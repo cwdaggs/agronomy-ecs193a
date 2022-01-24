@@ -1,6 +1,6 @@
 ## Potential Commands
 
-npm install styled-components.\
+npm install styled-components\
 npm install d3 --save
 
 
