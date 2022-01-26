@@ -86,6 +86,8 @@ function ScatterPlot ({filter})  {
           colorScale={colorScale}
           colorValue={colorValue}
         />
+        
+        
       </g>
     </svg>
   );
