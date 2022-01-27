@@ -1,0 +1,2 @@
+npm install react-pro-sidebar
+npm install react-icons --save

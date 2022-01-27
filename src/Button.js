@@ -17,20 +17,22 @@ const Button = styled.button`
 `;
 
 const Tab = styled.button`
-  padding: 10px 60px;
+  padding: 35px 60px;
   cursor: pointer;
+  font-size: 30px;
+  font-family: OCR A Std, monospace; 
   opacity: 0.7;
   background: white;
   border: 0;
   outline: 0;
   ${({active}) => 
   active && `
-  border-bottom: 2px solid black;
+  // border-bottom: 2px solid black;
   opacity: 1;
   `}
 `;
 
-const types = ['Rice', 'Wheat', 'Corn'];
+const types = ['Visualizations', 'Info', 'About'];
 
 function ToggleGroup() {
     const [active, setActive] = useState(types[0]);
@@ -77,7 +79,6 @@ function TabGroup(){
                     </Tab>
                 ))}
             </div>
-                <p>Enter information for crop: <b>{active}</b> here</p>
         </>
     );
 }
