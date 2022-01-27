@@ -18,7 +18,6 @@ export function getFarmersCrops(data, Crops){
     var current_crops = String(data[i][Crops]).split(", ")
     for(var j in current_crops){
       if(!(crops.includes((current_crops[j])))){
-        console.log(current_crops[j])
         if(current_crops[j] !== "undefined"){
           crops.push(current_crops[j])
         }
