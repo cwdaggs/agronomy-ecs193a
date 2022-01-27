@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GrowerPriority } from './GrowerPriority';
+import { GrowerConcern } from './GrowerConcern';
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -88,7 +88,7 @@ function TabGroup(){
             </div>
                 <p><b>{active}</b> Data: </p>
 
-                <GrowerPriority filter={active}/>
+                <GrowerConcern filter={active}/>
                 
         </>
         

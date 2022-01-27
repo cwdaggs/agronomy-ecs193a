@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 //import {TabGroup, ToggleGroup} from './Button.js'
 //import {TabGroup, ToggleGroup} from './components/Iris_ScatterPlot/SP_Button'
-import {TabGroup, ToggleGroup} from './components/Grower_Priorities/VisButtons'
+import {TabGroup, ToggleGroup} from './components/Grower_Concern/ConcernButtons'
 
 function App() {
 

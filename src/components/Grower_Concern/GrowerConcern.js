@@ -2,9 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { csv, arc, pie, scaleBand, scaleLinear, max, format, scaleOrdinal } from 'd3';
 import { useData, update, calculateTotals, calculateTotalsForAllElements } from '../UseDataGrowers';
-import { XAxis } from './Priority_xAxis';
-import { YAxis } from './Priority_yAxis';
-import { Marks } from './PriorityMarks';
+import { XAxis } from './Concern_xAxis';
+import { YAxis } from './Concern_yAxis';
+import { Marks } from './ConcernMarks';
 //import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
 
 const width = 960;
@@ -12,7 +12,7 @@ const height = 500;
 const margin = { top: 20, right: 30, bottom: 65, left: 220 };
 const xAxisLabelOffset = 50;
 
-function GrowerPriority({filter}) {
+function GrowerConcern({filter}) {
   const dataset_full = useData();
 
   if (!dataset_full) {
@@ -120,6 +120,6 @@ function GrowerPriority({filter}) {
   );
 };
 
-export {GrowerPriority}
+export {GrowerConcern}
 //const rootElement = document.getElementById('root');
 //ReactDOM.render(<App />, rootElement);
