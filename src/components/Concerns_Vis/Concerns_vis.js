@@ -1,25 +1,24 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { csv, arc, pie, scaleBand, scaleLinear, max, format, scaleOrdinal } from 'd3';
-import { useData, update, calculateConcernTotalsForAllElements } from '../UseDataGrowers';
+import { filterByCrop, calculateConcernTotalsForAllElements } from '../UseData';
 import { XAxis } from './Concern_xAxis';
 import { YAxis } from './Concern_yAxis';
 import { Marks } from './ConcernMarks';
 //import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
 
-const width = 960;
+const width = 800;
 const height = 500;
 const margin = { top: 20, right: 30, bottom: 65, left: 220 };
 const xAxisLabelOffset = 50;
 
-function GrowerConcern({filter}) {
-  const dataset_full = useData();
-
+function Concerns({filter, dataset_full, population}) {
+    console.log(dataset_full)
   if (!dataset_full) {
     return <pre>Loading...</pre>;
   }
 
-  var data_filtered = update(dataset_full, filter)
+  var data_filtered = filterByCrop(dataset_full, filter)
   //console.log(data)
   var data = calculateConcernTotalsForAllElements(data_filtered)
 
@@ -48,7 +47,7 @@ function GrowerConcern({filter}) {
 
   const color_scale1 = scaleOrdinal()
     .domain(data.map(colorValue))
-    .range(['#800000']);
+    .range(['#AB6465']);
 
   const color_scale2 = scaleOrdinal()
     .domain(data.map(colorValue))
@@ -56,7 +55,7 @@ function GrowerConcern({filter}) {
 
   const color_scale3 = scaleOrdinal()
     .domain(data.map(colorValue))
-    .range(['#228B22']);
+    .range(['#9CAF88']);
 
   return (
     <svg width={width} height={height}>
@@ -66,7 +65,7 @@ function GrowerConcern({filter}) {
           innerHeight={innerHeight}
           tickFormat={xAxisTickFormat}
         />
-        <YAxis y_scale={y_scale} />
+        <YAxis y_scale={y_scale} key={y_scale.domain()} />
         <text
           className="yaxis-label"
           x={xAxisLabelOffset- innerHeight/2}
@@ -80,7 +79,7 @@ function GrowerConcern({filter}) {
           y={innerHeight + xAxisLabelOffset}
           textAnchor="middle"
         >
-          Farmers
+          {population}
         </text>
         <Marks
           data={data}
@@ -120,6 +119,4 @@ function GrowerConcern({filter}) {
   );
 };
 
-export {GrowerConcern}
-//const rootElement = document.getElementById('root');
-//ReactDOM.render(<App />, rootElement);
+export {Concerns}

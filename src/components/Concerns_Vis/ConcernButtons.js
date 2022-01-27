@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
-import { GrowerConcern } from './GrowerConcern';
+//import { GrowerConcern } from './GrowerConcerns';
+//import { ConsultantConcern } from './ConsultantConcerns';
 import styled from 'styled-components';
-import { useData, getFarmersCrops } from '../UseDataGrowers';
+//import { useDataGrowers, getFarmersCrops } from '../UseDataGrowers';
+//import { useDataConsultant } from '../UseDataConsultant';
+import { useData, getFarmersCrops } from '../UseData';
+import {Concerns} from './Concerns_vis'
 
 const Button = styled.button`
   background-color: black;
@@ -32,10 +36,8 @@ const Tab = styled.button`
   `}
 `;
 
-function GetTypes(){
-  const dataset_full = useData();
-  return getFarmersCrops(dataset_full, "Crops")
-  //const types = ["Rice", "Wheat", "Corn", "Barley", "Small Grain Hay"]
+function GetTypes(dataset){
+  return getFarmersCrops(dataset, "Crops")
   
 }
 
@@ -75,7 +77,9 @@ const ButtonGroup = styled.div`
 
 
 function TabGroup(){
-    const types = GetTypes();
+    const dataset_Growers = useData('./Grower_Crop_Data.csv');
+    const dataset_Consultant = useData('./Consultant_Crop_Data.csv');
+    const types = GetTypes(dataset_Growers);
     const [active, setActive] = useState(types[0]);
     return(
         <>
@@ -86,7 +90,6 @@ function TabGroup(){
                         active={active === type}
                         onClick={() => { 
                           setActive(type);
-
                           }
                         }
                         >{type}
@@ -94,8 +97,18 @@ function TabGroup(){
                 ))}
             </div>
                 <p><b>{active}</b> Data: </p>
-
-                <GrowerConcern filter={active}/>
+                <div className='rowC'>
+                  <Concerns 
+                    filter={active} 
+                    dataset_full={dataset_Growers}
+                    population={"Growers"}
+                  />
+                  <Concerns 
+                    filter={active} 
+                    dataset_full={dataset_Consultant}
+                    population={"Consultants"}
+                  />
+                </div>        
                 
         </>
         

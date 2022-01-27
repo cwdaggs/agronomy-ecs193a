@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { csv, scaleLinear, max, format, extent, scaleOrdinal } from 'd3';
-import { useData, update } from '../useData';
+import { useData, update } from './useData';
 //import { useData, update } from '../UseDataGrowers';
 import { XAxis } from './SP_xAxis';
 import { YAxis } from './SP_yAxis';

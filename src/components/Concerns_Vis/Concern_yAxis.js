@@ -1,5 +1,3 @@
-
-
 export const YAxis = ({ y_scale }) =>
   y_scale.domain().map(tickValue => (
     <g className="tick">
