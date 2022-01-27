@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { GrowerConcern } from './GrowerConcern';
 import styled from 'styled-components';
+import { useData, getFarmersCrops } from '../UseDataGrowers';
 
 const Button = styled.button`
   background-color: black;
@@ -31,10 +32,15 @@ const Tab = styled.button`
   `}
 `;
 
-const types = ["Rice", "Wheat", "Corn"]
-
+function GetTypes(){
+  const dataset_full = useData();
+  return getFarmersCrops(dataset_full, "Crops")
+  //const types = ["Rice", "Wheat", "Corn", "Barley", "Small Grain Hay"]
+  
+}
 
 function ToggleGroup() {
+    const types = GetTypes()
     const [active, setActive] = useState(types[0]);
     return (
       <ButtonGroup>
@@ -69,6 +75,7 @@ const ButtonGroup = styled.div`
 
 
 function TabGroup(){
+    const types = GetTypes();
     const [active, setActive] = useState(types[0]);
     return(
         <>

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { csv, arc, pie, scaleBand, scaleLinear, max, format, scaleOrdinal } from 'd3';
-import { useData, update, calculateTotals, calculateTotalsForAllElements } from '../UseDataGrowers';
+import { useData, update, calculateConcernTotalsForAllElements } from '../UseDataGrowers';
 import { XAxis } from './Concern_xAxis';
 import { YAxis } from './Concern_yAxis';
 import { Marks } from './ConcernMarks';
@@ -21,7 +21,7 @@ function GrowerConcern({filter}) {
 
   var data_filtered = update(dataset_full, filter)
   //console.log(data)
-  var data = calculateTotalsForAllElements(data_filtered)
+  var data = calculateConcernTotalsForAllElements(data_filtered)
 
 
   const innerHeight = height - margin.top - margin.bottom;

@@ -2,15 +2,36 @@ import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
 const csvUrl =
-  './Grower_Crop_Data2.csv';
+  './Grower_Crop_Data.csv';
 
 export function update(data, filter){
 
   return data.filter(function(d){return String(d.Crops).includes(filter)});
 }
 
-// Tallies each type of answer for the given question
-export function calculateTotals(data, filter){
+export function getFarmersCrops(data, Crops){
+  
+  var crops = []
+
+  for(var i in data){
+
+    var current_crops = String(data[i][Crops]).split(", ")
+    for(var j in current_crops){
+      if(!(crops.includes((current_crops[j])))){
+        console.log(current_crops[j])
+        if(current_crops[j] !== "undefined"){
+          crops.push(current_crops[j])
+        }
+      }
+    }
+    
+
+  }
+  return crops
+}
+
+// Tallies each type of answer for the given question (Concerns)
+export function calculateConcernTotals(data, filter){
     
     var notConcerned = 0
     var somewhatConcerned = 0
@@ -31,14 +52,14 @@ export function calculateTotals(data, filter){
 }   
 
 // Iterates through list of questions regarding farmer concerns, and sums up each answer
-export function calculateTotalsForAllElements(data){
+export function calculateConcernTotalsForAllElements(data){
     var questions = ["Concern_Air_Quality","Concern_Changing_Weather_and_Climate","Concern_Chemical_Regulations",
                     "Concern_Commondity_Price_of_Crops", "Concern_Consumer_Demand", "Concern_Input_Costs", "Concern_Labor_Quality_and_Availability",
                     "Concern_Labor_Regulations", "Concern_Land_Tenure", "Concern_Market_Access"] //, "Concern_Other"]
     var answers = []
     
     for(var i in questions){
-        answers.push(calculateTotals(data, questions[i]))
+        answers.push(calculateConcernTotals(data, questions[i]))
     }
 
     return answers
