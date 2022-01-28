@@ -12,6 +12,8 @@
     "react-pro-sidebar": "^0.7.1",
     "react-scripts": "5.0.0",
     "styled-components": "^5.3.3",
+    "typeface-abeezee": "^1.1.13",
+    "typeface-merriweather-sans": "^1.1.13",
     "web-vitals": "^2.1.3"
   },
   "scripts": {

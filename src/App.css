@@ -15,10 +15,6 @@
   padding-right: 125px;
 }
 
-#topbar {
-  display: flex;
-}
-
 #sidebar {
   position: fixed;
   right: 0;
@@ -33,6 +29,20 @@
   background-color: #13639e;
 }
 
+#aboutsummary {
+  color:black;
+  /* display:flex; */
+  padding-right: 50%;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+#infosummary {
+  color:black;
+  padding-right: 50%;
+  padding-top: 10px;
+  padding-left: 10px;
+}
 /* #menuitem {
   background-color: blanchedalmond;
   color:#FFBF00

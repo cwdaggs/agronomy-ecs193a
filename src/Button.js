@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import "typeface-abeezee";
 
 const Button = styled.button`
   background-color: black;
@@ -20,7 +21,7 @@ const Tab = styled.button`
   padding: 35px 60px;
   cursor: pointer;
   font-size: 30px;
-  font-family: OCR A Std, monospace; 
+  font-family: ABeeZee, serif; 
   opacity: 0.7;
   background: white;
   border: 0;
@@ -65,21 +66,27 @@ const ButtonGroup = styled.div`
 `;
 
 
-function TabGroup(){
+function TabGroup(props){
     const [active, setActive] = useState(types[0]);
+
+    function changeTab(type) {
+      setActive(type)
+      props.changeFunc(type);
+    }
+
     return(
-        <>
+      
             <div>
                 {types.map(type => (
                     <Tab
                         key={type}
                         active={active === type}
-                        onClick={() => setActive(type)}
+                        onClick={() => changeTab(type)}
                         >{type}
                     </Tab>
                 ))}
             </div>
-        </>
+      
     );
 }
 
