@@ -41,8 +41,15 @@ function Concerns({filter, dataset_full, population}) {
     .range([0, innerHeight])
     .paddingInner(0.15);
 
+    // Finds maximum for all answers to set domain properly
+    var x1_max_range = max(data, xValue1) 
+    var x2_max_range = max(data, xValue2) 
+    var x3_max_range = max(data, xValue3) 
+    var x_max = Math.max(x1_max_range, x2_max_range, x3_max_range)
+
+
   const x_scale = scaleLinear()
-    .domain([0, max(data, xValue1)])
+    .domain([0, x_max])
     .range([0, innerWidth]);
 
   const color_scale1 = scaleOrdinal()
