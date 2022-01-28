@@ -80,7 +80,7 @@ function TabGroup(){
     const dataset_Growers = useData('./Grower_Crop_Data.csv');
     const dataset_Consultant = useData('./Consultant_Crop_Data.csv');
     const types = GetTypes(dataset_Growers);
-    const [active, setActive] = useState(types[0]);
+    const [active, setActive] = useState("Barley");
     return(
         <>
             <div>
@@ -111,6 +111,8 @@ function TabGroup(){
                 </div>        
                 
         </>
+
+        
         
     );
 }

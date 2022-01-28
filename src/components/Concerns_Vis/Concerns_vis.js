@@ -13,7 +13,6 @@ const margin = { top: 20, right: 30, bottom: 65, left: 220 };
 const xAxisLabelOffset = 50;
 
 function Concerns({filter, dataset_full, population}) {
-    console.log(dataset_full)
   if (!dataset_full) {
     return <pre>Loading...</pre>;
   }
@@ -72,7 +71,7 @@ function Concerns({filter, dataset_full, population}) {
           innerHeight={innerHeight}
           tickFormat={xAxisTickFormat}
         />
-        <YAxis y_scale={y_scale} key={y_scale.domain()} />
+        <YAxis y_scale={y_scale}/>
         <text
           className="yaxis-label"
           x={xAxisLabelOffset- innerHeight/2}
@@ -125,5 +124,4 @@ function Concerns({filter, dataset_full, population}) {
     </svg>
   );
 };
-
 export {Concerns}
