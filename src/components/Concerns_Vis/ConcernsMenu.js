@@ -93,20 +93,21 @@ function ConcernsMenu() {
                 </StyledUl>
             </div> 
             <p><b>{active}</b> Data: </p>
-            <div class='row' align-items='center'>
-            <Concerns 
-                filter={active} 
-                dataset_full={dataset_Growers}
-                population={"Growers"}
-            />
-            </div>
-            <div align-items='center'>
-            <Concerns 
-                filter={active} 
-                dataset_full={dataset_Consultant}
-                population={"Consultants"}
-            />
-            </div>
+            
+              <div id="visualizations">
+              <Concerns 
+                  filter={active} 
+                  dataset_full={dataset_Growers}
+                  population={"Growers"}
+              />
+              </div>
+              <div id="visualizations">
+              <Concerns 
+                  filter={active} 
+                  dataset_full={dataset_Consultant}
+                  population={"Consultants"}
+              />
+              </div>
         </>     
       
     )

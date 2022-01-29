@@ -42,10 +42,7 @@ function App() {
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <TabGroup changeFunc={changeDisplay}/>
       </div>
-      <div id="visualzation">
         <Visualizations/>
-      </div>
-
     </div>
   );
 }

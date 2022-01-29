@@ -38,10 +38,15 @@
 }
 
 #visualization {
-  /* display:flex; */
-  padding-right: 50%;
-  padding-top: 10px;
-  padding-left: 10px;
+  font-family: arial;
+  font-size: 24px;
+  margin: 25px;
+  width: 350px;
+  height: 200px;
+  outline: dashed 1px black;
+  /* Center child horizontally*/
+  display: flex;
+  justify-content: center;
 }
 
 #infosummary {
