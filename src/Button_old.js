@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import "typeface-abeezee";
 
 const Button = styled.button`
   background-color: black;
@@ -18,22 +17,20 @@ const Button = styled.button`
 `;
 
 const Tab = styled.button`
-  padding: 35px 60px;
+  padding: 10px 60px;
   cursor: pointer;
-  font-size: 30px;
-  font-family: ABeeZee, serif; 
   opacity: 0.7;
   background: white;
   border: 0;
   outline: 0;
   ${({active}) => 
   active && `
-  // border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
   opacity: 1;
   `}
 `;
 
-const types = ['Visualizations', 'Info', 'About'];
+const types = ['Rice', 'Wheat', 'Corn'];
 
 function ToggleGroup() {
     const [active, setActive] = useState(types[0]);
@@ -66,27 +63,22 @@ const ButtonGroup = styled.div`
 `;
 
 
-function TabGroup(props){
+function TabGroup(){
     const [active, setActive] = useState(types[0]);
-
-    function changeTab(type) {
-      setActive(type)
-      props.changeFunc(type);
-    }
-
     return(
-      
+        <>
             <div>
                 {types.map(type => (
                     <Tab
                         key={type}
                         active={active === type}
-                        onClick={() => changeTab(type)}
+                        onClick={() => setActive(type)}
                         >{type}
                     </Tab>
                 ))}
             </div>
-      
+                <p>Enter information for crop: <b>{active}</b> here</p>
+        </>
     );
 }
 

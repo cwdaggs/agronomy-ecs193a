@@ -93,7 +93,7 @@ function ConcernsMenu() {
                 </StyledUl>
             </div> 
             <p><b>{active}</b> Data: </p>
-            <div class='row' align-items='center'>
+            <div className='row' align-items='center'>
             <Concerns 
                 filter={active} 
                 dataset_full={dataset_Growers}

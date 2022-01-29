@@ -7,11 +7,14 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "d3": "^7.3.0",
-    "has-value": "^2.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-pro-sidebar": "^0.7.1",
     "react-scripts": "5.0.0",
     "styled-components": "^5.3.3",
+    "typeface-abeezee": "^1.1.13",
+    "typeface-merriweather-sans": "^1.1.13",
     "web-vitals": "^2.1.3"
   },
   "scripts": {
