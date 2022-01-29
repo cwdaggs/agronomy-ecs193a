@@ -47,6 +47,7 @@
   /* Center child horizontally*/
   display: flex;
   justify-content: center;
+
 }
 
 #infosummary {
