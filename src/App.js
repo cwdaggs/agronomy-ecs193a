@@ -7,8 +7,6 @@ import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 
 
-
-
 function App() {
   const [display, setDisplay] = useState("Visualizations");
 
