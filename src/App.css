@@ -37,6 +37,19 @@
   padding-left: 10px;
 }
 
+#visualization {
+  font-family: arial;
+  font-size: 24px;
+  margin: 25px;
+  width: 350px;
+  height: 200px;
+  outline: dashed 1px black;
+  /* Center child horizontally*/
+  display: flex;
+  justify-content: center;
+
+}
+
 #infosummary {
   color:black;
   padding-right: 50%;
