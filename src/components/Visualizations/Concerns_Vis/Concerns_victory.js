@@ -1,6 +1,5 @@
-import { VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel } from 'victory';
-import {calculateConcernTotalsForEachElement, filterByCrop} from '../UseData.js'
-import { scaleBand } from 'd3';
+import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '../UseData.js'
     
     // This is an example of a function you might use to transform your data to make 100% data
     function transformData(dataset) {
@@ -12,7 +11,7 @@ import { scaleBand } from 'd3';
       });
       return dataset.map((data) => {
         return data.map((datum, i) => {
-          return { x: datum.Concern, y: (datum.Total / totals[i]) * 100 };
+          return { x: datum.Concern, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
         });
       });
     }
@@ -24,47 +23,77 @@ import { scaleBand } from 'd3';
         }
 
       var data_filtered = filterByCrop(myDataset, filter)
-      const dataset = transformData(calculateConcernTotalsForEachElement(data_filtered));
-      
-      const width = 800;
-      const height = 500;
-      const margin = { top: 20, right: 30, bottom: 65, left: 220 };
+      var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
+      var data_sorted = sort_by_very(data_by_concern)
+      const dataset = transformData(data_sorted);
 
-      const innerWidth = width - margin.left - margin.right;
+      const width = 250;
+      const height = 150;
+      const margin = { top: height/10, right: width/4, bottom: height/10, left: width/4 };
+
+      const fontSize = 4
 
       return (
         <div>
-          <VictoryChart height={height} width={innerWidth}
-            domainPadding={{ x: 30, y: 20 }}
+          <VictoryChart
+            horizontal={true}
+            x={10}
+            animate={{
+                duration: 500,
+                
+              }}
+            height={height} 
+            width={width}
+            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
+            
           >
               <VictoryStack
+                
                 style={{
                     data: { stroke: "black", strokeWidth: 0.5 }
                 }}
                 colorScale={["#ff6361", "#ffa600", "green"]}
               >
                 {dataset.map((data, i) => {
-                  return <VictoryBar data={data} key={i}/>;
+                  return <VictoryBar 
+                    data={data} 
+                    key={i} 
+                    labels={({datum}) => datum.concern + ": " + Math.round(datum.y) + "%"}
+                    labelComponent={
+                        <VictoryTooltip 
+                          style={{
+                            height:4,
+                            width:4,
+                            fontSize:3
+                          }}    
+                        />
+                    }/>;
                 })}
               </VictoryStack>
               <VictoryAxis dependentAxis
+
                 tickFormat={(tick) => `${tick}%`}
+                
+                style={{
+                    axis: {stroke: "#756f6a"},
+                    ticks: {stroke: "grey", size: 5},
+                    tickLabels: {fontSize: fontSize, padding: 5}
+                  }}
               />
               <VictoryAxis
-                tickCount={10}
+                style={{
+                    axis: {stroke: "#756f6a"},
+                    ticks: {stroke: "grey", size: 5},
+                    tickLabels: {fontSize: fontSize, padding: 0}
+                  }}
                 tickLabelComponent={
                             
-                            <VictoryLabel 
-                                angle={-45} 
-                                textAnchor="end" 
-                                height={100}
-                                data={["Air Quality","Weather and Climate","Chemical Regulations",
-                                "Commondity Price of Crops", "Consumer Demand", "Input Costs", "Labor Quality and Availability",
-                                "Labor Regulations", "Land Tenure", "Market Access"]}
+                            <VictoryLabel    
+                                textAnchor="end"
                             />
-                                
+                               
                             }
-                
               />
           </VictoryChart>
         </div>
