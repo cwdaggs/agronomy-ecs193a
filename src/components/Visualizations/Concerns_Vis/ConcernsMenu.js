@@ -127,18 +127,4 @@ function ConcernsMenu() {
       
     )
 }
-/* Old vis storage
-            <Concerns 
-                filter={active} 
-                dataset_full={dataset_Growers}
-                population={"Growers"}
-            />
-            </div>
-            <div align-items='center'>
-            <Concerns 
-                filter={active} 
-                dataset_full={dataset_Consultant}
-                population={"Consultants"}
-            />
-*/
 export {ConcernsMenu};

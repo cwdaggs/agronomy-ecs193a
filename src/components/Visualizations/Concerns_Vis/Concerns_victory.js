@@ -28,8 +28,8 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '
       const dataset = transformData(data_sorted);
 
       const width = 250;
-      const height = 150;
-      const margin = { top: height/10, right: width/4, bottom: height/10, left: width/4 };
+      const height = 100;
+      const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
 
       const fontSize = 4
 
@@ -53,7 +53,7 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '
                 style={{
                     data: { stroke: "black", strokeWidth: 0.5 }
                 }}
-                colorScale={["#ff6361", "#ffa600", "green"]}
+                colorScale={["#333333", "#999999", "#CCCCCC"]}
               >
                 {dataset.map((data, i) => {
                   return <VictoryBar 
