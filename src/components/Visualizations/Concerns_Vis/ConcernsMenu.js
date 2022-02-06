@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useData, getFarmersCrops } from '../UseData';
-import {Concerns} from './Concerns_vis'
+//import {Concerns} from './Concerns_vis'
+import {ConcernsVictory} from './Concerns_victory'
 
 const StyledUl = styled.ul`
   list-style-type: none;
@@ -53,6 +54,22 @@ const SubA = styled.a`
   }
 `;
 
+const Tab = styled.button`
+  padding: 35px 60px;
+  cursor: pointer;
+  font-size: 30px;
+  font-family: ABeeZee, serif; 
+  opacity: 0.7;
+  background: white;
+  border: 0;
+  outline: 0;
+  ${({active}) => 
+  active && `
+  // border-bottom: 2px solid black;
+  opacity: 1;
+  `}
+`;
+
 function GetTypes(dataset){
     return getFarmersCrops(dataset, "Crops") 
 }
@@ -61,6 +78,8 @@ function ConcernsMenu() {
 
   const dataset_Growers = useData('./data/Grower_Crop_Data.csv');
   const dataset_Consultant = useData('./data/Consultant_Crop_Data.csv');
+  const dataset_Other = useData('././data/Other_Crop_Data.csv');
+
   const types = GetTypes(dataset_Growers);
   const [active, setActive] = useState("Barley");
   
@@ -94,22 +113,18 @@ function ConcernsMenu() {
             </div> 
             <p><b>{active}</b> Data: </p>
             <div className='row' align-items='center'>
-            <Concerns 
-                filter={active} 
-                dataset_full={dataset_Growers}
-                population={"Growers"}
-            />
+            
             </div>
+            
             <div align-items='center'>
-            <Concerns 
+            <ConcernsVictory 
                 filter={active} 
-                dataset_full={dataset_Consultant}
-                population={"Consultants"}
+                myDataset={dataset_Growers}
+                population={"Growers"}
             />
             </div>
         </>     
       
     )
 }
-
 export {ConcernsMenu};
