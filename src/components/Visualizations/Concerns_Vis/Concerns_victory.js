@@ -39,17 +39,14 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '
             horizontal={true}
             x={10}
             animate={{
-                duration: 500,
-                
+                duration: 500,               
               }}
             height={height} 
             width={width}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
-            
+            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
           >
               <VictoryStack
-                
                 style={{
                     data: { stroke: "black", strokeWidth: 0.5 }
                 }}
@@ -63,8 +60,8 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '
                     labelComponent={
                         <VictoryTooltip 
                           style={{
-                            height:4,
-                            width:4,
+                            // height:1,
+                            // width:4,
                             fontSize:3
                           }}    
                         />
@@ -72,9 +69,7 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '
                 })}
               </VictoryStack>
               <VictoryAxis dependentAxis
-
                 tickFormat={(tick) => `${tick}%`}
-                
                 style={{
                     axis: {stroke: "#756f6a"},
                     ticks: {stroke: "grey", size: 5},
@@ -87,13 +82,11 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '
                     ticks: {stroke: "grey", size: 5},
                     tickLabels: {fontSize: fontSize, padding: 0}
                   }}
-                tickLabelComponent={
-                            
-                            <VictoryLabel    
-                                textAnchor="end"
-                            />
-                               
-                            }
+                tickLabelComponent={       
+                  <VictoryLabel    
+                      textAnchor="end"
+                  />   
+                }
               />
           </VictoryChart>
         </div>

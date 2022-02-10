@@ -5,7 +5,12 @@ import {AiFillAndroid} from "react-icons/ai";
 import {SiAdblock} from "react-icons/si";
 import {GrHorton} from "react-icons/gr";
 import {ConcernsMenu} from '../Visualizations/Concerns_Vis/ConcernsMenu'
+import { useData, getFarmersCrops } from '../Visualizations/UseData';
 
+// Don't work here
+// const dataset_Growers = useData('./data/Grower_Crop_Data.csv');
+// const dataset_Consultant = useData('./data/Consultant_Crop_Data.csv');
+// const dataset_Other = useData('././data/Other_Crop_Data.csv');
 
 export const Visualizations = () => {
     return(
@@ -24,7 +29,7 @@ export const Visualizations = () => {
             </ProSidebar>
         </div> 
 
-        {/* visualizations go here */ <ConcernsMenu />}
+        {<ConcernsMenu dataset={useData('./data/Grower_Crop_Data.csv')}/>}
       </div>
     );
 }
