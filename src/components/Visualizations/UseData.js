@@ -26,16 +26,13 @@ export function sort_by_very(dataset){
 }
 
 export function filterByCrop(data, filter){
-
   return data.filter(function(d){return String(d.Crops).includes(filter)});
 }
 
 export function getFarmersCrops(data, Crops){
-  
   var crops = []
 
   for(var i in data){
-
     var current_crops = String(data[i][Crops]).split(", ")
     for(var j in current_crops){
       if(!(crops.includes((current_crops[j])))){
@@ -44,40 +41,33 @@ export function getFarmersCrops(data, Crops){
         }
       }
     }
-    
-
   }
   return crops
 }
 
 // Tallies each type of answer for the given question (Concerns)
-export function calculateConcernTotals(data, filter){
-    
-    var notConcerned = 0
-    var somewhatConcerned = 0
-    var veryConcerned = 0
+export function calculateConcernTotals(data, filter){  
+  var notConcerned = 0
+  var somewhatConcerned = 0
+  var veryConcerned = 0
 
-    for(var farmer in data){
-     
-        if(data[farmer][filter] === "Not  concerned"){
-            notConcerned ++
-        }else if(data[farmer][filter] === "Somewhat concerned"){
-            somewhatConcerned ++
-        }else if(data[farmer][filter] === "Very concerned"){
-            veryConcerned ++
-        }
-    }
-
-    return {Concern: filter, Not_Concerned: notConcerned, Somewhat_Concerned: somewhatConcerned, Very_Concerned: veryConcerned}
+  for(var farmer in data){
+      if(data[farmer][filter] === "Not  concerned"){
+          notConcerned ++
+      }else if(data[farmer][filter] === "Somewhat concerned"){
+          somewhatConcerned ++
+      }else if(data[farmer][filter] === "Very concerned"){
+          veryConcerned ++
+      }
+  }
+  return {Concern: filter, Not_Concerned: notConcerned, Somewhat_Concerned: somewhatConcerned, Very_Concerned: veryConcerned}
 }   
 
 // Tallies each type of answer for the given question (Concerns)
 export function calculateConcernEach(data, filter, answer){
-    
   var total = 0
 
   for(var farmer in data){
-
       if(data[farmer][filter] === answer){
           total ++
       }
@@ -100,7 +90,7 @@ export function calculateConcernTotalsForAllElements(data){
                     "Concern_Labor_Regulations", "Concern_Land_Tenure", "Concern_Market_Access"] //, "Concern_Other"]
     var answers = []
     
-    for(var i in questions){
+    for(var i in questions) {
         answers.push(calculateConcernTotals(data, questions[i]))
     }
 
@@ -138,6 +128,6 @@ export function useData(url) {
 
     d3.csv(csvUrl, row).then(setData);
   }, []);
-  //console.log(data)
+  // console.log(data)
   return data;
 };
