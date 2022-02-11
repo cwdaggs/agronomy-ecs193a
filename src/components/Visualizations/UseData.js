@@ -104,16 +104,39 @@ export function calculateConcernTotalsForEachElement(data){
   var very = []
   var somewhat = []
   var notVery = []
-  //console.log("Original data: " , data)
+  // console.log("Original data: " , data)
 
   for(var i in questions){
       very.push(calculateConcernEach(data, questions[i], "Very concerned"))
       somewhat.push(calculateConcernEach(data, questions[i], "Somewhat concerned"))
       notVery.push(calculateConcernEach(data, questions[i], "Not  concerned"))
   }
-  //console.log("New data: ", [very, somewhat, notVery])
+  // console.log("New data: ", [very, somewhat, notVery])
 
   return [very, somewhat, notVery]
+}
+
+export function calculateCropPercentageAverage(data) {
+  var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
+  var modified_data=[]
+
+  for (var j = 0; j < columns.length; j++) {
+    var sum = 0
+    var length = data.length
+    for (var i = 0; i < data.length; i++) {
+      var num = parseInt(data[i][columns[j]], 10)
+      if (Number.isNaN(num)) {
+        sum += 0
+        length -= 1
+      } else {
+        sum += num
+      }
+    }
+    var avg = sum / length;
+    modified_data.push({x: columns[j].split('_').join(' ').replace('Percentage ', ''), y: avg});
+  }
+
+  return modified_data
 }
 
 export function useData(url) {
