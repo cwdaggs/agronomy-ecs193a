@@ -189,12 +189,12 @@ export function averageSatisfaction(data){
 } 
 
 export function trendLineSatisfactions(data){
-
+  
   var xSum = 0
   var ySum = 0
 
   var total = data.length
-
+  console.log(data)
   for(var i in data){
     xSum += data[i].Priority
     ySum += data[i].Satisfaction
@@ -203,24 +203,29 @@ export function trendLineSatisfactions(data){
   var xAvg = xSum/total
   var yAvg = ySum/total
 
-  var devX = 0
-  var devY = 0
   var prod = 0
   var unc = 0
 
   for(var j in data){
-    devX += data[j].Priority - xAvg
-    devY += data[j].Satisfaction - yAvg
-    prod += devX * devY
-    unc += (data[j].Priority - xAvg)^2
+    console.log("Delta x: ", (data[j].Priority - xAvg))
+    console.log("Delta y: ", (data[j].Satisfaction - yAvg))
+
+    console.log("Product:", ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg)))
+    
+    prod += ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg))
+    unc += (data[j].Priority - xAvg)*(data[j].Priority - xAvg)
+
+    console.log("Current sum: ", prod)
+    console.log("Current unc: ", unc)
   }
 
-  var m = prod/unc
+  var m = ( prod/unc )
+  console.log(m)
   var b = yAvg - m*xAvg
 
-  var set = [{x:0, y:b}]
+  var set = []
 
-  for(var k = 1; k <= 3; k++){
+  for(var k = 0; k <= 3; k++){
     set.push({x: k, y:(m*k+b)})
   }
   console.log(set)
