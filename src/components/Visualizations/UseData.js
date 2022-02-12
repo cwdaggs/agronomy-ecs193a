@@ -182,6 +182,13 @@ export function averageSatisfaction(data){
         sAmount += 1
       }
     }
+    if(pAmount === 0){
+      pAmount = 1
+    }
+
+    if(sAmount === 0){
+      sAmount = 1
+    }
     answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount)})
   }
   //console.log(answers)
