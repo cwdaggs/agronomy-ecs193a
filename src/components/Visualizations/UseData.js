@@ -139,6 +139,94 @@ export function calculateCropPercentageAverage(data) {
   return modified_data
 }
 
+export function averageSatisfaction(data){
+  var topics = ["Compost_Management", "Cover_Crops", "Crop_Establishment", 
+                "Disease_Control", "Emerging_Crops", "Greenhouse_Gas_Emissions_Reduction", 
+                "Harvest_and_Postharvest", "Insect_Pest_Control", "Irrigation_Management",
+                "Manure_Management", "Niche_Marketing_Field_Crops", "Nutrient_Management",
+                "Organic_Production", "Other", "Salinity_Management",
+                "Soil_Health_Management", "Testing_New_Products", "Variety_Testing",
+                "Water_Conservation_and_Storage", "Weed_Control"]
+
+  var answers = []
+
+  for (var i in topics){
+    var pAmount = 0
+    var sAmount = 0
+    var pTot = 0
+    var sTot = 0
+
+    for (var j in data){
+      var satisfaction = data[j][String("Satisfaction_" + topics[i])]
+      var priority = data[j][String("Priority_" + topics[i])]
+
+      if (priority === "High Priority"){
+        pTot += 3
+        pAmount += 1
+      }else if (priority === "Medium Priority"){
+        pTot += 2
+        pAmount += 1
+      }else if (priority === "Low Priority"){
+        pTot += 1
+        pAmount += 1
+      }
+
+      if (satisfaction === "High Satisfaction"){
+        sTot += 3
+        sAmount += 1
+      }else if (satisfaction === "Medium Satisfaction"){
+        sTot += 2
+        sAmount += 1
+      }else if (satisfaction === "Low Satisfaction"){
+        sTot += 1
+        sAmount += 1
+      }
+    }
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount)})
+  }
+  //console.log(answers)
+  return answers
+} 
+
+export function trendLineSatisfactions(data){
+
+  var xSum = 0
+  var ySum = 0
+
+  var total = data.length
+
+  for(var i in data){
+    xSum += data[i].Priority
+    ySum += data[i].Satisfaction
+  }
+  
+  var xAvg = xSum/total
+  var yAvg = ySum/total
+
+  var devX = 0
+  var devY = 0
+  var prod = 0
+  var unc = 0
+
+  for(var j in data){
+    devX += data[j].Priority - xAvg
+    devY += data[j].Satisfaction - yAvg
+    prod += devX * devY
+    unc += (data[j].Priority - xAvg)^2
+  }
+
+  var m = prod/unc
+  var b = yAvg - m*xAvg
+
+  var set = [{x:0, y:b}]
+
+  for(var k = 1; k <= 3; k++){
+    set.push({x: k, y:(m*k+b)})
+  }
+  console.log(set)
+  return set
+}
+
 export function useData(url) {
   
   const csvUrl = url;
