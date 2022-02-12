@@ -5,7 +5,8 @@ import {AiFillAndroid} from "react-icons/ai";
 import {SiAdblock} from "react-icons/si";
 import {GrHorton} from "react-icons/gr";
 import {ConcernsMenu} from '../Visualizations/Concerns_Vis/ConcernsMenu'
-
+import { useData, getFarmersCrops } from '../Visualizations/UseData';
+import {CropPercentages} from '../Visualizations/CropPercentages';
 
 export const Visualizations = () => {
     return(
@@ -23,8 +24,9 @@ export const Visualizations = () => {
             </Menu>
             </ProSidebar>
         </div> 
-
-        {/* visualizations go here */ <ConcernsMenu />}
+        {<ConcernsMenu dataset={useData('./data/Grower_Crop_Data.csv')}/>}
+        <h2>Of these acres, in a given year estimate approximately what percentage are in the following categories?</h2>
+        {<CropPercentages dataset={useData('./data/Grower_Crop_Data.csv')}/>}
       </div>
     );
 }
