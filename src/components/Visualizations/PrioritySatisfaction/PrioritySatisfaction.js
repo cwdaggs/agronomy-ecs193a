@@ -55,10 +55,10 @@ export function PrioritySatisfaction({dataset, filter}) {
                 labelComponent={
                     <VictoryTooltip 
                         style={{
-                        fontSize:5
+                        fontSize:fontSize
                         }}
-                        flyoutHeight={20}
-                        flyoutWidth={60}    
+                        flyoutHeight={10}
+                        flyoutWidth={30}    
                     />
                 }
                 
@@ -83,10 +83,11 @@ export function PrioritySatisfaction({dataset, filter}) {
                         }}
                 />
             <VictoryLine
+                label="Trend Line"
                 style={{ 
                     data: { 
                         stroke: "#756f6a", 
-                        strokeWidth:1, 
+                        strokeWidth:0.3, 
                         strokeLinecap: "round" 
                     } 
                 }}
