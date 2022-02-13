@@ -29,7 +29,8 @@ export const Visualizations = () => {
         {<ConcernsMenu dataset={useData('./data/Grower_Crop_Data.csv')}/>}
         <h2>Of these acres, in a given year estimate approximately what percentage are in the following categories?</h2>
 
-        {<CropPercentages dataset={useData('./data/Grower_Crop_Data.csv')}/>}     
+        {<CropPercentages dataset={useData('./data/Grower_Crop_Data.csv')}/>}
+             
         {/*Question written in AcresManagedBarChart*/}
         {<AcresManagedMenu dataset={useData('./data/Filtered_Crop_Data.csv')}/>}
 

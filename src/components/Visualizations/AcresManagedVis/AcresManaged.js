@@ -1,4 +1,4 @@
-import {VictoryLabel, VictoryChart, VictoryBar} from 'victory';
+import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar} from 'victory';
 import {filterByCrop, calculateAcresManagedOrConsulted, calculateAcres} from '../UseData.js';
 import "typeface-abeezee";
 
@@ -14,10 +14,11 @@ export function AcresManagedBarChart(props) {
     return (
         <div>
           <h2>How many acres do you manage/consult annually?</h2>
-          <VictoryChart height={200} width={600}
+          <VictoryChart height={300} width={600}
             domainPadding={10}
             padding={{left: 100, bottom: 30, top: 30, right: 100}}
           >
+            <VictoryLabel text="Acres vs Number of Responses" x={225} y={20} textAnchor="right"/>
             <VictoryBar horizontal
               data={acre_data}
               style={{ data:  { fill: ({datum}) => datum.fill}}}

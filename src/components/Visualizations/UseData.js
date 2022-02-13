@@ -157,7 +157,7 @@ export function calculateAcresManagedOrConsulted(data){
 }
 
 export function calculateAcres(data){
-  var names = ["Under 500", "1000", "1500", "2000", "2500", "2500+"]
+  var names = ["Under 500", "501-1000", "1001-1500", "1501-2000", "2001-2500", "2500+"]
   var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
   var columns = ["Acres_Managed", "Acres_Consulted"]
   var modified_data=[]
@@ -169,19 +169,19 @@ export function calculateAcres(data){
       var num = parseInt(data[i][columns[j]], 10)
       // Remove NAs and outliers
       if(Number.isInteger(num)){
-          if(num < 500){
+          if(num <= 500){
               bin_count[0]++
           }
-          else if (num < 1000){
+          else if (num <= 1000){
             bin_count[1]++
           }
-          else if (num < 1500){
+          else if (num <= 1500){
             bin_count[2]++
           }
-          else if (num < 2000){
+          else if (num <= 2000){
             bin_count[3]++
           }
-          else if (num < 2500){
+          else if (num <= 2500){
             bin_count[4]++
           }
           else{
