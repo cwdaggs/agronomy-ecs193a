@@ -139,6 +139,7 @@ export function calculateCropPercentageAverage(data) {
   return modified_data
 }
 
+
 export function calculateAcresManagedOrConsulted(data){
   var columns = ["Acres_Managed", "Acres_Consulted"]
   var modified_data=[]
@@ -194,6 +195,106 @@ export function calculateAcres(data){
   }
     
   return modified_data
+}
+export function averageSatisfaction(data){
+  var topics = ["Compost_Management", "Cover_Crops", "Crop_Establishment", 
+                "Disease_Control", "Emerging_Crops", "Greenhouse_Gas_Emissions_Reduction", 
+                "Harvest_and_Postharvest", "Insect_Pest_Control", "Irrigation_Management",
+                "Manure_Management", "Niche_Marketing_Field_Crops", "Nutrient_Management",
+                "Organic_Production", "Other", "Salinity_Management",
+                "Soil_Health_Management", "Testing_New_Products", "Variety_Testing",
+                "Water_Conservation_and_Storage", "Weed_Control"]
+
+  var answers = []
+
+  for (var i in topics){
+    var pAmount = 0
+    var sAmount = 0
+    var pTot = 0
+    var sTot = 0
+
+    for (var j in data){
+      var satisfaction = data[j][String("Satisfaction_" + topics[i])]
+      var priority = data[j][String("Priority_" + topics[i])]
+
+      if (priority === "High Priority"){
+        pTot += 3
+        pAmount += 1
+      }else if (priority === "Medium Priority"){
+        pTot += 2
+        pAmount += 1
+      }else if (priority === "Low Priority"){
+        pTot += 1
+        pAmount += 1
+      }
+
+      if (satisfaction === "High Satisfaction"){
+        sTot += 3
+        sAmount += 1
+      }else if (satisfaction === "Medium Satisfaction"){
+        sTot += 2
+        sAmount += 1
+      }else if (satisfaction === "Low Satisfaction"){
+        sTot += 1
+        sAmount += 1
+      }
+    }
+    if(pAmount === 0){
+      pAmount = 1
+    }
+
+    if(sAmount === 0){
+      sAmount = 1
+    }
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount)})
+  }
+  //console.log(answers)
+  return answers
+} 
+
+export function trendLineSatisfactions(data){
+  
+  var xSum = 0
+  var ySum = 0
+
+  var total = data.length
+  console.log(data)
+  for(var i in data){
+    xSum += data[i].Priority
+    ySum += data[i].Satisfaction
+  }
+  
+  var xAvg = xSum/total
+  var yAvg = ySum/total
+
+  var prod = 0
+  var unc = 0
+
+  for(var j in data){
+    console.log("Delta x: ", (data[j].Priority - xAvg))
+    console.log("Delta y: ", (data[j].Satisfaction - yAvg))
+
+    console.log("Product:", ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg)))
+    
+    prod += ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg))
+    unc += (data[j].Priority - xAvg)*(data[j].Priority - xAvg)
+
+    console.log("Current sum: ", prod)
+    console.log("Current unc: ", unc)
+  }
+
+  var m = ( prod/unc )
+  console.log(m)
+  var b = yAvg - m*xAvg
+
+  var set = []
+
+  for(var k = 0; k <= 3; k++){
+    set.push({x: k, y:(m*k+b)})
+  }
+  console.log(set)
+  return set
+
 }
 
 export function useData(url) {

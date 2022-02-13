@@ -30,7 +30,7 @@ export function ConcernsVictory({myDataset, filter}) {
   const height = 100;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
 
-  const fontSize = 4
+  const fontSize = 2
 
   return (
     <div>
@@ -58,7 +58,7 @@ export function ConcernsVictory({myDataset, filter}) {
               labelComponent={
                   <VictoryTooltip 
                     style={{
-                      fontSize:2
+                      fontSize:fontSize
                     }}
                     flyoutHeight={15}
                     flyoutWidth={30}    
