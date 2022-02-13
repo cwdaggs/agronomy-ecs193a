@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {getFarmersCrops } from '../UseData';
-import {ConcernsVictory} from './Concerns_victory';
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
+import {PrioritySatisfaction} from './PrioritySatisfaction.js'
 
 function GetTypes(dataset){
     return getFarmersCrops(dataset, "Crops") 
 }
 
-function ConcernsMenu(props) {
+function PriorityMenu(props) {
 
   const dataset = props.dataset
   const types = GetTypes(dataset);
@@ -15,7 +15,6 @@ function ConcernsMenu(props) {
   
   return (
     <>
-    <h2>In regards to the production of {active} in California, rate your concern for the following:</h2>
     <div>
       <StyledUl>
         <DropDownLi>
@@ -39,9 +38,9 @@ function ConcernsMenu(props) {
     <p><b >{active}</b> Data: </p>
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
-    <ConcernsVictory filter={active} myDataset={dataset} population={"Growers"}/>
+    <PrioritySatisfaction filter={active} dataset={dataset} population={"Growers"}/>
     </div>
     </>     
   )
 }
-export {ConcernsMenu};
+export {PriorityMenu};

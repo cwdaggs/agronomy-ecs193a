@@ -7,6 +7,7 @@ import {GrHorton} from "react-icons/gr";
 import {ConcernsMenu} from '../Visualizations/Concerns_Vis/ConcernsMenu'
 import { useData, getFarmersCrops } from '../Visualizations/UseData';
 import {CropPercentages} from '../Visualizations/CropPercentages';
+import { PriorityMenu } from '../Visualizations/PrioritySatisfaction/PriorityMenu';
 
 export const Visualizations = () => {
     return(
@@ -27,6 +28,8 @@ export const Visualizations = () => {
         {<ConcernsMenu dataset={useData('./data/Grower_Crop_Data.csv')}/>}
         <h2>Of these acres, in a given year estimate approximately what percentage are in the following categories?</h2>
         {<CropPercentages dataset={useData('./data/Grower_Crop_Data.csv')}/>}
+        <h2>Rate your current level of importance/satisfaction with UCCE's delivery of information on these topics, (1-3)</h2>
+        {<PriorityMenu dataset={useData('./data/Grower_Crop_Data.csv')}/>}
       </div>
     );
 }
