@@ -246,7 +246,7 @@ export function averageSatisfaction(data){
     if(sAmount === 0){
       sAmount = 1
     }
-    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount)})
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot})
   }
   //console.log(answers)
   return answers
@@ -271,7 +271,7 @@ export function trendLineSatisfactions(data){
   var unc = 0
 
   for(var j in data){
-    
+
     prod += ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg))
     unc += (data[j].Priority - xAvg)*(data[j].Priority - xAvg)
 

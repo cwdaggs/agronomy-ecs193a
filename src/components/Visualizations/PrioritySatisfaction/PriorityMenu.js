@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {getFarmersCrops } from '../UseData';
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
 import {PrioritySatisfaction} from './PrioritySatisfaction.js'
-
+import {PrioritySatisfactionScatter} from './PrioritySatisfaction copy'
 function GetTypes(dataset){
     return getFarmersCrops(dataset, "Crops") 
 }
@@ -38,7 +38,7 @@ function PriorityMenu(props) {
     <p><b >{active}</b> Data: </p>
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
-    <PrioritySatisfaction filter={active} dataset={dataset} population={"Growers"}/>
+    <PrioritySatisfactionScatter filter={active} dataset={dataset} population={"Growers"}/>
     </div>
     </>     
   )
