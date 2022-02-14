@@ -7,14 +7,14 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
     if (!dataset) {
         return <pre>Loading...</pre>;
     }
-    console.log(dataset)
+
     var data_filtered = filterByCrop(dataset, filter)
     var data = averageSatisfaction(data_filtered)
 
     var domain = d3.extent(data, function(d) { return d.Priority; })
     var range = d3.extent(data, function(d) { return d.Satisfaction; })
     var domainPadding = 0.1
-    console.log(data)
+
     var trendData = trendLineSatisfactions(data)
 
     const width = 250;

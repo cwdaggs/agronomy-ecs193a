@@ -47,7 +47,7 @@ export function AffectVictory({myDataset, filter}) {
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#333333", "#999999", "#CCCCCC"]}
+          colorScale={["#111111", "#333333","#666666", "#999999", "#CCCCCC"]}
         >
           {dataset.map((data, i) => {
             return <VictoryBar 
