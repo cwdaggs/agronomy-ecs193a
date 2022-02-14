@@ -201,7 +201,7 @@ export function trendLineSatisfactions(data){
   var ySum = 0
 
   var total = data.length
-  console.log(data)
+
   for(var i in data){
     xSum += data[i].Priority
     ySum += data[i].Satisfaction
@@ -214,20 +214,14 @@ export function trendLineSatisfactions(data){
   var unc = 0
 
   for(var j in data){
-    console.log("Delta x: ", (data[j].Priority - xAvg))
-    console.log("Delta y: ", (data[j].Satisfaction - yAvg))
-
-    console.log("Product:", ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg)))
     
     prod += ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg))
     unc += (data[j].Priority - xAvg)*(data[j].Priority - xAvg)
 
-    console.log("Current sum: ", prod)
-    console.log("Current unc: ", unc)
   }
 
   var m = ( prod/unc )
-  console.log(m)
+
   var b = yAvg - m*xAvg
 
   var set = []
@@ -235,8 +229,94 @@ export function trendLineSatisfactions(data){
   for(var k = 0; k <= 3; k++){
     set.push({x: k, y:(m*k+b)})
   }
-  console.log(set)
+
   return set
+}
+
+export function calculateAffectTotals(data, filter){  
+  var always = 0
+  var often = 0
+  var sometimes = 0
+  var rarely = 0
+  var never = 0
+
+  for(var farmer in data){
+      if(data[farmer][filter] === "Always"){
+          always++
+      }else if(data[farmer][filter] === "Often"){
+          often++
+      }else if(data[farmer][filter] === "Sometimes"){
+          sometimes++
+      }else if(data[farmer][filter] === "Rarely"){
+          rarely++
+      }else if(data[farmer][filter] === "Never"){
+          never++
+      }
+  }
+  return {Concern: filter, Always: always, Often: often, Sometimes: sometimes, Rarely: rarely, Never: never}
+}
+
+export function calculateAffectEach(data, filter, answer){
+  var total = 0
+
+  for(var farmer in data){
+      if(data[farmer][filter] === answer){
+          total ++
+      }
+  }
+
+  var name = String(filter).split('_')
+  var temp = ""
+
+  for(let i = 3; i < name.length - 1; i++){
+    temp += name[i] + " ";
+  }
+  temp += name[name.length - 1]
+  return {Affect: temp, Total: total, Level_Of_Affect: answer}
+}
+
+export function calculateAffectTotalsForAllElements(data){
+  var questions = ["Affected_Crop_Production_Profitability", "Affected_Crop_Production_Crop_Yield",
+                  "Affected_Crop_Production_Crop_Quality", "Affected_Crop_Production_Input_Costs", 
+                  "Affected_Crop_Production_Soil_Fertility", "Affected_Crop_Production_Land_Stewardship", 
+                  "Affected_Crop_Production_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Meeting_Government_Regulations", "Affected_Crop_Production_Labor_Required", 
+                  "Affected_Crop_Production_Ease_of_Implementation", "Affected_Crop_Production_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Availability_of_Outreach_Information", "Affected_Crop_Production_Water_Availability"]
+  var answers = []
+  
+  for(var i in questions) {
+      answers.push(calculateAffectTotals(data, questions[i]))
+  }
+
+  return answers
+}
+
+export function calculateAffectTotalsForEachElement(data){
+  var questions = ["Affected_Crop_Production_Profitability", "Affected_Crop_Production_Crop_Yield",
+                  "Affected_Crop_Production_Crop_Quality", "Affected_Crop_Production_Input_Costs", 
+                  "Affected_Crop_Production_Soil_Fertility", "Affected_Crop_Production_Land_Stewardship", 
+                  "Affected_Crop_Production_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Meeting_Government_Regulations", "Affected_Crop_Production_Labor_Required", 
+                  "Affected_Crop_Production_Ease_of_Implementation", "Affected_Crop_Production_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Availability_of_Outreach_Information", "Affected_Crop_Production_Water_Availability"]
+  var always = []
+  var often = []
+  var sometimes = []
+  var rarely = []
+  var never = []
+  // console.log("Original data: " , data)
+
+  for(var i in questions){
+      always.push(calculateAffectEach(data, questions[i], "Always"))
+      often.push(calculateAffectEach(data, questions[i], "Often"))
+      sometimes.push(calculateAffectEach(data, questions[i], "Sometimes"))
+      rarely.push(calculateAffectEach(data, questions[i], "Rarely"))
+      never.push(calculateAffectEach(data, questions[i], "Never"))
+  }
+  // console.log("New data: ", [always, often, sometimes, rarely, never])
+
+  return [always, often, sometimes, rarely, never]
 }
 
 export function useData(url) {
