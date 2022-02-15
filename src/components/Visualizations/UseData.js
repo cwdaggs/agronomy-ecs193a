@@ -157,7 +157,7 @@ export function calculateAcresManagedOrConsulted(data){
 }
 
 export function calculateAcres(data){
-  var names = ["Under 500", "501-1000", "1001-1500", "1501-2000", "2001-2500", "2500+"]
+  var names = ["Under 500\nAcres", "501-1000\nAcres", "1001-1500\nAcres", "1501-2000\nAcres", "2001-2500\nAcres", "2500+\nAcres"]
   var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
   var columns = ["Acres_Managed", "Acres_Consulted"]
   var modified_data=[]
