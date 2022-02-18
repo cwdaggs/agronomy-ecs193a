@@ -18,7 +18,7 @@ export function AcresManagedBarChart(props) {
           <VictoryChart height={300} width={600}
             domainPadding={10}
             padding={{left: 100, bottom: 30, top: 30, right: 100}}
-            animate={{duration: 500}}
+            animate={{duration: 700}}
           >
             <VictoryLabel text="Acres vs Number of Responses" x={225} y={20} textAnchor="right"/>
             <VictoryBar horizontal
