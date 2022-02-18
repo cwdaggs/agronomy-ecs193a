@@ -1,5 +1,5 @@
 import {VictoryPie, VictoryTooltip} from 'victory';
-import {calculateCropPercentageAverage} from './UseData.js';
+import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
 
 export function CropPercentages(props) {

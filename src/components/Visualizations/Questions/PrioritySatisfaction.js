@@ -35,6 +35,7 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 width={width}
                 domainPadding={{ x: margin.right/10, y: margin.top/10 }}
                 padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}  
+                
             >
             <VictoryScatter
                 x={(d) => d.Priority}

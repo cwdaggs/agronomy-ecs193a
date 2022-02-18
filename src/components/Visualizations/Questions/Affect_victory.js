@@ -16,14 +16,14 @@ function transformData(dataset) {
   });
 }
 
-export function AffectVictory({myDataset, filter}) {
-  if (!myDataset) {
+export function AffectVictory({dataset, filter}) {
+  if (!dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByCrop(myDataset, filter)
+  var data_filtered = filterByCrop(dataset, filter)
   var data_by_affect = calculateAffectTotalsForEachElement(data_filtered)
-  const dataset = transformData(data_by_affect)
+  const dataset_final = transformData(data_by_affect)
 
   const width = 250;
   const height = 100;
@@ -49,7 +49,7 @@ export function AffectVictory({myDataset, filter}) {
           }}
           colorScale={["#111111", "#333333","#666666", "#999999", "#CCCCCC"]}
         >
-          {dataset.map((data, i) => {
+          {dataset_final.map((data, i) => {
             return <VictoryBar 
               data={data} 
               key={i} 
