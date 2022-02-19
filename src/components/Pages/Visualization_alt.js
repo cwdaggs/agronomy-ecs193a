@@ -1,4 +1,4 @@
-import { ProSidebar, Menu, MenuItem, SubMenu} from 'react-pro-sidebar';
+import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import {FaGem} from "react-icons/fa";
 import {GiCorn} from "react-icons/gi";
 import {AiFillAndroid} from "react-icons/ai";
@@ -8,25 +8,27 @@ import { useData } from '../Visualizations/UseData';
 import {VisMenu} from '../Visualizations/Menu';
 import { CropPercentages } from '../Visualizations/Questions/CropPercentages';
 import React, { useState } from "react";
-import {ButtonSwitch, Tab, Button, ButtonGroup } from '../Visualizations/StyledDivs'
+import { OccupationMenu } from '../Visualizations/OccupationMenu';
 
 export const Visualizations = () => {
 
     
     const types = ["Concerns", "CropPercentages", "AcresManaged", "PrioritySatisfaction", "Affect", "Affect2"]
-    const icons = {"Concerns": (<FaGem/>), "CropPercentages": (<GiCorn/>), "AcresManaged": <AiFillAndroid/>, "PrioritySatisfaction": <SiAdblock/>, "Affect": <GrHorton/>}
+    const icons = [{"Concerns": (<FaGem/>)}, {"CropPercentages": (<GiCorn/>)}, {"AcresManaged": <AiFillAndroid/>}, {"PrioritySatisfaction": <SiAdblock/>}, {"Affect": <GrHorton/>}]
     const [active, setActive] = useState("Concerns");
     return(
         <div id="outer-container">
-            
+            <div id="sidebar">
+            <ProSidebar id="sidebar-container">
+            <Menu iconShape="square" id="menu">
                 {types.map(type => (
-                    <Tab 
+                    <MenuItem 
                         key={type}
                         icon={icons[type]} 
                         onClick={() => {setActive(type)}} 
                         active={active === type}
                         >{type}
-                    </Tab>
+                    </MenuItem>
                  )) }
                 {/*
                 <MenuItem icon={<FaGem/>} onClick={() => {setActive(type);}} active={active === type} >Topic 1</MenuItem>
@@ -37,7 +39,9 @@ export const Visualizations = () => {
                 */}
             {/* <SubMenu title="Components" icon={<FaEdgeLegacy />}>
             </SubMenu> */}
-        
+            </Menu>
+            </ProSidebar>
+        </div> 
         {<VisMenu dataset={useData('./data/Grower_Crop_Data.csv')} vis={active}/>}
         
         {/*{<VisMenu dataset={useData('./data/Full_Dataset.csv')} vis={active}/>}

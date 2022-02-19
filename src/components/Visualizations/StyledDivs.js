@@ -66,4 +66,33 @@ const Tab = styled.button`
   `}
 `;
 
-export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, Tab};
+const Button = styled.button`
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  padding: 10px 60px;
+  border-radius: 5px;
+  margin: 10px 0px;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  &:disabled{
+    color: grey;
+    opacity: 0.7;
+  }
+`;
+
+const ButtonSwitch = styled(Button)`
+  opacity: 0.7;
+  ${({ active }) =>
+    active &&
+    `
+    opacity: 1;
+  `}
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+`;
+
+
+export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, Tab, Button, ButtonGroup, ButtonSwitch};

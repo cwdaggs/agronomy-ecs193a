@@ -17,9 +17,10 @@ function getVis(vis_name, active, dataset){
   var vis_key = { 
               "PrioritySatisfaction" :  (<PrioritySatisfaction filter={active} dataset={dataset} population={"Growers"}/>),
               "CropPercentages":        (<CropPercentages filter={active} dataset={dataset} population={"Growers"}/>),
-              "Affect":                 (<AffectVictory filter={active} dataset={dataset} population={"Growers"}/>),
+              "Affect":                 (<AffectVictory filter={active} dataset={dataset} population={"Growers"}/> ),
               "Concerns":               (<ConcernsVictory filter={active} myDataset={dataset} population={"Growers"}/>),
-              "AcresManaged":           (<AcresManagedBarChart filter={active} dataset={dataset} population={"Growers"}/>)
+              "AcresManaged":           (<AcresManagedBarChart filter={active} dataset={dataset} population={"Growers"}/>),
+              "Affect2":                (<p>Coming soon...</p>)
             }
   return vis_key[vis_name]
 }

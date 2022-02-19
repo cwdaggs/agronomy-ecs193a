@@ -88,6 +88,32 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                         axisLabel: {fontSize: fontSize*2 }
                         }}
                 />
+            <VictoryLine horizontal
+              style={{ 
+                data: { 
+                    stroke: "#756f6a", 
+                    strokeWidth:0.1, 
+                    strokeLinecap: "round" 
+                } 
+              }}
+              x={(d) => d.x}
+              y={(d) => d.y}
+              data={trendData[2]}
+            />
+
+            <VictoryLine
+
+              style={{ 
+                data: { 
+                    stroke: "#756f6a", 
+                    strokeWidth:0.1, 
+                    strokeLinecap: "round" 
+                } 
+              }}
+              data={trendData[1]}
+              x={(d) => d.x}
+              y={(d) => d.y}
+            />
             <VictoryLine
                 
                 style={{ 
@@ -129,7 +155,7 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 }
                 x={(d) => d.x}
                 y={(d) => d.y}
-                data={trendData}
+                data={trendData[0]}
             />
             </VictoryChart>
         </div>

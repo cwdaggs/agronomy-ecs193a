@@ -6,10 +6,10 @@ export function AcresManagedBarChart(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-
+    //console.log(props.dataset)
     var data = filterByCrop(props.dataset, props.filter);
     var acre_data = calculateAcres(data);
-    console.log(acre_data);
+    //console.log(acre_data);
 
     return (
         <div>
@@ -18,7 +18,7 @@ export function AcresManagedBarChart(props) {
             domainPadding={10}
             padding={{left: 100, bottom: 30, top: 30, right: 100}}
           >
-            <VictoryLabel text="Acres vs Number of Responses" x={225} y={20} textAnchor="right"/>
+            <VictoryLabel text="Acres vs Number of Responses" x={225} y={20} />
             <VictoryBar horizontal
               data={acre_data}
               style={{ data:  { fill: ({datum}) => datum.fill}}}
