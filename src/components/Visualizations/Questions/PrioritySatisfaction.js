@@ -7,10 +7,10 @@ function barData(dataset, topic){
   var values = []
   console.log(dataset)
   for(var i = 0; i < dataset.length; i++){
-    values.push({x: dataset[i].Topic, y: dataset[i].Satisfaction, z: dataset[i].Priority})
+    values.push({x: dataset[i].Topic, y: dataset[i].Priority, z: dataset[i].Satisfaction})
   }
   console.log(values)
-  return values
+  return values.sort((a,b) => a.y-b.y)
 }
 
 export const PrioritySatisfaction = ({dataset, filter}) => {
@@ -41,6 +41,16 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
           padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
         >
           <VictoryBar horizontal
+            labels={({datum}) => "Priority of " + datum.x + ":\n" + datum.y.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:fontSize
+                  }}
+                  flyoutHeight={15}
+                  flyoutWidth={30}    
+                />
+            }
             style={{ 
               data: { 
                 fill: "#c43a31",
@@ -52,9 +62,19 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
             data={data}
           />
           <VictoryBar horizontal
+            labels={({datum}) => "Satisfaction of " + datum.x + ":\n" + datum.z.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:fontSize
+                  }}
+                  flyoutHeight={15}
+                  flyoutWidth={30}    
+                />
+            }
             style={{ 
               data: { 
-                fill: "blue",
+                fill: "green",
                 stroke: "#756f6a",
                 fillOpacity: 0.7,
                 strokeWidth: 0.5 
@@ -175,7 +195,7 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
             <VictoryLine horizontal
               style={{ 
                 data: { 
-                    stroke: "#756f6a", 
+                    stroke: "red", 
                     strokeWidth:0.1, 
                     strokeLinecap: "round" 
                 } 
@@ -189,7 +209,7 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
 
               style={{ 
                 data: { 
-                    stroke: "#756f6a", 
+                    stroke: "red", 
                     strokeWidth:0.1, 
                     strokeLinecap: "round" 
                 } 
