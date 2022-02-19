@@ -246,7 +246,7 @@ export function averageSatisfaction(data){
     if(sAmount === 0){
       sAmount = 1
     }
-    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot})
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot, x:topics[i], y:(pTot/pAmount)})
   }
   //console.log(answers)
   return answers
