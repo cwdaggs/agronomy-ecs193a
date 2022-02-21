@@ -1,4 +1,4 @@
-import {VictoryPie, VictoryTooltip} from 'victory';
+import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {calculateCropPercentageAverage} from './UseData.js';
 import "typeface-abeezee";
 
@@ -8,14 +8,54 @@ export function CropPercentages(props) {
     }
 
     const data = calculateCropPercentageAverage(props.dataset)
+    var legend_data = []
+    for (var i = 0; i < data.length; i++) {
+        legend_data.push({name: data[i].x})
+    }
 
     return (
-        <VictoryPie
-            style={{ labels: { fill: "black", color: "white", fontSize: 5, fontFamily: 'ABeeZee'}}}
-            colorScale="heatmap"
-            height={210}
-            labels={({ datum }) => `${datum.x}`}
-            data={data}
-        />
+        // <VictoryPie
+        //     style={{ labels: { fill: "black", color: "white", fontSize: 5, fontFamily: 'ABeeZee'}}}
+        //     colorScale="heatmap"
+        //     height={210}
+        //     labels={({ datum }) => `${datum.x}`}
+        //     data={data}
+        // />
+        <svg width={2000} height={800}>
+            <VictoryLegend
+                standalone={false}
+                colorScale="heatmap"
+                x={950}
+                y={200}
+                gutter={20}
+                style={{ labels: { fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, title: {fontSize:23}}}
+                title="Legend"
+                centerTitle
+                data={legend_data}
+            />
+            <VictoryPie
+                standalone={false}
+                width={800}
+                height={800}
+                padding={{
+                    left: 250,
+                    bottom: 20,
+                    top: 20
+                }}
+                style={{ data: { stroke: "black", strokeWidth: 1}}}
+                colorScale="heatmap"
+                data={data}
+                // labels={() => null}
+                labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+                labelComponent={<VictoryTooltip 
+                    style={{
+                      fontSize:20,
+                      fontFamily: 'ABeeZee'
+                    }}
+                    flyoutHeight={25}
+                    flyoutWidth={45}    
+                  />}
+            />
+        </svg>
     );
 }
