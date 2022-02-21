@@ -117,23 +117,29 @@ export function calculateConcernTotalsForEachElement(data){
 }
 
 export function calculatePrimaryGrowingReasons(data, filter) {
-  // var columns = ["Alfalfa_Reasons", "Cotton_Reasons", "Rice_Reasons", "Wild_Rice_Reasons", "Wheat_Reasons", "Triticale_Reasons",
-  //               "Barley_Reasons", "Oats_Reasons", "Corn_Reasons", "Sorghum_Reasons", "Corn_Silage_Reasons", "Small_Grain_Silage_Reasons",
-  //               "Small_Grain_Hay_Reasons", "Grass_and_Grass_Mixtures_Hay_Reasons", "Grass_and_Grass_Mixtures_Pasture_Reasons",
-  //               "Sorghum_Sudangrass_Sudan_Reasons", "Mixed_Hay_Reasons", "Dry_Beans_Reasons", "Sunflower_Reasons", "Oilseeds_Reasons",
-  //               "Sugar_Beets_Reasons", "Hemp_Reasons", "Other_Reasons"]
-  var column_name = filter + "_Reasons"
+ // Does crash when trying to click the all button lol
+  var column_name = filter.split(' ').join('_') + "_Reasons"
   var modified_data = []
   const myMap = new Map()
   for (var farmer in data) {
     const reasons = data[farmer][column_name].split(',')
     for (var reason in reasons) {
-      myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)
+      var key = reasons[reason]
+      if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
+        key = "Limited by farm resources"
+      }
+      if (key != "") {
+        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
+      }
     }
   }
-  
+
   for (const [key, value] of myMap) {
-    modified_data.push({x: key, y: value});
+    if (key === "Limited by farm resources") {
+      modified_data.push({x: key, y: value/6});
+    } else {
+      modified_data.push({x: key, y: value});
+    }
   }
 
   return modified_data
