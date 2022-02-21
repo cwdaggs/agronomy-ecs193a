@@ -10,12 +10,15 @@ export function CropPercentages(props) {
     const data = calculateCropPercentageAverage(props.dataset)
 
     return (
-        <VictoryPie
-            style={{ labels: { fill: "black", color: "white", fontSize: 5, fontFamily: 'ABeeZee'}}}
-            colorScale="heatmap"
-            height={210}
-            labels={({ datum }) => `${datum.x}`}
-            data={data}
-        />
+        <div>
+            <h2>Of these acres, in a given year estimate approximately what percentage are in the following categories?</h2>
+            <VictoryPie
+                style={{ labels: { fill: "black", color: "white", fontSize: 5, fontFamily: 'ABeeZee'}}}
+                colorScale="heatmap"
+                height={210}
+                labels={({ datum }) => `${datum.x}`}
+                data={data}
+            />
+        </div>
     );
 }

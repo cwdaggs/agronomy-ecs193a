@@ -29,6 +29,10 @@ export function filterByCrop(data, filter){
   return data.filter(function(d){return String(d.Crops).includes(filter)});
 }
 
+export function filterByVocation(data, filter){
+  return data.filter(function(d){return String(d.Primary_Vocation).includes(filter)});
+}
+
 export function getFarmersCrops(data, Crops){
   var crops = []
 
@@ -162,7 +166,6 @@ export function calculateAcres(data){
   var columns = ["Acres_Managed", "Acres_Consulted"]
   var modified_data=[]
   var bin_count = [0,0,0,0,0,0]
-  console.log(bin_count)
 
   for(var i = 0; i < data.length; i++){
     for(var j = 0; j < columns.length; j++){
@@ -291,29 +294,6 @@ export function trendLineSatisfactions(data){
 
 }
 
-export function calculateAffectTotals(data, filter){  
-  var always = 0
-  var often = 0
-  var sometimes = 0
-  var rarely = 0
-  var never = 0
-
-  for(var farmer in data){
-      if(data[farmer][filter] === "Always"){
-          always++
-      }else if(data[farmer][filter] === "Often"){
-          often++
-      }else if(data[farmer][filter] === "Sometimes"){
-          sometimes++
-      }else if(data[farmer][filter] === "Rarely"){
-          rarely++
-      }else if(data[farmer][filter] === "Never"){
-          never++
-      }
-  }
-  return {Concern: filter, Always: always, Often: often, Sometimes: sometimes, Rarely: rarely, Never: never}
-}
-
 export function calculateAffectEach(data, filter, answer){
   var total = 0
 
@@ -326,44 +306,32 @@ export function calculateAffectEach(data, filter, answer){
   var name = String(filter).split('_')
   var temp = ""
 
-  for(let i = 3; i < name.length - 1; i++){
+  for(let i = 4; i < name.length - 1; i++){
     temp += name[i] + " ";
   }
   temp += name[name.length - 1]
   return {Affect: temp, Total: total, Level_Of_Affect: answer}
 }
 
-export function calculateAffectTotalsForAllElements(data){
-  var questions = ["Affected_Crop_Production_Profitability", "Affected_Crop_Production_Crop_Yield",
-                  "Affected_Crop_Production_Crop_Quality", "Affected_Crop_Production_Input_Costs", 
-                  "Affected_Crop_Production_Soil_Fertility", "Affected_Crop_Production_Land_Stewardship", 
-                  "Affected_Crop_Production_Natural_Resource_Conservation", 
-                  "Affected_Crop_Production_Meeting_Government_Regulations", "Affected_Crop_Production_Labor_Required", 
-                  "Affected_Crop_Production_Ease_of_Implementation", "Affected_Crop_Production_Certainty_in_Management_Practice", 
-                  "Affected_Crop_Production_Availability_of_Outreach_Information", "Affected_Crop_Production_Water_Availability"]
-  var answers = []
-  
-  for(var i in questions) {
-      answers.push(calculateAffectTotals(data, questions[i]))
-  }
-
-  return answers
-}
-
-export function calculateAffectTotalsForEachElement(data){
-  var questions = ["Affected_Crop_Production_Profitability", "Affected_Crop_Production_Crop_Yield",
-                  "Affected_Crop_Production_Crop_Quality", "Affected_Crop_Production_Input_Costs", 
-                  "Affected_Crop_Production_Soil_Fertility", "Affected_Crop_Production_Land_Stewardship", 
-                  "Affected_Crop_Production_Natural_Resource_Conservation", 
-                  "Affected_Crop_Production_Meeting_Government_Regulations", "Affected_Crop_Production_Labor_Required", 
-                  "Affected_Crop_Production_Ease_of_Implementation", "Affected_Crop_Production_Certainty_in_Management_Practice", 
-                  "Affected_Crop_Production_Availability_of_Outreach_Information", "Affected_Crop_Production_Water_Availability"]
+export function calculateConsultantAffectTotalsForEachElement(data){
+  var questions = ["Affected_Crop_Production_Recommendation_Profitability", 
+                  "Affected_Crop_Production_Recommendation_Crop_Yield",
+                  "Affected_Crop_Production_Recommendation_Crop_Quality", 
+                  "Affected_Crop_Production_Recommendation_Input_Costs", 
+                  "Affected_Crop_Production_Recommendation_Soil_Fertility", 
+                  "Affected_Crop_Production_Recommendation_Land_Stewardship", 
+                  "Affected_Crop_Production_Recommendation_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Recommendation_Meeting_Government_Regulations", 
+                  "Affected_Crop_Production_Recommendation_Labor_Required", 
+                  "Affected_Crop_Production_Recommendation_Ease_of_Implementation", 
+                  "Affected_Crop_Production_Recommendation_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Recommendation_Availability_of_Outreach_Information", 
+                  "Affected_Crop_Production_Recommendation_Water_Availability"]
   var always = []
   var often = []
   var sometimes = []
   var rarely = []
   var never = []
-  // console.log("Original data: " , data)
 
   for(var i in questions){
       always.push(calculateAffectEach(data, questions[i], "Always"))
@@ -372,9 +340,85 @@ export function calculateAffectTotalsForEachElement(data){
       rarely.push(calculateAffectEach(data, questions[i], "Rarely"))
       never.push(calculateAffectEach(data, questions[i], "Never"))
   }
-  // console.log("New data: ", [always, often, sometimes, rarely, never])
 
   return [always, often, sometimes, rarely, never]
+}
+
+export function calculateGrowerAffectTotalsForEachElement(data){
+  var questions = ["Affected_Crop_Production_Management_Profitability", 
+                  "Affected_Crop_Production_Management_Crop_Yield",
+                  "Affected_Crop_Production_Management_Crop_Quality", 
+                  "Affected_Crop_Production_Management_Input_Costs", 
+                  "Affected_Crop_Production_Management_Soil_Fertility", 
+                  "Affected_Crop_Production_Management_Land_Stewardship", 
+                  "Affected_Crop_Production_Management_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Management_Meeting_Government_Regulations", 
+                  "Affected_Crop_Production_Management_Labor_Required", 
+                  "Affected_Crop_Production_Management_Ease_of_Implementation", 
+                  "Affected_Crop_Production_Management_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Management_Availability_of_Outreach_Information", 
+                  "Affected_Crop_Production_Management_Water_Availability"]
+  var always = []
+  var often = []
+  var sometimes = []
+  var rarely = []
+  var never = []
+
+  for(var i in questions){
+      always.push(calculateAffectEach(data, questions[i], "Always"))
+      often.push(calculateAffectEach(data, questions[i], "Often"))
+      sometimes.push(calculateAffectEach(data, questions[i], "Sometimes"))
+      rarely.push(calculateAffectEach(data, questions[i], "Rarely"))
+      never.push(calculateAffectEach(data, questions[i], "Never"))
+  }
+
+  return [always, often, sometimes, rarely, never]
+}
+
+export function calculateInformationSources(data){
+  var sources = [
+    "Industry",
+    "Other Growers",
+    "UC Cooperative Extension",
+    "Pesticide Control Advisor",
+    "Certified Crop Advisor",
+    "NRCS",
+    "Input Supplier",
+    "Family members",
+    "Field crew",
+    "County Agricultural Commissioner",
+    "Environmental Groups",
+    "Resource Conservation Districts",
+    "State or County Farm Bureau",
+    "Non-Profit Organization",
+    "Commodity Boards",
+    "Water Quality Coalition",
+  ];
+
+  var colors = [
+    "#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121", "#ff0000", "#ffa500",
+    "#ffff00", "#008000", "#0000ff", "#4b0082", "#ee82ee", "#000000", "#808080", "#800080"
+  ];
+
+  var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var modified_data = [];
+
+  for (var i = 0; i < data.length; i++) {
+    var values = String(data[i]["Information_Sources"]).split(',');
+    for (var v in values) {
+      for (var j = 0; j < sources.length; j++) {
+        if (values[v].includes(sources[j])) {
+          totals[j]++;
+        }
+      }
+    }
+  }
+
+  for(var k=0; k<totals.length; k++){
+    modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
+  }
+
+  return modified_data;
 }
 
 export function useData(url) {
