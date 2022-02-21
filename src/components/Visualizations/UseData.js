@@ -116,6 +116,29 @@ export function calculateConcernTotalsForEachElement(data){
   return [very, somewhat, notVery]
 }
 
+export function calculatePrimaryGrowingReasons(data, filter) {
+  // var columns = ["Alfalfa_Reasons", "Cotton_Reasons", "Rice_Reasons", "Wild_Rice_Reasons", "Wheat_Reasons", "Triticale_Reasons",
+  //               "Barley_Reasons", "Oats_Reasons", "Corn_Reasons", "Sorghum_Reasons", "Corn_Silage_Reasons", "Small_Grain_Silage_Reasons",
+  //               "Small_Grain_Hay_Reasons", "Grass_and_Grass_Mixtures_Hay_Reasons", "Grass_and_Grass_Mixtures_Pasture_Reasons",
+  //               "Sorghum_Sudangrass_Sudan_Reasons", "Mixed_Hay_Reasons", "Dry_Beans_Reasons", "Sunflower_Reasons", "Oilseeds_Reasons",
+  //               "Sugar_Beets_Reasons", "Hemp_Reasons", "Other_Reasons"]
+  var column_name = filter + "_Reasons"
+  var modified_data = []
+  const myMap = new Map()
+  for (var farmer in data) {
+    const reasons = data[farmer][column_name].split(',')
+    for (var reason in reasons) {
+      myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)
+    }
+  }
+  
+  for (const [key, value] of myMap) {
+    modified_data.push({x: key, y: value});
+  }
+
+  return modified_data
+}
+
 export function calculateCropPercentageAverage(data) {
   var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
   var modified_data=[]
