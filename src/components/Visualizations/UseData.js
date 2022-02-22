@@ -134,7 +134,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
       for (var item in modified_data) {
         let key_data = modified_data[item].x
         let value_data = modified_data[item].y
-        if (key_data !== "") {
+        if (key_data !== "NA") {
           myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
         }
       }
@@ -160,7 +160,7 @@ export function calculatePrimaryGrowingReasons(data, filter) {
       if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
         key = "Limited by farm resources"
       }
-      if (key !== "") {
+      if (key !== "NA") {
         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
       }
     }
@@ -191,7 +191,7 @@ export function calculateAllPriorityConcerns(data, filter) {
       for (var item in modified_data) {
         let key_data = modified_data[item].x
         let value_data = modified_data[item].y
-        if (key_data !== "") {
+        if (key_data !== "NA") {
           myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
         }
       }
@@ -214,7 +214,7 @@ export function calculatePriorityConcerns(data, filter) { //labelled under conce
     const reasons = String(data[farmer][filter]).split(',')
     for (var reason in reasons) {
       var key = reasons[reason]
-      if (key !== "") {
+      if (key !== "NA") {
         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
       }
     }
@@ -267,7 +267,7 @@ export function calculateAcresManagedOrConsulted(data){
 }
 
 export function calculateAcres(data){
-  var names = ["Under 500", "501-1000", "1001-1500", "1501-2000", "2001-2500", "2500+"]
+  var names = ["< 500", "1000", "1500", "2000", "2500", "2500+"]
   var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
   var columns = ["Acres_Managed", "Acres_Consulted"]
   var modified_data=[]
@@ -278,19 +278,22 @@ export function calculateAcres(data){
       var num = parseInt(data[i][columns[j]], 10)
       // Remove NAs and outliers
       if(Number.isInteger(num)){
-          if(num <= 500){
+          if(num > 10000){
+            continue;
+          }
+          if(num < 500){
               bin_count[0]++
           }
-          else if (num <= 1000){
+          else if (num < 1000){
             bin_count[1]++
           }
-          else if (num <= 1500){
+          else if (num < 1500){
             bin_count[2]++
           }
-          else if (num <= 2000){
+          else if (num < 2000){
             bin_count[3]++
           }
-          else if (num <= 2500){
+          else if (num < 2500){
             bin_count[4]++
           }
           else{
@@ -355,7 +358,7 @@ export function averageSatisfaction(data){
     if(sAmount === 0){
       sAmount = 1
     }
-    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot})
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount)})
   }
   //console.log(answers)
   return answers
@@ -380,7 +383,7 @@ export function trendLineSatisfactions(data){
   var unc = 0
 
   for(var j in data){
-
+    
     prod += ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg))
     unc += (data[j].Priority - xAvg)*(data[j].Priority - xAvg)
 
@@ -524,6 +527,73 @@ export function calculateInformationSources(data){
     modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
   }
 
+  return modified_data;
+}
+
+export function getInternetSources(data){
+  var sources = [
+    "Internet (websites)",
+    "Blogs",
+    "Webinars",
+    "Virtual Meetings",
+    "Newsletters",
+    "UC Cooperative Extension Magazine Articles",
+    "Personal contact (phone, email, on-farm consultation)",
+    "In-person meetings (Field Days, Grower Meetings)",
+    "Books/manuals",
+    "Radio/Podcast",
+    "Social Media",
+    "Fact Sheets",
+    "Interactive Web Tools",
+    "Demonstration Videos",
+    "Two or three day destination meetings",
+    "\"California Agriculture\" Journal"
+  ];
+
+  var colors = [
+    "#212011",
+    "#2C2D17",
+    "#35381D",
+    "#3D4323",
+    "#444F2A",
+    "#4A5A30",
+    "#4F6536",
+    "#53703D",
+    "#577B44",
+    "#59864A",
+    "#5B9151",
+    "#699759",
+    "#769C60",
+    "#83A268",
+    "#90A770",
+    "#9CAD78",
+    "#A8B280",
+    "#B2B888",
+    "#BDBD90",
+    "#C2BE98",
+    "#C7BFA0",
+  ];
+
+  var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var modified_data = [];
+
+  for (var i = 0; i < data.length; i++) {
+    var values = String(data[i]["UCCE_Information_Preferred_Contact"]).split(',(?![+ ])');
+    for (var j in values) {
+      for (var k = 0; k < sources.length; k++) {
+        if (values[j].includes(sources[k])) {
+          totals[k]++;
+        }
+      }
+    }
+  }
+  sources[5] = "UC Cooperative Extension\nMagazine Articles"
+  sources[6] = "Personal contact\n(phone, email, on-farm consultation)";
+  sources[7] = "In-person meetings\n(Field Days, Grower Meetings)";
+
+  for(var l=0; l<totals.length; l++){
+    modified_data.push({x: sources[l], y: totals[l], fill: colors[l]});
+  }
   return modified_data;
 }
 

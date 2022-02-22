@@ -9,9 +9,9 @@ import {ConcernsVictory} from './Questions/Concerns_victory';
 import {AcresManagedBarChart} from './Questions/AcresManaged.js';
 import { CropPercentages } from "./Questions/CropPercentages";
 import {InfoSourcesBarChart} from "./Questions/InfoSources";
+import {InternetSourcesBarChart} from "./Questions/InternetSources";
 import { PriorityConcerns } from "./Questions/PriorityConcerns";
 import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
-
 
 function GetTypes(dataset){
     return getFarmersCrops(dataset, "Crops") 
@@ -26,6 +26,7 @@ function getVis(vis_name, active, dataset){
               "Concerns":               (<ConcernsVictory filter={active} myDataset={dataset} population={"Growers"}/>),
               "AcresManaged":           (<AcresManagedBarChart filter={active} dataset={dataset}/>),
               "InfoSources":            (<InfoSourcesBarChart filter={active} dataset={dataset}/>),
+              "InternetSources":        (<InternetSourcesBarChart filter={active} dataset={dataset}/>),
               "PriorityConcerns":       (<PriorityConcerns filter={active} myDataset={dataset}/>),
               "PrimaryGrowingReasons":  (<PrimaryGrowingReasons filter={active} myDataset={dataset}/>)
 
