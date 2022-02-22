@@ -1,4 +1,4 @@
-import {VictoryHistogram, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
+import {VictoryLegend, VictoryHistogram, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
 import { averageSatisfaction, filterByCrop, trendLineSatisfactions } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState, useEffect } from "react";
@@ -141,6 +141,18 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}  
                 
             >
+            <VictoryLegend x={0}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={4}
+              style={{ border: { stroke: "black" }, title: {fontSize: 3 }, data: {fontSize:3 }}}
+              data={[
+                { name: "One", symbol: { fill: "tomato", stroke: "#756f6a", strokeWidth: 0.5 }, labels:{fontSize: 3} },
+                { name: "Two", symbol: { fill: "orange", type:"square" }, labels:{fontSize: 3} },
+                { name: "Three", symbol: { fill: "gold" }, labels:{fontSize: 3} }
+              ]}
+            />
             <VictoryScatter
                 x={(d) => d.Priority}
                 y={(d) => d.Satisfaction}
