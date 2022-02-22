@@ -120,6 +120,112 @@ export function calculateConcernTotalsForEachElement(data){
   return [very, somewhat, notVery]
 }
 
+export function calculateAllPrimaryGrowingReasons(data, filter) {
+  var columns = ["Alfalfa_Reasons",	"Cotton_Reasons",	"Rice_Reasons",	"Wild_Rice_Reasons",	"Wheat_Reasons",	"Triticale_Reasons",	
+                "Barley_Reasons",	"Oats_Reasons",	"Corn_Reasons",	"Sorghum_Reasons",	"Corn_Silage_Reasons", "Small_Grain_Silage_Reasons",
+                "Small_Grain_Hay_Reasons",	"Grass_and_Grass_Mixtures_Hay_Reasons",	"Grass_and_Grass_Mixtures_Pasture_Reasons",	"Sorghum_Sudangrass_Sudan_Reasons",	
+                "Mixed_Hay_Reasons", "Dry_Beans_Reasons",	"Sunflower_Reasons",	"Oilseeds_Reasons", "Sugar_Beets_Reasons", "Hemp_Reasons", "Other_Reasons"]
+
+  const myMap = new Map()
+  if (filter === "") {
+    var new_modified_data = []
+    for (var col in columns) {
+      var modified_data = calculatePrimaryGrowingReasons(data, columns[col])
+      for (var item in modified_data) {
+        let key_data = modified_data[item].x
+        let value_data = modified_data[item].y
+        if (key_data !== "") {
+          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
+        }
+      }
+    }
+    
+    for (const [key, value] of myMap) {
+      new_modified_data.push({x: key, y: value});
+    }
+    return new_modified_data
+  } else {
+    var new_filter = filter.split(' ').join('_') + "_Reasons"
+    return calculatePrimaryGrowingReasons(data, new_filter)
+  }
+}
+
+export function calculatePrimaryGrowingReasons(data, filter) {
+  var modified_data = []
+  const myMap = new Map()
+  for (var farmer in data) {
+    const reasons = String(data[farmer][filter]).split(',')
+    for (var reason in reasons) {
+      var key = reasons[reason]
+      if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
+        key = "Limited by farm resources"
+      }
+      if (key !== "") {
+        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
+      }
+    }
+  }
+
+  for (const [key, value] of myMap) {
+    if (key === "Limited by farm resources") {
+      modified_data.push({x: key, y: value/6});
+    } else {
+      modified_data.push({x: key, y: value});
+    }
+  }
+
+  return modified_data
+}
+
+export function calculateAllPriorityConcerns(data, filter) {
+   var columns = ["Alfalfa_Concerns",	"Cotton_Concerns",	"Rice_Concerns",	"Wild_Rice_Concerns",	"Wheat_Concerns",	"Triticale_Concerns",	
+                "Barley_Concerns",	"Oats_Concerns",	"Corn_Concerns",	"Sorghum_Concerns",	"Corn_Silage_Concerns", "Small_Grain_Silage_Concerns",
+                "Small_Grain_Hay_Concerns",	"Grass_and_Grass_Mixtures_Hay_Concerns",	"Grass_and_Grass_Mixtures_Pasture_Concerns",	"Sorghum_Sudangrass_Sudan_Concerns",	
+                "Mixed_Hay_Concerns", "Dry_Beans_Concerns",	"Sunflower_Concerns",	"Oilseeds_Concerns", "Sugar_Beets_Concerns", "Hemp_Concerns", "Other_Concerns"]
+
+  const myMap = new Map()
+  if (filter === "") {
+    var new_modified_data = []
+    for (var col in columns) {
+      var modified_data = calculatePriorityConcerns(data, columns[col])
+      for (var item in modified_data) {
+        let key_data = modified_data[item].x
+        let value_data = modified_data[item].y
+        if (key_data !== "") {
+          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
+        }
+      }
+    }
+    
+    for (const [key, value] of myMap) {
+      new_modified_data.push({x: key, y: value});
+    }
+    return new_modified_data
+  } else {
+    var new_filter = filter.split(' ').join('_') + "_Concerns"
+    return calculatePriorityConcerns(data, new_filter)
+  }
+}
+
+export function calculatePriorityConcerns(data, filter) { //labelled under concerns right before growing reasons, the q is about challenges
+  var modified_data = []
+  const myMap = new Map()
+  for (var farmer in data) {
+    const reasons = String(data[farmer][filter]).split(',')
+    for (var reason in reasons) {
+      var key = reasons[reason]
+      if (key !== "") {
+        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
+      }
+    }
+  }
+
+  for (const [key, value] of myMap) {
+    modified_data.push({x: key, y: value});
+  }
+  return modified_data
+}
+
 export function calculateCropPercentageAverage(data) {
   var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
   var modified_data=[]
