@@ -1,5 +1,5 @@
 
-import {VictoryAxis, VictoryTooltip, VictoryLabel, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
+import {VictoryAxis, VictoryTooltip, VictoryLabel, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
 import { averageSatisfaction, filterByCrop, trendLineSatisfactions } from '../UseData';
 import * as d3 from 'd3'
 

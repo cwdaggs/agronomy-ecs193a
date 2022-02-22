@@ -26,7 +26,7 @@ function getVis(vis_name, active, dataset){
               "Concerns":               (<ConcernsVictory filter={active} myDataset={dataset} population={"Growers"}/>),
               "AcresManaged":           (<AcresManagedBarChart filter={active} dataset={dataset}/>),
               "InfoSources":            (<InfoSourcesBarChart filter={active} dataset={dataset}/>),
-              "InternetSources":        (<InternetSourcesBarChart filter={active} dataset={dataset}/>)
+              "InternetSources":        (<InternetSourcesBarChart filter={active} dataset={dataset}/>),
               "PriorityConcerns":       (<PriorityConcerns filter={active} myDataset={dataset}/>),
               "PrimaryGrowingReasons":  (<PrimaryGrowingReasons filter={active} myDataset={dataset}/>)
 

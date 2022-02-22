@@ -20,7 +20,7 @@ export function AcresManagedBarChart(props) {
             padding={{left: 100, bottom: 50, top: 30, right: 100}}
             animate={{duration: 800}}
           >
-            <VictoryLabel text={"Acres vs Number of Farms (n = " + data.length + ")"} x={230} y={20}/>
+            <VictoryLabel text={"Acres vs Number of Farms (n = " + data.length + ")"} x={130} y={20}/>
             <VictoryAxis
               label="Farm Size in Acres"
               padding={{ top: 40, bottom: 60 }}
