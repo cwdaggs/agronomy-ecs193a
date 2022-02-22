@@ -134,7 +134,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
       for (var item in modified_data) {
         let key_data = modified_data[item].x
         let value_data = modified_data[item].y
-        if (key_data !== "") {
+        if (key_data !== "NA") {
           myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
         }
       }
@@ -160,7 +160,7 @@ export function calculatePrimaryGrowingReasons(data, filter) {
       if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
         key = "Limited by farm resources"
       }
-      if (key !== "") {
+      if (key !== "NA") {
         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
       }
     }
@@ -191,7 +191,7 @@ export function calculateAllPriorityConcerns(data, filter) {
       for (var item in modified_data) {
         let key_data = modified_data[item].x
         let value_data = modified_data[item].y
-        if (key_data !== "") {
+        if (key_data !== "NA") {
           myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
         }
       }
@@ -214,7 +214,7 @@ export function calculatePriorityConcerns(data, filter) { //labelled under conce
     const reasons = String(data[farmer][filter]).split(',')
     for (var reason in reasons) {
       var key = reasons[reason]
-      if (key !== "") {
+      if (key !== "NA") {
         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
       }
     }
