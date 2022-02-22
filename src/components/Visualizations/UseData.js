@@ -29,6 +29,10 @@ export function filterByCrop(data, filter){
   return data.filter(function(d){return String(d.Crops).includes(filter)});
 }
 
+export function filterByVocation(data, filter){
+  return data.filter(function(d){return String(d.Primary_Vocation).includes(filter)});
+}
+
 export function getFarmersCrops(data, Crops){
   var crops = []
 
@@ -116,6 +120,112 @@ export function calculateConcernTotalsForEachElement(data){
   return [very, somewhat, notVery]
 }
 
+export function calculateAllPrimaryGrowingReasons(data, filter) {
+  var columns = ["Alfalfa_Reasons",	"Cotton_Reasons",	"Rice_Reasons",	"Wild_Rice_Reasons",	"Wheat_Reasons",	"Triticale_Reasons",	
+                "Barley_Reasons",	"Oats_Reasons",	"Corn_Reasons",	"Sorghum_Reasons",	"Corn_Silage_Reasons", "Small_Grain_Silage_Reasons",
+                "Small_Grain_Hay_Reasons",	"Grass_and_Grass_Mixtures_Hay_Reasons",	"Grass_and_Grass_Mixtures_Pasture_Reasons",	"Sorghum_Sudangrass_Sudan_Reasons",	
+                "Mixed_Hay_Reasons", "Dry_Beans_Reasons",	"Sunflower_Reasons",	"Oilseeds_Reasons", "Sugar_Beets_Reasons", "Hemp_Reasons", "Other_Reasons"]
+
+  const myMap = new Map()
+  if (filter === "") {
+    var new_modified_data = []
+    for (var col in columns) {
+      var modified_data = calculatePrimaryGrowingReasons(data, columns[col])
+      for (var item in modified_data) {
+        let key_data = modified_data[item].x
+        let value_data = modified_data[item].y
+        if (key_data !== "NA") {
+          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
+        }
+      }
+    }
+    
+    for (const [key, value] of myMap) {
+      new_modified_data.push({x: key, y: value});
+    }
+    return new_modified_data
+  } else {
+    var new_filter = filter.split(' ').join('_') + "_Reasons"
+    return calculatePrimaryGrowingReasons(data, new_filter)
+  }
+}
+
+export function calculatePrimaryGrowingReasons(data, filter) {
+  var modified_data = []
+  const myMap = new Map()
+  for (var farmer in data) {
+    const reasons = String(data[farmer][filter]).split(',')
+    for (var reason in reasons) {
+      var key = reasons[reason]
+      if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
+        key = "Limited by farm resources"
+      }
+      if (key !== "NA") {
+        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
+      }
+    }
+  }
+
+  for (const [key, value] of myMap) {
+    if (key === "Limited by farm resources") {
+      modified_data.push({x: key, y: value/6});
+    } else {
+      modified_data.push({x: key, y: value});
+    }
+  }
+
+  return modified_data
+}
+
+export function calculateAllPriorityConcerns(data, filter) {
+   var columns = ["Alfalfa_Concerns",	"Cotton_Concerns",	"Rice_Concerns",	"Wild_Rice_Concerns",	"Wheat_Concerns",	"Triticale_Concerns",	
+                "Barley_Concerns",	"Oats_Concerns",	"Corn_Concerns",	"Sorghum_Concerns",	"Corn_Silage_Concerns", "Small_Grain_Silage_Concerns",
+                "Small_Grain_Hay_Concerns",	"Grass_and_Grass_Mixtures_Hay_Concerns",	"Grass_and_Grass_Mixtures_Pasture_Concerns",	"Sorghum_Sudangrass_Sudan_Concerns",	
+                "Mixed_Hay_Concerns", "Dry_Beans_Concerns",	"Sunflower_Concerns",	"Oilseeds_Concerns", "Sugar_Beets_Concerns", "Hemp_Concerns", "Other_Concerns"]
+
+  const myMap = new Map()
+  if (filter === "") {
+    var new_modified_data = []
+    for (var col in columns) {
+      var modified_data = calculatePriorityConcerns(data, columns[col])
+      for (var item in modified_data) {
+        let key_data = modified_data[item].x
+        let value_data = modified_data[item].y
+        if (key_data !== "NA") {
+          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
+        }
+      }
+    }
+    
+    for (const [key, value] of myMap) {
+      new_modified_data.push({x: key, y: value});
+    }
+    return new_modified_data
+  } else {
+    var new_filter = filter.split(' ').join('_') + "_Concerns"
+    return calculatePriorityConcerns(data, new_filter)
+  }
+}
+
+export function calculatePriorityConcerns(data, filter) { //labelled under concerns right before growing reasons, the q is about challenges
+  var modified_data = []
+  const myMap = new Map()
+  for (var farmer in data) {
+    const reasons = String(data[farmer][filter]).split(',')
+    for (var reason in reasons) {
+      var key = reasons[reason]
+      if (key !== "NA") {
+        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
+      }
+    }
+  }
+
+  for (const [key, value] of myMap) {
+    modified_data.push({x: key, y: value});
+  }
+  return modified_data
+}
+
 export function calculateCropPercentageAverage(data) {
   var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
   var modified_data=[]
@@ -157,31 +267,33 @@ export function calculateAcresManagedOrConsulted(data){
 }
 
 export function calculateAcres(data){
-  var names = ["Under 500", "501-1000", "1001-1500", "1501-2000", "2001-2500", "2500+"]
+  var names = ["< 500", "1000", "1500", "2000", "2500", "2500+"]
   var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
   var columns = ["Acres_Managed", "Acres_Consulted", "Acres"]
   var modified_data=[]
   var bin_count = [0,0,0,0,0,0]
-  //console.log(bin_count)
 
   for(var i = 0; i < data.length; i++){
     for(var j = 0; j < columns.length; j++){
       var num = parseInt(data[i][columns[j]], 10)
       // Remove NAs and outliers
       if(Number.isInteger(num)){
-          if(num <= 500){
+          if(num > 10000){
+            continue;
+          }
+          if(num < 500){
               bin_count[0]++
           }
-          else if (num <= 1000){
+          else if (num < 1000){
             bin_count[1]++
           }
-          else if (num <= 1500){
+          else if (num < 1500){
             bin_count[2]++
           }
-          else if (num <= 2000){
+          else if (num < 2000){
             bin_count[3]++
           }
-          else if (num <= 2500){
+          else if (num < 2500){
             bin_count[4]++
           }
           else{
@@ -271,7 +383,7 @@ export function trendLineSatisfactions(data){
   var unc = 0
 
   for(var j in data){
-
+    
     prod += ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg))
     unc += (data[j].Priority - xAvg)*(data[j].Priority - xAvg)
 
@@ -292,65 +404,42 @@ export function trendLineSatisfactions(data){
 
 }
 
-export function getPriorityReccomendations(data){
+// export function getPriorityReccomendations(data){
 
-  var dataset = calculateAffectTotalsForEachElement(data)
+//   var dataset = calculateAffectTotalsForEachElement(data)
 
-  var questions = { "Profitability":0, "Crop Yield":0,
-                    "Crop Quality":0, "Input Costs":0, 
-                    "Soil Fertility":0, "Land Stewardship":0, 
-                    "Natural Resource Conservation":0, 
-                    "Meeting Government Regulations":0, "Labor Required":0, 
-                    "Ease of Implementation":0, "Certainty in Management Practice":0, 
-                    "Availability of Outreach Information":0, "Water Availability":0 }
+//   var questions = { "Profitability":0, "Crop Yield":0,
+//                     "Crop Quality":0, "Input Costs":0, 
+//                     "Soil Fertility":0, "Land Stewardship":0, 
+//                     "Natural Resource Conservation":0, 
+//                     "Meeting Government Regulations":0, "Labor Required":0, 
+//                     "Ease of Implementation":0, "Certainty in Management Practice":0, 
+//                     "Availability of Outreach Information":0, "Water Availability":0 }
 
-  var topics= [ "Profitability", "Crop Yield",
-                "Crop Quality", "Input Costs", 
-                "Soil Fertility", "Land Stewardship", 
-                "Natural Resource Conservation", 
-                "Meeting Government Regulations", "Labor Required", 
-                "Ease of Implementation", "Certainty in Management Practice", 
-                "Availability of Outreach Information", "Water Availability"]
+//   var topics= [ "Profitability", "Crop Yield",
+//                 "Crop Quality", "Input Costs", 
+//                 "Soil Fertility", "Land Stewardship", 
+//                 "Natural Resource Conservation", 
+//                 "Meeting Government Regulations", "Labor Required", 
+//                 "Ease of Implementation", "Certainty in Management Practice", 
+//                 "Availability of Outreach Information", "Water Availability"]
 
-    console.log(dataset)
-    for(var i = 0; i < dataset.length; i++){
-      for(var j = 0; j < dataset[i].length; j++){
-        questions[dataset[i][j]["Affect"]] += dataset[i][j]["Total"]*(dataset.length - i)
-        //console.log(dataset[i][j]["Affect"])
-      }
-    }
-    var answers = []
-    for(var k = 0; k < topics.length; k++){
-      answers.push({topic: topics[k], value: questions[topics[k]]/100})
-    }
+//     console.log(dataset)
+//     for(var i = 0; i < dataset.length; i++){
+//       for(var j = 0; j < dataset[i].length; j++){
+//         questions[dataset[i][j]["Affect"]] += dataset[i][j]["Total"]*(dataset.length - i)
+//         //console.log(dataset[i][j]["Affect"])
+//       }
+//     }
+//     var answers = []
+//     for(var k = 0; k < topics.length; k++){
+//       answers.push({topic: topics[k], value: questions[topics[k]]/100})
+//     }
 
-    console.log(answers)
-    return answers
+//     console.log(answers)
+//     return answers
   
-}
-
-export function calculateAffectTotals(data, filter){  
-  var always = 0
-  var often = 0
-  var sometimes = 0
-  var rarely = 0
-  var never = 0
-
-  for(var farmer in data){
-      if(data[farmer][filter] === "Always"){
-          always++
-      }else if(data[farmer][filter] === "Often"){
-          often++
-      }else if(data[farmer][filter] === "Sometimes"){
-          sometimes++
-      }else if(data[farmer][filter] === "Rarely"){
-          rarely++
-      }else if(data[farmer][filter] === "Never"){
-          never++
-      }
-  }
-  return {Concern: filter, Always: always, Often: often, Sometimes: sometimes, Rarely: rarely, Never: never}
-}
+// }
 
 export function calculateAffectEach(data, filter, answer){
   var total = 0
@@ -364,44 +453,32 @@ export function calculateAffectEach(data, filter, answer){
   var name = String(filter).split('_')
   var temp = ""
 
-  for(let i = 3; i < name.length - 1; i++){
+  for(let i = 4; i < name.length - 1; i++){
     temp += name[i] + " ";
   }
   temp += name[name.length - 1]
   return {Affect: temp, Total: total, Level_Of_Affect: answer}
 }
 
-export function calculateAffectTotalsForAllElements(data){
-  var questions = ["Affected_Crop_Production_Profitability", "Affected_Crop_Production_Crop_Yield",
-                  "Affected_Crop_Production_Crop_Quality", "Affected_Crop_Production_Input_Costs", 
-                  "Affected_Crop_Production_Soil_Fertility", "Affected_Crop_Production_Land_Stewardship", 
-                  "Affected_Crop_Production_Natural_Resource_Conservation", 
-                  "Affected_Crop_Production_Meeting_Government_Regulations", "Affected_Crop_Production_Labor_Required", 
-                  "Affected_Crop_Production_Ease_of_Implementation", "Affected_Crop_Production_Certainty_in_Management_Practice", 
-                  "Affected_Crop_Production_Availability_of_Outreach_Information", "Affected_Crop_Production_Water_Availability"]
-  var answers = []
-  
-  for(var i in questions) {
-      answers.push(calculateAffectTotals(data, questions[i]))
-  }
-
-  return answers
-}
-
-export function calculateAffectTotalsForEachElement(data){
-  var questions = ["Affected_Crop_Production_Profitability", "Affected_Crop_Production_Crop_Yield",
-                  "Affected_Crop_Production_Crop_Quality", "Affected_Crop_Production_Input_Costs", 
-                  "Affected_Crop_Production_Soil_Fertility", "Affected_Crop_Production_Land_Stewardship", 
-                  "Affected_Crop_Production_Natural_Resource_Conservation", 
-                  "Affected_Crop_Production_Meeting_Government_Regulations", "Affected_Crop_Production_Labor_Required", 
-                  "Affected_Crop_Production_Ease_of_Implementation", "Affected_Crop_Production_Certainty_in_Management_Practice", 
-                  "Affected_Crop_Production_Availability_of_Outreach_Information", "Affected_Crop_Production_Water_Availability"]
+export function calculateConsultantAffectTotalsForEachElement(data){
+  var questions = ["Affected_Crop_Production_Recommendation_Profitability", 
+                  "Affected_Crop_Production_Recommendation_Crop_Yield",
+                  "Affected_Crop_Production_Recommendation_Crop_Quality", 
+                  "Affected_Crop_Production_Recommendation_Input_Costs", 
+                  "Affected_Crop_Production_Recommendation_Soil_Fertility", 
+                  "Affected_Crop_Production_Recommendation_Land_Stewardship", 
+                  "Affected_Crop_Production_Recommendation_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Recommendation_Meeting_Government_Regulations", 
+                  "Affected_Crop_Production_Recommendation_Labor_Required", 
+                  "Affected_Crop_Production_Recommendation_Ease_of_Implementation", 
+                  "Affected_Crop_Production_Recommendation_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Recommendation_Availability_of_Outreach_Information", 
+                  "Affected_Crop_Production_Recommendation_Water_Availability"]
   var always = []
   var often = []
   var sometimes = []
   var rarely = []
   var never = []
-  // console.log("Original data: " , data)
 
   for(var i in questions){
       always.push(calculateAffectEach(data, questions[i], "Always"))
@@ -410,9 +487,152 @@ export function calculateAffectTotalsForEachElement(data){
       rarely.push(calculateAffectEach(data, questions[i], "Rarely"))
       never.push(calculateAffectEach(data, questions[i], "Never"))
   }
-  // console.log("New data: ", [always, often, sometimes, rarely, never])
 
   return [always, often, sometimes, rarely, never]
+}
+
+export function calculateGrowerAffectTotalsForEachElement(data){
+  var questions = ["Affected_Crop_Production_Management_Profitability", 
+                  "Affected_Crop_Production_Management_Crop_Yield",
+                  "Affected_Crop_Production_Management_Crop_Quality", 
+                  "Affected_Crop_Production_Management_Input_Costs", 
+                  "Affected_Crop_Production_Management_Soil_Fertility", 
+                  "Affected_Crop_Production_Management_Land_Stewardship", 
+                  "Affected_Crop_Production_Management_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Management_Meeting_Government_Regulations", 
+                  "Affected_Crop_Production_Management_Labor_Required", 
+                  "Affected_Crop_Production_Management_Ease_of_Implementation", 
+                  "Affected_Crop_Production_Management_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Management_Availability_of_Outreach_Information", 
+                  "Affected_Crop_Production_Management_Water_Availability"]
+  var always = []
+  var often = []
+  var sometimes = []
+  var rarely = []
+  var never = []
+
+  for(var i in questions){
+      always.push(calculateAffectEach(data, questions[i], "Always"))
+      often.push(calculateAffectEach(data, questions[i], "Often"))
+      sometimes.push(calculateAffectEach(data, questions[i], "Sometimes"))
+      rarely.push(calculateAffectEach(data, questions[i], "Rarely"))
+      never.push(calculateAffectEach(data, questions[i], "Never"))
+  }
+
+  return [always, often, sometimes, rarely, never]
+}
+
+export function calculateInformationSources(data){
+  var sources = [
+    "Industry",
+    "Other Growers",
+    "UC Cooperative Extension",
+    "Pesticide Control Advisor",
+    "Certified Crop Advisor",
+    "NRCS",
+    "Input Supplier",
+    "Family members",
+    "Field crew",
+    "County Agricultural Commissioner",
+    "Environmental Groups",
+    "Resource Conservation Districts",
+    "State or County Farm Bureau",
+    "Non-Profit Organization",
+    "Commodity Boards",
+    "Water Quality Coalition",
+  ];
+
+  var colors = [
+    "#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121", "#ff0000", "#ffa500",
+    "#ffff00", "#008000", "#0000ff", "#4b0082", "#ee82ee", "#000000", "#808080", "#800080"
+  ];
+
+  var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var modified_data = [];
+
+  for (var i = 0; i < data.length; i++) {
+    var values = String(data[i]["Information_Sources"]).split(',');
+    for (var v in values) {
+      for (var j = 0; j < sources.length; j++) {
+        if (values[v].includes(sources[j])) {
+          totals[j]++;
+        }
+      }
+    }
+  }
+
+  for(var k=0; k<totals.length; k++){
+    modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
+  }
+
+  return modified_data;
+}
+
+export function getInternetSources(data){
+  var sources = [
+    "Internet (websites)",
+    "Blogs",
+    "Webinars",
+    "Virtual Meetings",
+    "Newsletters",
+    "UC Cooperative Extension Magazine Articles",
+    "Personal contact (phone, email, on-farm consultation)",
+    "In-person meetings (Field Days, Grower Meetings)",
+    "Books/manuals",
+    "Radio/Podcast",
+    "Social Media",
+    "Fact Sheets",
+    "Interactive Web Tools",
+    "Demonstration Videos",
+    "Two or three day destination meetings",
+    "\"California Agriculture\" Journal"
+  ];
+
+  var colors = [
+    "#212011",
+    "#2C2D17",
+    "#35381D",
+    "#3D4323",
+    "#444F2A",
+    "#4A5A30",
+    "#4F6536",
+    "#53703D",
+    "#577B44",
+    "#59864A",
+    "#5B9151",
+    "#699759",
+    "#769C60",
+    "#83A268",
+    "#90A770",
+    "#9CAD78",
+    "#A8B280",
+    "#B2B888",
+    "#BDBD90",
+    "#C2BE98",
+    "#C7BFA0",
+  ];
+
+  var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var modified_data = [];
+
+  for (var i = 0; i < data.length; i++) {
+    var values = String(data[i]["UCCE_Information_Preferred_Contact"]).split(',(?![+ ])');
+    for (var j in values) {
+      for (var k = 0; k < sources.length; k++) {
+        if (values[j].includes(sources[k])) {
+          totals[k]++;
+        }
+      }
+    }
+  }
+  sources[5] = "UC Cooperative Extension\nMagazine Articles"
+  sources[6] = "Personal contact\n(phone, email, on-farm consultation)";
+  sources[7] = "In-person meetings\n(Field Days, Grower Meetings)";
+
+  for(var l=0; l<totals.length; l++){
+    modified_data.push({x: sources[l], y: totals[l], fill: colors[l]});
+  }
+  return modified_data;
 }
 
 export function useData(url) {

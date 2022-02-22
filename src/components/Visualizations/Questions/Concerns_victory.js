@@ -1,3 +1,4 @@
+
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '../UseData.js'
 import "typeface-abeezee";
@@ -34,6 +35,7 @@ export function ConcernsVictory({myDataset, filter}) {
 
   return (
     <div>
+      <h2>In regards to the production of FIELD CROPS in California, rate your concern for the following:</h2>
       <VictoryChart
         horizontal={true}
         animate={{
