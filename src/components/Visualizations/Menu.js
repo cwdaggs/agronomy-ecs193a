@@ -7,6 +7,7 @@ import {AffectVictory} from './Questions/Affect_victory';
 import {ConcernsVictory} from './Questions/Concerns_victory';
 import {AcresManagedBarChart} from './Questions/AcresManaged.js';
 import { CropPercentages } from "./Questions/CropPercentages";
+import {InfoSourcesBarChart} from "./Questions/InfoSources";
 
 function GetTypes(dataset){
     return getFarmersCrops(dataset, "Crops") 
@@ -17,9 +18,10 @@ function getVis(vis_name, active, dataset){
   var vis_key = { 
               "PrioritySatisfaction" :  (<PrioritySatisfaction filter={active} dataset={dataset} population={"Growers"}/>),
               "CropPercentages":        (<CropPercentages filter={active} dataset={dataset} population={"Growers"}/>),
-              "Affect":                 (<AffectVictory filter={active} dataset={dataset} population={"Growers"}/>),
+              "Affect":                 (<AffectVictory filter={active} dataset={dataset}/>),
               "Concerns":               (<ConcernsVictory filter={active} myDataset={dataset} population={"Growers"}/>),
-              "AcresManaged":           (<AcresManagedBarChart filter={active} dataset={dataset} population={"Growers"}/>)
+              "AcresManaged":           (<AcresManagedBarChart filter={active} dataset={dataset}/>),
+              "InfoSources":            (<InfoSourcesBarChart filter={active} dataset={dataset}/>)
             }
   return vis_key[vis_name]
 }
