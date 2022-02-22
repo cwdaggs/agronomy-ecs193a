@@ -33,7 +33,7 @@ export function InternetSourcesBarChart(props) {
             padding={{left: 100, bottom: 30, top: 30, right: 100}}
             animate={{duration: 800}}
           >
-            <VictoryLabel text={"Internet Sources vs Number of Responses " + "(n = " + filtered_data.length + ")"} x={170} y={20} textAnchor="right"/>
+            <VictoryLabel text={"Internet Sources vs Number of Responses " + "(n = " + filtered_data.length + ")"} x={170} y={20}/>
             <VictoryBar horizontal
               data={graph_data}
               style={{ data:  { fill: ({datum}) => datum.fill}}}
