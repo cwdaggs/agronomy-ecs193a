@@ -132,7 +132,7 @@ export function calculatePrimaryGrowingReasons(data, filter) {
       if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
         key = "Limited by farm resources"
       }
-      if (key != "") {
+      if (key !== "") {
         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
       }
     }
@@ -157,7 +157,7 @@ export function calculatePriorityConcerns(data, filter) { //labelled under conce
     const reasons = data[farmer][column_name].split(',')
     for (var reason in reasons) {
       var key = reasons[reason]
-      if (key != "") {
+      if (key !== "") {
         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
       }
     }

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {calculateGrowerAffectTotalsForEachElement, filterByCrop, calculateConsultantAffectTotalsForEachElement} from '../UseData.js'
 import "typeface-abeezee";
     

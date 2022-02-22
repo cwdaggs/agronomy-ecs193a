@@ -1,5 +1,5 @@
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar} from 'victory';
-import {filterByCrop, calculateAcresManagedOrConsulted, calculateAcres} from '../UseData.js';
+import {VictoryLabel, VictoryChart, VictoryBar} from 'victory';
+import {filterByCrop, calculateAcres} from '../UseData.js';
 import "typeface-abeezee";
 
 export function AcresManagedBarChart(props) {

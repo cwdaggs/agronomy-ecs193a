@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar} from 'victory';
 import {filterByCrop, calculateInformationSources, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 

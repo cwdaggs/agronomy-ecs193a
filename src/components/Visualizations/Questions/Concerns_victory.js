@@ -1,4 +1,4 @@
-import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '../UseData.js'
 import "typeface-abeezee";
     
