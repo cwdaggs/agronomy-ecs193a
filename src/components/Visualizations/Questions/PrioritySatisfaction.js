@@ -25,6 +25,7 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
     
     return (
         <div>
+            <h2>Rate your current level of importance/satisfaction with UCCE's delivery of information on these topics, (1-3)</h2>
             <VictoryChart
                 theme={VictoryTheme.material}
                 domain={{ x: [domain[0] - domainPadding, domain[1] + domainPadding], y: [range[0] - domainPadding, range[1] + domainPadding] }}
@@ -35,6 +36,7 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 width={width}
                 domainPadding={{ x: margin.right/10, y: margin.top/10 }}
                 padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}  
+                
             >
             <VictoryScatter
                 x={(d) => d.Priority}

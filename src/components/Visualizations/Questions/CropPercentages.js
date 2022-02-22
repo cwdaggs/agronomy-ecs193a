@@ -1,5 +1,5 @@
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
-import {calculateCropPercentageAverage} from './UseData.js';
+import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
 
 export function CropPercentages(props) {
@@ -21,7 +21,10 @@ export function CropPercentages(props) {
         //     labels={({ datum }) => `${datum.x}`}
         //     data={data}
         // />
+        <div>
+        <h2>Of the total acres, what percentage are in the following categories? (Field Crops, Vegetable Crops, Tree and Vine Crops, or Other)</h2>
         <svg width={2000} height={800}>
+            
             <VictoryLegend
                 standalone={false}
                 colorScale="heatmap"
@@ -57,5 +60,6 @@ export function CropPercentages(props) {
                   />}
             />
         </svg>
+        </div>
     );
 }

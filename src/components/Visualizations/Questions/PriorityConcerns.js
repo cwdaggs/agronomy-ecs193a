@@ -1,27 +1,29 @@
-import { calculatePrimaryGrowingReasons, filterByCrop } from "../UseData.js";
+import {calculatePriorityConcerns, filterByCrop} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 
-export function PrimaryGrowingReasons({myDataset, filter}) {
+export function PriorityConcerns({myDataset, filter}) {
     if (!myDataset) {
         return <pre>Loading...</pre>;
     }
 
     var data_filtered = filterByCrop(myDataset, filter)
-    var data_by_reason = calculatePrimaryGrowingReasons(data_filtered, filter)
+    var data_by_reason = calculatePriorityConcerns(data_filtered, filter)
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
     }
-    const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
+    const colorScale = ["#552E3A", "#713E4C", "#8D505C", "#A7626C", "#C2747B", "#DB878A", "#E0979E", "#E5A6B1", "#EAB6C3", "#F4D6E1"]
 
     return (
+        <div>
+            <h2>What are the highest priority management challenges/concerns?</h2>
         <svg width={2000} height={900}>
             <VictoryLegend
                 standalone={false}
                 colorScale={colorScale}
                 x={1000}
-                y={110}
+                y={150}
                 gutter={20}
                 style={{ labels: { fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, title: {fontSize:23}}}
                 title="Legend"
@@ -52,5 +54,6 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                   />}
             />
         </svg>
+        </div>
     );
 }

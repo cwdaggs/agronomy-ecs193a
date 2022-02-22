@@ -1,5 +1,6 @@
+import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '../UseData.js'
+import {calculateGrowerAffectTotalsForEachElement, filterByCrop, calculateConsultantAffectTotalsForEachElement} from '../UseData.js'
 import "typeface-abeezee";
     
 // This is an example of a function you might use to transform your data to make 100% data
@@ -11,20 +12,27 @@ function transformData(dataset) {
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: datum.Concern, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
+      return { x: datum.Affect + " (n=" + totals[i] + ")", y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Affect };
     });
   });
 }
 
-export function ConcernsVictory({myDataset, filter}) {
-  if (!myDataset) {
+export function AffectVictory({dataset, filter}) {
+  const [job, setJob] = useState("Growers");
+
+  if (!dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByCrop(myDataset, filter)
-  var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
-  var data_sorted = sort_by_very(data_by_concern)
-  const dataset = transformData(data_sorted);
+  var data_filtered = filterByCrop(dataset, filter)
+
+  var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
+  var heading = (<h2>How often do the following priorities affect your management decisions for field crop production?</h2>)
+  if (job === "Consultants") {
+    heading = (<h2>How often do the following priorities affect your recommendations for field crop production?</h2>)
+    data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
+  }
+  const dataset_final = transformData(data_by_affect)
 
   const width = 250;
   const height = 100;
@@ -34,6 +42,11 @@ export function ConcernsVictory({myDataset, filter}) {
 
   return (
     <div>
+      <button onClick={function () {setJob("Growers")}}>Growers</button>
+      <button onClick={function () {setJob("Consultants")}}>Consultants</button>
+      <p><b >{job}</b> Data: </p>
+      {heading}
+      <h3>Red=Always, Orange=Often, Yellow=Sometimes, Green=Rarely, Blue=Never</h3>
       <VictoryChart
         horizontal={true}
         animate={{
@@ -48,9 +61,9 @@ export function ConcernsVictory({myDataset, filter}) {
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#333333", "#999999", "#CCCCCC"]}
+          colorScale={["#ff0000", "#ffa500","#ffff00", "#008000", "#0000ff"]}
         >
-          {dataset.map((data, i) => {
+          {dataset_final.map((data, i) => {
             return <VictoryBar 
               data={data} 
               key={i} 
