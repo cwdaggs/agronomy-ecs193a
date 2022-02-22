@@ -29,6 +29,7 @@ export const Visualizations = () => {
             {<VisMenu dataset={useData('./data/Grower_Crop_Data.csv')} vis={"PrioritySatisfaction"}/>}
             {<VisMenu dataset={useData('./data/Filtered_Crop_data.csv')} vis={"Affect"}/>}
             {<VisMenu dataset={useData('./data/Filtered_Crop_data.csv')} vis={"InfoSources"}/>}
+            {<VisMenu dataset={useData('./data/Filtered_Crop_data.csv')} vis={"InternetSources"}/>}
         </div>
     );
 }
