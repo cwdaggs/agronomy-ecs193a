@@ -9,7 +9,6 @@ export function AcresManagedBarChart(props) {
 
     var data = filterByCrop(props.dataset, props.filter);
     var acre_data = calculateAcres(data);
-    console.log(acre_data);
 
     return (
         <div>

@@ -1,5 +1,5 @@
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {calculateAffectTotalsForEachElement, filterByCrop} from '../UseData.js'
+import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '../UseData.js'
 import "typeface-abeezee";
     
 // This is an example of a function you might use to transform your data to make 100% data
@@ -11,19 +11,20 @@ function transformData(dataset) {
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: datum.Affect, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Affect };
+      return { x: datum.Concern, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
     });
   });
 }
 
-export function AffectVictory({myDataset, filter}) {
+export function ConcernsVictory({myDataset, filter}) {
   if (!myDataset) {
       return <pre>Loading...</pre>;
   }
 
   var data_filtered = filterByCrop(myDataset, filter)
-  var data_by_affect = calculateAffectTotalsForEachElement(data_filtered)
-  const dataset = transformData(data_by_affect)
+  var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
+  var data_sorted = sort_by_very(data_by_concern)
+  const dataset = transformData(data_sorted);
 
   const width = 250;
   const height = 100;
@@ -33,6 +34,7 @@ export function AffectVictory({myDataset, filter}) {
 
   return (
     <div>
+      <h2>In regards to the production of FIELD CROPS in California, rate your concern for the following:</h2>
       <VictoryChart
         horizontal={true}
         animate={{
@@ -47,7 +49,7 @@ export function AffectVictory({myDataset, filter}) {
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#111111", "#333333","#666666", "#999999", "#CCCCCC"]}
+          colorScale={["#333333", "#999999", "#CCCCCC"]}
         >
           {dataset.map((data, i) => {
             return <VictoryBar 
