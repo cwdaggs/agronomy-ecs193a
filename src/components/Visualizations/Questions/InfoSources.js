@@ -1,5 +1,7 @@
 import {useState} from 'react';
+
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+
 import {filterByCrop, calculateInformationSources, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
@@ -32,7 +34,9 @@ export function InfoSourcesBarChart(props) {
             domainPadding={10}
             padding={{left: 100, bottom: 30, top: 30, right: 100}}
           >
+
             <VictoryLabel text="Information Sources vs Number of Responses" x={170} y={20}/>
+
             <VictoryBar horizontal
               data={info_data}
               style={{ data:  { fill: ({datum}) => datum.fill}}}

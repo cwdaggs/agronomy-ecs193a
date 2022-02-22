@@ -30,6 +30,9 @@ export const Visualizations = () => {
             {<VisMenu dataset={useData('./data/Filtered_Crop_data.csv')} vis={"Affect"}/>}
             {<VisMenu dataset={useData('./data/Filtered_Crop_data.csv')} vis={"InfoSources"}/>}
             {<VisMenu dataset={useData('./data/Filtered_Crop_data.csv')} vis={"InternetSources"}/>}
+            {<VisMenu dataset={useData('./data/Grower_Crop_data.csv')} vis={"PrimaryGrowingReasons"}/>}
+            {<VisMenu dataset={useData('./data/Grower_Crop_data.csv')} vis={"PriorityConcerns"}/>}
+
         </div>
     );
 }

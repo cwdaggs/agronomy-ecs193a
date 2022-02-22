@@ -27,6 +27,7 @@ export function AcresManagedBarChart(props) {
             />
             <VictoryAxis dependentAxis/>
             <VictoryBar
+
               data={acre_data}
               alignment="middle"
               style={{ data:  { fill: ({datum}) => datum.fill}}}

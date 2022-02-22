@@ -1,28 +1,29 @@
-
+import {calculateAllPriorityConcerns, filterByCrop} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
-import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
 
-export function CropPercentages(props) {
-    if (!props.dataset) {
+export function PriorityConcerns({myDataset, filter}) {
+    if (!myDataset) {
         return <pre>Loading...</pre>;
     }
 
-    const data = calculateCropPercentageAverage(props.dataset)
+    var data_filtered = filterByCrop(myDataset, filter)
+    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter)
     var legend_data = []
-    for (var i = 0; i < data.length; i++) {
-        legend_data.push({name: data[i].x})
+    for (var i = 0; i < data_by_reason.length; i++) {
+        legend_data.push({name: data_by_reason[i].x})
     }
+    const colorScale = ["#552E3A", "#713E4C", "#8D505C", "#A7626C", "#C2747B", "#DB878A", "#E0979E", "#E5A6B1", "#EAB6C3", "#F4D6E1"]
 
     return (
         <div>
-            <h2>Of the total acres, what percentage are in the following categories? (Field Crops, Vegetable Crops, Tree and Vine Crops, or Other)</h2>
-            <svg width={1920} height={800}>       
+            <h2>What are the highest priority management challenges/concerns?</h2>
+            <svg width={1920} height={900}>
                 <VictoryLegend
                     standalone={false}
-                    colorScale="heatmap"
-                    x={950}
-                    y={200}
+                    colorScale={colorScale}
+                    x={1000}
+                    y={150}
                     gutter={20}
                     style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
                             title:  {fontFamily: 'ABeeZee', fontSize: 23},
@@ -41,10 +42,10 @@ export function CropPercentages(props) {
                         top: 20
                     }}
                     style={{ data: { stroke: "black", strokeWidth: 1}}}
-                    colorScale="heatmap"
-                    data={data}
+                    colorScale={colorScale}
+                    data={data_by_reason}
                     // labels={() => null}
-                    labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+                    labels={({ datum }) => `${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
                         fontSize:20,
@@ -55,7 +56,6 @@ export function CropPercentages(props) {
                     />}
                 />
             </svg>
-
         </div>
     );
 }
