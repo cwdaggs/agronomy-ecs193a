@@ -1,4 +1,4 @@
-import {calculatePriorityConcerns, filterByCrop} from "../UseData.js";
+import {calculateAllPriorityConcerns, filterByCrop} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 
@@ -8,7 +8,7 @@ export function PriorityConcerns({myDataset, filter}) {
     }
 
     var data_filtered = filterByCrop(myDataset, filter)
-    var data_by_reason = calculatePriorityConcerns(data_filtered, filter)
+    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter)
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})

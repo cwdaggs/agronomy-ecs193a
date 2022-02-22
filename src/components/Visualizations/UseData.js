@@ -125,19 +125,17 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
                 "Barley_Reasons",	"Oats_Reasons",	"Corn_Reasons",	"Sorghum_Reasons",	"Corn_Silage_Reasons", "Small_Grain_Silage_Reasons",
                 "Small_Grain_Hay_Reasons",	"Grass_and_Grass_Mixtures_Hay_Reasons",	"Grass_and_Grass_Mixtures_Pasture_Reasons",	"Sorghum_Sudangrass_Sudan_Reasons",	
                 "Mixed_Hay_Reasons", "Dry_Beans_Reasons",	"Sunflower_Reasons",	"Oilseeds_Reasons", "Sugar_Beets_Reasons", "Hemp_Reasons", "Other_Reasons"]
+
   const myMap = new Map()
-  // console.log(filter)
   if (filter === "") {
     var new_modified_data = []
     for (var col in columns) {
-      // console.log(columns[col].split('_').join(' ').replace("Reasons", ""))
-      console.log("Column: "+columns[col])
-      const modified_data = calculatePrimaryGrowingReasons(data, columns[col])
-      for (data in modified_data) {
-        var key = modified_data[data].x
-        var value = modified_data[data].y
-        if (key !== "") {
-          myMap.has(key) ? myMap.set(key, myMap.get(key) + value) : myMap.set(key, value)
+      var modified_data = calculatePrimaryGrowingReasons(data, columns[col])
+      for (var item in modified_data) {
+        let key_data = modified_data[item].x
+        let value_data = modified_data[item].y
+        if (key_data !== "") {
+          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
         }
       }
     }
@@ -148,14 +146,11 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
     return new_modified_data
   } else {
     var new_filter = filter.split(' ').join('_') + "_Reasons"
-    console.log("New Filter column: "+new_filter)
     return calculatePrimaryGrowingReasons(data, new_filter)
   }
 }
 
 export function calculatePrimaryGrowingReasons(data, filter) {
- // Crashes when trying to click the all button lol
-  // var column_name = filter.split(' ').join('_') + "_Reasons"
   var modified_data = []
   const myMap = new Map()
   for (var farmer in data) {
@@ -182,12 +177,41 @@ export function calculatePrimaryGrowingReasons(data, filter) {
   return modified_data
 }
 
+export function calculateAllPriorityConcerns(data, filter) {
+   var columns = ["Alfalfa_Concerns",	"Cotton_Concerns",	"Rice_Concerns",	"Wild_Rice_Concerns",	"Wheat_Concerns",	"Triticale_Concerns",	
+                "Barley_Concerns",	"Oats_Concerns",	"Corn_Concerns",	"Sorghum_Concerns",	"Corn_Silage_Concerns", "Small_Grain_Silage_Concerns",
+                "Small_Grain_Hay_Concerns",	"Grass_and_Grass_Mixtures_Hay_Concerns",	"Grass_and_Grass_Mixtures_Pasture_Concerns",	"Sorghum_Sudangrass_Sudan_Concerns",	
+                "Mixed_Hay_Concerns", "Dry_Beans_Concerns",	"Sunflower_Concerns",	"Oilseeds_Concerns", "Sugar_Beets_Concerns", "Hemp_Concerns", "Other_Concerns"]
+
+  const myMap = new Map()
+  if (filter === "") {
+    var new_modified_data = []
+    for (var col in columns) {
+      var modified_data = calculatePriorityConcerns(data, columns[col])
+      for (var item in modified_data) {
+        let key_data = modified_data[item].x
+        let value_data = modified_data[item].y
+        if (key_data !== "") {
+          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
+        }
+      }
+    }
+    
+    for (const [key, value] of myMap) {
+      new_modified_data.push({x: key, y: value});
+    }
+    return new_modified_data
+  } else {
+    var new_filter = filter.split(' ').join('_') + "_Concerns"
+    return calculatePriorityConcerns(data, new_filter)
+  }
+}
+
 export function calculatePriorityConcerns(data, filter) { //labelled under concerns right before growing reasons, the q is about challenges
-  var column_name = filter.split(' ').join('_') + "_Concerns"
   var modified_data = []
   const myMap = new Map()
   for (var farmer in data) {
-    const reasons = data[farmer][column_name].split(',')
+    const reasons = String(data[farmer][filter]).split(',')
     for (var reason in reasons) {
       var key = reasons[reason]
       if (key !== "") {
@@ -199,7 +223,6 @@ export function calculatePriorityConcerns(data, filter) { //labelled under conce
   for (const [key, value] of myMap) {
     modified_data.push({x: key, y: value});
   }
-
   return modified_data
 }
 
