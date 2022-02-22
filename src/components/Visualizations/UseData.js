@@ -117,7 +117,7 @@ export function calculateConcernTotalsForEachElement(data){
 }
 
 export function calculatePrimaryGrowingReasons(data, filter) {
- // Does crash when trying to click the all button lol
+ // Crashes when trying to click the all button lol
   var column_name = filter.split(' ').join('_') + "_Reasons"
   var modified_data = []
   const myMap = new Map()
