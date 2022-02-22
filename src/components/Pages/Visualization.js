@@ -10,8 +10,9 @@ import {CropPercentages} from '../Visualizations/CropPercentages';
 import {AcresManagedMenu} from '../Visualizations/AcresManagedVis/AcresManagedMenu';
 import { PriorityMenu } from '../Visualizations/PrioritySatisfaction/PriorityMenu';
 import {AffectMenu} from '../Visualizations/AffectProduction/AffectMenu';
-import { PrimaryGrowingReasons } from '../Visualizations/PrimaryGrowingReasons';
-import { PrimaryGrowingReasonsMenu } from '../Visualizations/PrimaryGrowingReasonsMenu';
+import { PrimaryGrowingReasons } from '../Visualizations/PrimaryGrowingReasons/PrimaryGrowingReasons.js';
+import { PrimaryGrowingReasonsMenu } from '../Visualizations/PrimaryGrowingReasons/PrimaryGrowingReasonsMenu.js';
+import { PriorityConcernsMenu } from '../Visualizations/PriorityConcerns/PriorityConcernsMenu';
 
 export const Visualizations = () => {
     return(
@@ -45,6 +46,9 @@ export const Visualizations = () => {
 
         <h2>What are the primary reasons that you grow the following field crops?</h2>
         {<PrimaryGrowingReasonsMenu dataset={useData('./data/Grower_Crop_Data.csv')}/>}
+
+        <h2>What are the highest priority management challenges/concerns for each crop?</h2>
+        {<PriorityConcernsMenu dataset={useData('./data/Grower_Crop_Data.csv')}/>}
       </div>
     );
 }

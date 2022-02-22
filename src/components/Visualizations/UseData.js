@@ -145,6 +145,27 @@ export function calculatePrimaryGrowingReasons(data, filter) {
   return modified_data
 }
 
+export function calculatePriorityConcerns(data, filter) { //labelled under concerns right before growing reasons, the q is about challenges
+  var column_name = filter.split(' ').join('_') + "_Concerns"
+  var modified_data = []
+  const myMap = new Map()
+  for (var farmer in data) {
+    const reasons = data[farmer][column_name].split(',')
+    for (var reason in reasons) {
+      var key = reasons[reason]
+      if (key != "") {
+        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
+      }
+    }
+  }
+
+  for (const [key, value] of myMap) {
+    modified_data.push({x: key, y: value});
+  }
+
+  return modified_data
+}
+
 export function calculateCropPercentageAverage(data) {
   var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
   var modified_data=[]

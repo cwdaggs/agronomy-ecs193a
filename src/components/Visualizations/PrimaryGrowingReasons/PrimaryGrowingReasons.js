@@ -1,4 +1,4 @@
-import { calculatePrimaryGrowingReasons, filterByCrop } from "./UseData.js";
+import { calculatePrimaryGrowingReasons, filterByCrop } from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 

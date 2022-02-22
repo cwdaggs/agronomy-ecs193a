@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import {getFarmersCrops } from './UseData.js';
-import { PrimaryGrowingReasons } from "./PrimaryGrowingReasons.js";
-import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from './StyledDivs.js';
+import {getFarmersCrops } from '../UseData.js';
+import { PriorityConcerns } from "./PriorityConcerns.js";
+import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs.js';
 
 function GetTypes(dataset){
     return getFarmersCrops(dataset, "Crops") 
 }
 
-function PrimaryGrowingReasonsMenu(props) {
+function PriorityConcernsMenu(props) {
 
   const dataset = props.dataset
   const types = GetTypes(dataset);
@@ -38,9 +38,9 @@ function PrimaryGrowingReasonsMenu(props) {
     <p><b >{active}</b> Data: </p>
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
-    <PrimaryGrowingReasons filter={active} myDataset={dataset} population={"Growers"}/>
+    <PriorityConcerns filter={active} myDataset={dataset} population={"Growers"}/>
     </div>
     </>     
   )
 }
-export {PrimaryGrowingReasonsMenu};
+export {PriorityConcernsMenu};
