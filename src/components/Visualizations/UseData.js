@@ -161,7 +161,7 @@ export function calculateAcresManagedOrConsulted(data){
 }
 
 export function calculateAcres(data){
-  var names = ["Under 500\nAcres", "1000 Acres", "1500 Acres", "2000 Acres", "2500 Acres", "Over 2500"]
+  var names = ["0-500", "1000", "1500", "2000", "2500", "2500+"]
   var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
   var columns = ["Acres_Managed", "Acres_Consulted"]
   var modified_data=[]
@@ -172,6 +172,9 @@ export function calculateAcres(data){
       var num = parseInt(data[i][columns[j]], 10)
       // Remove NAs and outliers
       if(Number.isInteger(num)){
+          if(num > 10000){
+            continue;
+          }
           if(num < 500){
               bin_count[0]++
           }
@@ -249,7 +252,7 @@ export function averageSatisfaction(data){
     if(sAmount === 0){
       sAmount = 1
     }
-    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot})
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount)})
   }
   //console.log(answers)
   return answers
@@ -274,7 +277,7 @@ export function trendLineSatisfactions(data){
   var unc = 0
 
   for(var j in data){
-
+    
     prod += ((data[j].Priority - xAvg)*(data[j].Satisfaction - yAvg))
     unc += (data[j].Priority - xAvg)*(data[j].Priority - xAvg)
 

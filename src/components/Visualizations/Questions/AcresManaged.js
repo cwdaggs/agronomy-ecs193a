@@ -13,18 +13,24 @@ export function AcresManagedBarChart(props) {
     return (
         <div>
           <h2>How many acres do you manage/consult annually?</h2>
-          <p>On the vertical axis is the size of a farm in acres. The horizontal axis shows the number of farms in each bin.</p>
-          <VictoryChart height={300} width={600}
+          <VictoryChart //height={300} width={500}
             domainPadding={10}
-            padding={{left: 100, bottom: 30, top: 30, right: 100}}
+            padding={{left: 100, bottom: 50, top: 30, right: 100}}
             animate={{duration: 800}}
           >
-            <VictoryLabel text="Acres vs Number of Responses" x={225} y={20} textAnchor="right"/>
-            <VictoryBar horizontal
+            <VictoryLabel text="Acres vs Number of Responses" x={250} y={20} textAnchor="middle"/>
+            <VictoryAxis
+              label="Acres"
+              padding={{ top: 40, bottom: 60 }}
+            />
+            <VictoryAxis dependentAxis/>
+            <VictoryBar
               data={acre_data}
+              alignment="middle"
               style={{ data:  { fill: ({datum}) => datum.fill}}}
             />
           </VictoryChart>
+          
         </div>
       );
 }
