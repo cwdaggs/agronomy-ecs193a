@@ -120,13 +120,46 @@ export function calculateConcernTotalsForEachElement(data){
   return [very, somewhat, notVery]
 }
 
+export function calculateAllPrimaryGrowingReasons(data, filter) {
+  var columns = ["Alfalfa_Reasons",	"Cotton_Reasons",	"Rice_Reasons",	"Wild_Rice_Reasons",	"Wheat_Reasons",	"Triticale_Reasons",	
+                "Barley_Reasons",	"Oats_Reasons",	"Corn_Reasons",	"Sorghum_Reasons",	"Corn_Silage_Reasons", "Small_Grain_Silage_Reasons",
+                "Small_Grain_Hay_Reasons",	"Grass_and_Grass_Mixtures_Hay_Reasons",	"Grass_and_Grass_Mixtures_Pasture_Reasons",	"Sorghum_Sudangrass_Sudan_Reasons",	
+                "Mixed_Hay_Reasons", "Dry_Beans_Reasons",	"Sunflower_Reasons",	"Oilseeds_Reasons", "Sugar_Beets_Reasons", "Hemp_Reasons", "Other_Reasons"]
+  const myMap = new Map()
+  // console.log(filter)
+  if (filter === "") {
+    var new_modified_data = []
+    for (var col in columns) {
+      // console.log(columns[col].split('_').join(' ').replace("Reasons", ""))
+      console.log("Column: "+columns[col])
+      const modified_data = calculatePrimaryGrowingReasons(data, columns[col])
+      for (data in modified_data) {
+        var key = modified_data[data].x
+        var value = modified_data[data].y
+        if (key !== "") {
+          myMap.has(key) ? myMap.set(key, myMap.get(key) + value) : myMap.set(key, value)
+        }
+      }
+    }
+    
+    for (const [key, value] of myMap) {
+      new_modified_data.push({x: key, y: value});
+    }
+    return new_modified_data
+  } else {
+    var new_filter = filter.split(' ').join('_') + "_Reasons"
+    console.log("New Filter column: "+new_filter)
+    return calculatePrimaryGrowingReasons(data, new_filter)
+  }
+}
+
 export function calculatePrimaryGrowingReasons(data, filter) {
  // Crashes when trying to click the all button lol
-  var column_name = filter.split(' ').join('_') + "_Reasons"
+  // var column_name = filter.split(' ').join('_') + "_Reasons"
   var modified_data = []
   const myMap = new Map()
   for (var farmer in data) {
-    const reasons = data[farmer][column_name].split(',')
+    const reasons = String(data[farmer][filter]).split(',')
     for (var reason in reasons) {
       var key = reasons[reason]
       if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {

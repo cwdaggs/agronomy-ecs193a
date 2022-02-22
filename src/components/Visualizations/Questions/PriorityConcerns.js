@@ -18,42 +18,44 @@ export function PriorityConcerns({myDataset, filter}) {
     return (
         <div>
             <h2>What are the highest priority management challenges/concerns?</h2>
-        <svg width={2000} height={900}>
-            <VictoryLegend
-                standalone={false}
-                colorScale={colorScale}
-                x={1000}
-                y={150}
-                gutter={20}
-                style={{ labels: { fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, title: {fontSize:23}}}
-                title="Legend"
-                centerTitle
-                data={legend_data}
-            />
-            <VictoryPie
-                standalone={false}
-                width={800}
-                height={800}
-                padding={{
-                    left: 250,
-                    bottom: 20,
-                    top: 20
-                }}
-                style={{ data: { stroke: "black", strokeWidth: 1}}}
-                colorScale={colorScale}
-                data={data_by_reason}
-                // labels={() => null}
-                labels={({ datum }) => `${datum.y}`}
-                labelComponent={<VictoryTooltip 
-                    style={{
-                      fontSize:20,
-                      fontFamily: 'ABeeZee'
+            <svg width={1920} height={900}>
+                <VictoryLegend
+                    standalone={false}
+                    colorScale={colorScale}
+                    x={1000}
+                    y={150}
+                    gutter={20}
+                    style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
+                            title:  {fontFamily: 'ABeeZee', fontSize: 23},
+                            data:   {stroke: "black", strokeWidth: 1}}}
+                    title="Legend"
+                    centerTitle
+                    data={legend_data}
+                />
+                <VictoryPie
+                    standalone={false}
+                    width={800}
+                    height={800}
+                    padding={{
+                        left: 250,
+                        bottom: 20,
+                        top: 20
                     }}
-                    flyoutHeight={25}
-                    flyoutWidth={45}    
-                  />}
-            />
-        </svg>
+                    style={{ data: { stroke: "black", strokeWidth: 1}}}
+                    colorScale={colorScale}
+                    data={data_by_reason}
+                    // labels={() => null}
+                    labels={({ datum }) => `${datum.y}`}
+                    labelComponent={<VictoryTooltip 
+                        style={{
+                        fontSize:20,
+                        fontFamily: 'ABeeZee'
+                        }}
+                        flyoutHeight={25}
+                        flyoutWidth={45}    
+                    />}
+                />
+            </svg>
         </div>
     );
 }
