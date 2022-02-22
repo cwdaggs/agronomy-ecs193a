@@ -1,3 +1,4 @@
+
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
@@ -54,6 +55,7 @@ export function CropPercentages(props) {
                     />}
                 />
             </svg>
+
         </div>
     );
 }
