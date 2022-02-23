@@ -114,6 +114,7 @@ export function calculateConcernTotalsForEachElement(data){
       very.push(calculateConcernEach(data, questions[i], "Very concerned"))
       somewhat.push(calculateConcernEach(data, questions[i], "Somewhat concerned"))
       notVery.push(calculateConcernEach(data, questions[i], "Not  concerned"))
+
   }
   // console.log("New data: ", [very, somewhat, notVery])
 

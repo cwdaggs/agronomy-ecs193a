@@ -13,7 +13,7 @@ function transformData(dataset) {
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: datum.Concern, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
+      return { x: String(datum.Concern + " n = " + totals[i]), y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
     });
   });
 }
@@ -56,7 +56,7 @@ export function ConcernsVictory({myDataset, filter}) {
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#333333", "#999999", "#CCCCCC"]}
+          colorScale={["#00471A", "#009141", "#02D46F"]}
         >
           {dataset.map((data, i) => {
             return <VictoryBar 
