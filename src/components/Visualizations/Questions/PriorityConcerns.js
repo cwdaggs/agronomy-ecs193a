@@ -1,13 +1,14 @@
-import {calculateAllPriorityConcerns, filterByCrop} from "../UseData.js";
+import {calculateAllPriorityConcerns, filterByCrop, useData} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 
 export function PriorityConcerns({myDataset, filter}) {
-    if (!myDataset) {
+    var d = useData('./data/Grower_Crop_Data.csv')
+    if (!d){ // myDataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByCrop(myDataset, filter)
+    var data_filtered = filterByCrop(d, filter) // myDataset, filter)
     var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter)
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {

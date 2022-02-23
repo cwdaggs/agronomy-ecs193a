@@ -38,7 +38,7 @@ export const Visualizations = () => {
             {/* <SubMenu title="Components" icon={<FaEdgeLegacy />}>
             </SubMenu> */}
         
-        {<VisMenu dataset={useData('./data/Grower_Crop_Data.csv')} vis={active}/>}
+        {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active}/>}
         
         {/*{<VisMenu dataset={useData('./data/Full_Dataset.csv')} vis={active}/>}
         <h2>Of these acres, in a given year estimate approximately what percentage are in the following categories?</h2>

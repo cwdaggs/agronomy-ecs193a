@@ -404,42 +404,6 @@ export function trendLineSatisfactions(data){
 
 }
 
-// export function getPriorityReccomendations(data){
-
-//   var dataset = calculateAffectTotalsForEachElement(data)
-
-//   var questions = { "Profitability":0, "Crop Yield":0,
-//                     "Crop Quality":0, "Input Costs":0, 
-//                     "Soil Fertility":0, "Land Stewardship":0, 
-//                     "Natural Resource Conservation":0, 
-//                     "Meeting Government Regulations":0, "Labor Required":0, 
-//                     "Ease of Implementation":0, "Certainty in Management Practice":0, 
-//                     "Availability of Outreach Information":0, "Water Availability":0 }
-
-//   var topics= [ "Profitability", "Crop Yield",
-//                 "Crop Quality", "Input Costs", 
-//                 "Soil Fertility", "Land Stewardship", 
-//                 "Natural Resource Conservation", 
-//                 "Meeting Government Regulations", "Labor Required", 
-//                 "Ease of Implementation", "Certainty in Management Practice", 
-//                 "Availability of Outreach Information", "Water Availability"]
-
-//     console.log(dataset)
-//     for(var i = 0; i < dataset.length; i++){
-//       for(var j = 0; j < dataset[i].length; j++){
-//         questions[dataset[i][j]["Affect"]] += dataset[i][j]["Total"]*(dataset.length - i)
-//         //console.log(dataset[i][j]["Affect"])
-//       }
-//     }
-//     var answers = []
-//     for(var k = 0; k < topics.length; k++){
-//       answers.push({topic: topics[k], value: questions[topics[k]]/100})
-//     }
-
-//     console.log(answers)
-//     return answers
-  
-// }
 
 export function calculateAffectEach(data, filter, answer){
   var total = 0

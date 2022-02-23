@@ -1,6 +1,6 @@
 
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop} from '../UseData.js'
+import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop, useData} from '../UseData.js'
 import "typeface-abeezee";
     
 // This is an example of a function you might use to transform your data to make 100% data
@@ -18,11 +18,12 @@ function transformData(dataset) {
 }
 
 export function ConcernsVictory({myDataset, filter}) {
-  if (!myDataset) {
+  var d = useData('./data/Grower_Crop_Data.csv')
+  if (!d){ //myDataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByCrop(myDataset, filter)
+  var data_filtered = filterByCrop(d, filter)
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_concern)
   const dataset = transformData(data_sorted);
