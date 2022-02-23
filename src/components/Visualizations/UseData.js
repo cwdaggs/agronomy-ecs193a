@@ -90,7 +90,7 @@ export function calculateConcernEach(data, filter, answer){
 // Iterates through list of questions regarding farmer concerns, and sums up each answer
 export function calculateConcernTotalsForAllElements(data){
     var questions = ["Concern_Air_Quality","Concern_Changing_Weather_and_Climate","Concern_Chemical_Regulations",
-                    "Concern_Commondity_Price_of_Crops", "Concern_Consumer_Demand", "Concern_Input_Costs", "Concern_Labor_Quality_and_Availability",
+                    "Concern_Commodity_Price_of_Crops", "Concern_Consumer_Demand", "Concern_Input_Costs", "Concern_Labor_Quality_and_Availability",
                     "Concern_Labor_Regulations", "Concern_Land_Tenure", "Concern_Market_Access"] //, "Concern_Other"]
     var answers = []
     
@@ -103,7 +103,7 @@ export function calculateConcernTotalsForAllElements(data){
 
 export function calculateConcernTotalsForEachElement(data){
   var questions = ["Concern_Air_Quality","Concern_Changing_Weather_and_Climate","Concern_Chemical_Regulations",
-                  "Concern_Commondity_Price_of_Crops", "Concern_Consumer_Demand", "Concern_Input_Costs", "Concern_Labor_Quality_and_Availability",
+                  "Concern_Commodity_Price_of_Crops", "Concern_Consumer_Demand", "Concern_Input_Costs", "Concern_Labor_Quality_and_Availability",
                   "Concern_Labor_Regulations", "Concern_Land_Tenure", "Concern_Market_Access"] //, "Concern_Other"]
   var very = []
   var somewhat = []
