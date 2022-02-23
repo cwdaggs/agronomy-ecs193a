@@ -18,10 +18,10 @@ function GetTypes(dataset){
 function getVis(vis_name, active, dataset){
 
   var vis_key = { 
-              "PrioritySatisfaction" :  (<PrioritySatisfaction filter={active} dataset={dataset} population={"Growers"}/>),
-              "CropPercentages":        (<CropPercentages filter={active} dataset={dataset} population={"Growers"}/>),
+              "PrioritySatisfaction" :  (<PrioritySatisfaction filter={active} dataset={dataset}/>),
+              "CropPercentages":        (<CropPercentages filter={active} dataset={dataset}/>),
               "Affect":                 (<AffectVictory filter={active} dataset={dataset}/>),
-              "Concerns":               (<ConcernsVictory filter={active} myDataset={dataset} population={"Growers"}/>),
+              "Concerns":               (<ConcernsVictory filter={active} myDataset={dataset}/>),
               "AcresManaged":           (<AcresManagedBarChart filter={active} dataset={dataset}/>),
               "InfoSources":            (<InfoSourcesBarChart filter={active} dataset={dataset}/>),
               "InternetSources":        (<InternetSourcesBarChart filter={active} dataset={dataset}/>),

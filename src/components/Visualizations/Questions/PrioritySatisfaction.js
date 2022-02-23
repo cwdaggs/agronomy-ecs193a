@@ -1,5 +1,5 @@
 import {VictoryLegend, VictoryHistogram, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, filterByCrop, trendLineSatisfactions } from '../UseData';
+import { averageSatisfaction, filterByCrop, trendLineSatisfactions, filterByVocation } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState, useEffect } from "react";
 
@@ -15,11 +15,12 @@ function barData(dataset, topic){
 
 export const PrioritySatisfaction = ({dataset, filter}) => {
     const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
+    const [occupation, setOccupation] = useState("o");
     if (!dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByCrop(dataset, filter)
+    var data_filtered = filterByVocation(filterByCrop(dataset, filter), occupation)
     var data = averageSatisfaction(data_filtered)
 
     var domain = d3.extent(data, function(d) { return d.Priority; })
@@ -123,7 +124,12 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
     console.log(selectedData)
 
     return (
+
         <div>
+            <button onClick={function () {setOccupation("o"); setVis(<p>Click and drag a selection of points for more information</p>)}}>All</button>
+            <button onClick={function () {setOccupation("Grower"); setVis(<p>Click and drag a selection of points for more information</p>)}}>Growers</button>
+            <button onClick={function () {setOccupation("Consultant"); setVis(<p>Click and drag a selection of points for more information</p>)}}>Consultants</button>
+
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer
