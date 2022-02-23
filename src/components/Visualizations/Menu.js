@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {getFarmersCrops } from './UseData';
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from './StyledDivs';
 import {PrioritySatisfaction} from './Questions/PrioritySatisfaction.js'
-import {PrioritySatisfactionScatter} from './Questions/PrioritySatisfaction copy'
-
 import {AffectVictory} from './Questions/Affect_victory';
 import {ConcernsVictory} from './Questions/Concerns_victory';
 import {AcresManagedBarChart} from './Questions/AcresManaged.js';
