@@ -1,6 +1,6 @@
 
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
-import {calculateCropPercentageAverage, useData} from '../UseData.js';
+import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
 
 export function CropPercentages(props) {
@@ -10,7 +10,6 @@ export function CropPercentages(props) {
     }
 
     const data = calculateCropPercentageAverage(props.dataset)
-    console.log(data)
     var legend_data = []
     for (var i = 0; i < data.length; i++) {
         legend_data.push({name: data[i].x})

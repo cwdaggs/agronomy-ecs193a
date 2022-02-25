@@ -1,4 +1,4 @@
-import {calculateAllPriorityConcerns, filterByCrop, useData} from "../UseData.js";
+import {calculateAllPriorityConcerns, filterByCrop} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {useState} from 'react';
 import "typeface-abeezee";
