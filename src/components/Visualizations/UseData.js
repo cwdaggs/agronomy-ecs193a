@@ -294,7 +294,7 @@ export function calculateAcresManagedOrConsulted(data){
 export function calculateAcres(data){
   var names = ["< 500", "1000", "1500", "2000", "2500", "2500+"]
   var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
-  var columns = ["Acres_Managed", "Acres_Consulted", "Acres"]
+  var columns = ["Acres_Managed", "Acres_Consulted"]
   var modified_data=[]
   var bin_count = [0,0,0,0,0,0]
 
