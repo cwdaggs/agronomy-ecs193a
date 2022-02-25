@@ -46,7 +46,9 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
             labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:fontSize
+                    fontSize:fontSize,
+                    strokeWidth:1,
+                    fontFamily: 'ABeeZee'
                   }}
                   flyoutHeight={15}
                   flyoutWidth={30}    
@@ -121,7 +123,6 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
     const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
   
     const fontSize = 2
-    console.log(selectedData)
 
     return (
 
@@ -154,9 +155,9 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
               gutter={4}
               style={{ border: { stroke: "black" }, title: {fontSize: 3 }, data: {fontSize:3 }}}
               data={[
-                { name: "One", symbol: { fill: "tomato", stroke: "#756f6a", strokeWidth: 0.5 }, labels:{fontSize: 3} },
-                { name: "Two", symbol: { fill: "orange", type:"square" }, labels:{fontSize: 3} },
-                { name: "Three", symbol: { fill: "gold" }, labels:{fontSize: 3} }
+                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a", strokeWidth: 0.5 }, labels:{fontSize: 3} },
+                { name: "Average", symbol: { fill: "red", type:"square" }, labels:{fontSize: 3} },
+                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" }, labels:{fontSize: 3} }
               ]}
             />
             <VictoryScatter
@@ -179,12 +180,14 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 labelComponent={
                     <VictoryTooltip 
                         style={{
-                        fontSize:fontSize
+                          fontSize:fontSize,
+                          strokeWidth:0.1,
+                          fontFamily: 'ABeeZee'
                         }}
                         flyoutHeight={10}
-                        flyoutWidth={30}
-                        dy={-3}    
+                        flyoutWidth={30}    
                     />
+                    
                 }
                 
                 onMouseEnter={(props) => props.style.data.stroke = "black"}

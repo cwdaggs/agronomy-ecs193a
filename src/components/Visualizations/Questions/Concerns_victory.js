@@ -46,7 +46,7 @@ export function ConcernsVictory({myDataset, filter}) {
         horizontal={true}
         animate={{
             duration: 500,               
-          }}
+        }}
         height={height} 
         width={width}
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}

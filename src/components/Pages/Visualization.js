@@ -13,7 +13,7 @@ import {ButtonSwitch, Tab, Button, ButtonGroup } from '../Visualizations/StyledD
 export const Visualizations = () => {
 
     
-    const types = ["Concerns", "CropPercentages", "AcresManaged", "PrioritySatisfaction", "Affect", "InfoSources", "InternetSources", "PriorityConcerns"]
+    const types = ["Concerns", "CropPercentages", "AcresManaged", "PrioritySatisfaction", "Affect", "InfoSources", "InternetSources", "PriorityConcerns", "Map"]
     const icons = {"Concerns": (<FaGem/>), "CropPercentages": (<GiCorn/>), "AcresManaged": <AiFillAndroid/>, "PrioritySatisfaction": <SiAdblock/>, "Affect": <GrHorton/>}
     const [active, setActive] = useState("Concerns");
     return(

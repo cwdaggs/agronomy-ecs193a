@@ -4,3 +4,4 @@ npm install d3 --save
 npm install victory
 npm install react-button --save
 npm install react-bootstrap-validation --save
+npm install --save react-simple-maps

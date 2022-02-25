@@ -4,12 +4,13 @@ import {calculateCropPercentageAverage, useData} from '../UseData.js';
 import "typeface-abeezee";
 
 export function CropPercentages(props) {
-    var d = useData('./data/Grower_Crop_Data.csv')
-    if (!d){ //props.dataset) {
+
+    if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    const data = calculateCropPercentageAverage(d) //props.dataset)
+    const data = calculateCropPercentageAverage(props.dataset)
+    console.log(data)
     var legend_data = []
     for (var i = 0; i < data.length; i++) {
         legend_data.push({name: data[i].x})
@@ -33,6 +34,9 @@ export function CropPercentages(props) {
                     data={legend_data}
                 />
                 <VictoryPie
+                    animate={{
+                        duration: 500,               
+                    }}
                     standalone={false}
                     width={800}
                     height={800}

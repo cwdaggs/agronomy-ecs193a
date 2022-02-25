@@ -50,8 +50,8 @@ export function AffectVictory({dataset, filter}) {
       <VictoryChart
         horizontal={true}
         animate={{
-            duration: 500,               
-          }}
+            duration: 1000,               
+        }}
         height={height} 
         width={width}
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}

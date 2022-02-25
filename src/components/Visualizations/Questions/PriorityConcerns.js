@@ -1,15 +1,17 @@
 import {calculateAllPriorityConcerns, filterByCrop, useData} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
+import {useState} from 'react';
 import "typeface-abeezee";
 
 export function PriorityConcerns({myDataset, filter}) {
-    var d = useData('./data/Grower_Crop_Data.csv')
-    if (!d){ // myDataset) {
+    const [job, setJob] = useState("_Growing_");
+    if (!myDataset) {
         return <pre>Loading...</pre>;
     }
-
-    var data_filtered = filterByCrop(d, filter) // myDataset, filter)
-    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter)
+    
+    var data_filtered = filterByCrop(myDataset, filter)
+    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, job)
+    console.log(data_by_reason)
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
@@ -19,7 +21,10 @@ export function PriorityConcerns({myDataset, filter}) {
     return (
         <div>
             <h2>What are the highest priority management challenges/concerns?</h2>
+            <button onClick={function () {setJob("_Growing_")}}>Growers</button>
+            <button onClick={function () {setJob("_Consulting_")}}>Consultants</button>
             <svg width={1920} height={900}>
+
                 <VictoryLegend
                     standalone={false}
                     colorScale={colorScale}
@@ -34,6 +39,9 @@ export function PriorityConcerns({myDataset, filter}) {
                     data={legend_data}
                 />
                 <VictoryPie
+                    animate={{
+                        duration: 500,               
+                    }}
                     standalone={false}
                     width={800}
                     height={800}

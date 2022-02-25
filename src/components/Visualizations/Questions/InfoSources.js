@@ -31,6 +31,9 @@ export function InfoSourcesBarChart(props) {
           <p><b >{job}</b> Data: </p>
           <h2>Who do you communicate with when seeking information about field crop production?</h2>
           <VictoryChart height={300} width={600}
+            animate={{
+              duration: 500,               
+            }}
             domainPadding={10}
             padding={{left: 100, bottom: 30, top: 30, right: 100}}
           >
