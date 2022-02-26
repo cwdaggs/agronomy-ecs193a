@@ -1,15 +1,26 @@
-
-import {VictoryAxis, VictoryTooltip, VictoryLabel, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, filterByCrop, trendLineSatisfactions } from '../UseData';
+import {VictoryLegend, VictoryHistogram, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
+import { averageSatisfaction, filterByCrop, trendLineSatisfactions, filterByVocation } from '../UseData';
 import * as d3 from 'd3'
+import React, { useState, useEffect } from "react";
+
+function barData(dataset, topic){
+  var values = []
+  console.log(dataset)
+  for(var i = 0; i < dataset.length; i++){
+    values.push({x: dataset[i].Topic, y: dataset[i].Priority, z: dataset[i].Satisfaction})
+  }
+  console.log(values)
+  return values.sort((a,b) => a.y-b.y)
+}
 
 export const PrioritySatisfaction = ({dataset, filter}) => {
-
+    const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
+    const [occupation, setOccupation] = useState("o");
     if (!dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByCrop(dataset, filter)
+    var data_filtered = filterByVocation(filterByCrop(dataset, filter), occupation)
     var data = averageSatisfaction(data_filtered)
 
     var domain = d3.extent(data, function(d) { return d.Priority; })
@@ -17,17 +28,115 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
     var domainPadding = 0.1
 
     var trendData = trendLineSatisfactions(data)
+    var selectedData = data
+
+    function makeVis(data){
+      setVis(
+        (<VictoryChart 
+          animate={{
+            duration: 500,               
+          }}
+          height={height} 
+          width={width}
+
+          padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
+        >
+          <VictoryBar horizontal
+            labels={({datum}) => "Priority of " + datum.x + ":\n" + datum.y.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:fontSize,
+                    strokeWidth:1,
+                    fontFamily: 'ABeeZee'
+                  }}
+                  flyoutHeight={15}
+                  flyoutWidth={30}    
+                />
+            }
+            style={{ 
+              data: { 
+                fill: "#c43a31",
+                stroke: "#756f6a",
+                fillOpacity: 0.7,
+                strokeWidth: 0.5
+              } 
+            }}
+            data={data}
+          />
+          <VictoryBar horizontal
+            labels={({datum}) => "Satisfaction of " + datum.x + ":\n" + datum.z.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:fontSize
+                  }}
+                  flyoutHeight={15}
+                  flyoutWidth={30}    
+                />
+            }
+            style={{ 
+              data: { 
+                fill: "green",
+                stroke: "#756f6a",
+                fillOpacity: 0.7,
+                strokeWidth: 0.5 
+              } 
+            }}
+            data={data}
+            y={(d)=>d.z}
+          />
+          <VictoryAxis dependentAxis
+            label="Ranking"
+            tickFormat={(tick) => `${tick}`}
+            style={{
+              axis: {stroke: "#756f6a"},
+              ticks: {stroke: "grey", size: 5},
+              tickLabels: {fontSize: fontSize, padding: 5}
+            }}
+          />
+          <VictoryAxis
+            style={{
+              axis: {stroke: "#756f6a"},
+              ticks: {stroke: "grey", size: 5},
+              tickLabels: {fontSize: fontSize, padding: 0}
+            }}
+          />
+        </VictoryChart>)
+        )
+    }
+
+    function handleSelection(points, bounds, props){
+      selectedData = (barData(props.selectedData[0].data))
+      console.log(selectedData)
+      makeVis(selectedData)
+      
+    }
+
+    function handleSelectionCleared(props){
+      console.log("cleared")
+    }
+    
 
     const width = 250;
     const height = 100;
     const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
   
     const fontSize = 2
-    
+
     return (
+
         <div>
-            <h2>Rate your current level of importance/satisfaction with UCCE's delivery of information on these topics, (1-3)</h2>
-            <VictoryChart
+            <button onClick={function () {setOccupation("o"); setVis(<p>Click and drag a selection of points for more information</p>)}}>All</button>
+            <button onClick={function () {setOccupation("Grower"); setVis(<p>Click and drag a selection of points for more information</p>)}}>Growers</button>
+            <button onClick={function () {setOccupation("Consultant"); setVis(<p>Click and drag a selection of points for more information</p>)}}>Consultants</button>
+
+            <VictoryChart 
+                containerComponent=
+                  {<VictorySelectionContainer
+                    onSelection={(points, bounds, props) => handleSelection(points, bounds, props)}
+                    onSelectionCleared={(props) => handleSelectionCleared(props)}
+                  />}
                 theme={VictoryTheme.material}
                 domain={{ x: [domain[0] - domainPadding, domain[1] + domainPadding], y: [range[0] - domainPadding, range[1] + domainPadding] }}
                 animate={{
@@ -39,14 +148,26 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}  
                 
             >
+            <VictoryLegend x={0}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={4}
+              style={{ border: { stroke: "black" }, title: {fontSize: 3 }, data: {fontSize:3 }}}
+              data={[
+                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a", strokeWidth: 0.5 }, labels:{fontSize: 3} },
+                { name: "Average", symbol: { fill: "red", type:"square" }, labels:{fontSize: 3} },
+                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" }, labels:{fontSize: 3} }
+              ]}
+            />
             <VictoryScatter
                 x={(d) => d.Priority}
                 y={(d) => d.Satisfaction}
                 style={{
                     data: {
-                        fill: "#c43a31",
+                        fill: ({ active }) => active ? "#285f1e" : "#c43a31",
                         stroke: "#756f6a",
-                        fillOpacity: 0.7,
+                        fillOpacity: ({ active }) => active ? 1 : 0.7,
                         strokeWidth: 0.5
                     },
                     axis: {stroke: "#756f6a"},
@@ -59,12 +180,14 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 labelComponent={
                     <VictoryTooltip 
                         style={{
-                        fontSize:fontSize
+                          fontSize:fontSize,
+                          strokeWidth:0.1,
+                          fontFamily: 'ABeeZee'
                         }}
                         flyoutHeight={10}
-                        flyoutWidth={30}
-                        dy={-3}    
+                        flyoutWidth={30}    
                     />
+                    
                 }
                 
                 onMouseEnter={(props) => props.style.data.stroke = "black"}
@@ -90,6 +213,32 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                         axisLabel: {fontSize: fontSize*2 }
                         }}
                 />
+            <VictoryLine horizontal
+              style={{ 
+                data: { 
+                    stroke: "red", 
+                    strokeWidth:0.1, 
+                    strokeLinecap: "round" 
+                } 
+              }}
+              x={(d) => d.x}
+              y={(d) => d.y}
+              data={trendData[2]}
+            />
+
+            <VictoryLine
+
+              style={{ 
+                data: { 
+                    stroke: "red", 
+                    strokeWidth:0.1, 
+                    strokeLinecap: "round" 
+                } 
+              }}
+              data={trendData[1]}
+              x={(d) => d.x}
+              y={(d) => d.y}
+            />
             <VictoryLine
                 
                 style={{ 
@@ -131,8 +280,11 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
                 }
                 x={(d) => d.x}
                 y={(d) => d.y}
-                data={trendData}
+                data={trendData[0]}
             />
-            </VictoryChart>
-        </div>
+          </VictoryChart>
+       
+
+          {vis}
+      </div>
     )};

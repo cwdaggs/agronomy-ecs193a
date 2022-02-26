@@ -26,18 +26,24 @@ export function sort_by_very(dataset){
 }
 
 export function filterByCrop(data, filter){
-  return data.filter(function(d){return String(d.Crops).includes(filter)});
+  if(filter === "All"){
+    return data
+  }else{
+    return data.filter(function(d){return String(d.Crops).includes(filter)});
+
+  }
 }
 
 export function filterByVocation(data, filter){
   return data.filter(function(d){return String(d.Primary_Vocation).includes(filter)});
 }
 
-export function getFarmersCrops(data, Crops){
+export function getFarmersCrops(data){
   var crops = []
+  crops.push("All")
 
   for(var i in data){
-    var current_crops = String(data[i][Crops]).split(", ")
+    var current_crops = String(data[i]["Crops"]).split(", ")
     for(var j in current_crops){
       if(!(crops.includes((current_crops[j])))){
         if(current_crops[j] !== "undefined"){
@@ -47,6 +53,24 @@ export function getFarmersCrops(data, Crops){
     }
   }
   return crops
+}
+
+export function getFarmersCounties(data){
+  var counties = []
+
+  for(var i in data){
+    var current_counties = String(data[i]["County"]).split(",")
+    for(var j in current_counties){
+      if(!(counties.includes((current_counties[j])))){
+        if(current_counties[j] !== undefined){
+          counties.push(current_counties[j])
+        }
+      }
+      
+    }
+  }
+  console.log(counties)
+  return counties
 }
 
 // Tallies each type of answer for the given question (Concerns)
@@ -114,6 +138,7 @@ export function calculateConcernTotalsForEachElement(data){
       very.push(calculateConcernEach(data, questions[i], "Very concerned"))
       somewhat.push(calculateConcernEach(data, questions[i], "Somewhat concerned"))
       notVery.push(calculateConcernEach(data, questions[i], "Not  concerned"))
+
   }
   // console.log("New data: ", [very, somewhat, notVery])
 
@@ -177,14 +202,14 @@ export function calculatePrimaryGrowingReasons(data, filter) {
   return modified_data
 }
 
-export function calculateAllPriorityConcerns(data, filter) {
-   var columns = ["Alfalfa_Concerns",	"Cotton_Concerns",	"Rice_Concerns",	"Wild_Rice_Concerns",	"Wheat_Concerns",	"Triticale_Concerns",	
-                "Barley_Concerns",	"Oats_Concerns",	"Corn_Concerns",	"Sorghum_Concerns",	"Corn_Silage_Concerns", "Small_Grain_Silage_Concerns",
-                "Small_Grain_Hay_Concerns",	"Grass_and_Grass_Mixtures_Hay_Concerns",	"Grass_and_Grass_Mixtures_Pasture_Concerns",	"Sorghum_Sudangrass_Sudan_Concerns",	
-                "Mixed_Hay_Concerns", "Dry_Beans_Concerns",	"Sunflower_Concerns",	"Oilseeds_Concerns", "Sugar_Beets_Concerns", "Hemp_Concerns", "Other_Concerns"]
+export function calculateAllPriorityConcerns(data, filter, job) {
+   var columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
+                "Barley" + job + "Concerns",	"Oats" + job + "Concerns",	"Corn" + job + "Concerns",	"Sorghum" + job + "Concerns",	"Corn_Silage" + job + "Concerns", "Small_Grain_Silage" + job + "Concerns",
+                "Small_Grain_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Pasture" + job + "Concerns",	"Sorghum_Sudangrass_Sudan" + job + "Concerns",	
+                "Mixed_Hay" + job + "Concerns", "Dry_Beans" + job + "Concerns",	"Sunflower" + job + "Concerns",	"Oilseeds" + job + "Concerns", "Sugar_Beets" + job + "Concerns", "Hemp" + job + "Concerns", "Other" + job + "Concerns"]
 
   const myMap = new Map()
-  if (filter === "") {
+  if (filter === "All" || filter === "") {
     var new_modified_data = []
     for (var col in columns) {
       var modified_data = calculatePriorityConcerns(data, columns[col])
@@ -196,13 +221,12 @@ export function calculateAllPriorityConcerns(data, filter) {
         }
       }
     }
-    
     for (const [key, value] of myMap) {
       new_modified_data.push({x: key, y: value});
     }
     return new_modified_data
   } else {
-    var new_filter = filter.split(' ').join('_') + "_Concerns"
+    var new_filter = filter.split(' ').join('_') + job + "Concerns"
     return calculatePriorityConcerns(data, new_filter)
   }
 }
@@ -214,7 +238,7 @@ export function calculatePriorityConcerns(data, filter) { //labelled under conce
     const reasons = String(data[farmer][filter]).split(',')
     for (var reason in reasons) {
       var key = reasons[reason]
-      if (key !== "NA") {
+      if (key !== "NA" && key !== "undefined") {
         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
       }
     }
@@ -227,7 +251,8 @@ export function calculatePriorityConcerns(data, filter) { //labelled under conce
 }
 
 export function calculateCropPercentageAverage(data) {
-  var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
+  //var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
+  var columns = ["Percentage_of_Acres_Field_Crops", "Percentage_of_Acres_Vegetable_Crops", "Percentage_of_Acres_Tree_and_Vine_Crops", "Percentage_of_Acres_Other"]
   var modified_data=[]
 
   for (var j = 0; j < columns.length; j++) {
@@ -305,7 +330,7 @@ export function calculateAcres(data){
   for(var k=0; k<bin_count.length; k++){
     modified_data.push({x: names[k], y: bin_count[k], fill: colors[k]});
   }
-    
+  //console.log(bin_count)
   return modified_data
 }
 export function averageSatisfaction(data){
@@ -358,7 +383,7 @@ export function averageSatisfaction(data){
     if(sAmount === 0){
       sAmount = 1
     }
-    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount)})
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot, x:topics[i], y:(pTot/pAmount)})
   }
   //console.log(answers)
   return answers
@@ -394,14 +419,16 @@ export function trendLineSatisfactions(data){
   var b = yAvg - m*xAvg
 
   var set = []
-
+  var avgsX = [{x:xAvg, y: 0}, {x: xAvg, y: 3}]
+  var avgsY = [{x:0, y: yAvg}, {x:3, y: yAvg}]
   for(var k = 0; k <= 3; k++){
     set.push({x: k, y:(m*k+b)})
   }
 
-  return set
+  return [set, avgsX, avgsY]
 
 }
+
 
 export function calculateAffectEach(data, filter, answer){
   var total = 0
@@ -595,6 +622,23 @@ export function getInternetSources(data){
     modified_data.push({x: sources[l], y: totals[l], fill: colors[l]});
   }
   return modified_data;
+}
+
+export function acresByCounty(data){
+  //const counties = getFarmersCounties(data)
+  var county_acres =  { }
+  for(var i in data){
+    var current_counties = String(data[i]["County"]).split(",")
+    for( var j in current_counties){
+      if(county_acres[current_counties[j]]){
+        county_acres[current_counties[j]] += 1
+      }else{
+        county_acres[current_counties[j]] = 1
+      }
+    }
+  }
+  console.log(county_acres)
+  return county_acres
 }
 
 export function useData(url) {

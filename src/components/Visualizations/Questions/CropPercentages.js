@@ -4,6 +4,7 @@ import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
 
 export function CropPercentages(props) {
+
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
@@ -32,6 +33,9 @@ export function CropPercentages(props) {
                     data={legend_data}
                 />
                 <VictoryPie
+                    animate={{
+                        duration: 500,               
+                    }}
                     standalone={false}
                     width={800}
                     height={800}
