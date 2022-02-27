@@ -4,6 +4,11 @@ import {useState} from 'react';
 import "typeface-abeezee";
 
 function calculateAllPriorityConcerns(data, filter, job) {
+    if(job == "Growers"){
+        job = "_Growing_";
+    } else{
+        job = "_Consulting_";
+    }
     var columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
                  "Barley" + job + "Concerns",	"Oats" + job + "Concerns",	"Corn" + job + "Concerns",	"Sorghum" + job + "Concerns",	"Corn_Silage" + job + "Concerns", "Small_Grain_Silage" + job + "Concerns",
                  "Small_Grain_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Pasture" + job + "Concerns",	"Sorghum_Sudangrass_Sudan" + job + "Concerns",	
@@ -51,15 +56,13 @@ function calculatePriorityConcerns(data, filter) { //labelled under concerns rig
    return modified_data
  }
 
-export function PriorityConcerns({myDataset, filter}) {
-    const [job, setJob] = useState("_Growing_");
-    if (!myDataset) {
+export function PriorityConcerns(props) {
+    if (!props.myDataset) {
         return <pre>Loading...</pre>;
     }
-    
-    var data_filtered = filterByCrop(myDataset, filter)
-    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, job)
-    console.log(data_by_reason)
+    var data_filtered = filterByCrop(props.myDataset, props.filter)
+    var data_by_reason = calculateAllPriorityConcerns(data_filtered, props.filter, props.vocationFilter)
+
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
@@ -69,8 +72,6 @@ export function PriorityConcerns({myDataset, filter}) {
     return (
         <div>
             <h2>What are the highest priority management challenges/concerns?</h2>
-            <button onClick={function () {setJob("_Growing_")}}>Growers</button>
-            <button onClick={function () {setJob("_Consulting_")}}>Consultants</button>
             <svg width={1920} height={900}>
                 <VictoryLegend
                     standalone={false}

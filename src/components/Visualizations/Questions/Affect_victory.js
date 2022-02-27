@@ -98,18 +98,18 @@ function transformData(dataset) {
   });
 }
 
-export function AffectVictory({dataset, filter}) {
-  const [job, setJob] = useState("Growers");
+export function AffectVictory(props) {
+  //const [job, setJob] = useState("Growers");
 
-  if (!dataset) {
+  if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByCrop(dataset, filter)
+  var data_filtered = filterByCrop(props.dataset, props.filter)
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
   var heading = (<h2>How often do the following priorities affect your management decisions for field crop production?</h2>)
-  if (job === "Consultants") {
+  if (props.vocationFilter === "Consultants") {
     heading = (<h2>How often do the following priorities affect your recommendations for field crop production?</h2>)
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
   }
@@ -123,9 +123,9 @@ export function AffectVictory({dataset, filter}) {
 
   return (
     <div>
-      <button onClick={function () {setJob("Growers")}}>Growers</button>
+      {/* <button onClick={function () {setJob("Growers")}}>Growers</button>
       <button onClick={function () {setJob("Consultants")}}>Consultants</button>
-      <p><b >{job}</b> Data: </p>
+      <p><b >{job}</b> Data: </p> */}
       {heading}
       <h3>Red=Always, Orange=Often, Yellow=Sometimes, Green=Rarely, Blue=Never</h3>
       <VictoryChart

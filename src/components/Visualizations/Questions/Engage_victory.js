@@ -61,14 +61,14 @@ function transformData(dataset) {
   });
 }
 
-export function EngageVictory({dataset, filter}) {
-  const [job, setJob] = useState("All");
+export function EngageVictory(props) {
+  //const [job, setJob] = useState("All");
 
-  if (!dataset) {
+  if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(dataset, filter), job)
+  var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   const dataset_final = transformData(data_by_engage)
 
@@ -80,12 +80,6 @@ export function EngageVictory({dataset, filter}) {
 
   return (
     <div>
-      <button onClick={function () {setJob("All")}}>All</button>
-      <button onClick={function () {setJob("Grower")}}>Growers</button>
-      <button onClick={function () {setJob("Consultant")}}>Consultants</button>
-      <button onClick={function () {setJob("Allied Industry")}}>Allied Industry</button>
-      <button onClick={function () {setJob("Other")}}>Other</button>
-      <p><b >{job}</b> Data: </p>
       <h2>How often do you engage with UC Cooperative Extension (UCCE) in the following ways?</h2>
       <h3>Red = 1-3 times/week, Orange = 1-2 times/month, Yellow = 3-6 times per year, Green = 1-2 times/year, Blue=Never</h3>
       <VictoryChart

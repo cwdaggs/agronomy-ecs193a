@@ -52,29 +52,23 @@ export function calculateInformationSources(data){
 }
 
 export function InfoSourcesBarChart(props) {
-    const [job, setJob] = useState("All");
+    //const [job, setJob] = useState("All");
 
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data = filterByCrop(props.dataset, props.filter);
-    if (job === "Allied Industry" || job === "Other") {
+    var data = filterByVocation(props.dataset, props.vocationFilter);
+    if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
       data = props.dataset;
     }
-    var filtered_data = filterByVocation(data, job);
+    var filtered_data = filterByCrop(data, props.filter);
     var info_data = calculateInformationSources(filtered_data);
 
     const fontSize = 5;
 
     return (
         <div>
-          <button onClick={function () {setJob("All")}}>All</button>
-          <button onClick={function () {setJob("Grower")}}>Growers</button>
-          <button onClick={function () {setJob("Consultant")}}>Consultants</button>
-          <button onClick={function () {setJob("Allied Industry")}}>Allied Industry</button>
-          <button onClick={function () {setJob("Other")}}>Other</button>
-          <p><b >{job}</b> Data: </p>
           <h2>Who do you communicate with when seeking information about field crop production?</h2>
           <VictoryChart height={300} width={600}
             animate={{

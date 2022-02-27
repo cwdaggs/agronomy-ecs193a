@@ -13,14 +13,14 @@ function barData(dataset, topic){
   return values.sort((a,b) => a.y-b.y)
 }
 
-export const PrioritySatisfaction = ({dataset, filter}) => {
+export const PrioritySatisfaction = (props) => {
     const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
-    const [occupation, setOccupation] = useState("All");
-    if (!dataset) {
+    //const [occupation, setOccupation] = useState("All");
+    if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCrop(dataset, filter), occupation)
+    var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter)
     var data = averageSatisfaction(data_filtered)
 
     var domain = d3.extent(data, function(d) { return d.Priority; })
@@ -127,10 +127,6 @@ export const PrioritySatisfaction = ({dataset, filter}) => {
     return (
 
         <div>
-            <button onClick={function () {setOccupation("All"); setVis(<p>Click and drag a selection of points for more information</p>)}}>All</button>
-            <button onClick={function () {setOccupation("Grower"); setVis(<p>Click and drag a selection of points for more information</p>)}}>Growers</button>
-            <button onClick={function () {setOccupation("Consultant"); setVis(<p>Click and drag a selection of points for more information</p>)}}>Consultants</button>
-
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer
