@@ -15,7 +15,11 @@ import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
 import {MapChart} from "./CaliforniaCounties"
 
 function GetTypes(dataset){
-    return getFarmersCrops(dataset) 
+  let types = getFarmersCrops(dataset).sort();
+  types.splice(types.indexOf("All"), 1);
+  types.unshift("All");
+  types.push(types.splice(types.indexOf("Other"), 1)[0]);
+  return types; 
 }
 
 function getVis(vis_name, active, activeVocation, dataset){
@@ -41,6 +45,7 @@ function VisMenu(props) {
 
   const dataset = props.dataset
   const types = GetTypes(dataset);
+  
   const [active, setActive] = useState("All");
 
   const vocationTypes = ["All", "Growers", "Consultants", "Allied Industry", "Other"]

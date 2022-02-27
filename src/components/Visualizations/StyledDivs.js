@@ -5,7 +5,7 @@ const StyledUl = styled.ul`
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  // background-color: #333;
 `;
 
 const StyledLi = styled.li`
@@ -13,6 +13,7 @@ const StyledLi = styled.li`
 `;
 
 const Dropbtn = styled.div`
+  background-color: #333;
   display: inline-block;
   color: white;
   text-align: center;
