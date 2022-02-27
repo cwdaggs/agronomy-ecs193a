@@ -271,7 +271,7 @@ export function calculateCropPercentageAverage(data) {
       }
     }
     var avg = sum / length;
-    modified_data.push({x: columns[j].split('_').join(' ').replace('Percentage ', ''), y: avg});
+    modified_data.push({x: columns[j].split('_').join(' ').replace('Percentage of Acres ', ''), y: avg});
   }
 
   return modified_data
