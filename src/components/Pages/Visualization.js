@@ -13,7 +13,8 @@ export const Visualizations = () => {
         "Affect", 
         "InfoSources", 
         "InternetSources", 
-        "PriorityConcerns", 
+        "PriorityConcerns",
+        "PrimaryGrowingReasons", 
         "AmountValued",
         "Engage",
         "Map"
