@@ -1,7 +1,4 @@
-import {useState} from 'react';
-
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-
 import {filterByCrop, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
@@ -52,17 +49,16 @@ export function calculateInformationSources(data){
 }
 
 export function InfoSourcesBarChart(props) {
-    //const [job, setJob] = useState("All");
-
+    
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data = filterByVocation(props.dataset, props.vocationFilter);
+    var data = filterByCrop(props.dataset, props.filter);
     if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
       data = props.dataset;
     }
-    var filtered_data = filterByCrop(data, props.filter);
+    var filtered_data = filterByVocation(data, props.vocationFilter);
     var info_data = calculateInformationSources(filtered_data);
 
     const fontSize = 5;
