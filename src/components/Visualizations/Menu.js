@@ -9,6 +9,8 @@ import { CropPercentages } from "./Questions/CropPercentages";
 import {InfoSourcesBarChart} from "./Questions/InfoSources";
 import {InternetSourcesBarChart} from "./Questions/InternetSources";
 import { PriorityConcerns } from "./Questions/PriorityConcerns";
+import { AmountVictory } from "./Questions/AmountValued";
+import { EngageVictory } from "./Questions/Engage_victory";
 import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
 import {MapChart} from "./CaliforniaCounties"
 
@@ -27,9 +29,10 @@ function getVis(vis_name, active, dataset){
               "InfoSources":            (<InfoSourcesBarChart filter={active} dataset={dataset}/>),
               "InternetSources":        (<InternetSourcesBarChart filter={active} dataset={dataset}/>),
               "PriorityConcerns":       (<PriorityConcerns filter={active} myDataset={dataset}/>),
+              "AmountValued":           (<AmountVictory filter={active} dataset={dataset}/>),
+              "Engage":                 (<EngageVictory filter={active} dataset={dataset}/>),
               "PrimaryGrowingReasons":  (<PrimaryGrowingReasons filter={active} myDataset={dataset}/>),
               "Map":                    (<MapChart filter={active} data={dataset}/>)
-
             }
   return vis_key[vis_name]
 }

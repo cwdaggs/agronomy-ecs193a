@@ -2,11 +2,57 @@ import {useState} from 'react';
 
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
 
-import {filterByCrop, calculateInformationSources, filterByVocation} from '../UseData.js';
+import {filterByCrop, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
+export function calculateInformationSources(data){
+  var sources = [
+    "Industry",
+    "Other Growers",
+    "UC Cooperative Extension",
+    "Pesticide Control Advisor",
+    "Certified Crop Advisor",
+    "NRCS",
+    "Input Supplier",
+    "Family members",
+    "Field crew",
+    "County Agricultural Commissioner",
+    "Environmental Groups",
+    "Resource Conservation Districts",
+    "State or County Farm Bureau",
+    "Non-Profit Organization",
+    "Commodity Boards",
+    "Water Quality Coalition",
+  ];
+
+  var colors = [
+    "#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121", "#ff0000", "#ffa500",
+    "#ffff00", "#008000", "#0000ff", "#4b0082", "#ee82ee", "#000000", "#808080", "#800080"
+  ];
+
+  var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var modified_data = [];
+
+  for (var i = 0; i < data.length; i++) {
+    var values = String(data[i]["Information_Sources"]).split(',');
+    for (var v in values) {
+      for (var j = 0; j < sources.length; j++) {
+        if (values[v].includes(sources[j])) {
+          totals[j]++;
+        }
+      }
+    }
+  }
+
+  for(var k=0; k<totals.length; k++){
+    modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
+  }
+
+  return modified_data;
+}
+
 export function InfoSourcesBarChart(props) {
-    const [job, setJob] = useState("");
+    const [job, setJob] = useState("All");
 
     if (!props.dataset) {
         return <pre>Loading...</pre>;
@@ -23,7 +69,7 @@ export function InfoSourcesBarChart(props) {
 
     return (
         <div>
-          <button onClick={function () {setJob("")}}>All</button>
+          <button onClick={function () {setJob("All")}}>All</button>
           <button onClick={function () {setJob("Grower")}}>Growers</button>
           <button onClick={function () {setJob("Consultant")}}>Consultants</button>
           <button onClick={function () {setJob("Allied Industry")}}>Allied Industry</button>
@@ -43,6 +89,16 @@ export function InfoSourcesBarChart(props) {
             <VictoryBar horizontal
               data={info_data}
               style={{ data:  { fill: ({datum}) => datum.fill}}}
+              labels={({datum}) => datum.y}
+              labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:fontSize
+                  }}
+                  flyoutHeight={15}
+                  flyoutWidth={30}    
+                />
+            }
             />
             <VictoryAxis dependentAxis
               style={{
