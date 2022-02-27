@@ -1,9 +1,47 @@
-
+import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop, filterByVocation, useData} from '../UseData.js'
+import {sort_by_very, filterByCrop, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
-import React, { useState, useEffect } from "react";
-    
+
+export function calculateValueEach(data, filter, answer){
+  var total = 0
+
+  for(var farmer in data){
+      if(data[farmer][filter] === answer){
+          total ++
+      }
+  }
+
+  var name = String(filter).split('_')
+  var temp = ""
+
+  for(let i = 2; i < name.length - 1; i++){
+    temp += name[i] + " ";
+  }
+  temp += name[name.length - 1]
+  return {Value: temp, Total: total, Level_Of_Value: answer}
+}
+
+export function calculateValueTotalsForEachElement(data){
+  var questions = [
+    "Amount_Valued_Continuing_Education_Credits",
+    "Amount_Valued_On_Farm_Consultations",
+    "Amount_Valued_Crop_Injury_Diagnosis",
+    "Amount_Valued_On_Farm_Trials"
+  ]
+  var very = []
+  var somewhat = []
+  var not = []
+
+  for(var i in questions){
+      very.push(calculateValueEach(data, questions[i], "Very Valuable"))
+      somewhat.push(calculateValueEach(data, questions[i], "Somewhat Valuable"))
+      not.push(calculateValueEach(data, questions[i], "Not Valuable"))
+  }
+
+  return [very, somewhat, not]
+}
+
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
     const totals = dataset[0].map((data, i) => {
@@ -13,21 +51,23 @@ function transformData(dataset) {
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: String(datum.Concern + " n = " + totals[i]), y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
+      return { x: datum.Value + " (n=" + totals[i] + ")", y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Value };
     });
   });
 }
 
-export function ConcernsVictory({myDataset, filter}) {
-  const [occupation, setOccupation] = useState("All");
-  if ((!myDataset) || (!filter)) {
+export function AmountVictory({dataset, filter}) {
+  const [job, setJob] = useState("All");
+
+  if (!dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(myDataset, filter), occupation)
-  var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
-  var data_sorted = sort_by_very(data_by_concern)
-  const dataset = transformData(data_sorted);
+  var data_filtered = filterByVocation(filterByCrop(dataset, filter), job)
+  var data_by_value = calculateValueTotalsForEachElement(data_filtered)
+  var data_sorted = sort_by_very(data_by_value)
+  const dataset_final = transformData(data_sorted)
+
   const width = 250;
   const height = 100;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
@@ -36,16 +76,15 @@ export function ConcernsVictory({myDataset, filter}) {
 
   return (
     <div>
-      <h2>In regards to the production of FIELD CROPS in California, rate your concern for the following:</h2>
-      
-      <button onClick={function () {setOccupation("All")}}>All</button>
-      <button onClick={function () {setOccupation("Grower")}}>Growers</button>
-      <button onClick={function () {setOccupation("Consultant")}}>Consultants</button>
-      
+      <button onClick={function () {setJob("All")}}>All</button>
+      <button onClick={function () {setJob("Grower")}}>Growers</button>
+      <button onClick={function () {setJob("Consultant")}}>Consultants</button>
+      <p><b >{job}</b> Data: </p>
+      <h2>How much do you value the following:</h2>
       <VictoryChart
         horizontal={true}
         animate={{
-            duration: 500,               
+            duration: 1000,               
         }}
         height={height} 
         width={width}
@@ -56,9 +95,9 @@ export function ConcernsVictory({myDataset, filter}) {
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#00471A", "#009141", "#02D46F"]}
+          colorScale={["#ff0000", "#00ff00", "#0000ff"]}
         >
-          {dataset.map((data, i) => {
+          {dataset_final.map((data, i) => {
             return <VictoryBar 
               data={data} 
               key={i} 

@@ -4,7 +4,7 @@ import {filterByCrop, getInternetSources, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
 
 export function InternetSourcesBarChart(props) {
-    const [job, setJob] = useState("");
+    const [job, setJob] = useState("All");
 
     if (!props.dataset) {
         return <pre>Loading...</pre>;
@@ -21,7 +21,7 @@ export function InternetSourcesBarChart(props) {
 
     return (
         <div>
-          <button onClick={function () {setJob("")}}>All</button>
+          <button onClick={function () {setJob("All")}}>All</button>
           <button onClick={function () {setJob("Grower")}}>Growers</button>
           <button onClick={function () {setJob("Consultant")}}>Consultants</button>
           <button onClick={function () {setJob("Allied Industry")}}>Allied Industry</button>

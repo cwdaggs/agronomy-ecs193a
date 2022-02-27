@@ -1,8 +1,89 @@
 import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {calculateGrowerAffectTotalsForEachElement, filterByCrop, calculateConsultantAffectTotalsForEachElement} from '../UseData.js'
+import {filterByCrop} from '../UseData.js'
 import "typeface-abeezee";
-    
+
+export function calculateAffectEach(data, filter, answer){
+  var total = 0
+
+  for(var farmer in data){
+      if(data[farmer][filter] === answer){
+          total ++
+      }
+  }
+
+  var name = String(filter).split('_')
+  var temp = ""
+
+  for(let i = 4; i < name.length - 1; i++){
+    temp += name[i] + " ";
+  }
+  temp += name[name.length - 1]
+  return {Affect: temp, Total: total, Level_Of_Affect: answer}
+}
+
+export function calculateConsultantAffectTotalsForEachElement(data){
+  var questions = ["Affected_Crop_Production_Recommendation_Profitability", 
+                  "Affected_Crop_Production_Recommendation_Crop_Yield",
+                  "Affected_Crop_Production_Recommendation_Crop_Quality", 
+                  "Affected_Crop_Production_Recommendation_Input_Costs", 
+                  "Affected_Crop_Production_Recommendation_Soil_Fertility", 
+                  "Affected_Crop_Production_Recommendation_Land_Stewardship", 
+                  "Affected_Crop_Production_Recommendation_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Recommendation_Meeting_Government_Regulations", 
+                  "Affected_Crop_Production_Recommendation_Labor_Required", 
+                  "Affected_Crop_Production_Recommendation_Ease_of_Implementation", 
+                  "Affected_Crop_Production_Recommendation_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Recommendation_Availability_of_Outreach_Information", 
+                  "Affected_Crop_Production_Recommendation_Water_Availability"]
+  var always = []
+  var often = []
+  var sometimes = []
+  var rarely = []
+  var never = []
+
+  for(var i in questions){
+      always.push(calculateAffectEach(data, questions[i], "Always"))
+      often.push(calculateAffectEach(data, questions[i], "Often"))
+      sometimes.push(calculateAffectEach(data, questions[i], "Sometimes"))
+      rarely.push(calculateAffectEach(data, questions[i], "Rarely"))
+      never.push(calculateAffectEach(data, questions[i], "Never"))
+  }
+
+  return [always, often, sometimes, rarely, never]
+}
+
+export function calculateGrowerAffectTotalsForEachElement(data){
+  var questions = ["Affected_Crop_Production_Management_Profitability", 
+                  "Affected_Crop_Production_Management_Crop_Yield",
+                  "Affected_Crop_Production_Management_Crop_Quality", 
+                  "Affected_Crop_Production_Management_Input_Costs", 
+                  "Affected_Crop_Production_Management_Soil_Fertility", 
+                  "Affected_Crop_Production_Management_Land_Stewardship", 
+                  "Affected_Crop_Production_Management_Natural_Resource_Conservation", 
+                  "Affected_Crop_Production_Management_Meeting_Government_Regulations", 
+                  "Affected_Crop_Production_Management_Labor_Required", 
+                  "Affected_Crop_Production_Management_Ease_of_Implementation", 
+                  "Affected_Crop_Production_Management_Certainty_in_Management_Practice", 
+                  "Affected_Crop_Production_Management_Availability_of_Outreach_Information", 
+                  "Affected_Crop_Production_Management_Water_Availability"]
+  var always = []
+  var often = []
+  var sometimes = []
+  var rarely = []
+  var never = []
+
+  for(var i in questions){
+      always.push(calculateAffectEach(data, questions[i], "Always"))
+      often.push(calculateAffectEach(data, questions[i], "Often"))
+      sometimes.push(calculateAffectEach(data, questions[i], "Sometimes"))
+      rarely.push(calculateAffectEach(data, questions[i], "Rarely"))
+      never.push(calculateAffectEach(data, questions[i], "Never"))
+  }
+
+  return [always, often, sometimes, rarely, never]
+}
+
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
     const totals = dataset[0].map((data, i) => {
