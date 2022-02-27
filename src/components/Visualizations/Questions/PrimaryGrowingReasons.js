@@ -9,7 +9,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
                   "Mixed_Hay_Growing_Reasons", "Dry_Beans_Growing_Reasons",	"Sunflower_Growing_Reasons", "Oilseeds_Growing_Reasons", "Sugar_Beets_Growing_Reasons", "Hemp_Growing_Reasons", "Other_Growing_Reasons"]
   
     const myMap = new Map()
-    if (filter === "") {
+    if (filter === "All" || filter === "") {
       var new_modified_data = []
       for (var col in columns) {
         var modified_data = calculatePrimaryGrowingReasons(data, columns[col])
@@ -91,6 +91,9 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                 />
                 <VictoryPie
                     standalone={false}
+                    animate={{
+                      duration: 500,               
+                    }}
                     width={800}
                     height={800}
                     padding={{
