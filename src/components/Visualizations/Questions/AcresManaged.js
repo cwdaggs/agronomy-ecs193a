@@ -1,5 +1,5 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCrop} from '../UseData.js';
+import {filterByCrop, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
 function calculateAcres(data){
@@ -12,6 +12,7 @@ function calculateAcres(data){
   for(var i = 0; i < data.length; i++){
     for(var j = 0; j < columns.length; j++){
       var num = parseInt(data[i][columns[j]], 10)
+      console.log(num);
       // Remove NAs and outliers
       if(Number.isInteger(num)){
           if(num > 10000){
@@ -44,22 +45,34 @@ function calculateAcres(data){
   return modified_data
 }
 
+function calculateSizeOfDataSet(data, vocation){
+  switch(vocation){
+    case "Growers":
+      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length;
+    case "Consultants":
+      return data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
+    default:
+      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length + data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
+  }
+}
+
 export function AcresManagedBarChart(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-    var data = filterByCrop(props.dataset, props.filter);
+    var data = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
+    console.log(data);
 
     return (
         <div>
-          {/* <h2>How many acres do you manage/consult annually?</h2> */}
+          <h2>How many acres do you manage/consult annually?</h2>
           <VictoryChart height={800} width={1920}
             domainPadding={60}
             /*padding={{left: 100, bottom: 50, top: 30, right: 100}}*/
             animate={{duration: 800}}
           >
-            <VictoryLabel text={"Acres vs Number of Farms (n = " + data.length + ")"} x={650} y={20}
+            <VictoryLabel text={"Acres vs Number of Farms (n = " + calculateSizeOfDataSet(data, props.vocationFilter) + ")"} x={650} y={20}
             style={{
               fontSize: 45
             }}/>
