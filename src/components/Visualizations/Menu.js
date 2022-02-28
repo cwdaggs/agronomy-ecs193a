@@ -62,7 +62,7 @@ function VisMenu(props) {
         <div>
           <StyledUl>
             <DropDownLi>
-              <Dropbtn onClick={() => this.handleClick("DropDown")}>
+              <Dropbtn>
                 Filter Crops
               </Dropbtn>
               <DropDownContent>
@@ -94,7 +94,7 @@ function VisMenu(props) {
       <div>
         <StyledUl>
         <DropDownLi>
-          <Dropbtn onClick={() => this.handleClick("DropDown")}>
+          <Dropbtn>
               Filter Vocation
             </Dropbtn>
             <DropDownContent>
@@ -110,7 +110,7 @@ function VisMenu(props) {
               </DropDownContent>
           </DropDownLi>
           <DropDownLi>
-            <Dropbtn onClick={() => this.handleClick("DropDown")}>
+            <Dropbtn>
               Filter Crops
             </Dropbtn>
             <DropDownContent>
