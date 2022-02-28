@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {filterByCrop, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
@@ -62,13 +61,16 @@ function transformData(dataset) {
 }
 
 export function EngageVictory(props) {
-  //const [job, setJob] = useState("All");
-
+  
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter)
+  var data = filterByCrop(props.dataset, props.filter);
+  if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
+    data = props.dataset;
+  }
+  var data_filtered = filterByVocation(data, props.vocationFilter)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   const dataset_final = transformData(data_by_engage)
 

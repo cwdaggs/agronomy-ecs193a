@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {filterByCrop} from '../UseData.js'
 import "typeface-abeezee";
@@ -99,8 +98,7 @@ function transformData(dataset) {
 }
 
 export function AffectVictory(props) {
-  //const [job, setJob] = useState("Growers");
-
+  
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }

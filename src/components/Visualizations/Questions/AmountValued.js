@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {sort_by_very, filterByCrop, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
@@ -57,8 +56,7 @@ function transformData(dataset) {
 }
 
 export function AmountVictory(props) {
-  //const [job, setJob] = useState("All");
-
+  
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
