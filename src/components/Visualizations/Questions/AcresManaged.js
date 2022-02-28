@@ -12,7 +12,6 @@ function calculateAcres(data){
   for(var i = 0; i < data.length; i++){
     for(var j = 0; j < columns.length; j++){
       var num = parseInt(data[i][columns[j]], 10)
-      console.log(num);
       // Remove NAs and outliers
       if(Number.isInteger(num)){
           if(num > 10000){
@@ -62,29 +61,30 @@ export function AcresManagedBarChart(props) {
     }
     var data = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
-    console.log(data);
+    var dataLength = calculateSizeOfDataSet(data, props.vocationFilter)
+    var lengthString = String("Acres vs Number of Farms (n = " + dataLength + ")");
 
     return (
         <div>
           <h2>How many acres do you manage/consult annually?</h2>
           <VictoryChart height={800} width={1920}
             domainPadding={60}
-            /*padding={{left: 100, bottom: 50, top: 30, right: 100}}*/
             animate={{duration: 800}}
           >
-            <VictoryLabel text={"Acres vs Number of Farms (n = " + calculateSizeOfDataSet(data, props.vocationFilter) + ")"} x={650} y={20}
+            <VictoryLabel text={lengthString} x={650} y={20}
             style={{
               fontSize: 45
             }}/>
             <VictoryAxis
-              label="Farm Size in Acres"
-              /*padding={{ top: 10, bottom: 10 }}*/
               style={{
                 tickLabels: {fontSize: 30, padding: 5},
                 axisLabel: {fontSize: 40, padding: {top: 0}}
               }}
             />
-            <VictoryAxis dependentAxis/>
+            <VictoryAxis dependentAxis
+            style={{
+              tickLabels: {fontSize: 20, padding: 5},
+            }}/>
             <VictoryBar
 
               data={acre_data}
