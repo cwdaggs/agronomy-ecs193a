@@ -28,7 +28,7 @@ export const Visualizations = () => {
                     key={type} 
                     onClick={() => {setActive(type)}} 
                     active={active === type}
-                    >{type}
+                    >{type.replace(/([A-Z])/g, ' $1').trim()}
                 </Tab>
             ))}
         
