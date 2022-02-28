@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {sort_by_very, filterByCrop, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
@@ -56,14 +55,13 @@ function transformData(dataset) {
   });
 }
 
-export function AmountVictory({dataset, filter}) {
-  const [job, setJob] = useState("All");
-
-  if (!dataset) {
+export function AmountVictory(props) {
+  
+  if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(dataset, filter), job)
+  var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
@@ -76,10 +74,6 @@ export function AmountVictory({dataset, filter}) {
 
   return (
     <div>
-      <button onClick={function () {setJob("All")}}>All</button>
-      <button onClick={function () {setJob("Grower")}}>Growers</button>
-      <button onClick={function () {setJob("Consultant")}}>Consultants</button>
-      <p><b >{job}</b> Data: </p>
       <h2>How much do you value the following:</h2>
       <VictoryChart
         horizontal={true}

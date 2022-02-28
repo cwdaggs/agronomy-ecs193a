@@ -5,7 +5,7 @@ const StyledUl = styled.ul`
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  // background-color: #333;
 `;
 
 const StyledLi = styled.li`
@@ -13,6 +13,7 @@ const StyledLi = styled.li`
 `;
 
 const Dropbtn = styled.div`
+  background-color: #333;
   display: inline-block;
   color: white;
   text-align: center;
@@ -53,15 +54,18 @@ const SubA = styled.a`
 const Tab = styled.button`
   padding: 35px 60px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 25px;
   font-family: ABeeZee, serif; 
   opacity: 0.7;
   background: white;
   border: 0;
   outline: 0;
+  &:hover {
+    background-color: #f1f1f1;
+  }
   ${({active}) => 
   active && `
-  // border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
   opacity: 1;
   `}
 `;

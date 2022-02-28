@@ -6,19 +6,20 @@ import {Tab} from '../Visualizations/StyledDivs'
 export const Visualizations = () => {
     
     const types = [
-        "Concerns", 
-        "CropPercentages", 
-        "AcresManaged", 
-        "PrioritySatisfaction", 
-        "Affect", 
-        "InfoSources", 
-        "InternetSources", 
-        "PriorityConcerns", 
-        "AmountValued",
-        "Engage",
+        "AcresManaged", //Q2
+        "CropPercentages", //Q3
+        "Concerns", //Q6
+        "PriorityConcerns", //Q7
+        "PrimaryGrowingReasons", //Q8
+        "Affect", //Q9
+        "InfoSources", //Q10
+        "Engage", //Q11
+        "AmountValued", //Q12
+        "PrioritySatisfaction", //Q13
+        "InternetSources", //Q16
         "Map"
     ]
-    const [active, setActive] = useState("Concerns");
+    const [active, setActive] = useState("AcresManaged");
     return(
         <div id="outer-container">
             

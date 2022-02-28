@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {filterByCrop, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
@@ -61,14 +60,17 @@ function transformData(dataset) {
   });
 }
 
-export function EngageVictory({dataset, filter}) {
-  const [job, setJob] = useState("All");
-
-  if (!dataset) {
+export function EngageVictory(props) {
+  
+  if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(dataset, filter), job)
+  var data = filterByCrop(props.dataset, props.filter);
+  if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
+    data = props.dataset;
+  }
+  var data_filtered = filterByVocation(data, props.vocationFilter)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   const dataset_final = transformData(data_by_engage)
 
@@ -80,12 +82,6 @@ export function EngageVictory({dataset, filter}) {
 
   return (
     <div>
-      <button onClick={function () {setJob("All")}}>All</button>
-      <button onClick={function () {setJob("Grower")}}>Growers</button>
-      <button onClick={function () {setJob("Consultant")}}>Consultants</button>
-      <button onClick={function () {setJob("Allied Industry")}}>Allied Industry</button>
-      <button onClick={function () {setJob("Other")}}>Other</button>
-      <p><b >{job}</b> Data: </p>
       <h2>How often do you engage with UC Cooperative Extension (UCCE) in the following ways?</h2>
       <h3>Red = 1-3 times/week, Orange = 1-2 times/month, Yellow = 3-6 times per year, Green = 1-2 times/year, Blue=Never</h3>
       <VictoryChart

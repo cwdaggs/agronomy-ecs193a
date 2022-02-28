@@ -34,11 +34,24 @@ export function filterByCrop(data, filter){
 }
 
 export function filterByVocation(data, filter){
-  if(filter === "All"){
-    return data
-  }else{
-    return data.filter(function(d){return String(d.Primary_Vocation).includes(filter)});
+  switch(filter){
+    case "All":
+      return data
+    case "Growers":
+      filter = "Grower"
+      break;
+    case "Consultants":
+      filter = "Consultant (ex. Certified Crop Advisor (CCA), Pest Control Advisor (PCA))"
+      break;
+    case "Allied Industry":
+      filter = "Allied Industry (e.g. Input supplier, manufacturer, processor, etc.) (please specify):"
+      break;
+    case "Other":
+      filter = "Other (please specify):"
+      break;
+    default:
   }
+  return data.filter(function(d){return String(d.Primary_Vocation).includes(filter)});
 }
 
 export function getFarmersCrops(data){
@@ -148,111 +161,6 @@ export function calculateConcernTotalsForEachElement(data){
   return [very, somewhat, notVery]
 }
 
-export function calculateAllPrimaryGrowingReasons(data, filter) {
-  var columns = ["Alfalfa_Reasons",	"Cotton_Reasons",	"Rice_Reasons",	"Wild_Rice_Reasons",	"Wheat_Reasons",	"Triticale_Reasons",	
-                "Barley_Reasons",	"Oats_Reasons",	"Corn_Reasons",	"Sorghum_Reasons",	"Corn_Silage_Reasons", "Small_Grain_Silage_Reasons",
-                "Small_Grain_Hay_Reasons",	"Grass_and_Grass_Mixtures_Hay_Reasons",	"Grass_and_Grass_Mixtures_Pasture_Reasons",	"Sorghum_Sudangrass_Sudan_Reasons",	
-                "Mixed_Hay_Reasons", "Dry_Beans_Reasons",	"Sunflower_Reasons",	"Oilseeds_Reasons", "Sugar_Beets_Reasons", "Hemp_Reasons", "Other_Reasons"]
-
-  const myMap = new Map()
-  if (filter === "") {
-    var new_modified_data = []
-    for (var col in columns) {
-      var modified_data = calculatePrimaryGrowingReasons(data, columns[col])
-      for (var item in modified_data) {
-        let key_data = modified_data[item].x
-        let value_data = modified_data[item].y
-        if (key_data !== "NA") {
-          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
-        }
-      }
-    }
-    
-    for (const [key, value] of myMap) {
-      new_modified_data.push({x: key, y: value});
-    }
-    return new_modified_data
-  } else {
-    var new_filter = filter.split(' ').join('_') + "_Reasons"
-    return calculatePrimaryGrowingReasons(data, new_filter)
-  }
-}
-
-export function calculatePrimaryGrowingReasons(data, filter) {
-  var modified_data = []
-  const myMap = new Map()
-  for (var farmer in data) {
-    const reasons = String(data[farmer][filter]).split(',')
-    for (var reason in reasons) {
-      var key = reasons[reason]
-      if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
-        key = "Limited by farm resources"
-      }
-      if (key !== "NA") {
-        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
-      }
-    }
-  }
-
-  for (const [key, value] of myMap) {
-    if (key === "Limited by farm resources") {
-      modified_data.push({x: key, y: value/6});
-    } else {
-      modified_data.push({x: key, y: value});
-    }
-  }
-
-  return modified_data
-}
-
-export function calculateAllPriorityConcerns(data, filter, job) {
-   var columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
-                "Barley" + job + "Concerns",	"Oats" + job + "Concerns",	"Corn" + job + "Concerns",	"Sorghum" + job + "Concerns",	"Corn_Silage" + job + "Concerns", "Small_Grain_Silage" + job + "Concerns",
-                "Small_Grain_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Pasture" + job + "Concerns",	"Sorghum_Sudangrass_Sudan" + job + "Concerns",	
-                "Mixed_Hay" + job + "Concerns", "Dry_Beans" + job + "Concerns",	"Sunflower" + job + "Concerns",	"Oilseeds" + job + "Concerns", "Sugar_Beets" + job + "Concerns", "Hemp" + job + "Concerns", "Other" + job + "Concerns"]
-
-  const myMap = new Map()
-  if (filter === "All" || filter === "") {
-    var new_modified_data = []
-    for (var col in columns) {
-      var modified_data = calculatePriorityConcerns(data, columns[col])
-      for (var item in modified_data) {
-        let key_data = modified_data[item].x
-        let value_data = modified_data[item].y
-        if (key_data !== "NA") {
-          myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
-        }
-      }
-    }
-    for (const [key, value] of myMap) {
-      new_modified_data.push({x: key, y: value});
-    }
-    return new_modified_data
-  } else {
-    var new_filter = filter.split(' ').join('_') + job + "Concerns"
-    return calculatePriorityConcerns(data, new_filter)
-  }
-}
-
-export function calculatePriorityConcerns(data, filter) { //labelled under concerns right before growing reasons, the q is about challenges
-  var modified_data = []
-  const myMap = new Map()
-  for (var farmer in data) {
-    const reasons = String(data[farmer][filter]).split(',')
-    for (var reason in reasons) {
-      var key = reasons[reason]
-      if (key !== "NA" && key !== "undefined") {
-        myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
-      }
-    }
-  }
-
-  for (const [key, value] of myMap) {
-    modified_data.push({x: key, y: value});
-  }
-  return modified_data
-}
-
 export function calculateCropPercentageAverage(data) {
   //var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
   var columns = ["Percentage_of_Acres_Field_Crops", "Percentage_of_Acres_Vegetable_Crops", "Percentage_of_Acres_Tree_and_Vine_Crops", "Percentage_of_Acres_Other"]
@@ -271,71 +179,29 @@ export function calculateCropPercentageAverage(data) {
       }
     }
     var avg = sum / length;
-    modified_data.push({x: columns[j].split('_').join(' ').replace('Percentage ', ''), y: avg});
+    modified_data.push({x: columns[j].split('_').join(' ').replace('Percentage of Acres ', ''), y: avg});
   }
 
   return modified_data
 }
 
 
-export function calculateAcresManagedOrConsulted(data){
-  var columns = ["Acres_Managed", "Acres_Consulted"]
-  var modified_data=[]
+// export function calculateAcresManagedOrConsulted(data){
+//   var columns = ["Acres_Managed", "Acres_Consulted"]
+//   var modified_data=[]
 
-  for(var i = 0; i < data.length; i++){
-    for(var j = 0; j < columns.length; j++){
-      var num = parseInt(data[i][columns[j]], 10)
-      // Remove NAs and outliers
-      if(Number.isInteger(num) && num < 10000){
-        modified_data.push({x: data[i]["Primary_Vocation"], y: num});
-        }
-      }
-    }    
-  return modified_data
-}
+//   for(var i = 0; i < data.length; i++){
+//     for(var j = 0; j < columns.length; j++){
+//       var num = parseInt(data[i][columns[j]], 10)
+//       // Remove NAs and outliers
+//       if(Number.isInteger(num) && num < 10000){
+//         modified_data.push({x: data[i]["Primary_Vocation"], y: num});
+//         }
+//       }
+//     }    
+//   return modified_data
+// }
 
-export function calculateAcres(data){
-  var names = ["< 500", "1000", "1500", "2000", "2500", "2500+"]
-  var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
-  var columns = ["Acres_Managed", "Acres_Consulted"]
-  var modified_data=[]
-  var bin_count = [0,0,0,0,0,0]
-
-  for(var i = 0; i < data.length; i++){
-    for(var j = 0; j < columns.length; j++){
-      var num = parseInt(data[i][columns[j]], 10)
-      // Remove NAs and outliers
-      if(Number.isInteger(num)){
-          if(num > 10000){
-            continue;
-          }
-          if(num < 500){
-              bin_count[0]++
-          }
-          else if (num < 1000){
-            bin_count[1]++
-          }
-          else if (num < 1500){
-            bin_count[2]++
-          }
-          else if (num < 2000){
-            bin_count[3]++
-          }
-          else if (num < 2500){
-            bin_count[4]++
-          }
-          else{
-            bin_count[5]++
-          }   
-        }
-      }
-    }
-  for(var k=0; k<bin_count.length; k++){
-    modified_data.push({x: names[k], y: bin_count[k], fill: colors[k]});
-  }
-  //console.log(bin_count)
-  return modified_data
-}
 export function averageSatisfaction(data){
   var topics = ["Compost_Management", "Cover_Crops", "Crop_Establishment", 
                 "Disease_Control", "Emerging_Crops", "Greenhouse_Gas_Emissions_Reduction", 
@@ -430,73 +296,6 @@ export function trendLineSatisfactions(data){
 
   return [set, avgsX, avgsY]
 
-}
-
-export function getInternetSources(data){
-  var sources = [
-    "Internet (websites)",
-    "Blogs",
-    "Webinars",
-    "Virtual Meetings",
-    "Newsletters",
-    "UC Cooperative Extension Magazine Articles",
-    "Personal contact (phone, email, on-farm consultation)",
-    "In-person meetings (Field Days, Grower Meetings)",
-    "Books/manuals",
-    "Radio/Podcast",
-    "Social Media",
-    "Fact Sheets",
-    "Interactive Web Tools",
-    "Demonstration Videos",
-    "Two or three day destination meetings",
-    "\"California Agriculture\" Journal"
-  ];
-
-  var colors = [
-    "#212011",
-    "#2C2D17",
-    "#35381D",
-    "#3D4323",
-    "#444F2A",
-    "#4A5A30",
-    "#4F6536",
-    "#53703D",
-    "#577B44",
-    "#59864A",
-    "#5B9151",
-    "#699759",
-    "#769C60",
-    "#83A268",
-    "#90A770",
-    "#9CAD78",
-    "#A8B280",
-    "#B2B888",
-    "#BDBD90",
-    "#C2BE98",
-    "#C7BFA0",
-  ];
-
-  var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var modified_data = [];
-
-  for (var i = 0; i < data.length; i++) {
-    var values = String(data[i]["UCCE_Information_Preferred_Contact"]).split(',(?![+ ])');
-    for (var j in values) {
-      for (var k = 0; k < sources.length; k++) {
-        if (values[j].includes(sources[k])) {
-          totals[k]++;
-        }
-      }
-    }
-  }
-  sources[5] = "UC Cooperative Extension\nMagazine Articles"
-  sources[6] = "Personal contact\n(phone, email, on-farm consultation)";
-  sources[7] = "In-person meetings\n(Field Days, Grower Meetings)";
-
-  for(var l=0; l<totals.length; l++){
-    modified_data.push({x: sources[l], y: totals[l], fill: colors[l]});
-  }
-  return modified_data;
 }
 
 export function acresByCounty(data){

@@ -18,13 +18,12 @@ function transformData(dataset) {
   });
 }
 
-export function ConcernsVictory({myDataset, filter}) {
-  const [occupation, setOccupation] = useState("All");
-  if ((!myDataset) || (!filter)) {
+export function ConcernsVictory(props) {
+  if ((!props.dataset) || (!props.filter)) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(myDataset, filter), occupation)
+  var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_concern)
   const dataset = transformData(data_sorted);
@@ -37,10 +36,6 @@ export function ConcernsVictory({myDataset, filter}) {
   return (
     <div>
       <h2>In regards to the production of FIELD CROPS in California, rate your concern for the following:</h2>
-      
-      <button onClick={function () {setOccupation("All")}}>All</button>
-      <button onClick={function () {setOccupation("Grower")}}>Growers</button>
-      <button onClick={function () {setOccupation("Consultant")}}>Consultants</button>
       
       <VictoryChart
         horizontal={true}
