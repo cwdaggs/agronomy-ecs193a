@@ -108,9 +108,9 @@ export function AffectVictory(props) {
   var data_filtered = filterByCrop(props.dataset, props.filter)
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
-  var heading = (<h2>How often do the following priorities affect your management decisions for field crop production?</h2>)
+  // var heading = (<h2>How often do the following priorities affect your management decisions for field crop production?</h2>)
   if (props.vocationFilter === "Consultants") {
-    heading = (<h2>How often do the following priorities affect your recommendations for field crop production?</h2>)
+    // heading = (<h2>How often do the following priorities affect your recommendations for field crop production?</h2>)
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
   }
   const dataset_final = transformData(data_by_affect)
@@ -126,7 +126,7 @@ export function AffectVictory(props) {
       {/* <button onClick={function () {setJob("Growers")}}>Growers</button>
       <button onClick={function () {setJob("Consultants")}}>Consultants</button>
       <p><b >{job}</b> Data: </p> */}
-      {heading}
+      {/* {heading} */}
       <h3>Red=Always, Orange=Often, Yellow=Sometimes, Green=Rarely, Blue=Never</h3>
       <VictoryChart
         horizontal={true}

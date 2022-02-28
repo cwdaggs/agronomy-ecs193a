@@ -26,7 +26,8 @@ export const MapChart = (props) => {
   const data = filterByCrop(props.data, props.filter)
   const countyData = acresByCounty(data)
   return (
-    <div><h2>Density of Survey Responses By County</h2>
+    <div>
+      {/* <h2>Density of Survey Responses By County</h2> */}
       <svg width={1920} height={800}>
           
           <VictoryLegend

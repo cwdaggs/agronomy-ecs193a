@@ -13,6 +13,7 @@ import { AmountVictory } from "./Questions/AmountValued";
 import { EngageVictory } from "./Questions/Engage_victory";
 import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
 import {MapChart} from "./CaliforniaCounties"
+// import {OnlyCrops} from "./DropDownMenus"
 
 function GetTypes(dataset){
   let types = getFarmersCrops(dataset).sort();
@@ -48,27 +49,15 @@ function VisMenu(props) {
   
   const [active, setActive] = useState("All");
 
-  const vocationTypes = ["All", "Growers", "Consultants", "Allied Industry", "Other"]
+  const vocationTypes = ["All", "Allied Industry", "Consultants", "Growers", "Other"]
   const limitedVocationTypes = ["All", "Growers", "Consultants"]
   const evenMoreLimitedVocationTypes = ["Growers", "Consultants"]
   const [activeVocation, setActiveVocation] = useState("Growers");
 
   const vis = getVis(props.vis, active, activeVocation, dataset);
 
-  switch(vis.type.name){
-    // Visualizations with no filters
-    case "CropPercentages": {
-        return (
-          <>
-          {vis}
-          </>
-        )
-      }
-    // Visualizations that can only be filtered by crop
-    case "MapChart":
-    case "PrimaryGrowingReasons":
-    case "AcresManagedBarChart": {
-      return (
+  function OnlyCrops() {
+    return (
         <>
         <div>
           <StyledUl>
@@ -97,54 +86,111 @@ function VisMenu(props) {
         </div>
         </>     
       )
+  }
+
+  function MoreLimitedVocation() {
+    return (
+      <>
+      <div>
+        <StyledUl>
+        <DropDownLi>
+          <Dropbtn onClick={() => this.handleClick("DropDown")}>
+              Filter Vocation
+            </Dropbtn>
+            <DropDownContent>
+              {" "}
+              {evenMoreLimitedVocationTypes.map(type => (
+                  <SubA 
+                    key={type}
+                    active={activeVocation === type}
+                    onClick={() => {setActiveVocation(type);}}
+                    >{type}
+                </SubA>
+                ))}
+              </DropDownContent>
+          </DropDownLi>
+          <DropDownLi>
+            <Dropbtn onClick={() => this.handleClick("DropDown")}>
+              Filter Crops
+            </Dropbtn>
+            <DropDownContent>
+              {" "}
+              {types.map(type => (
+                  <SubA 
+                    key={type}
+                    active={active === type}
+                    onClick={() => {setActive(type);}}
+                    >{type}
+                </SubA>
+                ))}
+              </DropDownContent>
+          </DropDownLi>
+        </StyledUl>
+      </div> 
+      <p><b >Vocation: </b>{activeVocation} &ensp; <b >Crop: </b>{active}</p>
+      <div className='row' align-items='center'> </div>
+      <div align-items='center'>
+      {vis}
+      </div>
+      </>  
+    )
+  }
+
+  function LimitedVocation() {
+
+  }
+
+  function Vocation() {}
+
+  switch(vis.type.name){
+    // Visualizations with no filters
+    case "CropPercentages": {
+        return (
+          <>
+          <h2>Of the total acres, what percentage are in the following categories? (Field Crops, Vegetable Crops, Tree and Vine Crops, or Other)</h2>
+          {vis}
+          </>
+        )
+      }
+    // Visualizations that can only be filtered by crop
+    case "MapChart": {
+      return (
+        <>
+        <h2>Density of Survey Responses By County</h2> 
+        <OnlyCrops/>
+        </>   
+      )
+    }
+    case "PrimaryGrowingReasons": {
+      return (
+        <>
+        <h2>What are the primary reasons you grow the following field crops?</h2> 
+        <OnlyCrops/>
+        </>   
+      )
+    }
+    case "AcresManagedBarChart": {
+      return (
+        <>
+        <h2>How many acres do you manage/consult annually?</h2> 
+        <OnlyCrops/>
+        </>   
+      )
     }
     // Visualizations that can strictly only be filtered by grower or consultant
     case "PriorityConcerns":
     case "AffectVictory": {
+      // let blah = ""
+      // if ({activeVocation} === "Consultants") {
+      //   blah = "How often do the following priorities affect your recommendations for field crop production?"
+      // } else {
+      //   blah = "How often do the following priorities affect your management decisions for field crop production?"
+      // }
       return (
-        <>
-        <div>
-          <StyledUl>
-          <DropDownLi>
-            <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                Filter Vocation
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {evenMoreLimitedVocationTypes.map(type => (
-                    <SubA 
-                      key={type}
-                      active={activeVocation === type}
-                      onClick={() => {setActiveVocation(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-            <DropDownLi>
-              <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                Filter Crops
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {types.map(type => (
-                    <SubA 
-                      key={type}
-                      active={active === type}
-                      onClick={() => {setActive(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-          </StyledUl>
-        </div> 
-        <p><b >Vocation: </b>{activeVocation} &ensp; <b >Crop: </b>{active}</p>
-        <div className='row' align-items='center'> </div>
-        <div align-items='center'>
-        {vis}
-        </div>
-        </>     
+          <>
+          <h2>How often do the following priorities affect your managements/recommendations for field crop production?</h2>
+          <MoreLimitedVocation/>
+          </>
       )
     }
     // Visualizations that can be filtered by all, growers, or consultants
@@ -247,4 +293,7 @@ function VisMenu(props) {
     }
   } 
 }
+
+
+
 export {VisMenu};
