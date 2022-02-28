@@ -1,4 +1,4 @@
-import {filterByCrop} from "../UseData.js";
+import {filterByCrop, filterByVocation} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 
@@ -64,8 +64,10 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByCrop(myDataset, filter)
+    var data_filtered = filterByVocation(filterByCrop(myDataset, filter), "Growers")
+    // console.log(data_filtered)
     var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
+    // console.log(data_by_reason)
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
@@ -74,7 +76,7 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
 
     return (
         <div>
-            <h2>What are the primary reasons you grow the following field crops?</h2> 
+            
             <svg width={1920} height={900}>
                 <VictoryLegend
                     standalone={false}

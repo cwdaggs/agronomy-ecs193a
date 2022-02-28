@@ -19,7 +19,7 @@ export const Visualizations = () => {
         "InternetSources", //Q16
         "Map"
     ]
-    const [active, setActive] = useState("Concerns");
+    const [active, setActive] = useState("AcresManaged");
     return(
         <div id="outer-container">
             
