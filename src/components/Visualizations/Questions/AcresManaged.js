@@ -1,5 +1,5 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCrop} from '../UseData.js';
+import {filterByCrop, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
 function calculateAcres(data){
@@ -44,34 +44,47 @@ function calculateAcres(data){
   return modified_data
 }
 
+function calculateSizeOfDataSet(data, vocation){
+  switch(vocation){
+    case "Growers":
+      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length;
+    case "Consultants":
+      return data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
+    default:
+      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length + data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
+  }
+}
+
 export function AcresManagedBarChart(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-    var data = filterByCrop(props.dataset, props.filter);
+    var data = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
+    var dataLength = calculateSizeOfDataSet(data, props.vocationFilter)
+    var lengthString = String("Acres vs Number of Farms (n = " + dataLength + ")");
 
     return (
         <div>
-          {/* <h2>How many acres do you manage/consult annually?</h2> */}
+          <h2>How many acres do you manage/consult annually?</h2>
           <VictoryChart height={800} width={1920}
             domainPadding={60}
-            /*padding={{left: 100, bottom: 50, top: 30, right: 100}}*/
             animate={{duration: 800}}
           >
-            <VictoryLabel text={"Acres vs Number of Farms (n = " + data.length + ")"} x={650} y={20}
+            <VictoryLabel text={lengthString} x={650} y={20}
             style={{
               fontSize: 45
             }}/>
             <VictoryAxis
-              label="Farm Size in Acres"
-              /*padding={{ top: 10, bottom: 10 }}*/
               style={{
                 tickLabels: {fontSize: 30, padding: 5},
                 axisLabel: {fontSize: 40, padding: {top: 0}}
               }}
             />
-            <VictoryAxis dependentAxis/>
+            <VictoryAxis dependentAxis
+            style={{
+              tickLabels: {fontSize: 20, padding: 5},
+            }}/>
             <VictoryBar
 
               data={acre_data}

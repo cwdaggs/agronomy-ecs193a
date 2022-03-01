@@ -169,14 +169,14 @@ function VisMenu(props) {
         </>   
       )
     }
-    case "AcresManagedBarChart": {
-      return (
-        <>
-        <h2>How many acres do you manage/consult annually?</h2> 
-        <OnlyCrops/>
-        </>   
-      )
-    }
+    // case "AcresManagedBarChart": {
+    //   return (
+    //     <>
+    //     <h2>How many acres do you manage/consult annually?</h2> 
+    //     <OnlyCrops/>
+    //     </>   
+    //   )
+    // }
     // Visualizations that can strictly only be filtered by grower or consultant
     case "PriorityConcerns": {
       return (
@@ -201,6 +201,7 @@ function VisMenu(props) {
       )
     }
     // Visualizations that can be filtered by all, growers, or consultants
+    case "AcresManagedBarChart":
     case "AmountVictory":
     case "PrioritySatisfaction":
     case "ConcernsVictory": {
