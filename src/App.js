@@ -15,6 +15,10 @@ function App() {
     setDisplay(newDisplay);
   }
 
+  function changeDual(){
+    checkDualDisplay(!dual_display)
+  }
+
   function getDisplay(){
     if(dual_display){
       return(
@@ -58,7 +62,7 @@ function App() {
         <TabGroup changeFunc={changeDisplay}/>
       </div>
       <div>
-        <Checkbox label={"Compare"} checked={false} onChange={checkDualDisplay} />
+        <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
       </div>
       {getDisplay()}
     </div>

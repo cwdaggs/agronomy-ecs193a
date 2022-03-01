@@ -31,12 +31,12 @@ export const Visualizations = () => {
                     <DropDownContent>
                       {" "}
                       {types.map(type => (
-                          <Tab 
+                          <SubA 
                           key={type} 
                           onClick={() => {setActive(type)}} 
                           active={active === type}
                           >{type}
-                        </Tab>
+                        </SubA>
                         ))}
                       </DropDownContent>
                   </DropDownLi>

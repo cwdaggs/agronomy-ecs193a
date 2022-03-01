@@ -22,10 +22,10 @@ const colorScale = scaleLinear()
 const pieColorScale = ["#0A2F51", "#0E4D64", "#137177","#188977"]
 
 function occupationAmount(data){
-  var occMap = [  {x: "Growers", y: filterByVocation(data, "Grower").length}, 
-                  {x: "Consultants", y: filterByVocation(data, "Consultant (ex. Certified Crop Advisor (CCA), Pest Control Advisor (PCA))").length}, 
-                  {x: "Allied Industry", y: filterByVocation(data, "Allied Industry (e.g. Input supplier, manufacturer, processor, etc.) (please specify):").length}, 
-                  {x: "Other", y: filterByVocation(data, "Other (please specify):").length} ]
+  var occMap = [  {x: "Growers", y: 100 * (filterByVocation(data, "Grower").length / data.length)}, 
+                  {x: "Consultants", y: 100 * (filterByVocation(data, "Consultant (ex. Certified Crop Advisor (CCA), Pest Control Advisor (PCA))").length  / data.length ) }, 
+                  {x: "Allied Industry", y: 100 * (filterByVocation(data, "Allied Industry (e.g. Input supplier, manufacturer, processor, etc.) (please specify):").length  / data.length ) }, 
+                  {x: "Other", y: 100 * (filterByVocation(data, "Other (please specify):").length / data.length )} ]
   console.log(occMap)
   return occMap
 }
@@ -108,14 +108,14 @@ export const MapChart = (props) => {
             colorScale={pieColorScale}
             data={occupationData}
             // labels={() => null}
-            labels={({ datum }) => `${datum.x + ": " + datum.y.toFixed()}`}
+            labels={({ datum }) => `${datum.x + ": " + datum.y.toFixed() + "%"}`}
             labelComponent={<VictoryTooltip 
               style={{
                 fontSize:20,
                 fontFamily: 'ABeeZee'
               }}
               flyoutHeight={25}
-              flyoutWidth={185}    
+              flyoutWidth={200}    
               />}
             />
             <VictoryLegend
