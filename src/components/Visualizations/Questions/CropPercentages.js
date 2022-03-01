@@ -15,33 +15,34 @@ export function CropPercentages(props) {
     }
 
     return (
-        <div>
-            
-            <svg width={1920} height={800}>       
+
+        <div class='parent flex-parent'>
+            <div class='child flex-child'>
                 <VictoryLegend
-                    standalone={false}
                     colorScale="heatmap"
-                    x={950}
-                    y={200}
+                    
                     gutter={20}
-                    style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 23},
+                    style={{labels: {fill: "black", color: "white", fontFamily: 'sans-serif', fontSize: 23}, 
+                            title:  {fontFamily: 'sans-serif', fontSize: 23},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title="Legend"
                     centerTitle
                     data={legend_data}
-                />
+            />
+            </div>
+            <div class='child flex-child'>   
+                
                 <VictoryPie
                     animate={{
                         duration: 500,               
                     }}
-                    standalone={false}
-                    width={800}
-                    height={800}
+                    
+                    width={400}
+                    height={400}
                     padding={{
-                        left: 250,
-                        bottom: 20,
-                        top: 20
+                        left: 0,
+                        bottom: 50,
+                        top: 50
                     }}
                     style={{ data: { stroke: "black", strokeWidth: 1}}}
                     colorScale="heatmap"
@@ -57,7 +58,7 @@ export function CropPercentages(props) {
                         flyoutWidth={45}    
                     />}
                 />
-            </svg>
+            </div>
 
         </div>
     );

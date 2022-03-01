@@ -33,6 +33,22 @@ const Tab = styled.button`
   `}
 `;
 
+const CropTab = styled.button`
+  padding: 15px 30px;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: ABeeZee, serif; 
+  opacity: 0.7;
+  background: white;
+  border: 0;
+  outline: 0;
+  ${({active}) => 
+  active && `
+  // border-bottom: 2px solid black;
+  opacity: 1;
+  `}
+`;
+
 const types = ['Visualizations', 'Info', 'About'];
 
 function ToggleGroup() {
@@ -65,6 +81,14 @@ const ButtonGroup = styled.div`
   display: flex;
 `;
 
+const Checkbox = ({ label, value, onChange }) => {
+  return (
+    <label>
+      <input type="checkbox" checked={value} onChange={onChange}/>
+      {label}
+    </label>
+  );
+};
 
 function TabGroup(props){
     const [active, setActive] = useState(types[0]);
@@ -90,4 +114,4 @@ function TabGroup(props){
     );
 }
 
-export {TabGroup, ToggleGroup}
+export {TabGroup, ToggleGroup, Checkbox}

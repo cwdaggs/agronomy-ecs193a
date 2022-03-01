@@ -75,14 +75,10 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
     const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
 
     return (
-        <div>
-            
-            <svg width={1920} height={900}>
-                <VictoryLegend
-                    standalone={false}
+          <div class='parent flex-parent'>
+            <div class='child flex-child'>
+                <VictoryLegend           
                     colorScale={colorScale}
-                    x={1000}
-                    y={110}
                     gutter={20}
                     style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 23}, 
                             title:  {fontFamily: 'ABeeZee', fontSize: 23},
@@ -91,17 +87,18 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                     centerTitle
                     data={legend_data}
                 />
+                </div>
+                <div class='child flex-child'>   
                 <VictoryPie
-                    standalone={false}
                     animate={{
                       duration: 500,               
                     }}
-                    width={800}
-                    height={800}
+                    width={400}
+                    height={400}
                     padding={{
-                        left: 250,
-                        bottom: 20,
-                        top: 20
+                        left: 0,
+                        bottom: 50,
+                        top: 60
                     }}
                     // events={[{
                     //     target: "data",
@@ -137,7 +134,7 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                         flyoutWidth={45}    
                     />}
                 />
-            </svg>
+            </div>
         </div>
     );
 }
