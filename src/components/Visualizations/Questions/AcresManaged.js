@@ -44,15 +44,12 @@ function calculateAcres(data){
   return modified_data
 }
 
-function calculateSizeOfDataSet(data, vocation){
-  switch(vocation){
-    case "Growers":
-      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length;
-    case "Consultants":
-      return data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
-    default:
-      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length + data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
+function calculateSizeOfDataSet(data){
+  var size = 0;
+  for(var i = 0; i < data.length; i++){
+    size += data[i].y;
   }
+  return size;
 }
 
 export function AcresManagedBarChart(props) {
@@ -61,7 +58,7 @@ export function AcresManagedBarChart(props) {
     }
     var data = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
-    var dataLength = calculateSizeOfDataSet(data, props.vocationFilter)
+    var dataLength = calculateSizeOfDataSet(acre_data)
     var lengthString = String("Acres vs Number of Farms (n = " + dataLength + ")");
 
     return (
