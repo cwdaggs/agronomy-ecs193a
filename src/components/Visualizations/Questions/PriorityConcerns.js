@@ -71,7 +71,7 @@ export function PriorityConcerns(props) {
 
     return (
         <div>
-            <h2>What are the highest priority management challenges/concerns?</h2>
+            {/* <h2>What are the highest priority management challenges/concerns?</h2> */}
             <svg width={1920} height={900}>
                 <VictoryLegend
                     standalone={false}

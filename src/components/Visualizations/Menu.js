@@ -178,7 +178,14 @@ function VisMenu(props) {
       )
     }
     // Visualizations that can strictly only be filtered by grower or consultant
-    case "PriorityConcerns":
+    case "PriorityConcerns": {
+      return (
+        <>
+        <h2>What are the highest priority management challenges/concerns?</h2>
+        <MoreLimitedVocation/>
+        </>
+      )
+    }
     case "AffectVictory": {
       // let blah = ""
       // if ({activeVocation} === "Consultants") {
