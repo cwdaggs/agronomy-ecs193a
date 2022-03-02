@@ -44,7 +44,7 @@ export const AboutSummary = () => {
                     and occupation. Participating in the survey was Growers, Consultants, members of Allied Industry, and more.
                     Below is a map representing the density of responses in respect to county, as well as the distribution of responses per occupation:
             </C.Desc> 
-            <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />       
+            <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />      
           <C.Button>
             <button>
               See Full Survey results
