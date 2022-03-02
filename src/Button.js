@@ -34,7 +34,7 @@ const Tab = styled.button`
   `}
 `;
 
-const types = ['Visualizations', 'Info', 'About'];
+const types = ['Home', 'Visualizations', 'Info', 'About'];
 
 function ToggleGroup() {
     const [active, setActive] = useState(types[0]);
