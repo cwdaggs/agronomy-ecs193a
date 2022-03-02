@@ -115,7 +115,11 @@ export function AffectVictory(props) {
   const width = 1920;
   const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
-  const colorScale = ["#ff0000", "#ffa500","#ffff00", "#008000", "#0000ff"];
+  const colorScale = ["#245f81",
+    "#8f97c5",
+    "#f8d3ff",
+    "#ef88b7",
+    "#d43d51"];
   const fontSize = 20
   const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
 

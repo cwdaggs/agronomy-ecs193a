@@ -76,7 +76,11 @@ export function EngageVictory(props) {
   const width = 1920;
   const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
-  const colorScale = ["#ff0000", "#ffa500","#ffff00", "#008000", "#0000ff"];
+  const colorScale = ["#19bbb0",
+    "#68caa5",
+    "#9dd79f",
+    "#bee37b",
+    "#f4e651"];
   const fontSize = 20
   const legend_data = [{name: "1-3 times/week"}, {name: "1-2 times/month"}, {name: "3-6 times/year"}, {name: "1-2 times/year"}, {name: "Never"}]
 
@@ -110,7 +114,7 @@ export function EngageVictory(props) {
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#ff0000", "#ffa500","#ffff00", "#008000", "#0000ff"]}
+          colorScale={colorScale}
         >
           {dataset_final.map((data, i) => {
             return <VictoryBar 

@@ -68,7 +68,9 @@ export function AmountVictory(props) {
   const width = 1920;
   const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
-  const colorScale = ["#ff0000", "#00ff00", "#0000ff"];
+  const colorScale = ["#003f5c",
+    "#bc5090",
+    "#ffa600"];
   const fontSize = 20
   const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
 
