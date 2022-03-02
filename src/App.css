@@ -56,6 +56,13 @@
   padding-top: 10px;
   padding-left: 10px;
 }
+
+.flex-parent {
+  display: flex;
+}
+.flex-child {
+  flex: 1;
+}
 /* #menuitem {
   background-color: blanchedalmond;
   color:#FFBF00

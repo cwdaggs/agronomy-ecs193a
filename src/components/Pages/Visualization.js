@@ -2,6 +2,7 @@ import {useData} from '../Visualizations/UseData';
 import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
 import {Tab} from '../Visualizations/StyledDivs'
+import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
 
 export const Visualizations = () => {
     
@@ -21,15 +22,25 @@ export const Visualizations = () => {
     const [active, setActive] = useState("AcresManaged");
     return(
         <div id="outer-container">
+                <StyledUl>
+                  <DropDownLi>
+                    <Dropbtn onClick={() => this.handleClick("DropDown")}>
+                      Select Topic
+                    </Dropbtn>
+                    <DropDownContent>
+                      {" "}
+                      {types.map(type => (
+                          <SubA 
+                          key={type} 
+                          onClick={() => {setActive(type)}} 
+                          active={active === type}
+                          >{type}
+                        </SubA>
+                        ))}
+                      </DropDownContent>
+                  </DropDownLi>
+                </StyledUl>
             
-            {types.map(type => (
-                <Tab 
-                    key={type} 
-                    onClick={() => {setActive(type)}} 
-                    active={active === type}
-                    >{type}
-                </Tab>
-            ))}
         
             {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active}/>}
         

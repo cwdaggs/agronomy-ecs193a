@@ -1,17 +1,35 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TabGroup, ToggleGroup} from './Button.js'
+import {TabGroup, ToggleGroup, Checkbox} from './Button.js'
 import 'react-pro-sidebar/dist/css/styles.css';
 import {InfoSummary} from './components/Pages/InfoSummary'
 import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 
-
 function App() {
   const [display, setDisplay] = useState("Visualizations");
 
+  const [dual_display, checkDualDisplay] = useState(false);
+
   function changeDisplay(newDisplay) {
     setDisplay(newDisplay);
+  }
+
+  function changeDual(){
+    checkDualDisplay(!dual_display)
+  }
+
+  function getDisplay(){
+    if(dual_display){
+      return(
+        <div class='parent flex-parent'>
+          <div class='child flex-child'><Visualizations/></div>
+          <div class='child flex-child'><Visualizations/></div>
+        </div>
+        );
+    }else{
+      return(<Visualizations/>)
+    }
   }
 
   if (display === "Info") {
@@ -43,7 +61,10 @@ function App() {
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <TabGroup changeFunc={changeDisplay}/>
       </div>
-        <Visualizations/>
+      <div>
+        <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+      </div>
+      {getDisplay()}
     </div>
   );
 }
