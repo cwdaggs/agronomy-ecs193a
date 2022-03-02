@@ -118,11 +118,11 @@ export const PrioritySatisfaction = (props) => {
     }
     
 
-    const width = 250;
-    const height = 100;
+    const width = 1920;
+    const height = 1080;
     const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
   
-    const fontSize = 2
+    const fontSize = 20
 
     return (
 
@@ -149,11 +149,11 @@ export const PrioritySatisfaction = (props) => {
               centerTitle
               orientation="horizontal"
               gutter={4}
-              style={{ border: { stroke: "black" }, title: {fontSize: 3 }, data: {fontSize:3 }}}
+              style={{ border: { stroke: "black" }, title: {fontSize: 3 }, data: {fontSize:20 }}}
               data={[
-                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a", strokeWidth: 0.5 }, labels:{fontSize: 3} },
-                { name: "Average", symbol: { fill: "red", type:"square" }, labels:{fontSize: 3} },
-                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" }, labels:{fontSize: 3} }
+                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a", strokeWidth: 0.5 }, labels:{fontSize: 20} },
+                { name: "Average", symbol: { fill: "red", type:"square" }, labels:{fontSize: 20} },
+                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" }, labels:{fontSize: 20} }
               ]}
             />
             <VictoryScatter
@@ -167,21 +167,21 @@ export const PrioritySatisfaction = (props) => {
                         strokeWidth: 0.5
                     },
                     axis: {stroke: "#756f6a"},
-                    ticks: {stroke: "grey", size: 5},
+                    ticks: {stroke: "grey", size: 20},
                     tickLabels: {fontSize: fontSize, padding: 5}
                   }}
-                size={1}
+                size={10}
                 data={data}
                 labels={({datum}) => datum.Topic + "\nSatisfaction Avg: " + String(datum.Satisfaction).substring(0, 3) + "\nPriority Avg: " + String(datum.Priority).substring(0,3)}
                 labelComponent={
                     <VictoryTooltip 
                         style={{
-                          fontSize:fontSize,
+                          fontSize:fontSize-5,
                           strokeWidth:0.1,
                           fontFamily: 'ABeeZee'
                         }}
-                        flyoutHeight={10}
-                        flyoutWidth={30}    
+                        flyoutHeight={75}
+                        flyoutWidth={100}    
                     />
                     
                 }
@@ -213,7 +213,7 @@ export const PrioritySatisfaction = (props) => {
               style={{ 
                 data: { 
                     stroke: "red", 
-                    strokeWidth:0.1, 
+                    strokeWidth:1, 
                     strokeLinecap: "round" 
                 } 
               }}
@@ -227,7 +227,7 @@ export const PrioritySatisfaction = (props) => {
               style={{ 
                 data: { 
                     stroke: "red", 
-                    strokeWidth:0.1, 
+                    strokeWidth:1, 
                     strokeLinecap: "round" 
                 } 
               }}
@@ -240,7 +240,7 @@ export const PrioritySatisfaction = (props) => {
                 style={{ 
                     data: { 
                         stroke: "#756f6a", 
-                        strokeWidth:0.3, 
+                        strokeWidth:1.3, 
                         strokeLinecap: "round" 
                     } 
                 }}
@@ -255,7 +255,7 @@ export const PrioritySatisfaction = (props) => {
                             mutation: ({ style }) => {
                               return style.stroke === "red"
                                 ? null
-                                : { style: { stroke: "black", strokeWidth: 1 } };
+                                : { style: { stroke: "black", strokeWidth: 4 } };
                             }
                           },
                         ];
@@ -267,7 +267,7 @@ export const PrioritySatisfaction = (props) => {
                           mutation: ({style}) => {
                             return style.stroke === "red"
                             ? null
-                            : { style: { stroke: "#756f6a", strokeWidth: 0.3 } };;
+                            : { style: { stroke: "#756f6a", strokeWidth: 2 } };;
                           }
                         }];
                       }

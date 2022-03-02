@@ -13,7 +13,7 @@ import { AmountVictory } from "./Questions/AmountValued";
 import { EngageVictory } from "./Questions/Engage_victory";
 import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
 import {MapChart} from "./CaliforniaCounties"
-// import {OnlyCrops} from "./DropDownMenus"
+import "@fontsource/metropolis";
 
 function GetTypes(dataset){
   let types = getFarmersCrops(dataset).sort();

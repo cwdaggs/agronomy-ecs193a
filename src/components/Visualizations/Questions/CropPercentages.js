@@ -1,6 +1,7 @@
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
+import "@fontsource/metropolis";
 
 export function CropPercentages(props) {
 
@@ -24,8 +25,8 @@ export function CropPercentages(props) {
                     x={950}
                     y={200}
                     gutter={20}
-                    style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 23},
+                    style={{labels: {fill: "black", color: "white", fontFamily: 'Metropolis', fontSize: 23}, 
+                            title:  {fontFamily: 'Metropolis', fontWeight:800, fontSize: 23},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title="Legend"
                     centerTitle
@@ -51,7 +52,7 @@ export function CropPercentages(props) {
                     labelComponent={<VictoryTooltip 
                         style={{
                         fontSize:20,
-                        fontFamily: 'ABeeZee'
+                        fontFamily: 'Metropolis'
                         }}
                         flyoutHeight={25}
                         flyoutWidth={45}    
