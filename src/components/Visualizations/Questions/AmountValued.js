@@ -74,7 +74,7 @@ export function AmountVictory(props) {
 
   return (
     <div>
-      <h2>How much do you value the following:</h2>
+      
       <VictoryChart
         horizontal={true}
         animate={{

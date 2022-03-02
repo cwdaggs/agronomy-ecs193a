@@ -1,9 +1,30 @@
 export const Home = () => {
+
+    
     return(
-        <div id="outerContainer">
-                <div id="aboutsummary">
-                Yo
+        // <div id="outerContainer">
+                <div id="bg">
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
+                Yo <br></br>
                 </div>
-            </div>
+            // </div>
     );
 }

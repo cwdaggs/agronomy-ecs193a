@@ -37,7 +37,7 @@ export function ConcernsVictory(props) {
 
   return (
     <div>
-      <h2>In regards to the production of FIELD CROPS in California, rate your concern for the following:</h2>
+      
       
       <VictoryChart
         horizontal={true}

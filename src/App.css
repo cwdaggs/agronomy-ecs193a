@@ -56,7 +56,23 @@
   padding-top: 10px;
   padding-left: 10px;
 }
+
+#homepage {
+  background-image: url(./images/farming-background.jfif);
+}
 /* #menuitem {
   background-color: blanchedalmond;
   color:#FFBF00
 } */
+
+body,html {
+  height: 100%;
+}
+
+#bg {
+  background-image: url(./images/farming-background.jfif);
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}

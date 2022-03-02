@@ -88,7 +88,7 @@ export function InternetSourcesBarChart(props) {
 
     return (
         <div>
-          <h2>Where do you most often look for field crop production information on the internet?</h2>
+          
           <VictoryChart height={height} width={width}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   

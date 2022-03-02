@@ -67,7 +67,7 @@ export function InfoSourcesBarChart(props) {
 
     return (
         <div>
-          <h2>Who do you communicate with when seeking information about field crop production?</h2>
+          {/* <h2>Who do you communicate with when seeking information about field crop production?</h2> */}
           <VictoryChart height={height} width={width}
             animate={{
               duration: 500,               
