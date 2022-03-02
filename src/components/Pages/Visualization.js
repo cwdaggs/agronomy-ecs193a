@@ -17,7 +17,6 @@ export const Visualizations = () => {
         "AmountValued", //Q12
         "PrioritySatisfaction", //Q13
         "InternetSources", //Q16
-        "Map"
     ]
     const [active, setActive] = useState("AcresManaged");
     return(
