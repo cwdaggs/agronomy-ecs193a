@@ -64,7 +64,7 @@ export function AcresManagedBarChart(props) {
     return (
         <div>
           {/* <h2>How many acres do you manage/consult annually?</h2> */}
-          <VictoryChart height={800} width={1920}
+          <VictoryChart height={1080} width={1920}
             domainPadding={60}
             animate={{duration: 800}}
           >
@@ -83,7 +83,7 @@ export function AcresManagedBarChart(props) {
               tickLabels: {fontSize: 20, padding: 5},
             }}/>
             <VictoryBar
-
+              // barRatio={0.6}
               data={acre_data}
               alignment="middle"
               style={{ data:  { fill: ({datum}) => datum.fill}}}

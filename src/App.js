@@ -6,6 +6,7 @@ import {InfoSummary} from './components/Pages/InfoSummary'
 import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 import {Home} from './components/Pages/Home'
+import background from "./images/farming-background.jfif";
 
 
 function App() {
@@ -56,7 +57,10 @@ function App() {
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <TabGroup changeFunc={changeDisplay}/>
       </div>
+      <div  style={{ backgroundImage: `url(${background})` }}>
         <Home/>
+      </div>
+        
     </div>
   );
 }

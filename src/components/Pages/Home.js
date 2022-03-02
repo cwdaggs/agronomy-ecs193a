@@ -4,26 +4,7 @@ export const Home = () => {
     return(
         // <div id="outerContainer">
                 <div id="bg">
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
-                Yo <br></br>
+                <canvas width="800" height="600"></canvas>
                 </div>
             // </div>
     );
