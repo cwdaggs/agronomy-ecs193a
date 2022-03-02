@@ -51,7 +51,7 @@ export function ConcernsVictory(props) {
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#00471A", "#009141", "#02D46F"]}
+          colorScale={["#00471A", "#007141", "#02B06F"]}
         >
           {dataset.map((data, i) => {
             return <VictoryBar 

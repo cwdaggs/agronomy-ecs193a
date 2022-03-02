@@ -40,13 +40,17 @@ export const MapChart = (props) => {
   return (
     <div>
       {/* <h2>Density of Survey Responses By County</h2> */}
-      <svg width={1920} height={1000}>
+
+      <svg width={1320} height={800}>
+
           
           <VictoryLegend
             standalone={false}
             colorScale={colorScale}
-            x={100}
-            y={200}
+
+            x={0}
+            y={100}
+
             gutter={20}
             style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
                   title:  {fontFamily: 'ABeeZee', fontSize: 23},
@@ -100,7 +104,7 @@ export const MapChart = (props) => {
             width={1000}
             height={700}
             padding={{
-              left: 800,
+              left: 750,
               bottom: 20,
               top: 20
             }}
@@ -121,8 +125,9 @@ export const MapChart = (props) => {
             <VictoryLegend
             standalone={false}
             colorScale={colorScale}
-            x={1200}
-            y={200}
+            x={500}
+            y={100}
+
             gutter={20}
             style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
                   title:  {fontFamily: 'ABeeZee', fontSize: 23},
