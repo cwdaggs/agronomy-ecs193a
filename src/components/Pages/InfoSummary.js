@@ -1,10 +1,9 @@
 import * as C from './App.styles';
-import {MapChart} from '../Visualizations/CaliforniaCounties'
-import { useData } from '../Visualizations/UseData';
 
 export const InfoSummary = () => {
     return(
-        <C.Container>
+      
+    <C.Container>
       <C.Area>
         <C.Menu>
           <div >
@@ -57,5 +56,6 @@ export const InfoSummary = () => {
         </C.Body>
       </C.Area>
     </C.Container>
+    
     );
 }
