@@ -75,10 +75,12 @@ export function PriorityConcerns(props) {
             <div class='parent flex-parent'>
               <div class='child flex-child'>
                 <VictoryLegend
+                    x={150}
+                    y={0}
                     colorScale={colorScale}
                     gutter={20}
-                    style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 23},
+                    style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
+                            title:  {fontFamily: 'ABeeZee', fontSize: 13},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title="Legend"
                     centerTitle
@@ -90,11 +92,12 @@ export function PriorityConcerns(props) {
                     animate={{
                         duration: 500,               
                     }}
-                    width={400}
+                    width={600}
                     height={400}
                     padding={{
                         left: 0,
-                        bottom: 50,
+                        right: 120,
+                        bottom: 80,
                         top: 50
                     }}
                     style={{ data: { stroke: "black", strokeWidth: 1}}}

@@ -20,10 +20,11 @@ export function CropPercentages(props) {
             <div class='child flex-child'>
                 <VictoryLegend
                     colorScale="heatmap"
-                    
+                    x={150}
+                    y={50}  
                     gutter={20}
-                    style={{labels: {fill: "black", color: "white", fontFamily: 'sans-serif', fontSize: 23}, 
-                            title:  {fontFamily: 'sans-serif', fontSize: 23},
+                    style={{labels: {fill: "black", color: "white", fontFamily: 'sans-serif', fontSize: 13}, 
+                            title:  {fontFamily: 'sans-serif', fontSize: 13},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title="Legend"
                     centerTitle
@@ -37,11 +38,12 @@ export function CropPercentages(props) {
                         duration: 500,               
                     }}
                     
-                    width={400}
+                    width={600}
                     height={400}
                     padding={{
                         left: 0,
-                        bottom: 50,
+                        right: 320,
+                        bottom: 80,
                         top: 50
                     }}
                     style={{ data: { stroke: "black", strokeWidth: 1}}}

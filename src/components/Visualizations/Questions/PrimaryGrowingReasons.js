@@ -77,11 +77,13 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
     return (
           <div class='parent flex-parent'>
             <div class='child flex-child'>
-                <VictoryLegend           
+                <VictoryLegend      
+                  x={150}
+                  y={0}     
                     colorScale={colorScale}
                     gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 23}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 23},
+                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 10}, 
+                            title:  {fontFamily: 'ABeeZee', fontSize: 10},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title="Legend"
                     centerTitle
@@ -93,12 +95,13 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                     animate={{
                       duration: 500,               
                     }}
-                    width={400}
+                    width={600}
                     height={400}
                     padding={{
                         left: 0,
-                        bottom: 50,
-                        top: 60
+                        right: 120,
+                        bottom: 80,
+                        top: 50
                     }}
                     // events={[{
                     //     target: "data",
