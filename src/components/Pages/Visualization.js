@@ -20,6 +20,7 @@ export const Visualizations = () => {
         "InternetSources", //Q16
     ]
     const [active, setActive] = useState("AcresManaged");
+    const [key, setKey] = useState(0);
     return(
         <div id="outer-container">
                 <StyledUl>
@@ -32,7 +33,7 @@ export const Visualizations = () => {
                       {types.map(type => (
                           <SubA 
                           key={type} 
-                          onClick={() => {setActive(type)}} 
+                          onClick={() => {setKey(key+1); setActive(type)}} 
                           active={active === type}
                           >{type.replace(/([A-Z])/g, ' $1').trim()}
                         </SubA>
@@ -41,7 +42,7 @@ export const Visualizations = () => {
                   </DropDownLi>
                 </StyledUl>
         
-            {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active}/>}
+            {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}
         
         </div>
         

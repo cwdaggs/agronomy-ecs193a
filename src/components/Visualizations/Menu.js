@@ -137,7 +137,8 @@ function VisMenu(props) {
   const [moreLimitedVocation, setMoreLimitedVocation] = useState("Growers");
 
   const vis = getVis(props.vis, active, activeVocation, limitedVocation, moreLimitedVocation, dataset);
-
+  console.log(vis)
+  console.log(vis.type.name)
   switch(vis.type.name){
     // Visualizations with no filters
     case "CropPercentages": {
@@ -209,6 +210,10 @@ function VisMenu(props) {
     case "PrioritySatisfaction": {
       return (
         <>
+        <div class='vis-title'>
+          <h3>Rate what you believe should be the UCCE's priorities for field crop production, and 
+              rate your satisfaction with the UCCE's delivery of information on these topics. </h3>
+        </div>
         <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -222,7 +227,7 @@ function VisMenu(props) {
       )
     }
     // Visualizations that can be filtered by all vocations and crops
-    case "InternetSources": {
+    case "InternetSourcesBarChart": {
       return (
         <>
         <h3>Where do you most often look for field crop production information on the internet?</h3>
@@ -231,10 +236,18 @@ function VisMenu(props) {
       )
      
     }
-    case "InfoSources": {
+    case "InfoSourcesBarChart": {
       return (
         <>
           <h3>Who do you communicate with when seeking information about field crop production?</h3>
+          <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
+      )
+    }
+    case "EngageVictory":{
+      return (
+        <>
+          <h3>How often do you engage with the UCCE in the following ways?</h3>
           <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )

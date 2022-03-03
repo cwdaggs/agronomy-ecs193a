@@ -68,10 +68,17 @@
   font-family: 'Metropolis';
 }
 
+.vis-title{
+  font-family: 'Metropolis';
+  font-weight: 800;
+  font-size: 24px;
+}
+
 .visualization-window {
   font-family: 'Metropolis';
   font-size: 24px;
-  height: 80%;
+  height: 50%;
+  width: 50%;
   outline: solid 1px black;
   /* Center child horizontally*/
 }
