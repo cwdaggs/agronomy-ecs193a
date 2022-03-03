@@ -20,20 +20,21 @@ export const Visualizations = () => {
         "InternetSources", //Q16
     ]
     const [active, setActive] = useState("AcresManaged");
+    const [activeName, setActiveName] = useState("Select Topic");
     const [key, setKey] = useState(0);
     return(
         <div id="outer-container">
                 <StyledUl>
                   <DropDownLi>
-                    <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                      Select Topic
+                    <Dropbtn>
+                      {activeName}
                     </Dropbtn>
                     <DropDownContent>
                       {" "}
                       {types.map(type => (
                           <SubA 
                           key={type} 
-                          onClick={() => {setKey(key+1); setActive(type)}} 
+                          onClick={() => {setKey(key+1); setActiveName(type.replace(/([A-Z])/g, ' $1').trim()); setActive(type)}} 
                           active={active === type}
                           >{type.replace(/([A-Z])/g, ' $1').trim()}
                         </SubA>

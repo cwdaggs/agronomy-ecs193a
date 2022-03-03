@@ -24,13 +24,14 @@ function GetTypes(dataset){
 }
 
 function OnlyCrops(props) {
+  const [activeName, setActiveName] = useState("Select Crop");
   return (
       <>
       <div>
         <StyledUl>
           <DropDownLi>
             <Dropbtn>
-              Filter Crops
+              {activeName}
             </Dropbtn>
             <DropDownContent>
               {" "}
@@ -38,7 +39,7 @@ function OnlyCrops(props) {
                   <SubA 
                     key={type}
                     active={props.active === type}
-                    onClick={() => {props.setActive(type);}}
+                    onClick={() => {props.setActive(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
                     >{type}
                 </SubA>
                 ))}
@@ -56,13 +57,15 @@ function OnlyCrops(props) {
 }
 
 function LimitedVocation(props) {
+  const [activeCropName, setActiveCropName] = useState("Select Crop");
+  const [activeName, setActiveName] = useState("Select Vocation");
   return (
     <>
     <div>
       <StyledUl>
       <DropDownLi>
         <Dropbtn>
-            Filter Vocation
+            {activeName}
           </Dropbtn>
           <DropDownContent>
             {" "}
@@ -70,7 +73,7 @@ function LimitedVocation(props) {
                 <SubA 
                   key={type}
                   active={props.activeType === type}
-                  onClick={() => {props.func(type);}}
+                  onClick={() => {props.func(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
                   >{type}
               </SubA>
               ))}
@@ -78,7 +81,7 @@ function LimitedVocation(props) {
         </DropDownLi>
         <DropDownLi>
           <Dropbtn>
-            Filter Crops
+            {activeCropName}
           </Dropbtn>
           <DropDownContent>
             {" "}
@@ -86,7 +89,7 @@ function LimitedVocation(props) {
                 <SubA 
                   key={type}
                   active={props.active === type}
-                  onClick={() => {props.setActive(type);}}
+                  onClick={() => {props.setActive(type);setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim())}}
                   >{type}
               </SubA>
               ))}
