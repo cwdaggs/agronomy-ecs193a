@@ -6,4 +6,3 @@ npm install react-button --save
 npm install react-bootstrap-validation --save
 npm install --save react-simple-maps
 npm install @fontsource/metropolis
-npm i @fontsource/metropolis
