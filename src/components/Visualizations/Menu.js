@@ -88,7 +88,7 @@ function VisMenu(props) {
       )
   }
 
-  function MoreLimitedVocation() {
+  function MoreLimitedVocation(props) {
     return (
       <>
       <div>
@@ -99,7 +99,7 @@ function VisMenu(props) {
             </Dropbtn>
             <DropDownContent>
               {" "}
-              {evenMoreLimitedVocationTypes.map(type => (
+              {props.vocationArray.map(type => (
                   <SubA 
                     key={type}
                     active={activeVocation === type}
@@ -133,103 +133,6 @@ function VisMenu(props) {
       {vis}
       </div>
       </>  
-    )
-  }
-
-  function LimitedVocation() {
-    return (
-      <>
-        <div>
-          <StyledUl>
-          <DropDownLi>
-            <Dropbtn>
-                Filter Vocation
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {limitedVocationTypes.map(type => (
-                    <SubA 
-                      key={type}
-                      active={activeVocation === type}
-                      onClick={() => {setActiveVocation(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-            <DropDownLi>
-              <Dropbtn>
-                Filter Crops
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {types.map(type => (
-                    <SubA 
-                      key={type}
-                      active={active === type}
-                      onClick={() => {setActive(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-          </StyledUl>
-        </div> 
-        <p><b >Vocation: </b>{activeVocation} &ensp; <b >Crop: </b>{active}</p>
-        <div className='row' align-items='center'> </div>
-        <div align-items='center'>
-        {vis}
-        </div>
-        </>   
-    )
-      
-  }
-
-  function Vocation() {
-    return (
-      <>
-      <div>
-        <StyledUl>
-        <DropDownLi>
-          <Dropbtn>
-              Filter Vocation
-            </Dropbtn>
-            <DropDownContent>
-              {" "}
-              {vocationTypes.map(type => (
-                  <SubA 
-                    key={type}
-                    active={activeVocation === type}
-                    onClick={() => {setActiveVocation(type);}}
-                    >{type}
-                </SubA>
-                ))}
-              </DropDownContent>
-          </DropDownLi>
-          <DropDownLi>
-            <Dropbtn>
-              Filter Crops
-            </Dropbtn>
-            <DropDownContent>
-              {" "}
-              {types.map(type => (
-                  <SubA 
-                    key={type}
-                    active={active === type}
-                    onClick={() => {setActive(type);}}
-                    >{type}
-                </SubA>
-                ))}
-              </DropDownContent>
-          </DropDownLi>
-        </StyledUl>
-      </div> 
-      <p><b >Vocation: </b>{activeVocation} &ensp; <b >Crop: </b>{active}</p>
-      <div className='row' align-items='center'> </div>
-      <div align-items='center'>
-      {vis}
-      </div>
-      </>     
     )
   }
 
@@ -273,7 +176,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>What are the highest priority management challenges/concerns?</h3>
-        <MoreLimitedVocation/>
+        <MoreLimitedVocation vocationArray={evenMoreLimitedVocationTypes}/>
         </>
       )
     }
@@ -287,7 +190,7 @@ function VisMenu(props) {
       return (
           <>
           <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
-          <MoreLimitedVocation/>
+          <MoreLimitedVocation vocationArray={evenMoreLimitedVocationTypes}/>
           </>
       )
     }
@@ -296,7 +199,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>How many acres do you manage/consult annually?</h3> 
-        <LimitedVocation/>
+        <MoreLimitedVocation vocationArray={limitedVocationTypes}/>
         </>   
       )
     }
@@ -304,14 +207,14 @@ function VisMenu(props) {
       return (
         <>
         <h3>How much do you value the following:</h3>
-        <LimitedVocation/>
+        <MoreLimitedVocation vocationArray={limitedVocationTypes}/>
         </>   
       )
     }
     case "PrioritySatisfaction": {
       return (
         <>
-        <LimitedVocation/>
+        <MoreLimitedVocation vocationArray={limitedVocationTypes}/>
         </>   
       )
     }
@@ -319,7 +222,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
-        <LimitedVocation/>
+        <MoreLimitedVocation vocationArray={limitedVocationTypes}/>
         </>   
       )
     }
@@ -328,7 +231,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>Where do you most often look for field crop production information on the internet?</h3>
-        <Vocation/>
+        <MoreLimitedVocation vocationArray={vocationTypes}/>
         </>   
       )
      
@@ -337,14 +240,14 @@ function VisMenu(props) {
       return (
         <>
         <h3>Who do you communicate with when seeking information about field crop production?</h3>
-        <Vocation/>
+        <MoreLimitedVocation vocationArray={vocationTypes}/>
         </>   
       )
     }
     default: {
       return (
         <>
-        <Vocation/>
+        <MoreLimitedVocation vocationArray={vocationTypes}/>
         </>     
       )
     }
