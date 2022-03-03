@@ -77,8 +77,8 @@
 .visualization-window {
   font-family: 'Metropolis';
   font-size: 24px;
-  height: 50%;
-  width: 50%;
+  height: 80%;
+  width: 80%;
   outline: solid 1px black;
   /* Center child horizontally*/
 }
