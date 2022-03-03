@@ -1,4 +1,4 @@
-import { Background, VictoryTheme, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {sort_by_very, filterByCrop, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
 
@@ -65,16 +65,18 @@ export function AmountVictory(props) {
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
-
-  const width = 250;
-  const height = 100;
+  const width = 1920;
+  const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
-
-  const fontSize = 2
+  const colorScale = ["#003f5c",
+    "#bc5090",
+    "#ffa600"];
+  const fontSize = 20
+  const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
 
   return (
-    <div>
-      <h2>How much do you value the following:</h2>
+    <div class='visualization-window'>
+      
       <VictoryChart
         horizontal={true}
         animate={{
@@ -85,24 +87,38 @@ export function AmountVictory(props) {
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
         padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
       >
+         <VictoryLegend x={width/2 - 300}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              colorScale={colorScale}
+              itemsPerRow={5}
+              // symbolSpacer={5}
+              gutter={30}
+              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
+                      border: { stroke: "black" }, 
+                      title: {fontSize: fontSize }, 
+                      data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
+              data={legend_data}
+            />
         <VictoryStack
           style={{
               data: { stroke: "black", strokeWidth: 0.2}
           }}
-          colorScale={["#ff0000", "#00ff00", "#0000ff"]}
+          colorScale={colorScale}
         >
           {dataset_final.map((data, i) => {
             return <VictoryBar 
               data={data} 
               key={i} 
-              labels={({datum}) => datum.concern + ": " + Math.round(datum.y) + "%"}
+              labels={({datum}) => Math.round(datum.y) + "%"}
               labelComponent={
                   <VictoryTooltip 
                     style={{
                       fontSize:fontSize
                     }}
-                    flyoutHeight={15}
-                    flyoutWidth={30}    
+                    flyoutHeight={25}
+                    flyoutWidth={40}    
                   />
               }/>;
           })}

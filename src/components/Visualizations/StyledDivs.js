@@ -19,6 +19,14 @@ const Dropbtn = styled.div`
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-left: 5px solid white;
+  border-right: 5px solid white;
+  border-radius: 25px;
+  &:hover {
+    background-color: red;
+  }
 `;
 
 const DropDownContent = styled.div`
@@ -32,9 +40,9 @@ const DropDownContent = styled.div`
 
 const DropDownLi = styled(StyledLi)`
   display: inline-block;
-  &:hover {
-    background-color: red;
-  }
+  // &:hover {
+  //   background-color: red;
+  // }
   &:hover ${DropDownContent} {
     display: block;
   }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import "typeface-abeezee";
+import "@fontsource/metropolis";
 
 const Button = styled.button`
   background-color: black;
@@ -20,7 +21,23 @@ const Button = styled.button`
 const Tab = styled.button`
   padding: 35px 60px;
   cursor: pointer;
-  font-size: 30px;
+  font: 30px Metropolis, sans-serif;
+  font-weight: 800;
+  opacity: 0.7;
+  background: white;
+  border: 0;
+  outline: 0;
+  ${({active}) => 
+  active && `
+  // border-bottom: 2px solid black;
+  opacity: 1;
+  `}
+`;
+
+const CropTab = styled.button`
+  padding: 15px 30px;
+  cursor: pointer;
+  font-size: 20px;
   font-family: ABeeZee, serif; 
   opacity: 0.7;
   background: white;
@@ -33,7 +50,7 @@ const Tab = styled.button`
   `}
 `;
 
-const types = ['Visualizations', 'Info', 'About'];
+const types = ['Home', 'Visualizations', 'Info', 'About'];
 
 function ToggleGroup() {
     const [active, setActive] = useState(types[0]);
@@ -65,6 +82,14 @@ const ButtonGroup = styled.div`
   display: flex;
 `;
 
+const Checkbox = ({ label, value, onChange }) => {
+  return (
+    <label>
+      <input type="checkbox" checked={value} onChange={onChange}/>
+      {label}
+    </label>
+  );
+};
 
 function TabGroup(props){
     const [active, setActive] = useState(types[0]);
@@ -90,4 +115,4 @@ function TabGroup(props){
     );
 }
 
-export {TabGroup, ToggleGroup}
+export {TabGroup, ToggleGroup, Checkbox}

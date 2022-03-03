@@ -56,7 +56,52 @@
   padding-top: 10px;
   padding-left: 10px;
 }
+
+.flex-parent {
+  display: flex;
+}
+.flex-child {
+  flex: 1;
+}
+
+.font-metropolis{
+  font-family: 'Metropolis';
+}
+
+.vis-title{
+  font-family: 'Metropolis';
+  font-weight: 800;
+  font-size: 24px;
+}
+
+.title-info{
+  align-items: flex-end;
+}
+
+.visualization-window {
+  font-family: 'Metropolis';
+  font-size: 24px;
+  height: 80%;
+  width: 80%;
+  outline: solid 1px black;
+  /* Center child horizontally*/
+}
+#homepage {
+  background-image: url(./images/farming-background.jfif);
+}
 /* #menuitem {
   background-color: blanchedalmond;
   color:#FFBF00
 } */
+
+body,html {
+  height: 100%;
+}
+
+#bg {
+  background-image: url(./images/farming-background.jfif);
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}

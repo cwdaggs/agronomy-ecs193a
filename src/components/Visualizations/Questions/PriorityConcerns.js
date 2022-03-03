@@ -70,48 +70,50 @@ export function PriorityConcerns(props) {
     const colorScale = ["#552E3A", "#713E4C", "#8D505C", "#A7626C", "#C2747B", "#DB878A", "#E0979E", "#E5A6B1", "#EAB6C3", "#F4D6E1"]
 
     return (
-        <div>
-            <h2>What are the highest priority management challenges/concerns?</h2>
-            <svg width={1920} height={900}>
-                <VictoryLegend
-                    standalone={false}
-                    colorScale={colorScale}
-                    x={1000}
-                    y={150}
-                    gutter={20}
-                    style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 23},
-                            data:   {stroke: "black", strokeWidth: 1}}}
-                    title="Legend"
-                    centerTitle
-                    data={legend_data}
-                />
-                <VictoryPie
-                    animate={{
-                        duration: 500,               
-                    }}
-                    standalone={false}
-                    width={800}
-                    height={800}
-                    padding={{
-                        left: 250,
-                        bottom: 20,
-                        top: 20
-                    }}
-                    style={{ data: { stroke: "black", strokeWidth: 1}}}
-                    colorScale={colorScale}
-                    data={data_by_reason}
-                    labels={({ datum }) => `${datum.y}`}
-                    labelComponent={<VictoryTooltip 
-                        style={{
-                        fontSize:20,
-                        fontFamily: 'ABeeZee'
-                        }}
-                        flyoutHeight={25}
-                        flyoutWidth={45}    
-                    />}
-                />
-            </svg>
+      <div  class='visualization-window'>
+        <div class='parent flex-parent'>
+          <div class='child flex-child'>
+                  <VictoryLegend
+                      x={150}
+                      y={0}
+                      colorScale={colorScale}
+                      gutter={20}
+                      style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
+                              title:  {fontFamily: 'ABeeZee', fontSize: 13},
+                              data:   {stroke: "black", strokeWidth: 1}}}
+                      title="Legend"
+                      centerTitle
+                      data={legend_data}
+                  />
+                  </div>
+                  <div class='child flex-child'>   
+                  <VictoryPie
+                      animate={{
+                          duration: 500,               
+                      }}
+                      width={600}
+                      height={400}
+                      padding={{
+                          left: 0,
+                          right: 120,
+                          bottom: 80,
+                          top: 50
+                      }}
+                      style={{ data: { stroke: "black", strokeWidth: 1}}}
+                      colorScale={colorScale}
+                      data={data_by_reason}
+                      labels={({ datum }) => `${datum.y}`}
+                      labelComponent={<VictoryTooltip 
+                          style={{
+                          fontSize:20,
+                          fontFamily: 'ABeeZee'
+                          }}
+                          flyoutHeight={25}
+                          flyoutWidth={45}    
+                      />}
+                  />
+              </div>
         </div>
+      </div>
     );
 }

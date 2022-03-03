@@ -2,6 +2,7 @@ import {useData} from '../Visualizations/UseData';
 import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
 import {Tab} from '../Visualizations/StyledDivs'
+import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
 
 export const Visualizations = () => {
     
@@ -17,22 +18,32 @@ export const Visualizations = () => {
         "AmountValued", //Q12
         "PrioritySatisfaction", //Q13
         "InternetSources", //Q16
-        "Map"
     ]
     const [active, setActive] = useState("AcresManaged");
+    const [activeName, setActiveName] = useState("Select Topic");
+    const [key, setKey] = useState(0);
     return(
         <div id="outer-container">
-            
-            {types.map(type => (
-                <Tab 
-                    key={type} 
-                    onClick={() => {setActive(type)}} 
-                    active={active === type}
-                    >{type}
-                </Tab>
-            ))}
+                <StyledUl>
+                  <DropDownLi>
+                    <Dropbtn>
+                      {activeName}
+                    </Dropbtn>
+                    <DropDownContent>
+                      {" "}
+                      {types.map(type => (
+                          <SubA 
+                          key={type} 
+                          onClick={() => {setKey(key+1); setActiveName(type.replace(/([A-Z])/g, ' $1').trim()); setActive(type)}} 
+                          active={active === type}
+                          >{type.replace(/([A-Z])/g, ' $1').trim()}
+                        </SubA>
+                        ))}
+                      </DropDownContent>
+                  </DropDownLi>
+                </StyledUl>
         
-            {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active}/>}
+            {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}
         
         </div>
         

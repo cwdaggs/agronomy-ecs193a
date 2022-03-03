@@ -44,15 +44,12 @@ function calculateAcres(data){
   return modified_data
 }
 
-function calculateSizeOfDataSet(data, vocation){
-  switch(vocation){
-    case "Growers":
-      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length;
-    case "Consultants":
-      return data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
-    default:
-      return data.filter(c => Number.isInteger(parseInt(c.Acres_Managed),10)).length + data.filter(c => Number.isInteger(parseInt(c.Acres_Consulted),10)).length;
+function calculateSizeOfDataSet(data){
+  var size = 0;
+  for(var i = 0; i < data.length; i++){
+    size += data[i].y;
   }
+  return size;
 }
 
 export function AcresManagedBarChart(props) {
@@ -61,13 +58,13 @@ export function AcresManagedBarChart(props) {
     }
     var data = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
-    var dataLength = calculateSizeOfDataSet(data, props.vocationFilter)
+    var dataLength = calculateSizeOfDataSet(acre_data)
     var lengthString = String("Acres vs Number of Farms (n = " + dataLength + ")");
 
     return (
-        <div>
-          <h2>How many acres do you manage/consult annually?</h2>
-          <VictoryChart height={800} width={1920}
+        <div class='visualization-window'>
+          {/* <h2>How many acres do you manage/consult annually?</h2> */}
+          <VictoryChart height={1080} width={1920}
             domainPadding={60}
             animate={{duration: 800}}
           >
@@ -86,7 +83,7 @@ export function AcresManagedBarChart(props) {
               tickLabels: {fontSize: 20, padding: 5},
             }}/>
             <VictoryBar
-
+              // barRatio={0.6}
               data={acre_data}
               alignment="middle"
               style={{ data:  { fill: ({datum}) => datum.fill}}}

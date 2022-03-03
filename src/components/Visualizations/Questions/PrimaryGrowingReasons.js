@@ -65,43 +65,52 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
     }
 
     var data_filtered = filterByVocation(filterByCrop(myDataset, filter), "Growers")
-    // console.log(data_filtered)
     var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
-    // console.log(data_by_reason)
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
     }
-    const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
-
+    // const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
+    const colorScale = ["#00876c",
+      "#4d9a70",
+      "#7aac77",
+      "#a2bd83",
+      "#c9ce93",
+      "#eee0a9",
+      "#eac487",
+      "#e7a66c",
+      "#e38759",
+      "#dd6551",
+      "#d43d51"]
     return (
-        <div>
-            
-            <svg width={1920} height={900}>
-                <VictoryLegend
-                    standalone={false}
+      <div class='visualization-window'>
+          <div class='parent flex-parent'>
+            <div class='child flex-child'>
+                <VictoryLegend      
+                  x={150}
+                  y={0}     
                     colorScale={colorScale}
-                    x={1000}
-                    y={110}
                     gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 23}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 23},
+                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 10}, 
+                            title:  {fontFamily: 'ABeeZee', fontSize: 10},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title="Legend"
                     centerTitle
                     data={legend_data}
                 />
+                </div>
+                <div class='child flex-child'>   
                 <VictoryPie
-                    standalone={false}
                     animate={{
                       duration: 500,               
                     }}
-                    width={800}
-                    height={800}
+                    width={600}
+                    height={400}
                     padding={{
-                        left: 250,
-                        bottom: 20,
-                        top: 20
+                        left: 0,
+                        right: 120,
+                        bottom: 80,
+                        top: 50
                     }}
                     // events={[{
                     //     target: "data",
@@ -137,7 +146,8 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                         flyoutWidth={45}    
                     />}
                 />
-            </svg>
+            </div>
         </div>
+      </div>
     );
 }

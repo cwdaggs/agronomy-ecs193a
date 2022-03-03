@@ -60,21 +60,26 @@ export function InfoSourcesBarChart(props) {
     }
     var filtered_data = filterByVocation(data, props.vocationFilter);
     var info_data = calculateInformationSources(filtered_data);
-
-    const fontSize = 5;
+    const width = 1920;
+    const height = 1080;
+    const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
+    const fontSize = 20;
 
     return (
-        <div>
-          <h2>Who do you communicate with when seeking information about field crop production?</h2>
-          <VictoryChart height={300} width={600}
+        <div class='visualization-window'>
+          {/* <h2>Who do you communicate with when seeking information about field crop production?</h2> */}
+          <VictoryChart height={height} width={width}
             animate={{
               duration: 500,               
             }}
-            domainPadding={10}
-            padding={{left: 100, bottom: 30, top: 30, right: 100}}
+            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
           >
 
-            <VictoryLabel text="Information Sources vs Number of Responses" x={170} y={20}/>
+            <VictoryLabel text="Information Sources vs Number of Responses" 
+              x={width/2 - 300} 
+              y={80}
+              style ={{fontSize:fontSize +10}}/>
 
             <VictoryBar horizontal
               data={info_data}
@@ -85,8 +90,8 @@ export function InfoSourcesBarChart(props) {
                   style={{
                     fontSize:fontSize
                   }}
-                  flyoutHeight={15}
-                  flyoutWidth={30}    
+                  flyoutHeight={25}
+                  flyoutWidth={40}    
                 />
             }
             />

@@ -13,7 +13,7 @@ import { AmountVictory } from "./Questions/AmountValued";
 import { EngageVictory } from "./Questions/Engage_victory";
 import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
 import {MapChart} from "./CaliforniaCounties"
-// import {OnlyCrops} from "./DropDownMenus"
+import "@fontsource/metropolis";
 
 function GetTypes(dataset){
   let types = getFarmersCrops(dataset).sort();
@@ -21,6 +21,89 @@ function GetTypes(dataset){
   types.unshift("All");
   types.push(types.splice(types.indexOf("Other"), 1)[0]);
   return types; 
+}
+
+function OnlyCrops(props) {
+  const [activeName, setActiveName] = useState("Select Crop");
+  return (
+      <>
+      <div>
+        <StyledUl>
+          <DropDownLi>
+            <Dropbtn>
+              {activeName}
+            </Dropbtn>
+            <DropDownContent>
+              {" "}
+              {props.types.map(type => (
+                  <SubA 
+                    key={type}
+                    active={props.active === type}
+                    onClick={() => {props.setActive(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
+                    >{type}
+                </SubA>
+                ))}
+              </DropDownContent>
+          </DropDownLi>
+        </StyledUl>
+      </div> 
+      <p><b >&ensp;Crop: </b>{props.active}</p>
+      <div className='row' align-items='center'> </div>
+      <div align-items='center'>
+      {props.vis}
+      </div>
+      </>     
+    )
+}
+
+function LimitedVocation(props) {
+  const [activeCropName, setActiveCropName] = useState("Select Crop");
+  const [activeName, setActiveName] = useState("Select Vocation");
+  return (
+    <>
+    <div>
+      <StyledUl>
+      <DropDownLi>
+        <Dropbtn>
+            {activeName}
+          </Dropbtn>
+          <DropDownContent>
+            {" "}
+            {props.vocationArray.map(type => (
+                <SubA 
+                  key={type}
+                  active={props.activeType === type}
+                  onClick={() => {props.func(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
+                  >{type}
+              </SubA>
+              ))}
+            </DropDownContent>
+        </DropDownLi>
+        <DropDownLi>
+          <Dropbtn>
+            {activeCropName}
+          </Dropbtn>
+          <DropDownContent>
+            {" "}
+            {props.types.map(type => (
+                <SubA 
+                  key={type}
+                  active={props.active === type}
+                  onClick={() => {props.setActive(type);setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim())}}
+                  >{type}
+              </SubA>
+              ))}
+            </DropDownContent>
+        </DropDownLi>
+      </StyledUl>
+    </div> 
+    <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p>
+    <div className='row' align-items='center'> </div>
+    <div align-items='center'>
+    {props.vis}
+    </div>
+    </>  
+  )
 }
 
 function getVis(vis_name, active, activeVocation, dataset){
@@ -39,7 +122,7 @@ function getVis(vis_name, active, activeVocation, dataset){
               "PrimaryGrowingReasons":  (<PrimaryGrowingReasons filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
               "Map":                    (<MapChart filter={active} vocationFilter={activeVocation} data={dataset}/>)
             }
-  return vis_key[vis_name]
+  return (vis_key[vis_name])
 }
 
 function VisMenu(props) {
@@ -52,133 +135,49 @@ function VisMenu(props) {
   const vocationTypes = ["All", "Allied Industry", "Consultants", "Growers", "Other"]
   const limitedVocationTypes = ["All", "Growers", "Consultants"]
   const evenMoreLimitedVocationTypes = ["Growers", "Consultants"]
-  const [activeVocation, setActiveVocation] = useState("Growers");
+  const [activeVocation, setActiveVocation] = useState("All");
+  const [moreLimitedVocation, setMoreLimitedVocation] = useState("Growers");
 
   const vis = getVis(props.vis, active, activeVocation, dataset);
-
-  function OnlyCrops() {
-    return (
-        <>
-        <div>
-          <StyledUl>
-            <DropDownLi>
-              <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                Filter Crops
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {types.map(type => (
-                    <SubA 
-                      key={type}
-                      active={active === type}
-                      onClick={() => {setActive(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-          </StyledUl>
-        </div> 
-        <p><b >&ensp;Crop: </b>{active}</p>
-        <div className='row' align-items='center'> </div>
-        <div align-items='center'>
-        {vis}
-        </div>
-        </>     
-      )
-  }
-
-  function MoreLimitedVocation() {
-    return (
-      <>
-      <div>
-        <StyledUl>
-        <DropDownLi>
-          <Dropbtn onClick={() => this.handleClick("DropDown")}>
-              Filter Vocation
-            </Dropbtn>
-            <DropDownContent>
-              {" "}
-              {evenMoreLimitedVocationTypes.map(type => (
-                  <SubA 
-                    key={type}
-                    active={activeVocation === type}
-                    onClick={() => {setActiveVocation(type);}}
-                    >{type}
-                </SubA>
-                ))}
-              </DropDownContent>
-          </DropDownLi>
-          <DropDownLi>
-            <Dropbtn onClick={() => this.handleClick("DropDown")}>
-              Filter Crops
-            </Dropbtn>
-            <DropDownContent>
-              {" "}
-              {types.map(type => (
-                  <SubA 
-                    key={type}
-                    active={active === type}
-                    onClick={() => {setActive(type);}}
-                    >{type}
-                </SubA>
-                ))}
-              </DropDownContent>
-          </DropDownLi>
-        </StyledUl>
-      </div> 
-      <p><b >Vocation: </b>{activeVocation} &ensp; <b >Crop: </b>{active}</p>
-      <div className='row' align-items='center'> </div>
-      <div align-items='center'>
-      {vis}
-      </div>
-      </>  
-    )
-  }
-
-  function LimitedVocation() {
-
-  }
-
-  function Vocation() {}
-
+  console.log(vis)
+  console.log(vis.type.name)
   switch(vis.type.name){
     // Visualizations with no filters
     case "CropPercentages": {
         return (
           <>
-          <h2>Of the total acres, what percentage are in the following categories? (Field Crops, Vegetable Crops, Tree and Vine Crops, or Other)</h2>
+          <h3>Of the total acres, what percentage are in the following categories? (Field Crops, Vegetable Crops, Tree and Vine Crops, or Other)</h3>
           {vis}
           </>
         )
       }
     // Visualizations that can only be filtered by crop
-    case "MapChart": {
-      return (
-        <>
-        <h2>Density of Survey Responses By County</h2> 
-        <OnlyCrops/>
-        </>   
-      )
-    }
+
     case "PrimaryGrowingReasons": {
       return (
         <>
-        <h2>What are the primary reasons you grow the following field crops?</h2> 
-        <OnlyCrops/>
+        <h3>What are the primary reasons you grow the following field crops?</h3> 
+        <OnlyCrops active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
     // case "AcresManagedBarChart": {
     //   return (
     //     <>
-    //     <h2>How many acres do you manage/consult annually?</h2> 
+    //     <h3>How many acres do you manage/consult annually?</h3> 
     //     <OnlyCrops/>
     //     </>   
     //   )
     // }
     // Visualizations that can strictly only be filtered by grower or consultant
-    case "PriorityConcerns":
+    case "PriorityConcerns": {
+      return (
+        <>
+        <h3>What are the highest priority management challenges/concerns?</h3>
+        <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>
+      )
+    }
     case "AffectVictory": {
       // let blah = ""
       // if ({activeVocation} === "Consultants") {
@@ -188,107 +187,77 @@ function VisMenu(props) {
       // }
       return (
           <>
-          <h2>How often do the following priorities affect your managements/recommendations for field crop production?</h2>
-          <MoreLimitedVocation/>
+          <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
+          <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
           </>
       )
     }
     // Visualizations that can be filtered by all, growers, or consultants
-    case "AcresManagedBarChart":
-    case "AmountVictory":
-    case "PrioritySatisfaction":
+    case "AcresManagedBarChart": {
+      return (
+        <>
+        <h3>How many acres do you manage/consult annually?</h3> 
+        <LimitedVocation vocationArray={limitedVocationTypes}  func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
+      )
+    }
+    case "AmountVictory": {
+      return (
+        <>
+        <h3>How much do you value the following:</h3>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
+      )
+    }
+    case "PrioritySatisfaction": {
+      return (
+        <>
+        <div class='vis-title'>
+          <h3>Rate what you believe should be the UCCE's priorities for field crop production, and 
+              rate your satisfaction with the UCCE's delivery of information on these topics. </h3>
+        </div>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
+      )
+    }
     case "ConcernsVictory": {
       return (
         <>
-        <div>
-          <StyledUl>
-          <DropDownLi>
-            <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                Filter Vocation
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {limitedVocationTypes.map(type => (
-                    <SubA 
-                      key={type}
-                      active={activeVocation === type}
-                      onClick={() => {setActiveVocation(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-            <DropDownLi>
-              <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                Filter Crops
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {types.map(type => (
-                    <SubA 
-                      key={type}
-                      active={active === type}
-                      onClick={() => {setActive(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-          </StyledUl>
-        </div> 
-        <p><b >Vocation: </b>{activeVocation} &ensp; <b >Crop: </b>{active}</p>
-        <div className='row' align-items='center'> </div>
-        <div align-items='center'>
-        {vis}
-        </div>
-        </>     
+        <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
       )
     }
     // Visualizations that can be filtered by all vocations and crops
+    case "InternetSourcesBarChart": {
+      return (
+        <>
+        <h3>Where do you most often look for field crop production information on the internet?</h3>
+        <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
+      )
+     
+    }
+    case "InfoSourcesBarChart": {
+      return (
+        <>
+          <h3>Who do you communicate with when seeking information about field crop production?</h3>
+          <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
+      )
+    }
+    case "EngageVictory":{
+      return (
+        <>
+          <h3>How often do you engage with the UCCE in the following ways?</h3>
+          <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        </>   
+      )
+    }
     default: {
       return (
         <>
-        <div>
-          <StyledUl>
-          <DropDownLi>
-            <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                Filter Vocation
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {vocationTypes.map(type => (
-                    <SubA 
-                      key={type}
-                      active={activeVocation === type}
-                      onClick={() => {setActiveVocation(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-            <DropDownLi>
-              <Dropbtn onClick={() => this.handleClick("DropDown")}>
-                Filter Crops
-              </Dropbtn>
-              <DropDownContent>
-                {" "}
-                {types.map(type => (
-                    <SubA 
-                      key={type}
-                      active={active === type}
-                      onClick={() => {setActive(type);}}
-                      >{type}
-                  </SubA>
-                  ))}
-                </DropDownContent>
-            </DropDownLi>
-          </StyledUl>
-        </div> 
-        <p><b >Vocation: </b>{activeVocation} &ensp; <b >Crop: </b>{active}</p>
-        <div className='row' align-items='center'> </div>
-        <div align-items='center'>
-        {vis}
-        </div>
+          <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>     
       )
     }
