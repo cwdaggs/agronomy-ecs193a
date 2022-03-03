@@ -103,18 +103,18 @@ function LimitedVocation(props) {
   )
 }
 
-function getVis(vis_name, active, activeVocation, limitedVocation, moreLimitedVocation, dataset){
+function getVis(vis_name, active, activeVocation, dataset){
 
   var vis_key = { 
-              "PrioritySatisfaction" :  (<PrioritySatisfaction filter={active} vocationFilter={limitedVocation} dataset={dataset}/>),
+              "PrioritySatisfaction" :  (<PrioritySatisfaction filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "CropPercentages":        (<CropPercentages filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "Affect":                 (<AffectVictory filter={active} vocationFilter={moreLimitedVocation} dataset={dataset}/>),
-              "Concerns":               (<ConcernsVictory filter={active} vocationFilter={limitedVocation} dataset={dataset}/>),
-              "AcresManaged":           (<AcresManagedBarChart filter={active} vocationFilter={limitedVocation} dataset={dataset}/>),
+              "Affect":                 (<AffectVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Concerns":               (<ConcernsVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "AcresManaged":           (<AcresManagedBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "InfoSources":            (<InfoSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "InternetSources":        (<InternetSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "PriorityConcerns":       (<PriorityConcerns filter={active} vocationFilter={moreLimitedVocation} myDataset={dataset}/>),
-              "AmountValued":           (<AmountVictory filter={active} vocationFilter={limitedVocation} dataset={dataset}/>),
+              "PriorityConcerns":       (<PriorityConcerns filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
+              "AmountValued":           (<AmountVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "Engage":                 (<EngageVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "PrimaryGrowingReasons":  (<PrimaryGrowingReasons filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
               "Map":                    (<MapChart filter={active} vocationFilter={activeVocation} data={dataset}/>)
@@ -133,10 +133,9 @@ function VisMenu(props) {
   const limitedVocationTypes = ["All", "Growers", "Consultants"]
   const evenMoreLimitedVocationTypes = ["Growers", "Consultants"]
   const [activeVocation, setActiveVocation] = useState("All");
-  const [limitedVocation, setLimitedVocation] = useState("All");
   const [moreLimitedVocation, setMoreLimitedVocation] = useState("Growers");
 
-  const vis = getVis(props.vis, active, activeVocation, limitedVocation, moreLimitedVocation, dataset);
+  const vis = getVis(props.vis, active, activeVocation, dataset);
   console.log(vis)
   console.log(vis.type.name)
   switch(vis.type.name){
@@ -195,7 +194,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>How many acres do you manage/consult annually?</h3> 
-        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes}  func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -203,7 +202,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>How much do you value the following:</h3>
-        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -214,7 +213,7 @@ function VisMenu(props) {
           <h3>Rate what you believe should be the UCCE's priorities for field crop production, and 
               rate your satisfaction with the UCCE's delivery of information on these topics. </h3>
         </div>
-        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -222,7 +221,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
-        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
