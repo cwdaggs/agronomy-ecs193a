@@ -70,9 +70,8 @@ export function PriorityConcerns(props) {
     const colorScale = ["#552E3A", "#713E4C", "#8D505C", "#A7626C", "#C2747B", "#DB878A", "#E0979E", "#E5A6B1", "#EAB6C3", "#F4D6E1"]
 
     return (
-        <div>
-            {/* <h2>What are the highest priority management challenges/concerns?</h2> */}
-            <svg width={1920} height={900}>
+      <div class='parent flex-parent'>
+        <div class='child flex-child'>
                 <VictoryLegend
                     x={150}
                     y={0}
@@ -85,6 +84,8 @@ export function PriorityConcerns(props) {
                     centerTitle
                     data={legend_data}
                 />
+                </div>
+                <div class='child flex-child'>   
                 <VictoryPie
                     animate={{
                         duration: 500,               
@@ -110,7 +111,7 @@ export function PriorityConcerns(props) {
                         flyoutWidth={45}    
                     />}
                 />
-            </svg>
+            </div>
       </div>
     );
 }
