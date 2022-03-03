@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import "typeface-abeezee";
+import "@fontsource/metropolis";
 
 const Button = styled.button`
   background-color: black;
@@ -20,8 +21,8 @@ const Button = styled.button`
 const Tab = styled.button`
   padding: 35px 60px;
   cursor: pointer;
-  font-size: 30px;
-  font-family: ABeeZee, serif; 
+  font: 30px Metropolis, sans-serif;
+  font-weight: 800;
   opacity: 0.7;
   background: white;
   border: 0;
@@ -49,7 +50,7 @@ const CropTab = styled.button`
   `}
 `;
 
-const types = ['Visualizations', 'Info', 'About'];
+const types = ['Home', 'Visualizations', 'Info', 'About'];
 
 function ToggleGroup() {
     const [active, setActive] = useState(types[0]);

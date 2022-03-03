@@ -5,9 +5,11 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import {InfoSummary} from './components/Pages/InfoSummary'
 import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
+import {Home} from './components/Pages/Home'
+import background from "./images/farming-background.jfif";
 
 function App() {
-  const [display, setDisplay] = useState("Visualizations");
+  const [display, setDisplay] = useState("Home");
 
   const [dual_display, checkDualDisplay] = useState(false);
 
@@ -31,8 +33,22 @@ function App() {
       return(<Visualizations/>)
     }
   }
+  if (display === "Visualizations") {
+    return (
+      <div id="outerContainer">
+        <div id="heading">
+          <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
+          <TabGroup changeFunc={changeDisplay}/>
+        </div>
+          <div>
+          <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+        </div>
+        {getDisplay()}
+      </div>
+    );
+  }
 
-  if (display === "Info") {
+  else if (display === "Info") {
     return (
       <div id="outerContainer">
         <div id="heading">
@@ -61,10 +77,10 @@ function App() {
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <TabGroup changeFunc={changeDisplay}/>
       </div>
-      <div>
-        <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+      <div  style={{ backgroundImage: `url(${background})` }}>
+        <Home/>
       </div>
-      {getDisplay()}
+        
     </div>
   );
 }

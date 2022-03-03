@@ -71,9 +71,8 @@ export function PriorityConcerns(props) {
 
     return (
         <div>
-            <h2>What are the highest priority management challenges/concerns?</h2>
-            <div class='parent flex-parent'>
-              <div class='child flex-child'>
+            {/* <h2>What are the highest priority management challenges/concerns?</h2> */}
+            <svg width={1920} height={900}>
                 <VictoryLegend
                     x={150}
                     y={0}
@@ -86,8 +85,6 @@ export function PriorityConcerns(props) {
                     centerTitle
                     data={legend_data}
                 />
-                </div>
-                <div class='child flex-child'>  
                 <VictoryPie
                     animate={{
                         duration: 500,               
@@ -113,8 +110,7 @@ export function PriorityConcerns(props) {
                         flyoutWidth={45}    
                     />}
                 />
-            </div>
-        </div>
+            </svg>
       </div>
     );
 }

@@ -81,18 +81,23 @@ export function InternetSourcesBarChart(props) {
     }
     var filtered_data = filterByVocation(data, props.vocationFilter);
     var graph_data = getInternetSources(filtered_data);
-
-    const fontSize = 5;
+    const width = 1920;
+    const height = 1080;
+    const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
+    const fontSize = 18;
 
     return (
         <div>
-          <h2>Where do you most often look for field crop production information on the internet?</h2>
-          <VictoryChart height={300} width={600}
-            domainPadding={10}
-            padding={{left: 100, bottom: 30, top: 30, right: 100}}
+          
+          <VictoryChart height={height} width={width}
+            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
             animate={{duration: 800}}
           >
-            <VictoryLabel text={"Internet Sources vs Number of Responses " + "(n = " + filtered_data.length + ")"} x={170} y={20}/>
+            <VictoryLabel text={"Internet Sources vs Number of Responses " + "(n = " + filtered_data.length + ")"} 
+            x={width/2 - 300} 
+            y={80}
+            style ={{fontSize:fontSize +10}}/>
             <VictoryBar horizontal
               data={graph_data}
               style={{ data:  { fill: ({datum}) => datum.fill}}}
@@ -102,8 +107,8 @@ export function InternetSourcesBarChart(props) {
                   style={{
                     fontSize:fontSize
                   }}
-                  flyoutHeight={15}
-                  flyoutWidth={30}    
+                  flyoutHeight={25}
+                  flyoutWidth={40}    
                 />
             }
             />

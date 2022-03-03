@@ -34,13 +34,12 @@ export const Visualizations = () => {
                           key={type} 
                           onClick={() => {setActive(type)}} 
                           active={active === type}
-                          >{type}
+                          >{type.replace(/([A-Z])/g, ' $1').trim()}
                         </SubA>
                         ))}
                       </DropDownContent>
                   </DropDownLi>
                 </StyledUl>
-            
         
             {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active}/>}
         

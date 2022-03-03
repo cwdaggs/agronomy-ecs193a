@@ -2,6 +2,7 @@ import {VictoryLegend, VictoryHistogram, VictoryBar, VictorySelectionContainer, 
 import { averageSatisfaction, filterByCrop, trendLineSatisfactions, filterByVocation } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState, useEffect } from "react";
+import "typeface-abeezee";
 
 function barData(dataset, topic){
   var values = []
@@ -118,11 +119,11 @@ export const PrioritySatisfaction = (props) => {
     }
     
 
-    const width = 250;
-    const height = 100;
+    const width = 1920;
+    const height = 1080;
     const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
   
-    const fontSize = 2
+    const fontSize = 20
 
     return (
 
@@ -141,19 +142,23 @@ export const PrioritySatisfaction = (props) => {
                 height={height} 
                 width={width}
                 domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-                padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}  
+                padding={{ top: margin.top, bottom: margin.bottom, left: width/3.2, right: margin.right }}  
                 
             >
-            <VictoryLegend x={0}
+            <VictoryLegend 
+              x={100}
+              y={300}
               title="Legend"
               centerTitle
-              orientation="horizontal"
+              orientation="vertical"
               gutter={4}
-              style={{ border: { stroke: "black" }, title: {fontSize: 3 }, data: {fontSize:3 }}}
+              style={{ border: { stroke: "black" }, 
+                       title: {fontSize: fontSize * 2, fontFamily: 'ABeeZee' }, 
+                       labels: {fontSize: fontSize*2, fontFamily: 'ABeeZee'}}}
               data={[
-                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a", strokeWidth: 0.5 }, labels:{fontSize: 3} },
-                { name: "Average", symbol: { fill: "red", type:"square" }, labels:{fontSize: 3} },
-                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" }, labels:{fontSize: 3} }
+                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a"} },
+                { name: "Average", symbol: { fill: "red", type:"square" } },
+                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" } }
               ]}
             />
             <VictoryScatter
@@ -167,21 +172,21 @@ export const PrioritySatisfaction = (props) => {
                         strokeWidth: 0.5
                     },
                     axis: {stroke: "#756f6a"},
-                    ticks: {stroke: "grey", size: 5},
+                    ticks: {stroke: "grey", size: 20},
                     tickLabels: {fontSize: fontSize, padding: 5}
                   }}
-                size={1}
+                size={10}
                 data={data}
-                labels={({datum}) => datum.Topic + "\nSatisfaction Avg: " + String(datum.Satisfaction).substring(0, 3) + "\nPriority Avg: " + String(datum.Priority).substring(0,3)}
+                labels={({datum}) => datum.Topic.split('_').join(' ') + "\nSatisfaction Avg: " + String(datum.Satisfaction).substring(0, 4) + "\nPriority Avg: " + String(datum.Priority).substring(0,4)}
                 labelComponent={
                     <VictoryTooltip 
                         style={{
-                          fontSize:fontSize,
+                          fontSize:fontSize-5,
                           strokeWidth:0.1,
                           fontFamily: 'ABeeZee'
                         }}
-                        flyoutHeight={10}
-                        flyoutWidth={30}    
+                        flyoutHeight={60}
+                        flyoutWidth={235}    
                     />
                     
                 }
@@ -197,7 +202,7 @@ export const PrioritySatisfaction = (props) => {
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 5},
-                        axisLabel: {fontSize: fontSize*2, padding: 15 }
+                        axisLabel: {fontSize: fontSize*2, padding: 60 }
                         }}
                 />
                 <VictoryAxis
@@ -206,14 +211,14 @@ export const PrioritySatisfaction = (props) => {
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 0},
-                        axisLabel: {fontSize: fontSize*2 }
+                        axisLabel: {fontSize: fontSize*2, padding: 60 }
                         }}
                 />
             <VictoryLine horizontal
               style={{ 
                 data: { 
                     stroke: "red", 
-                    strokeWidth:0.1, 
+                    strokeWidth: 2, 
                     strokeLinecap: "round" 
                 } 
               }}
@@ -227,7 +232,7 @@ export const PrioritySatisfaction = (props) => {
               style={{ 
                 data: { 
                     stroke: "red", 
-                    strokeWidth:0.1, 
+                    strokeWidth: 2, 
                     strokeLinecap: "round" 
                 } 
               }}
@@ -240,7 +245,7 @@ export const PrioritySatisfaction = (props) => {
                 style={{ 
                     data: { 
                         stroke: "#756f6a", 
-                        strokeWidth:0.3, 
+                        strokeWidth:3, 
                         strokeLinecap: "round" 
                     } 
                 }}
@@ -255,7 +260,7 @@ export const PrioritySatisfaction = (props) => {
                             mutation: ({ style }) => {
                               return style.stroke === "red"
                                 ? null
-                                : { style: { stroke: "black", strokeWidth: 1 } };
+                                : { style: { stroke: "black", strokeWidth: 5 } };
                             }
                           },
                         ];
@@ -267,7 +272,7 @@ export const PrioritySatisfaction = (props) => {
                           mutation: ({style}) => {
                             return style.stroke === "red"
                             ? null
-                            : { style: { stroke: "#756f6a", strokeWidth: 0.3 } };;
+                            : { style: { stroke: "#756f6a", strokeWidth: 3 } };;
                           }
                         }];
                       }
