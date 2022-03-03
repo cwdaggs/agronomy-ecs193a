@@ -35,7 +35,7 @@ function App() {
   }
   if (display === "Visualizations") {
     return (
-      <div id="outerContainer">
+      <div id="outerContainer" class='font-metropolis'>
         <div id="heading">
           <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
           <TabGroup changeFunc={changeDisplay}/>
@@ -43,14 +43,14 @@ function App() {
           <div>
           <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
         </div>
-        {getDisplay()}
+          {getDisplay()}
       </div>
     );
   }
 
   else if (display === "Info") {
     return (
-      <div id="outerContainer">
+      <div id="outerContainer" class='font-metropolis'>
         <div id="heading">
           <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
           <TabGroup changeFunc={changeDisplay}/>
@@ -61,7 +61,7 @@ function App() {
   }
   if (display === "About") {
     return (
-      <div id="outerContainer">
+      <div id="outerContainer" class='font-metropolis'>
         <div id="heading">
           <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
           <TabGroup changeFunc={changeDisplay}/>
@@ -72,7 +72,7 @@ function App() {
     );
   }
   return (
-    <div id="outerContainer">
+    <div id="outerContainer" class='font-metropolis'>
       <div id="heading">
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <TabGroup changeFunc={changeDisplay}/>

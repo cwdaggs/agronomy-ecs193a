@@ -55,7 +55,7 @@ function OnlyCrops(props) {
     )
 }
 
-function MoreLimitedVocation(props) {
+function LimitedVocation(props) {
   return (
     <>
     <div>
@@ -119,7 +119,7 @@ function getVis(vis_name, active, activeVocation, limitedVocation, moreLimitedVo
               "PrimaryGrowingReasons":  (<PrimaryGrowingReasons filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
               "Map":                    (<MapChart filter={active} vocationFilter={activeVocation} data={dataset}/>)
             }
-  return vis_key[vis_name]
+  return (vis_key[vis_name])
 }
 
 function VisMenu(props) {
@@ -149,14 +149,7 @@ function VisMenu(props) {
         )
       }
     // Visualizations that can only be filtered by crop
-    case "MapChart": {
-      return (
-        <>
-        <h3>Density of Survey Responses By County</h3> 
-        <OnlyCrops active={active} types={types} setActive={setActive} vis={vis}/>
-        </>   
-      )
-    }
+
     case "PrimaryGrowingReasons": {
       return (
         <>
@@ -178,7 +171,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>What are the highest priority management challenges/concerns?</h3>
-        <MoreLimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>
       )
     }
@@ -192,7 +185,7 @@ function VisMenu(props) {
       return (
           <>
           <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
-          <MoreLimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+          <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
           </>
       )
     }
@@ -201,7 +194,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>How many acres do you manage/consult annually?</h3> 
-        <MoreLimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -209,14 +202,14 @@ function VisMenu(props) {
       return (
         <>
         <h3>How much do you value the following:</h3>
-        <MoreLimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
     case "PrioritySatisfaction": {
       return (
         <>
-        <MoreLimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -224,7 +217,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
-        <MoreLimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={limitedVocationTypes} func={setLimitedVocation} activeType={limitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -233,7 +226,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>Where do you most often look for field crop production information on the internet?</h3>
-        <MoreLimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
      
@@ -241,15 +234,15 @@ function VisMenu(props) {
     case "InfoSources": {
       return (
         <>
-        <h3>Who do you communicate with when seeking information about field crop production?</h3>
-        <MoreLimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+          <h3>Who do you communicate with when seeking information about field crop production?</h3>
+          <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
     default: {
       return (
         <>
-        <MoreLimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+          <LimitedVocation vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>     
       )
     }

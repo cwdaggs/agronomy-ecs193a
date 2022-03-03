@@ -63,6 +63,18 @@
 .flex-child {
   flex: 1;
 }
+
+.font-metropolis{
+  font-family: 'Metropolis';
+}
+
+.visualization-window {
+  font-family: 'Metropolis';
+  font-size: 24px;
+  height: 80%;
+  outline: solid 1px black;
+  /* Center child horizontally*/
+}
 #homepage {
   background-image: url(./images/farming-background.jfif);
 }

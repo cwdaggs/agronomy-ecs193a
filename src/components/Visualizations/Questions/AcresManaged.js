@@ -62,7 +62,7 @@ export function AcresManagedBarChart(props) {
     var lengthString = String("Acres vs Number of Farms (n = " + dataLength + ")");
 
     return (
-        <div>
+        <div class='visualization-window'>
           {/* <h2>How many acres do you manage/consult annually?</h2> */}
           <VictoryChart height={1080} width={1920}
             domainPadding={60}

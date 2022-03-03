@@ -75,7 +75,7 @@ export function AmountVictory(props) {
   const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
 
   return (
-    <div>
+    <div class='visualization-window'>
       
       <VictoryChart
         horizontal={true}

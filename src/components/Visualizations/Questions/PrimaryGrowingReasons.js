@@ -83,6 +83,7 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
       "#dd6551",
       "#d43d51"]
     return (
+      <div class='visualization-window'>
           <div class='parent flex-parent'>
             <div class='child flex-child'>
                 <VictoryLegend      
@@ -147,5 +148,6 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                 />
             </div>
         </div>
+      </div>
     );
 }

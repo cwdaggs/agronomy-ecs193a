@@ -124,7 +124,7 @@ export function AffectVictory(props) {
   const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
 
   return (
-    <div>
+    <div class='visualization-window'>
       {/* <button onClick={function () {setJob("Growers")}}>Growers</button>
       <button onClick={function () {setJob("Consultants")}}>Consultants</button>
       <p><b >{job}</b> Data: </p> */}

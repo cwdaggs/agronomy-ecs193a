@@ -127,7 +127,7 @@ export const PrioritySatisfaction = (props) => {
 
     return (
 
-        <div>
+        <div class='visualization-window'>
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer
@@ -151,7 +151,7 @@ export const PrioritySatisfaction = (props) => {
               title="Legend"
               centerTitle
               orientation="vertical"
-              gutter={4}
+              gutter={50}
               style={{ border: { stroke: "black" }, 
                        title: {fontSize: fontSize * 2, fontFamily: 'ABeeZee' }, 
                        labels: {fontSize: fontSize*2, fontFamily: 'ABeeZee'}}}
@@ -169,7 +169,7 @@ export const PrioritySatisfaction = (props) => {
                         fill: ({ active }) => active ? "#285f1e" : "#c43a31",
                         stroke: "#756f6a",
                         fillOpacity: ({ active }) => active ? 1 : 0.7,
-                        strokeWidth: 0.5
+                        strokeWidth: 1
                     },
                     axis: {stroke: "#756f6a"},
                     ticks: {stroke: "grey", size: 20},

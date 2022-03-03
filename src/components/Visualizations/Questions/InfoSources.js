@@ -66,7 +66,7 @@ export function InfoSourcesBarChart(props) {
     const fontSize = 20;
 
     return (
-        <div>
+        <div class='visualization-window'>
           {/* <h2>Who do you communicate with when seeking information about field crop production?</h2> */}
           <VictoryChart height={height} width={width}
             animate={{

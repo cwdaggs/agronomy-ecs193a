@@ -87,7 +87,7 @@ export function InternetSourcesBarChart(props) {
     const fontSize = 18;
 
     return (
-        <div>
+        <div class='visualization-window'>
           
           <VictoryChart height={height} width={width}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}

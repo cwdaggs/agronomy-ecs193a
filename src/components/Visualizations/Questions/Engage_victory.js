@@ -85,7 +85,7 @@ export function EngageVictory(props) {
   const legend_data = [{name: "1-3 times/week"}, {name: "1-2 times/month"}, {name: "3-6 times/year"}, {name: "1-2 times/year"}, {name: "Never"}]
 
   return (
-    <div>
+    <div class='visualization-window'>
       <VictoryChart
         horizontal={true}
         animate={{

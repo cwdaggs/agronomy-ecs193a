@@ -36,9 +36,8 @@ export function ConcernsVictory(props) {
   const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]
 
   return (
-    <div>
-      
-      
+    <div class='visualization-window'>
+    
       <VictoryChart
         horizontal={true}
         animate={{
