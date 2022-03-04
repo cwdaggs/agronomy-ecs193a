@@ -1,5 +1,5 @@
 import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {filterByCrop, filterByVocation} from '../UseData.js'
+import {filterByCrop, filterByVocation, sort_by_freq} from '../UseData.js'
 import "typeface-abeezee";
 
 export function calculateEngageEach(data, filter, answer){
@@ -72,7 +72,8 @@ export function EngageVictory(props) {
   }
   var data_filtered = filterByVocation(data, props.vocationFilter)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
-  const dataset_final = transformData(data_by_engage)
+  var data_sorted = sort_by_freq(data_by_engage)
+  const dataset_final = transformData(data_sorted)
   const width = 1920;
   const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };

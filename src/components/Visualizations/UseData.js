@@ -25,6 +25,93 @@ export function sort_by_very(dataset){
   return data
 }
 
+export function sort_by_freq(dataset){
+  var data = dataset
+  for(let j = 0; j < 13; j++){
+      for(let i = 0; i < data[0].length-1; i++){
+          var temp0 = data[0][i+1]
+          var temp1 = data[1][i+1]
+          var temp2 = data[2][i+1]
+          var temp3 = data[3][i+1]
+          var temp4 = data[4][i+1]
+          if(data[0][i].Total > data[0][i+1].Total) {
+              data[0][i+1] = data[0][i]
+              data[1][i+1] = data[1][i]
+              data[2][i+1] = data[2][i]
+              data[3][i+1] = data[3][i]
+              data[4][i+1] = data[4][i]
+
+              data[0][i] = temp0
+              data[1][i] = temp1
+              data[2][i] = temp2
+              data[3][i] = temp3
+              data[4][i] = temp4
+          }
+          if (data[0][i].Total === data[0][i+1].Total) {
+            if (data[1][i].Total > data[1][i+1].Total) {
+              data[0][i+1] = data[0][i]
+              data[1][i+1] = data[1][i]
+              data[2][i+1] = data[2][i]
+              data[3][i+1] = data[3][i]
+              data[4][i+1] = data[4][i]
+
+              data[0][i] = temp0
+              data[1][i] = temp1
+              data[2][i] = temp2
+              data[3][i] = temp3
+              data[4][i] = temp4
+            }
+            if (data[1][i].Total === data[1][i+1].Total) {
+              if (data[2][i].Total > data[2][i+1].Total) {
+                data[0][i+1] = data[0][i]
+                data[1][i+1] = data[1][i]
+                data[2][i+1] = data[2][i]
+                data[3][i+1] = data[3][i]
+                data[4][i+1] = data[4][i]
+  
+                data[0][i] = temp0
+                data[1][i] = temp1
+                data[2][i] = temp2
+                data[3][i] = temp3
+                data[4][i] = temp4
+              }
+              if (data[2][i].Total === data[2][i+1].Total) {
+                if (data[3][i].Total > data[3][i+1].Total) {
+                  data[0][i+1] = data[0][i]
+                  data[1][i+1] = data[1][i]
+                  data[2][i+1] = data[2][i]
+                  data[3][i+1] = data[3][i]
+                  data[4][i+1] = data[4][i]
+    
+                  data[0][i] = temp0
+                  data[1][i] = temp1
+                  data[2][i] = temp2
+                  data[3][i] = temp3
+                  data[4][i] = temp4
+                }
+                if (data[3][i].Total === data[3][i+1].Total) {
+                  if (data[4][i].Total > data[4][i+1].Total) {
+                    data[0][i+1] = data[0][i]
+                    data[1][i+1] = data[1][i]
+                    data[2][i+1] = data[2][i]
+                    data[3][i+1] = data[3][i]
+                    data[4][i+1] = data[4][i]
+      
+                    data[0][i] = temp0
+                    data[1][i] = temp1
+                    data[2][i] = temp2
+                    data[3][i] = temp3
+                    data[4][i] = temp4
+                  }
+                }
+              }
+            }
+          }
+      }
+  }
+  return data
+}
+
 export function filterByCrop(data, filter){
   if(filter === "All"){
     return data

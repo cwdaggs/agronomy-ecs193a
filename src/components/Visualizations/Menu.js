@@ -171,10 +171,11 @@ function VisMenu(props) {
     // }
     // Visualizations that can strictly only be filtered by grower or consultant
     case "PriorityConcerns": {
+      let pcVis = getVis("PriorityConcerns", active, moreLimitedVocation, dataset);
       return (
         <>
         <h3>What are the highest priority management challenges/concerns?</h3>
-        <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={pcVis}/>
         </>
       )
     }
@@ -185,10 +186,11 @@ function VisMenu(props) {
       // } else {
       //   blah = "How often do the following priorities affect your management decisions for field crop production?"
       // }
+      let affectVis = getVis("Affect", active, moreLimitedVocation, dataset);
       return (
           <>
           <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
-          <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+          <LimitedVocation vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={affectVis}/>
           </>
       )
     }
