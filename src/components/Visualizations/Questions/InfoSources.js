@@ -44,7 +44,7 @@ export function calculateInformationSources(data){
   for(var k=0; k<totals.length; k++){
     modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
   }
-
+  modified_data.sort(function(a,b){return a.y - b.y;});
   return modified_data;
 }
 
@@ -83,6 +83,7 @@ export function InfoSourcesBarChart(props) {
 
             <VictoryBar horizontal
               data={info_data}
+              sortKey = "y"
               style={{ data:  { fill: ({datum}) => datum.fill}}}
               labels={({datum}) => datum.y}
               labelComponent={

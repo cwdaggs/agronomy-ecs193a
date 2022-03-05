@@ -1,5 +1,5 @@
 import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {filterByCrop} from '../UseData.js'
+import {filterByCrop, sort_by_freq} from '../UseData.js'
 import "typeface-abeezee";
 
 export function calculateAffectEach(data, filter, answer){
@@ -111,7 +111,8 @@ export function AffectVictory(props) {
     // heading = (<h2>How often do the following priorities affect your recommendations for field crop production?</h2>)
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
   }
-  const dataset_final = transformData(data_by_affect)
+  var data_sorted = sort_by_freq(data_by_affect)
+  const dataset_final = transformData(data_sorted)
   const width = 1920;
   const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
