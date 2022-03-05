@@ -139,12 +139,12 @@ export function EngageVictory(props) {
             }}
         />
         <VictoryAxis
-          label="Type of Engagement"
+          // label="Type of Engagement"
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
               tickLabels: {fontSize: fontSize, padding: 0},
-              axisLabel: {fontSize: 30, padding: 360}
+              // axisLabel: {fontSize: 30, padding: 360}
             }}
           tickLabelComponent={       
             <VictoryLabel    

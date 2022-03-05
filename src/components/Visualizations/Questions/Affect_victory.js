@@ -183,12 +183,12 @@ export function AffectVictory(props) {
             }}
         />
         <VictoryAxis
-        label="Priority"
+        // label="Priority"
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
               tickLabels: {fontSize: fontSize, padding: 0},
-              axisLabel: {fontSize: 30, padding: 410}
+              // axisLabel: {fontSize: 30, padding: 410}
             }}
           tickLabelComponent={       
             <VictoryLabel    

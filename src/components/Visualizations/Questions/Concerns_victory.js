@@ -94,12 +94,12 @@ export function ConcernsVictory(props) {
             }}
         />
         <VictoryAxis
-          label = "Concerns"
+          // label = "Concerns"
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
               tickLabels: {fontSize: fontSize, padding: 0},
-              axisLabel: {fontSize: 30, padding: 380}
+              // axisLabel: {fontSize: 30, padding: 380}
             }}
           tickLabelComponent={       
             <VictoryLabel    
