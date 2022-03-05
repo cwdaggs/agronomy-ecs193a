@@ -219,7 +219,7 @@ function VisMenu(props) {
     case "PrioritySatisfaction": {
       return (
         <>
-        <div class='vis-title'>
+        <div>
           <h3>Rate what you believe should be the UCCE's priorities for field crop production, and 
               rate your satisfaction with the UCCE's delivery of information on these topics. </h3>
         </div>
