@@ -49,12 +49,11 @@ export function ConcernsVictory(props) {
         padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
       >
         <VictoryLegend x={width/2 - 300}
-              title="Legend"
+              title="Level of Concern"
               centerTitle
               orientation="horizontal"
               colorScale={colorScale}
-              itemsPerRow={5}
-              // symbolSpacer={5}
+              borderPadding = {{right: 10}}
               gutter={20}
               style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
                       border: { stroke: "black" }, 
@@ -64,7 +63,7 @@ export function ConcernsVictory(props) {
             />
         <VictoryStack
           style={{
-              data: { stroke: "black", strokeWidth: 0.2}
+              data: { stroke: "black", strokeWidth: 1}
           }}
           colorScale={colorScale}
         >
@@ -93,10 +92,12 @@ export function ConcernsVictory(props) {
             }}
         />
         <VictoryAxis
+          label = "Concerns"
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0}
+              tickLabels: {fontSize: fontSize, padding: 0},
+              axisLabel: {fontSize: 30, padding: 380}
             }}
           tickLabelComponent={       
             <VictoryLabel    

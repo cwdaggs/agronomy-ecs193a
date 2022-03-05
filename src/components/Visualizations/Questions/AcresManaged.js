@@ -59,11 +59,10 @@ export function AcresManagedBarChart(props) {
     var data = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
     var dataLength = calculateSizeOfDataSet(acre_data)
-    var lengthString = String("Acres vs Number of Farms (n = " + dataLength + ")");
+    var lengthString = String("Acreage vs Number of Farms (n = " + dataLength + ")");
 
     return (
         <div class='visualization-window'>
-          {/* <h2>How many acres do you manage/consult annually?</h2> */}
           <VictoryChart height={1080} width={1920}
             domainPadding={60}
             animate={{duration: 800}}
