@@ -47,7 +47,7 @@ function OnlyCrops(props) {
           </DropDownLi>
         </StyledUl>
       </div> 
-      <p><b >&ensp;Crop: </b>{props.active}</p>
+      {/* <p><b >&ensp;Crop: </b>{props.active}</p> */}
       <div className='row' align-items='center'> </div>
       <div align-items='center'>
       {props.vis}
@@ -97,7 +97,7 @@ function LimitedVocation(props) {
         </DropDownLi>
       </StyledUl>
     </div> 
-    <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p>
+    {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p> */}
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
     {props.vis}
@@ -173,14 +173,7 @@ function VisMenu(props) {
         </>   
       )
     }
-    // case "AcresManagedBarChart": {
-    //   return (
-    //     <>
-    //     <h3>How many acres do you manage/consult annually?</h3> 
-    //     <OnlyCrops/>
-    //     </>   
-    //   )
-    // }
+
     // Visualizations that can strictly only be filtered by grower or consultant
     case "PriorityConcerns": {
       let pcVis = getVis("PriorityConcerns", active, moreLimitedVocation, dataset);

@@ -25,7 +25,7 @@ const Dropbtn = styled.div`
   border-right: 5px solid white;
   border-radius: 25px;
   &:hover {
-    background-color: red;
+    background-color: green;
   }
 `;
 
