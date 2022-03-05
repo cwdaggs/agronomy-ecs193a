@@ -112,14 +112,14 @@ export const MapChart = (props) => {
             colorScale={pieColorScale}
             data={occupationData}
             // labels={() => null}
-            labels={({ datum }) => `${datum.x + ": " + datum.y.toFixed() + "%"}`}
+            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
             labelComponent={<VictoryTooltip 
               style={{
                 fontSize:20,
                 fontFamily: 'ABeeZee'
               }}
               flyoutHeight={25}
-              flyoutWidth={200}    
+              flyoutWidth={45}    
               />}
             />
             <VictoryLegend
