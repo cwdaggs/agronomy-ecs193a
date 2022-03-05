@@ -1,4 +1,5 @@
 import * as C from './App.styles';
+import "@fontsource/newsreader";
 
 export const InfoSummary = () => {
     return(
@@ -27,7 +28,7 @@ export const InfoSummary = () => {
               />
             </div>
             <div class='flex-child'>
-              <C.Desc>
+              <C.Desc className='font-newsreader'>
                   Cameron joined the Department of Plant Sciences in 2019. He is an agronomist who places equal emphasis on food security and 
                   environmental sustainability. His research is focused on developing cropping systems and management strategies to enhance 
                   productivity while minimizing nitrogen, carbon, water, and energy footprints in agriculture. Cameron was Assistant Professor 
@@ -41,9 +42,9 @@ export const InfoSummary = () => {
             <C.SubTitle>Development Team</C.SubTitle>
           <div class='flex-parent'>
             <div class='flex-child'>
-            <C.Desc>
-                    The team that developed this web application is a group of four UC Davis students that were hired by Cameron Pittelkow to create
-                    create an interactive visualization for each of the survey findings as a senior project. 
+            <C.Desc className='font-newsreader'>
+                    The team that developed this web application is a group of four UC Davis students that were enlisted by Dr. Pittelkow to
+                    create interactive visualizations for the survey findings that could be easily accessed by survey participants. 
             </C.Desc>
             </div>
             <div class='flex-child'>
