@@ -128,8 +128,20 @@ function getVis(vis_name, active, activeVocation, dataset){
 function VisMenu(props) {
 
   const dataset = props.dataset
-  const types = GetTypes(dataset);
-  
+  const types = [
+    "All", 
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ]; // GetTypes(dataset);
+
   const [active, setActive] = useState("All");
 
   const vocationTypes = ["All", "Allied Industry", "Consultants", "Growers", "Other"]
