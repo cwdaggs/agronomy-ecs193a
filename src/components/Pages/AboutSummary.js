@@ -1,5 +1,5 @@
 import * as C from './App.styles';
-import {MapChart} from '../Visualizations/CaliforniaCounties'
+import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
 import { useData } from '../Visualizations/UseData';
 export const AboutSummary = () => {
 
@@ -44,7 +44,12 @@ export const AboutSummary = () => {
                     and occupation. Participating in the survey was Growers, Consultants, members of Allied Industry, and more.
                     Below is a map representing the density of responses in respect to county, as well as the distribution of responses per occupation:
             </C.Desc> 
-            <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />      
+            <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+            <C.Desc>
+                    Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
+                    responses for each crop:
+            </C.Desc> 
+            <CropBar data={useData('./data/Filtered_Crop_Data.csv')}/>   
           <C.Button>
             <button>
               See Full Survey results

@@ -84,8 +84,20 @@
   height: 80%;
   width: 80%;
   outline: solid 1px black;
+  margin: auto;
   /* Center child horizontally*/
 }
+
+#about-visualization-window {
+  font-family: 'Metropolis';
+  font-size: 24px;
+  height: 100%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  /* Center child horizontally*/
+}
+
 #homepage {
   background-image: url(./images/farming-background.jfif);
 }
