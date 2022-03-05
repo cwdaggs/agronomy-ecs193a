@@ -116,11 +116,7 @@ export function AffectVictory(props) {
   const width = 1920;
   const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
-  const colorScale = ["#245f81",
-    "#8f97c5",
-    "#f8d3ff",
-    "#ef88b7",
-    "#d43d51"];
+  const colorScale = ["#245f81", "#8f97c5", "#f8d3ff", "#ef88b7", "#d43d51"];
   const fontSize = 20
   const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
 
@@ -141,16 +137,17 @@ export function AffectVictory(props) {
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
         padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
       >
-        <VictoryLegend x={width/2 - 300}
-              title="Legend"
+        <VictoryLegend 
+              x={width/2 - 300}
+              y={15}
+              title="Frequency of Effect on Managements/Recommendations"
               centerTitle
               orientation="horizontal"
               colorScale={colorScale}
               itemsPerRow={5}
-              // symbolSpacer={5}
               gutter={20}
               style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
-                      border: { stroke: "black" }, 
+                      // border: { stroke: "black" }, 
                       title: {fontSize: fontSize }, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
               data={legend_data}
@@ -186,10 +183,12 @@ export function AffectVictory(props) {
             }}
         />
         <VictoryAxis
+        label="Priority"
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0}
+              tickLabels: {fontSize: fontSize, padding: 0},
+              axisLabel: {fontSize: 30, padding: 410}
             }}
           tickLabelComponent={       
             <VictoryLabel    
