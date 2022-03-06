@@ -145,8 +145,20 @@ function getVis(vis_name, active, activeVocation, dataset){
 function VisMenu(props) {
 
   const dataset = props.dataset
-  const types = GetTypes(dataset);
-  
+  const types = [
+    "All", 
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ]; // GetTypes(dataset);
+
   const [active, setActive] = useState("All");
 
   const vocationTypes = ["All", "Allied Industry", "Consultants", "Growers", "Other"]
@@ -190,6 +202,7 @@ function VisMenu(props) {
     // }
     // Visualizations that can strictly only be filtered by grower or consultant
     case "PriorityConcerns": {
+      let pcVis = getVis("PriorityConcerns", active, moreLimitedVocation, dataset);
       return (
         <>
         <h3>What are the highest priority management challenges/concerns?</h3>
@@ -204,6 +217,7 @@ function VisMenu(props) {
       // } else {
       //   blah = "How often do the following priorities affect your management decisions for field crop production?"
       // }
+      let affectVis = getVis("Affect", active, moreLimitedVocation, dataset);
       return (
           <>
           <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
