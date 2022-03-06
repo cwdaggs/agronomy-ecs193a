@@ -1,5 +1,5 @@
 import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, filterByCrop, filterByVocation} from '../UseData.js'
+import {sort_by_very, filterByCropOrRegion, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
 
 export function calculateValueEach(data, filter, answer){
@@ -61,7 +61,7 @@ export function AmountVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter)
+  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)

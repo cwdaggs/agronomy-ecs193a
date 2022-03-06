@@ -1,5 +1,5 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCrop, filterByVocation} from '../UseData.js';
+import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
 function getInternetSources(data){
@@ -79,7 +79,7 @@ export function InternetSourcesBarChart(props) {
         return <pre>Loading...</pre>;
     }
 
-    var data = filterByCrop(props.dataset, props.filter);
+    var data = filterByCropOrRegion(props.dataset, props.filter);
     if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
       data = props.dataset;
     }

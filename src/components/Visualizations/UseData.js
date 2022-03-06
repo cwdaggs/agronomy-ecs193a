@@ -25,10 +25,20 @@ export function sort_by_very(dataset){
   return data
 }
 
-export function filterByCrop(data, filter){
+export function filterByCropOrRegion(data, filter){
+  const regionTypes = ["Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
   if(filter === "All"){
     return data
-  }else{
+  } 
+  else if(regionTypes.includes(filter)){
+    if(filter === "Sac Valley"){
+      filter = "Sac_Valley";
+    }
+    else if(filter === "Sierra Nevada"){
+      filter = "Sierra_Nevada";
+    }
+    return data.filter(function(d){return String(d.Region).includes(filter)});
+  } else{
     return data.filter(function(d){return String(d.Crops).includes(filter)});
   }
 }

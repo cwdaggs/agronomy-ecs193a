@@ -1,5 +1,5 @@
 import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {filterByCrop, filterByVocation} from '../UseData.js'
+import {filterByCropOrRegion, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
 
 export function calculateEngageEach(data, filter, answer){
@@ -66,7 +66,7 @@ export function EngageVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  var data = filterByCrop(props.dataset, props.filter);
+  var data = filterByCropOrRegion(props.dataset, props.filter);
   if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
     data = props.dataset;
   }

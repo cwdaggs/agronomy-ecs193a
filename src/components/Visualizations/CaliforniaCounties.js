@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
 import * as d3 from 'd3';
-import {filterByCrop, useData, acresByCounty, filterByVocation} from "./UseData"
+import {filterByCropOrRegion, useData, acresByCounty, filterByVocation} from "./UseData"
 import {VictoryLegend, VictoryPie, VictoryTooltip, VictoryBar, VictoryAxis, VictoryChart} from 'victory';
 import {
   ComposableMap,
@@ -34,7 +34,7 @@ export const MapChart = (props) => {
   if (!props.data){
     return <pre>Loading...</pre>;
 }
-  const data = filterByCrop(props.data, props.filter)
+  const data = filterByCropOrRegion(props.data, props.filter)
   const countyData = acresByCounty(data)
   const occupationData = occupationAmount(data);
   return (
@@ -149,16 +149,16 @@ export const MapChart = (props) => {
 
 
 function cropAmount(data){
-  var occMap = [  {x: "Rice", y: filterByCrop(data, "Rice").length}, 
-                  {x: "Alfalfa", y: filterByCrop(data, "Alfalfa").length}, 
-                  {x: "Wheat", y: filterByCrop(data, "Wheat").length},
-                  {x: "Corn", y: filterByCrop(data, "Corn").length},
-                  {x: "Corn Silage", y: filterByCrop(data, "Corn Silage").length},
-                  {x: "Dry Beans", y: filterByCrop(data, "Dry Beans").length},
-                  {x: "Cotton", y: filterByCrop(data, "Cotton").length},
-                  {x: "Sunflower", y: filterByCrop(data, "Sunflower").length},
-                  {x: "Barley", y: filterByCrop(data, "Barley").length},
-                  {x: "Small Grain Silage", y: filterByCrop(data, "Small Grain Silage").length} ]
+  var occMap = [  {x: "Rice", y: filterByCropOrRegion(data, "Rice").length}, 
+                  {x: "Alfalfa", y: filterByCropOrRegion(data, "Alfalfa").length}, 
+                  {x: "Wheat", y: filterByCropOrRegion(data, "Wheat").length},
+                  {x: "Corn", y: filterByCropOrRegion(data, "Corn").length},
+                  {x: "Corn Silage", y: filterByCropOrRegion(data, "Corn Silage").length},
+                  {x: "Dry Beans", y: filterByCropOrRegion(data, "Dry Beans").length},
+                  {x: "Cotton", y: filterByCropOrRegion(data, "Cotton").length},
+                  {x: "Sunflower", y: filterByCropOrRegion(data, "Sunflower").length},
+                  {x: "Barley", y: filterByCropOrRegion(data, "Barley").length},
+                  {x: "Small Grain Silage", y: filterByCropOrRegion(data, "Small Grain Silage").length} ]
   return occMap
 }
 

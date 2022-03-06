@@ -1,5 +1,5 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCrop, filterByVocation} from '../UseData.js';
+import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
 function calculateAcres(data){
@@ -56,7 +56,7 @@ export function AcresManagedBarChart(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-    var data = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
+    var data = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
     var dataLength = calculateSizeOfDataSet(acre_data)
     var lengthString = String("Number of Farms (n = " + dataLength + ")");

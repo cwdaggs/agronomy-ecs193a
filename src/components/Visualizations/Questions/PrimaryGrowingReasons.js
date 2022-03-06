@@ -1,4 +1,4 @@
-import {filterByCrop, filterByVocation} from "../UseData.js";
+import {filterByCropOrRegion, filterByVocation} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 
@@ -64,7 +64,7 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCrop(myDataset, filter), "Growers")
+    var data_filtered = filterByVocation(filterByCropOrRegion(myDataset, filter), "Growers")
     var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
     var legend_data = []
     for (var i = 0; i < data_by_reason.length; i++) {

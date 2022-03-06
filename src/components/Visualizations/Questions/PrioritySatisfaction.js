@@ -1,5 +1,5 @@
 import {VictoryLegend, VictoryHistogram, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, filterByCrop, trendLineSatisfactions, filterByVocation } from '../UseData';
+import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState, useEffect } from "react";
 import "typeface-abeezee";
@@ -21,7 +21,7 @@ export const PrioritySatisfaction = (props) => {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter)
+    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter)
     var data = averageSatisfaction(data_filtered)
 
     var domain = d3.extent(data, function(d) { return d.Priority; })
