@@ -68,6 +68,11 @@
   font-family: 'Metropolis';
 }
 
+.font-newsreader{
+  font-family: 'Newsreader';
+  font-size: 18px;
+}
+
 .vis-title{
   font-family: 'Metropolis';
   font-weight: 800;

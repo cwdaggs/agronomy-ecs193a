@@ -98,8 +98,8 @@ export const Body = styled.div`
 export const Title = styled.h1`
     margin:0;
     padding:0;
-    font-size:70px;
-    font-weight:700;
+    font-size:50px;
+    font-weight:600;
 `;
 
 export const SubTitle = styled.h1`
