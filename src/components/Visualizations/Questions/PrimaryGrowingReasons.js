@@ -48,7 +48,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
       }
     }
   
-    for (const [key, value] of myMap) {
+    for (const [key, value] of new Map([...myMap].sort())) {
       if (key === "Limited by farm resources") {
         modified_data.push({x: key, y: value/6});
       } else {
@@ -67,21 +67,13 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
     var data_filtered = filterByVocation(filterByCropOrRegion(myDataset, filter), "Growers")
     var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
     var legend_data = []
+    var n = 0
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
+        n += data_by_reason[i].y
     }
     // const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
-    const colorScale = ["#00876c",
-      "#4d9a70",
-      "#7aac77",
-      "#a2bd83",
-      "#c9ce93",
-      "#eee0a9",
-      "#eac487",
-      "#e7a66c",
-      "#e38759",
-      "#dd6551",
-      "#d43d51"]
+    const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
     return (
       <div class='visualization-window'>
           <div class='parent flex-parent'>
@@ -91,10 +83,10 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                   y={0}     
                     colorScale={colorScale}
                     gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 10}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 10},
+                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 12}, 
+                            title:  {fontFamily: 'ABeeZee', fontSize: 12},
                             data:   {stroke: "black", strokeWidth: 1}}}
-                    title="Legend"
+                    title={String("Reasons for Growing Crops (n=" + n + ")")}
                     centerTitle
                     data={legend_data}
                 />

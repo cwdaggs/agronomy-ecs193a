@@ -87,16 +87,17 @@ export function AmountVictory(props) {
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
         padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
       >
-         <VictoryLegend x={width/2 - 300}
-              title="Legend"
+         <VictoryLegend 
+              x={width/2 - 300}
+              y={15}
+              title="Level of Value"
               centerTitle
               orientation="horizontal"
               colorScale={colorScale}
               itemsPerRow={5}
-              // symbolSpacer={5}
               gutter={30}
               style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
-                      border: { stroke: "black" }, 
+                      // border: { stroke: "black" }, 
                       title: {fontSize: fontSize }, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
               data={legend_data}
@@ -132,10 +133,12 @@ export function AmountVictory(props) {
             }}
         />
         <VictoryAxis
+        label="Fields of Interest"
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0}
+              tickLabels: {fontSize: fontSize, padding: 0},
+              axisLabel: {fontSize: 30, padding: 340}
             }}
           tickLabelComponent={       
             <VictoryLabel    

@@ -47,7 +47,7 @@ function OnlyCrops(props) {
           </DropDownLi>
         </StyledUl>
       </div> 
-      <p><b >&ensp;Crop: </b>{props.active}</p>
+      {/* <p><b >&ensp;Crop: </b>{props.active}</p> */}
       <div className='row' align-items='center'> </div>
       <div align-items='center'>
       {props.vis}
@@ -115,6 +115,7 @@ function LimitedVocation(props) {
       </StyledUl>
     </div> 
     <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p>
+    {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p> */}
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
     {props.vis}
@@ -192,14 +193,7 @@ function VisMenu(props) {
         </>   
       )
     }
-    // case "AcresManagedBarChart": {
-    //   return (
-    //     <>
-    //     <h3>How many acres do you manage/consult annually?</h3> 
-    //     <OnlyCrops/>
-    //     </>   
-    //   )
-    // }
+
     // Visualizations that can strictly only be filtered by grower or consultant
     case "PriorityConcerns": {
       let pcVis = getVis("PriorityConcerns", active, moreLimitedVocation, dataset);
@@ -245,7 +239,7 @@ function VisMenu(props) {
     case "PrioritySatisfaction": {
       return (
         <>
-        <div class='vis-title'>
+        <div>
           <h3>Rate what you believe should be the UCCE's priorities for field crop production, and 
               rate your satisfaction with the UCCE's delivery of information on these topics. </h3>
         </div>

@@ -8,7 +8,7 @@ function barData(dataset, topic){
   var values = []
   console.log(dataset)
   for(var i = 0; i < dataset.length; i++){
-    values.push({x: dataset[i].Topic, y: dataset[i].Priority, z: dataset[i].Satisfaction})
+    values.push({x: String(dataset[i].Topic.split('_').join(" ")), y: dataset[i].Priority, z: dataset[i].Satisfaction})
   }
   console.log(values)
   return values.sort((a,b) => a.y-b.y)
@@ -43,16 +43,19 @@ export const PrioritySatisfaction = (props) => {
           padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
         >
           <VictoryBar horizontal
-            labels={({datum}) => "Priority of " + datum.x + ":\n" + datum.y.toFixed(2)}
+            alignment='start'
+            labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
             labelComponent={
                 <VictoryTooltip 
+                orientation={"bottom"}
+                pointerOrientation={"top"}
                   style={{
-                    fontSize:fontSize,
+                    fontSize:fontSize-3,
                     strokeWidth:1,
                     fontFamily: 'ABeeZee'
                   }}
-                  flyoutHeight={15}
-                  flyoutWidth={30}    
+                  flyoutHeight={40}
+                  flyoutWidth={345}    
                 />
             }
             style={{ 
@@ -66,14 +69,17 @@ export const PrioritySatisfaction = (props) => {
             data={data}
           />
           <VictoryBar horizontal
-            labels={({datum}) => "Satisfaction of " + datum.x + ":\n" + datum.z.toFixed(2)}
+            alignment='start'
+            labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2)}
             labelComponent={
                 <VictoryTooltip 
+                orientation={"bottom"}
+                pointerOrientation={"top"}
                   style={{
-                    fontSize:fontSize
+                    fontSize:fontSize-3
                   }}
-                  flyoutHeight={15}
-                  flyoutWidth={30}    
+                  flyoutHeight={40}
+                  flyoutWidth={400}    
                 />
             }
             style={{ 
@@ -93,7 +99,8 @@ export const PrioritySatisfaction = (props) => {
             style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 5}
+              tickLabels: {fontSize: fontSize, padding: 5},
+              axisLabel: {fontSize: fontSize}
             }}
           />
           <VictoryAxis
@@ -147,14 +154,14 @@ export const PrioritySatisfaction = (props) => {
             >
             <VictoryLegend 
               x={100}
-              y={300}
+              y={365}
               title="Legend"
               centerTitle
               orientation="vertical"
               gutter={50}
               style={{ border: { stroke: "black" }, 
-                       title: {fontSize: fontSize * 2, fontFamily: 'ABeeZee' }, 
-                       labels: {fontSize: fontSize*2, fontFamily: 'ABeeZee'}}}
+                       title: {fontSize: fontSize+10, fontFamily: 'ABeeZee' }, 
+                       labels: {fontSize: fontSize+10, fontFamily: 'ABeeZee'}}}
               data={[
                 { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a"} },
                 { name: "Average", symbol: { fill: "red", type:"square" } },
@@ -186,7 +193,7 @@ export const PrioritySatisfaction = (props) => {
                           fontFamily: 'ABeeZee'
                         }}
                         flyoutHeight={60}
-                        flyoutWidth={235}    
+                        flyoutWidth={270}    
                     />
                     
                 }

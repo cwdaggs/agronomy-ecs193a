@@ -68,7 +68,6 @@ export function AcresManagedBarChart(props) {
 
     return (
         <div class='visualization-window'>
-          {/* <h2>How many acres do you manage/consult annually?</h2> */}
           <VictoryChart height={1080} width={1920}
             //domainPadding={45}
             domainPadding={{ x: margin.right/5.3, y: margin.top }}

@@ -22,12 +22,12 @@ export function CropPercentages(props) {
                     <VictoryLegend
                         colorScale="heatmap"
                         x={150}
-                        y={50}  
+                        y={70}  
                         gutter={20}
-                        style={{labels: {fill: "black", color: "white", fontFamily: 'sans-serif', fontSize: 13}, 
-                                title:  {fontFamily: 'sans-serif', fontSize: 13},
+                        style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
+                                title:  {fontFamily: 'ABeeZee', fontSize: 13},
                                 data:   {stroke: "black", strokeWidth: 1}}}
-                        title="Legend"
+                        title="Crop Categories"
                         centerTitle
                         data={legend_data}
                 />

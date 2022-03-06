@@ -50,8 +50,8 @@ function calculatePriorityConcerns(data, filter) { //labelled under concerns rig
      }
    }
  
-   for (const [key, value] of myMap) {
-     modified_data.push({x: key, y: value});
+   for (const [key, value] of new Map([...myMap].sort())) {
+     key == "Other:" ? modified_data.push({x: "Other", y: value}) : modified_data.push({x: key, y: value})
    }
    return modified_data
  }
@@ -64,10 +64,13 @@ export function PriorityConcerns(props) {
     var data_by_reason = calculateAllPriorityConcerns(data_filtered, props.filter, props.vocationFilter)
 
     var legend_data = []
+    var n = 0
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
+        n += data_by_reason[i].y
     }
-    const colorScale = ["#552E3A", "#713E4C", "#8D505C", "#A7626C", "#C2747B", "#DB878A", "#E0979E", "#E5A6B1", "#EAB6C3", "#F4D6E1"]
+    // const colorScale = ["#552E3A", "#713E4C", "#8D505C", "#A7626C", "#C2747B", "#DB878A", "#E0979E", "#E5A6B1", "#EAB6C3", "#F4D6E1"]
+    const colorScale = ["#c54132", "#cf6351", "#d78271", "#db9f93", "#dadada", "#bccfb6", "#9cc493", "#7cb970", "#57ad4c", "#21a124"]
 
     return (
       <div  class='visualization-window'>
@@ -75,13 +78,13 @@ export function PriorityConcerns(props) {
           <div class='child flex-child'>
                   <VictoryLegend
                       x={150}
-                      y={0}
+                      y={10}
                       colorScale={colorScale}
                       gutter={20}
                       style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
                               title:  {fontFamily: 'ABeeZee', fontSize: 13},
                               data:   {stroke: "black", strokeWidth: 1}}}
-                      title="Legend"
+                      title={String("Management Concerns (n=" + n + ")")}
                       centerTitle
                       data={legend_data}
                   />
@@ -99,6 +102,7 @@ export function PriorityConcerns(props) {
                           bottom: 80,
                           top: 50
                       }}
+                      startAngle={0}
                       style={{ data: { stroke: "black", strokeWidth: 1}}}
                       colorScale={colorScale}
                       data={data_by_reason}
