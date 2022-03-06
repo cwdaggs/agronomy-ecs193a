@@ -1,6 +1,6 @@
 
 import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, calculateConcernTotalsForEachElement, filterByCrop, filterByVocation, useData} from '../UseData.js'
+import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion, filterByVocation, useData} from '../UseData.js'
 import "typeface-abeezee";
 import React, { useState, useEffect } from "react";
 import { color } from 'd3';
@@ -24,7 +24,7 @@ export function ConcernsVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByVocation(filterByCrop(props.dataset, props.filter), props.vocationFilter);
+  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_concern)
   const dataset = transformData(data_sorted);

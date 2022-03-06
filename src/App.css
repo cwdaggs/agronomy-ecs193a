@@ -2,6 +2,8 @@
   color: black;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  position: relative;
 }
 
 #heading {
@@ -89,8 +91,30 @@
   height: 80%;
   width: 80%;
   outline: solid 1px black;
+  margin: auto;
   /* Center child horizontally*/
 }
+
+footer {
+  text-align: center;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background-color: #022851;
+  color: white;
+}
+
+#about-visualization-window {
+  font-family: 'Metropolis';
+  font-size: 24px;
+  height: 100%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  /* Center child horizontally*/
+}
+
 #homepage {
   background-image: url(./images/farming-background.jfif);
 }

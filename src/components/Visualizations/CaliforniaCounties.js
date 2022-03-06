@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
 import * as d3 from 'd3';
-import {filterByCrop, useData, acresByCounty, filterByVocation} from "./UseData"
-import {VictoryLegend, VictoryPie, VictoryTooltip} from 'victory';
+import {filterByCropOrRegion, useData, acresByCounty, filterByVocation} from "./UseData"
+import {VictoryLegend, VictoryPie, VictoryTooltip, VictoryBar, VictoryAxis, VictoryChart} from 'victory';
 import {
   ComposableMap,
   Geographies,
@@ -26,7 +26,7 @@ function occupationAmount(data){
                   {x: "Consultants", y: 100 * (filterByVocation(data, "Consultant (ex. Certified Crop Advisor (CCA), Pest Control Advisor (PCA))").length  / data.length ) }, 
                   {x: "Allied Industry", y: 100 * (filterByVocation(data, "Allied Industry (e.g. Input supplier, manufacturer, processor, etc.) (please specify):").length  / data.length ) }, 
                   {x: "Other", y: 100 * (filterByVocation(data, "Other (please specify):").length / data.length )} ]
-  console.log(occMap)
+  //console.log(occMap)
   return occMap
 }
 
@@ -34,14 +34,14 @@ export const MapChart = (props) => {
   if (!props.data){
     return <pre>Loading...</pre>;
 }
-  const data = filterByCrop(props.data, props.filter)
+  const data = filterByCropOrRegion(props.data, props.filter)
   const countyData = acresByCounty(data)
   const occupationData = occupationAmount(data);
   return (
     <div>
       {/* <h2>Density of Survey Responses By County</h2> */}
 
-      <svg width={1320} height={800}>
+      <svg width={1320} height={700}>
 
           
           <VictoryLegend
@@ -102,7 +102,7 @@ export const MapChart = (props) => {
             }}
             standalone={false}
             width={1000}
-            height={700}
+            height={600}
             padding={{
               left: 750,
               bottom: 20,
@@ -146,3 +146,78 @@ export const MapChart = (props) => {
     </div>
   );
 };
+
+
+function cropAmount(data){
+  var occMap = [  {x: "Rice", y: filterByCropOrRegion(data, "Rice").length}, 
+                  {x: "Alfalfa", y: filterByCropOrRegion(data, "Alfalfa").length}, 
+                  {x: "Wheat", y: filterByCropOrRegion(data, "Wheat").length},
+                  {x: "Corn", y: filterByCropOrRegion(data, "Corn").length},
+                  {x: "Corn Silage", y: filterByCropOrRegion(data, "Corn Silage").length},
+                  {x: "Dry Beans", y: filterByCropOrRegion(data, "Dry Beans").length},
+                  {x: "Cotton", y: filterByCropOrRegion(data, "Cotton").length},
+                  {x: "Sunflower", y: filterByCropOrRegion(data, "Sunflower").length},
+                  {x: "Barley", y: filterByCropOrRegion(data, "Barley").length},
+                  {x: "Small Grain Silage", y: filterByCropOrRegion(data, "Small Grain Silage").length} ]
+  return occMap
+}
+
+
+export const CropBar = (props) => {
+  if (!props.data){
+    return <pre>Loading...</pre>;
+  }
+  const cropData = cropAmount(props.data);
+
+  const fontSize = 20
+
+  const margin = { top: 1080/12, right: 1920/8, bottom: 1080/4, left: 1920/6 };
+
+  return (
+    <div id='about-visualization-window'>
+      {/* <h2>How many acres do you manage/consult annually?</h2> */}
+      <VictoryChart height={1080} width={1920}
+        //domainPadding={45}
+        domainPadding={{ x: margin.right/5.3, y: margin.top }}
+        padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}
+        animate={{duration: 800}}
+      >
+        <VictoryAxis
+          //label={"Crop"}
+          style={{
+            tickLabels: {fontSize: fontSize*1.25, padding: 5},
+            axisLabel: {fontSize: fontSize*2, padding: 180}
+            }}
+          // style={{
+          //   tickLabels: {fontSize: 30, padding: 5},
+          //   axisLabel: {fontSize: 40, padding: {top: 0}}
+          // }}
+        />
+        <VictoryAxis dependentAxis
+        label = {"Number of Growers and Consultants"}
+        style={{
+          tickLabels: {fontSize: 20, padding: 15},
+          axisLabel: {fontSize: fontSize*2, padding: 60}
+        }}/>
+        <VictoryBar horizontal
+          // barRatio={0.6}
+          sortKey= "y"
+          data={cropData}
+          alignment="middle"
+          style={{ data:  { fill: () => "#282c5c"}}}
+          labels={({datum}) => datum.y}
+          labelComponent={
+            <VictoryTooltip 
+              style={{
+                fontSize:30
+              }}
+              flyoutHeight={45}
+              flyoutWidth={60}    
+            />
+        }
+        />
+      </VictoryChart>
+      
+    </div>
+  );
+}

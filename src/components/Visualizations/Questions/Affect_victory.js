@@ -1,5 +1,5 @@
 import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {filterByCrop, sort_by_freq} from '../UseData.js'
+import {filterByCropOrRegion, sort_by_freq} from '../UseData.js'
 import "typeface-abeezee";
 
 export function calculateAffectEach(data, filter, answer){
@@ -103,7 +103,7 @@ export function AffectVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  var data_filtered = filterByCrop(props.dataset, props.filter)
+  var data_filtered = filterByCropOrRegion(props.dataset, props.filter)
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
   // var heading = (<h2>How often do the following priorities affect your management decisions for field crop production?</h2>)

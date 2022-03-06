@@ -1,5 +1,5 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCrop, filterByVocation} from '../UseData.js';
+import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import "typeface-abeezee";
 
 function getInternetSources(data){
@@ -64,7 +64,11 @@ function getInternetSources(data){
   sources[7] = "In-person meetings\n(Field Days, Grower Meetings)";
 
   for(var l=0; l<totals.length; l++){
-    modified_data.push({x: sources[l], y: totals[l], fill: colors[l]});
+    modified_data.push({x: sources[l], y: totals[l]});
+  }
+  modified_data.sort(function(a,b){return a.y - b.y;});
+  for(var l=0; l<modified_data.length; l++){
+    modified_data[l].fill = colors[l];
   }
   return modified_data;
 }
@@ -75,7 +79,7 @@ export function InternetSourcesBarChart(props) {
         return <pre>Loading...</pre>;
     }
 
-    var data = filterByCrop(props.dataset, props.filter);
+    var data = filterByCropOrRegion(props.dataset, props.filter);
     if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
       data = props.dataset;
     }
@@ -83,7 +87,7 @@ export function InternetSourcesBarChart(props) {
     var graph_data = getInternetSources(filtered_data);
     const width = 1920;
     const height = 1080;
-    const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
+    const margin = { top: height/10, right: width/6, bottom: height/5, left: width/2.8 };
     const fontSize = 18;
 
     return (
@@ -94,12 +98,13 @@ export function InternetSourcesBarChart(props) {
             padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
             animate={{duration: 800}}
           >
-            <VictoryLabel text={"Internet Sources vs Number of Responses " + "(n = " + filtered_data.length + ")"} 
+            {/* <VictoryLabel 
             x={width/2 - 300} 
             y={80}
-            style ={{fontSize:fontSize +10}}/>
+            style ={{fontSize:fontSize +10}}/> */}
             <VictoryBar horizontal
               data={graph_data}
+              sortKey = "y"
               style={{ data:  { fill: ({datum}) => datum.fill}}}
               labels={({datum}) => datum.y}
               labelComponent={
@@ -113,17 +118,21 @@ export function InternetSourcesBarChart(props) {
             }
             />
             <VictoryAxis dependentAxis
+              label = {"Number of Responses " + "(n = " + filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5}
+                tickLabels: {fontSize: fontSize, padding: 5},
+                axisLabel: {fontSize: fontSize*2, padding: 50}
               }}
             />
             <VictoryAxis
+              label = {"Online Sources"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0}
+                tickLabels: {fontSize: fontSize, padding: 0},
+                axisLabel: {fontSize: fontSize*2, padding: 350}
               }}
             tickLabelComponent={       
               <VictoryLabel    

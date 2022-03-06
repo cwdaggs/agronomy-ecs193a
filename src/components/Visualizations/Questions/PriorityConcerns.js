@@ -1,4 +1,4 @@
-import {filterByCrop} from "../UseData.js";
+import {filterByCropOrRegion} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {useState} from 'react';
 import "typeface-abeezee";
@@ -60,7 +60,7 @@ export function PriorityConcerns(props) {
     if (!props.myDataset) {
         return <pre>Loading...</pre>;
     }
-    var data_filtered = filterByCrop(props.myDataset, props.filter)
+    var data_filtered = filterByCropOrRegion(props.myDataset, props.filter)
     var data_by_reason = calculateAllPriorityConcerns(data_filtered, props.filter, props.vocationFilter)
 
     var legend_data = []

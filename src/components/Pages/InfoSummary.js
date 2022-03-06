@@ -1,5 +1,5 @@
 import * as C from './App.styles';
-import {MapChart} from '../Visualizations/CaliforniaCounties'
+import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
 import { useData } from '../Visualizations/UseData';
 import "@fontsource/newsreader";
 import file from './downloads/ResearchPaper.pdf'
@@ -46,7 +46,12 @@ export const InfoSummary = () => {
                     and occupations. Vocations interviewed for the survey included growers, consultants, members of allied industries, and others who did not fall into the aforementioned categories.
                     Below is a map representing the density of responses in respect to county, as well as the distribution of responses per occupation:
             </C.Desc> 
-            <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />      
+            <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+            <C.Desc className='font-newsreader'>
+                    Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
+                    responses for each crop:
+            </C.Desc> 
+            <CropBar data={useData('./data/Filtered_Crop_Data.csv')}/>
           {/* <C.Button>
             <button>
               See Full Survey results
