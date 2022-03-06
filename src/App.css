@@ -2,6 +2,8 @@
   color: black;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  position: relative;
 }
 
 #heading {
@@ -86,6 +88,16 @@
   outline: solid 1px black;
   margin: auto;
   /* Center child horizontally*/
+}
+
+footer {
+  text-align: center;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background-color: #022851;
+  color: white;
 }
 
 #about-visualization-window {

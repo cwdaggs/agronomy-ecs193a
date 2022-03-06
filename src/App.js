@@ -44,6 +44,7 @@ function App() {
           <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
         </div>
           {getDisplay()}
+          <footer></footer>
       </div>
     );
   }
@@ -56,6 +57,7 @@ function App() {
           <TabGroup changeFunc={changeDisplay}/>
         </div>
           <InfoSummary />
+          <footer></footer>
       </div>
     );
   }
@@ -67,7 +69,7 @@ function App() {
           <TabGroup changeFunc={changeDisplay}/>
         </div>
         <AboutSummary/>
-
+        <footer></footer>
       </div>
     );
   }
@@ -80,7 +82,7 @@ function App() {
       <div  style={{ backgroundImage: `url(${background})` }}>
         <Home/>
       </div>
-        
+      <footer></footer>  
     </div>
   );
 }
