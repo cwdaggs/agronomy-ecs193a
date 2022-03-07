@@ -114,7 +114,8 @@ function LimitedVocation(props) {
         </DropDownLi>
       </StyledUl>
     </div> 
-    <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p>
+    <br></br>
+    {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p> */}
     {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p> */}
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
