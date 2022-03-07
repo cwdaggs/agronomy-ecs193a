@@ -57,59 +57,6 @@ function OnlyCrops(props) {
     )
 }
 
-// For visualizations with no region filtering capabilities (PriorityConcerns)
-function LimitedVocation(props) {
-  const [activeCropName, setActiveCropName] = useState("Select Crop");
-  const [activeName, setActiveName] = useState("Select Vocation");
-  return (
-    <>
-    <div>
-      <StyledUl>
-      <DropDownLi>
-        <Dropbtn>
-            {activeName}
-          </Dropbtn>
-          <DropDownContent>
-            {" "}
-            {props.vocationArray.map(type => (
-                <SubA 
-                  key={type}
-                  active={props.activeType === type}
-                  onClick={() => {props.func(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
-                  >{type}
-              </SubA>
-              ))}
-            </DropDownContent>
-        </DropDownLi>
-        <DropDownLi>
-          <Dropbtn>
-            {activeCropName}
-          </Dropbtn>
-          <DropDownContent>
-            {" "}
-            {props.types.map(type => (
-                <SubA 
-                  key={type}
-                  active={props.active === type}
-                  onClick={() => {props.setActive(type);setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim());}}
-                  >{type}
-              </SubA>
-              ))}
-            </DropDownContent>
-        </DropDownLi>
-      </StyledUl>
-    </div> 
-    <br></br>
-    {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p> */}
-    {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p> */}
-    <div className='row' align-items='center'> </div>
-    <div align-items='center'>
-    {props.vis}
-    </div>
-    </>  
-  )
-}
-
 // For all visualizations that can be filtered by region, crop, and vocation
 function VocationAndRegion(props) {
   const [activeCropName, setActiveCropName] = useState("Select Crop");
@@ -256,7 +203,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>What are the highest priority management challenges/concerns?</h3>
-        <LimitedVocation regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={pcVis}/>
+        <VocationAndRegion regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={pcVis}/>
         </>
       )
     }
