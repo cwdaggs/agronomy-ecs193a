@@ -66,8 +66,21 @@ export function EngageVictory(props) {
       return <pre>Loading...</pre>;
   }
 
+  const crops = [
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+
   var data = filterByCropOrRegion(props.dataset, props.filter);
-  if (props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") {
+  if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
     data = props.dataset;
   }
   var data_filtered = filterByVocation(data, props.vocationFilter)
