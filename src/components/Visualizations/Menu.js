@@ -181,7 +181,7 @@ function VisMenu(props) {
     case "CropPercentages": {
         return (
           <>
-          <h3>Of the total acres, what percentage are in the following categories? (Field Crops, Vegetable Crops, Tree and Vine Crops, or Other)</h3>
+          <h3>Of the total acres, what percentage of the crops grown are in each of the following categories?</h3>
           {vis}
           </>
         )
