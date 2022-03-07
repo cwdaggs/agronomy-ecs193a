@@ -10,15 +10,19 @@ import background from "./images/farming-background.jfif";
 
 function App() {
   const [display, setDisplay] = useState("Home");
+  const [key, setKey] = useState(0);
 
   const [dual_display, checkDualDisplay] = useState(false);
 
   function changeDisplay(newDisplay) {
+    if(newDisplay === "Visualizations" && dual_display){
+      changeDual();
+    }
     setDisplay(newDisplay);
   }
 
   function changeDual(){
-    checkDualDisplay(!dual_display)
+    checkDualDisplay(!dual_display);
   }
 
   function getDisplay(){
