@@ -35,7 +35,7 @@ export const PrioritySatisfaction = (props) => {
       setVis(
         ( 
           <div>
-          <h5>Selected Node Information Delivery Surplus/Deficiency by Topic:</h5>
+          <h5>Selected Node's Average Importance/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
           <VictoryChart 
             x={50}
             animate={{
@@ -94,7 +94,7 @@ export const PrioritySatisfaction = (props) => {
             />
             <VictoryBar horizontal
               alignment='start'
-              labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2)}
+              labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nImportance of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
               labelComponent={
                   <VictoryTooltip 
                   orientation={"bottom"}
@@ -102,7 +102,7 @@ export const PrioritySatisfaction = (props) => {
                     style={{
                       fontSize:fontSize-3
                     }}
-                    flyoutHeight={40}
+                    flyoutHeight={100}
                     flyoutWidth={400}    
                   />
               }
@@ -161,7 +161,7 @@ export const PrioritySatisfaction = (props) => {
     return (
 
         <div class='visualization-window'>
-            <h5>Importance vs Satisfaction </h5>
+            <h5>Average Importance vs Satisfaction Ranked on Scale of 1-3 (1-Not, 2-Somewhat, 3-Very) among {data_filtered.length} filtered responses</h5>
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer

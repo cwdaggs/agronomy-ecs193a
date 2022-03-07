@@ -13,7 +13,7 @@ import {
 const geoUrl =
   "./data/california-counties.geojson";
 
-const regionColorScale =  ["#0E4D64", "#137177","#188977", "#39A96B", "#74C67A", "#BFE1B0", "#DEEDCF"]
+const regionColorScale =  ["#0E4D64", "#137177","#188977", "#39A96B", "#74C67A", "#9EAD8F", "#6F9160"]
 
 const countyToRegion = {"Siskiyou": "Intermountain","Trinity": "Intermountain","Lassen": "Intermountain","Modoc": "Intermountain","Shasta": "Intermountain","Plumas": "Intermountain",
 "Solano":"Sac_Valley","Yolo":"Sac_Valley","Sacramento":"Sac_Valley","Sutter":"Sac_Valley","Yuba":"Sac_Valley","Colusa":"Sac_Valley","Tehama":"Sac_Valley","Butte":"Sac_Valley","Glenn":"Sac_Valley",
@@ -41,12 +41,12 @@ function getRegionColor(county){
 function regionAmount(data){
   var regionMap = [    
                     {x: "Intermountain", y: 100 * (filterByCropOrRegion(data, "Intermountain").length / data.length)}, 
-                    {x: "Sac_Valley", y: 100 * (filterByCropOrRegion(data, "Sac_Valley").length / data.length)},
+                    {x: "Sac Valley", y: 100 * (filterByCropOrRegion(data, "Sac Valley").length / data.length)},
                     {x: "NSJV", y: 100 * (filterByCropOrRegion(data, "NSJV").length / data.length)},
                     {x: "SSJV", y: 100 * (filterByCropOrRegion(data, "SSJV").length / data.length)},
                     {x: "Desert", y: 100 * (filterByCropOrRegion(data, "Desert").length / data.length)},
                     {x: "Coastal", y: 100 * (filterByCropOrRegion(data, "Coastal").length / data.length)},
-                    {x: "Sierra_Nevada", y: 100 * (filterByCropOrRegion(data, "Sierra_Nevada").length / data.length)}                   
+                    {x: "Sierra Nevada", y: 100 * (filterByCropOrRegion(data, "Sierra Nevada").length / data.length)}                   
                 ]
 
   return regionMap
@@ -79,12 +79,12 @@ export const RegionMapChart = (props) => {
             centerTitle
             data={[
               { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: 20}},
-              { name: "Sac_Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: 20}},
+              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: 20}},
               { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: 20}},
               { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: 20}},
               { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: 20}},
               { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: 20}},
-              { name: "Sierra_Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: 20}}
+              { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: 20}}
             ]}
           />
 
@@ -130,7 +130,7 @@ export const RegionMapChart = (props) => {
             colorScale={regionColorScale}
             data={regionData}
             // labels={() => null}
-            labels={({ datum }) => `${datum.x + ":" + datum.y.toFixed() + "%"}`}
+            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
             labelComponent={
                 <VictoryTooltip 
                 style={{
@@ -156,12 +156,12 @@ export const RegionMapChart = (props) => {
             centerTitle
             data={[
               { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: 20}},
-              { name: "Sac_Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: 20}},
+              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: 20}},
               { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: 20}},
               { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: 20}},
               { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: 20}},
               { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: 20}},
-              { name: "Sierra_Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: 20}}
+              { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: 20}}
             ]}
           />
       </svg>
