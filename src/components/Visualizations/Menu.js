@@ -47,6 +47,7 @@ function OnlyCrops(props) {
           </DropDownLi>
         </StyledUl>
       </div> 
+      <br></br>
       {/* <p><b >&ensp;Crop: </b>{props.active}</p> */}
       <div className='row' align-items='center'> </div>
       <div align-items='center'>
@@ -98,7 +99,8 @@ function LimitedVocation(props) {
         </DropDownLi>
       </StyledUl>
     </div> 
-    <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p>
+    <br></br>
+    {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p> */}
     {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p> */}
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
