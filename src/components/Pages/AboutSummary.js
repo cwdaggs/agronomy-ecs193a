@@ -6,17 +6,18 @@ export const AboutSummary = () => {
       
     <C.Container>
       <C.Area>
-        <C.Menu>
+        {/* <C.Menu>
           <div >
             <img
               src="./assets/icons/UCCE.png"
               alt="logo"
             />
           </div>
-        </C.Menu>
+        </C.Menu> */}
 
         <C.Body>
           <C.Title>Who We Are</C.Title>
+          <br></br>
           <div class='title-info'>
             <C.SubTitle>Dr. Cameron Pittelkow</C.SubTitle>
           </div>
@@ -25,6 +26,8 @@ export const AboutSummary = () => {
               <img
                 src="./assets/icons/pittelkow.jpg"
                 alt="logo"
+                width={450}
+                height={250}
               />
             </div>
             <div class='flex-child'>
@@ -51,8 +54,8 @@ export const AboutSummary = () => {
             <img
               src="./assets/icons/us.jpg"
               alt="logo"
-              width={400}
-              height={200}
+              width={450}
+              height={250}
             />
             </div>
           </div>    
