@@ -6,14 +6,14 @@ export const AboutSummary = () => {
       
     <C.Container>
       <C.Area>
-        <C.Menu>
+        {/* <C.Menu>
           <div >
             <img
               src="./assets/icons/UCCE.png"
               alt="logo"
             />
           </div>
-        </C.Menu>
+        </C.Menu> */}
 
         <C.Body>
           <C.Title>Who We Are</C.Title>
