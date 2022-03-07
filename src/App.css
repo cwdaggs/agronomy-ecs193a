@@ -75,6 +75,12 @@
   font-size: 18px;
 }
 
+.rect-home{
+  fill:rgb(246, 245, 243);
+  stroke-width:1;
+  stroke:rgb(0,0,0)
+}
+
 .vis-title{
   font-family: 'Metropolis';
   font-weight: 800;
