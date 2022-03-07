@@ -106,7 +106,7 @@ function LimitedVocation(props) {
                 <SubA 
                   key={type}
                   active={props.active === type}
-                  onClick={() => {props.setActive(type);setActiveCropName("Select Crop");setActiveRegionName(type.replace(/([A-Z])/g, ' $1').trim())}}
+                  onClick={() => {props.setActive(type);setActiveCropName("Select Crop");setActiveRegionName(type)}}
                   >{type}
               </SubA>
               ))}
