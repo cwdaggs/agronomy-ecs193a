@@ -161,6 +161,7 @@ export const PrioritySatisfaction = (props) => {
     return (
 
         <div class='visualization-window'>
+            <h5>Importance vs Satisfaction </h5>
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer

@@ -61,6 +61,7 @@ export function PriorityConcerns(props) {
         return <pre>Loading...</pre>;
     }
     var data_filtered = filterByCropOrRegion(props.myDataset, props.filter)
+    
     var data_by_reason = calculateAllPriorityConcerns(data_filtered, props.filter, props.vocationFilter)
 
     var legend_data = []
