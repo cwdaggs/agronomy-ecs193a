@@ -6,17 +6,18 @@ import "typeface-abeezee";
 
 function barData(dataset, topic){
   var values = []
-  console.log(dataset)
+
   for(var i = 0; i < dataset.length; i++){
     values.push({x: String(dataset[i].Topic.split('_').join(" ")), y: dataset[i].Priority, z: dataset[i].Satisfaction})
   }
-  console.log(values)
+
   return values.sort((a,b) => a.y-b.y)
 }
 
 export const PrioritySatisfaction = (props) => {
+    
     const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
-    //const [occupation, setOccupation] = useState("All");
+
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
@@ -144,15 +145,11 @@ export const PrioritySatisfaction = (props) => {
 
     function handleSelection(points, bounds, props){
       selectedData = (barData(props.selectedData[0].data))
-      console.log(selectedData)
       makeVis(selectedData)
       
     }
 
-    function handleSelectionCleared(props){
-      console.log("cleared")
-    }
-    
+    function handleSelectionCleared(props){}  
 
     const width = 1920;
     const height = 1080;
@@ -320,8 +317,6 @@ export const PrioritySatisfaction = (props) => {
                 data={trendData[0]}
             />
           </VictoryChart>
-       
-
           {vis}
       </div>
     )};

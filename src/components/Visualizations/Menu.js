@@ -130,18 +130,17 @@ function VocationAndRegion(props) {
 function getVis(vis_name, active, activeVocation, dataset){
 
   var vis_key = { 
-              "PrioritySatisfaction" :  (<PrioritySatisfaction filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "CropPercentages":        (<CropPercentages filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "Affect":                 (<AffectVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "Concerns":               (<ConcernsVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "AcresManaged":           (<AcresManagedBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "InfoSources":            (<InfoSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "InternetSources":        (<InternetSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "PriorityConcerns":       (<PriorityConcerns filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
-              "AmountValued":           (<AmountVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "Engage":                 (<EngageVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "PrimaryGrowingReasons":  (<PrimaryGrowingReasons filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
-              "Map":                    (<MapChart filter={active} vocationFilter={activeVocation} data={dataset}/>)
+              "Priorities vs Satisfaction" :        (<PrioritySatisfaction filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Crop Percentages":                   (<CropPercentages filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Priority Effect":                    (<AffectVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Production Concerns":                (<ConcernsVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Acres Managed":                      (<AcresManagedBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Information Sources":                (<InfoSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Internet Sources":                   (<InternetSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Priority Concerns":                  (<PriorityConcerns filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
+              "Values":                             (<AmountVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "UCCE Engagement":                    (<EngageVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
+              "Primary Growing Reasons":            (<PrimaryGrowingReasons filter={active} vocationFilter={activeVocation} myDataset={dataset}/>)
             }
   return (vis_key[vis_name])
 }
@@ -174,8 +173,7 @@ function VisMenu(props) {
   const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
 
   const vis = getVis(props.vis, active, activeVocation, dataset);
-  console.log(vis)
-  console.log(vis.type.name)
+
   switch(vis.type.name){
     // Visualizations with no filters
     case "CropPercentages": {
@@ -199,7 +197,7 @@ function VisMenu(props) {
 
     // Visualizations that can strictly only be filtered by grower or consultant
     case "PriorityConcerns": {
-      let pcVis = getVis("PriorityConcerns", active, moreLimitedVocation, dataset);
+      let pcVis = getVis("Priority Concerns", active, moreLimitedVocation, dataset);
       return (
         <>
         <h3>What are the highest priority management challenges/concerns?</h3>
@@ -214,7 +212,7 @@ function VisMenu(props) {
       // } else {
       //   blah = "How often do the following priorities affect your management decisions for field crop production?"
       // }
-      let affectVis = getVis("Affect", active, moreLimitedVocation, dataset);
+      let affectVis = getVis("Priority Effect", active, moreLimitedVocation, dataset);
       return (
           <>
           <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
