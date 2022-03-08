@@ -75,7 +75,7 @@ export const RegionMapChart = (props) => {
             style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
                   title:  {fontFamily: 'ABeeZee', fontSize: 23},
                   data:   {stroke: "black", strokeWidth: 1}}}
-            title="Responses by Region"
+            title="Regions"
             centerTitle
             data={[
               { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: 20}},
