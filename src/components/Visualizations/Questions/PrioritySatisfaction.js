@@ -100,7 +100,9 @@ export const PrioritySatisfaction = (props) => {
                   orientation={"bottom"}
                   pointerOrientation={"top"}
                     style={{
-                      fontSize:fontSize-3
+                      fontSize:fontSize-3,
+                      strokeWidth: 1,
+                      fontFamily: 'ABeeZee'
                     }}
                     flyoutHeight={100}
                     flyoutWidth={400}    
@@ -236,7 +238,7 @@ export const PrioritySatisfaction = (props) => {
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 5},
-                        axisLabel: {fontSize: fontSize*2, padding: 60 }
+                        axisLabel: {fontSize: fontSize*2, fontFamily: 'ABeeZee', padding: 60 }
                         }}
                 />
                 <VictoryAxis
@@ -245,7 +247,7 @@ export const PrioritySatisfaction = (props) => {
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 0},
-                        axisLabel: {fontSize: fontSize*2, padding: 60 }
+                        axisLabel: {fontSize: fontSize*2, fontFamily: 'ABeeZee', padding: 60 }
                         }}
                 />
             <VictoryLine horizontal

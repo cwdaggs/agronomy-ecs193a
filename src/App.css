@@ -45,7 +45,7 @@
   margin: 25px;
   width: 350px;
   height: 200px;
-  outline: dashed 1px black;
+  /* outline: dashed 1px black; */
   /* Center child horizontally*/
   display: flex;
   justify-content: center;
@@ -96,7 +96,7 @@
   font-size: 24px;
   height: 80%;
   width: 80%;
-  outline: solid 1px black;
+  /* outline: solid 1px black; */
   margin: auto;
   /* Center child horizontally*/
 }
@@ -106,7 +106,7 @@ footer {
   height: 60px;
   position: absolute;
   bottom: 0;
-  width: 100vw;
+  width: 100%;
   background-color: #022851;
   color: white;
 }

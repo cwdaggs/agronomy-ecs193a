@@ -47,6 +47,7 @@ function OnlyCrops(props) {
           </DropDownLi>
         </StyledUl>
       </div> 
+      <br></br>
       {/* <p><b >&ensp;Crop: </b>{props.active}</p> */}
       <div className='row' align-items='center'> </div>
       <div align-items='center'>
@@ -56,7 +57,8 @@ function OnlyCrops(props) {
     )
 }
 
-function LimitedVocation(props) {
+// For all visualizations that can be filtered by region, crop, and vocation
+function VocationAndRegion(props) {
   const [activeCropName, setActiveCropName] = useState("Select Crop");
   const [activeRegionName, setActiveRegionName] = useState("Select Region");
   const [activeName, setActiveName] = useState("Select Vocation");
@@ -106,7 +108,7 @@ function LimitedVocation(props) {
                 <SubA 
                   key={type}
                   active={props.active === type}
-                  onClick={() => {props.setActive(type);setActiveCropName("Select Crop");setActiveRegionName(type.replace(/([A-Z])/g, ' $1').trim())}}
+                  onClick={() => {props.setActive(type);setActiveCropName("Select Crop");setActiveRegionName(type)}}
                   >{type}
               </SubA>
               ))}
@@ -114,7 +116,8 @@ function LimitedVocation(props) {
         </DropDownLi>
       </StyledUl>
     </div> 
-    <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p>
+    <br></br>
+    {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p> */}
     {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p> */}
     <div className='row' align-items='center'> </div>
     <div align-items='center'>
@@ -168,7 +171,7 @@ function VisMenu(props) {
   const [activeVocation, setActiveVocation] = useState("All");
   const [moreLimitedVocation, setMoreLimitedVocation] = useState("Growers");
 
-  const regionTypes = ["Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+  const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
 
   const vis = getVis(props.vis, active, activeVocation, dataset);
   console.log(vis)
@@ -178,7 +181,7 @@ function VisMenu(props) {
     case "CropPercentages": {
         return (
           <>
-          <h3>Of the total acres, what percentage are in the following categories? (Field Crops, Vegetable Crops, Tree and Vine Crops, or Other)</h3>
+          <h3>Of the total acres, what percentage of the crops grown are in each of the following categories?</h3>
           {vis}
           </>
         )
@@ -200,7 +203,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>What are the highest priority management challenges/concerns?</h3>
-        <LimitedVocation regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={pcVis}/>
+        <VocationAndRegion regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={pcVis}/>
         </>
       )
     }
@@ -215,7 +218,7 @@ function VisMenu(props) {
       return (
           <>
           <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
-          <LimitedVocation regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={affectVis}/>
+          <VocationAndRegion regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={affectVis}/>
           </>
       )
     }
@@ -224,7 +227,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>How many acres do you manage/consult annually?</h3> 
-        <LimitedVocation regionArray={regionTypes} vocationArray={limitedVocationTypes}  func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes}  func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -232,7 +235,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>How much do you value the following:</h3>
-        <LimitedVocation regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -243,7 +246,7 @@ function VisMenu(props) {
           <h3>Rate what you believe should be the UCCE's priorities for field crop production, and 
               rate your satisfaction with the UCCE's delivery of information on these topics. </h3>
         </div>
-        <LimitedVocation regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -251,7 +254,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
-        <LimitedVocation regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -260,7 +263,7 @@ function VisMenu(props) {
       return (
         <>
         <h3>Where do you most often look for field crop production information on the internet?</h3>
-        <LimitedVocation regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+        <VocationAndRegion regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
      
@@ -269,7 +272,7 @@ function VisMenu(props) {
       return (
         <>
           <h3>Who do you communicate with when seeking information about field crop production?</h3>
-          <LimitedVocation regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+          <VocationAndRegion regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
@@ -277,14 +280,14 @@ function VisMenu(props) {
       return (
         <>
           <h3>How often do you engage with the UCCE in the following ways?</h3>
-          <LimitedVocation regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+          <VocationAndRegion regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
     }
     default: {
       return (
         <>
-          <LimitedVocation regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
+          <VocationAndRegion regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>     
       )
     }
