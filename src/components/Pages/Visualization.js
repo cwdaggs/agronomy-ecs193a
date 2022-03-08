@@ -7,19 +7,19 @@ import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualiza
 export const Visualizations = () => {
     
     const types = [
-        "AcresManaged", //Q2
-        "CropPercentages", //Q3
-        "Concerns", //Q6
-        "PriorityConcerns", //Q7
-        "PrimaryGrowingReasons", //Q8
-        "Affect", //Q9
-        "InfoSources", //Q10
-        "Engage", //Q11
-        "AmountValued", //Q12
-        "PrioritySatisfaction", //Q13
-        "InternetSources", //Q16
+        "Acres Managed", //Q2
+        "Crop Percentages", //Q3
+        "Production Concerns", //Q6
+        "Priority Concerns", //Q7
+        "Primary Growing Reasons", //Q8
+        "Priority Effect", //Q9
+        "Information Sources", //Q10
+        "UCCE Engagement", //Q11
+        "Values", //Q12
+        "Priorities vs Satisfaction", //Q13
+        "Internet Sources", //Q16
     ]
-    const [active, setActive] = useState("AcresManaged");
+    const [active, setActive] = useState("Acres Managed");
     const [activeName, setActiveName] = useState("Select Topic");
     const [key, setKey] = useState(0);
     return(
@@ -34,9 +34,9 @@ export const Visualizations = () => {
                       {types.map(type => (
                           <SubA 
                           key={type} 
-                          onClick={() => {setKey(key+1); setActiveName(type.replace(/([A-Z])/g, ' $1').trim()); setActive(type)}} 
+                          onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}} 
                           active={active === type}
-                          >{type.replace(/([A-Z])/g, ' $1').trim()}
+                          >{type}
                         </SubA>
                         ))}
                       </DropDownContent>

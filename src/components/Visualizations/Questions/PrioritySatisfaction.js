@@ -6,17 +6,18 @@ import "typeface-abeezee";
 
 function barData(dataset, topic){
   var values = []
-  console.log(dataset)
+
   for(var i = 0; i < dataset.length; i++){
     values.push({x: String(dataset[i].Topic.split('_').join(" ")), y: dataset[i].Priority, z: dataset[i].Satisfaction})
   }
-  console.log(values)
+
   return values.sort((a,b) => a.y-b.y)
 }
 
 export const PrioritySatisfaction = (props) => {
+    
     const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
-    //const [occupation, setOccupation] = useState("All");
+
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
@@ -33,100 +34,122 @@ export const PrioritySatisfaction = (props) => {
 
     function makeVis(data){
       setVis(
-        (<VictoryChart 
-          animate={{
-            duration: 500,               
-          }}
-          height={height} 
-          width={width}
+        ( 
+          <div>
+          <h5>Selected Node's Average Importance/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
+          <VictoryChart 
+            x={50}
+            animate={{
+              duration: 500,               
+            }}
+            height={height} 
+            width={width}
 
-          padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
-        >
-          <VictoryBar horizontal
-            alignment='start'
-            labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
-            labelComponent={
-                <VictoryTooltip 
-                orientation={"bottom"}
-                pointerOrientation={"top"}
-                  style={{
-                    fontSize:fontSize-3,
-                    strokeWidth:1,
-                    fontFamily: 'ABeeZee'
-                  }}
-                  flyoutHeight={40}
-                  flyoutWidth={345}    
-                />
-            }
-            style={{ 
-              data: { 
-                fill: "#c43a31",
-                stroke: "#756f6a",
-                fillOpacity: 0.7,
-                strokeWidth: 0.5
-              } 
-            }}
-            data={data}
-          />
-          <VictoryBar horizontal
-            alignment='start'
-            labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2)}
-            labelComponent={
-                <VictoryTooltip 
-                orientation={"bottom"}
-                pointerOrientation={"top"}
-                  style={{
-                    fontSize:fontSize-3,
-                    strokeWidth: 1,
-                    fontFamily: 'ABeeZee'
-                  }}
-                  flyoutHeight={40}
-                  flyoutWidth={400}    
-                />
-            }
-            style={{ 
-              data: { 
-                fill: "green",
-                stroke: "#756f6a",
-                fillOpacity: 0.7,
-                strokeWidth: 0.5 
-              } 
-            }}
-            data={data}
-            y={(d)=>d.z}
-          />
-          <VictoryAxis dependentAxis
-            label="Ranking"
-            tickFormat={(tick) => `${tick}`}
-            style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 5},
-              axisLabel: {fontSize: fontSize}
-            }}
-          />
-          <VictoryAxis
-            style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0}
-            }}
-          />
-        </VictoryChart>)
+            padding={{ top: margin.top + 100, bottom: margin.bottom, left: margin.left, right: margin.right }}
+            
+            >
+            <VictoryLegend 
+              x={width/3 + 100}
+              y={15}
+              title="Engagement Frequency"
+              centerTitle
+              orientation="horizontal"
+              itemsPerRow={3}
+              gutter={30}
+              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
+                      // border: { stroke: "black" }, 
+                      title: {fontSize: fontSize }, 
+                      data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
+              data={[
+                { name: "Sufficient", symbol: { fill: "green", type:"square"} },
+                { name: "Surplus", symbol: { fill: "green", fillOpacity:0.5, type:"square" } },
+                { name: "Deficient", symbol: { fill: "tomato", fillOpacity:0.7, type:"square" } }
+                
+              ]}
+            />
+            <VictoryBar horizontal
+              alignment='start'
+              labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
+              labelComponent={
+                  <VictoryTooltip 
+                  orientation={"bottom"}
+                  pointerOrientation={"top"}
+                    style={{
+                      fontSize:fontSize-3,
+                      strokeWidth:1,
+                      fontFamily: 'ABeeZee'
+                    }}
+                    flyoutHeight={40}
+                    flyoutWidth={345}    
+                  />
+              }
+              style={{ 
+                data: { 
+                  fill: "#c43a31",
+                  stroke: "#756f6a",
+                  fillOpacity: 0.7,
+                  strokeWidth: 0.5
+                } 
+              }}
+              data={data}
+            />
+            <VictoryBar horizontal
+              alignment='start'
+              labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nImportance of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
+              labelComponent={
+                  <VictoryTooltip 
+                  orientation={"bottom"}
+                  pointerOrientation={"top"}
+                    style={{
+                      fontSize:fontSize-3,
+                      strokeWidth: 1,
+                      fontFamily: 'ABeeZee'
+                    }}
+                    flyoutHeight={100}
+                    flyoutWidth={400}    
+                  />
+              }
+              style={{ 
+                data: { 
+                  fill: "green",
+                  stroke: "#756f6a",
+                  fillOpacity: 0.7,
+                  strokeWidth: 0.5 
+                } 
+              }}
+              data={data}
+              y={(d)=>d.z}
+            />
+            <VictoryAxis dependentAxis
+              label="Ranking"
+              tickFormat={(tick) => `${tick}`}
+              style={{
+                axis: {stroke: "#756f6a"},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: fontSize, padding: 5},
+                axisLabel: {fontSize: fontSize}
+              }}
+            />
+            <VictoryAxis
+              style={{
+                axis: {stroke: "#756f6a"},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: fontSize, padding: 0}
+              }}
+            />
+          </VictoryChart>
+        </div>
         )
+      )
     }
 
     function handleSelection(points, bounds, props){
       selectedData = (barData(props.selectedData[0].data))
-      console.log(selectedData)
       makeVis(selectedData)
       
     }
 
-    function handleSelectionCleared(props){
-      console.log("cleared")
-    }
-    
+    function handleSelectionCleared(props){}  
 
     const width = 1920;
     const height = 1080;
@@ -137,6 +160,7 @@ export const PrioritySatisfaction = (props) => {
     return (
 
         <div class='visualization-window'>
+            <h5>Average Importance vs Satisfaction Ranked on Scale of 1-3 (1-Not, 2-Somewhat, 3-Very) among {data_filtered.length} filtered responses</h5>
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer
@@ -293,8 +317,6 @@ export const PrioritySatisfaction = (props) => {
                 data={trendData[0]}
             />
           </VictoryChart>
-       
-
           {vis}
       </div>
     )};

@@ -182,7 +182,6 @@ export function getFarmersCounties(data){
       
     }
   }
-  console.log(counties)
   return counties
 }
 
@@ -281,23 +280,6 @@ export function calculateCropPercentageAverage(data) {
 
   return modified_data
 }
-
-
-// export function calculateAcresManagedOrConsulted(data){
-//   var columns = ["Acres_Managed", "Acres_Consulted"]
-//   var modified_data=[]
-
-//   for(var i = 0; i < data.length; i++){
-//     for(var j = 0; j < columns.length; j++){
-//       var num = parseInt(data[i][columns[j]], 10)
-//       // Remove NAs and outliers
-//       if(Number.isInteger(num) && num < 10000){
-//         modified_data.push({x: data[i]["Primary_Vocation"], y: num});
-//         }
-//       }
-//     }    
-//   return modified_data
-// }
 
 export function averageSatisfaction(data){
   var topics = ["Compost_Management", "Cover_Crops", "Crop_Establishment", 
@@ -408,7 +390,7 @@ export function acresByCounty(data){
       }
     }
   }
-  console.log(county_acres)
+  //console.log(county_acres)
   return county_acres
 }
 

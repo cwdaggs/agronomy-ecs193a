@@ -1,5 +1,6 @@
 import * as C from './App.styles';
 import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
+import {RegionMapChart} from '../Visualizations/RegionMap'
 import { useData } from '../Visualizations/UseData';
 import "@fontsource/newsreader";
 import file from './downloads/ResearchPaper.pdf'
@@ -47,6 +48,7 @@ export const InfoSummary = () => {
                     Below is a map representing the density of responses in respect to county, as well as the distribution of responses per occupation:
             </C.Desc> 
             <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+            <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
             <C.Desc className='font-newsreader'>
                     Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
                     responses for each crop:

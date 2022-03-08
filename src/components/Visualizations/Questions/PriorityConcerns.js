@@ -63,6 +63,7 @@ export function PriorityConcerns(props) {
         return <pre>Loading...</pre>;
     }
     var data_filtered = filterByCropOrRegion(props.myDataset, props.filter)
+
     var filter = props.filter
     if (regionTypes.includes(props.filter)){
       filter = "All";
