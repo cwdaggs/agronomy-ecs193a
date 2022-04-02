@@ -50,7 +50,7 @@ const CropTab = styled.button`
   `}
 `;
 
-const types = ['Home', 'Visualizations', 'Info', 'About'];
+const types = ['Home', 'Explore Results', 'Info', 'About'];
 
 function ToggleGroup() {
     const [active, setActive] = useState(types[0]);

@@ -103,14 +103,34 @@ export function AffectVictory(props) {
       return <pre>Loading...</pre>;
   }
 
+  const crops = [
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+
   var data_filtered = filterByCropOrRegion(props.dataset, props.filter)
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
-  // var heading = (<h2>How often do the following priorities affect your management decisions for field crop production?</h2>)
+  var titleText = "Frequency of Effect on Management Decisions";
   if (props.vocationFilter === "Consultants") {
-    // heading = (<h2>How often do the following priorities affect your recommendations for field crop production?</h2>)
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
+    titleText = "Frequency of Effect on Recommendations";
   }
+
+  if (crops.includes(props.filter)) {
+    titleText += " for " + props.filter;
+  } else if (props.filter !== "All") {
+    titleText += " in the " + props.filter + " Region";
+  }
+
   var data_sorted = sort_by_freq(data_by_affect)
   const dataset_final = transformData(data_sorted)
   const width = 1920;
@@ -122,11 +142,6 @@ export function AffectVictory(props) {
 
   return (
     <div class='visualization-window'>
-      {/* <button onClick={function () {setJob("Growers")}}>Growers</button>
-      <button onClick={function () {setJob("Consultants")}}>Consultants</button>
-      <p><b >{job}</b> Data: </p> */}
-      {/* {heading} */}
-      {/* <h3>Red=Always, Orange=Often, Yellow=Sometimes, Green=Rarely, Blue=Never</h3> */}
       <VictoryChart
         horizontal={true}
         animate={{
@@ -140,7 +155,7 @@ export function AffectVictory(props) {
         <VictoryLegend 
               x={width/2 - 300}
               y={15}
-              title="Frequency of Effect on Managements/Recommendations"
+              title={titleText}
               centerTitle
               orientation="horizontal"
               colorScale={colorScale}

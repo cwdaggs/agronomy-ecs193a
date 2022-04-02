@@ -61,6 +61,7 @@ export function AmountVictory(props) {
       return <pre>Loading...</pre>;
   }
 
+  var titleText = "Level of Value";
   var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
@@ -90,7 +91,7 @@ export function AmountVictory(props) {
          <VictoryLegend 
               x={width/2 - 300}
               y={15}
-              title="Level of Value"
+              title={titleText}
               centerTitle
               orientation="horizontal"
               colorScale={colorScale}
