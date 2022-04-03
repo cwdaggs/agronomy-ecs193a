@@ -133,9 +133,11 @@ export function AffectVictory(props) {
 
   var data_sorted = sort_by_freq(data_by_affect)
   const dataset_final = transformData(data_sorted)
-  const width = 1920;
-  const height = 1080;
-  const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const height = vh*0.9;
+  const width = vw;
+  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   const colorScale = ["#245f81", "#8f97c5", "#f8d3ff", "#ef88b7", "#d43d51"];
   const fontSize = 20
   const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]

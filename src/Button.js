@@ -19,9 +19,9 @@ const Button = styled.button`
 `;
 
 const Tab = styled.button`
-  padding: 35px 60px;
+  padding: 15px 60px;
   cursor: pointer;
-  font: 30px Metropolis, sans-serif;
+  font: 20px Metropolis, sans-serif;
   font-weight: 800;
   opacity: 0.7;
   background: white;

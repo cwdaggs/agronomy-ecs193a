@@ -28,7 +28,7 @@ function App() {
   function getDisplay(){
     if(dual_display){
       return(
-        <div class='parent flex-parent'>
+        <div class='flex-parent'>
           <div class='child flex-child'><Visualizations/></div>
           <div class='child flex-child'><Visualizations/></div>
         </div>
@@ -49,7 +49,7 @@ function App() {
           Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
           Full details of survey scope and representation here.
         </div>
-        <div>
+        <div id="compare-box">
           <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
         </div>
           {getDisplay()}

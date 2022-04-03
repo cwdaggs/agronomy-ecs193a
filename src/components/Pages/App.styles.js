@@ -6,6 +6,7 @@ export const Container = styled.div`
     background-position:center;
     background-size:cover;
     background-repeat: no-repeat;
+    padding-top: 50px;
 `;
 
 export const Area = styled.div`

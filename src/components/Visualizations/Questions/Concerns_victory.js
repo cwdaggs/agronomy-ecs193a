@@ -28,9 +28,11 @@ export function ConcernsVictory(props) {
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_concern)
   const dataset = transformData(data_sorted);
-  const width = 1920;
-  const height = 1080;
-  const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const height = vh*0.9;
+  const width = vw;
+  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   const colorScale = ["#00471A", "#009141", "#02D46F"];
   const fontSize = 20
   const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]

@@ -66,9 +66,11 @@ export function AmountVictory(props) {
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
-  const width = 1920;
-  const height = 1080;
-  const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const height = vh*0.9;
+  const width = vw;
+  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   const colorScale = ["#003f5c",
     "#bc5090",
     "#ffa600"];
@@ -81,7 +83,7 @@ export function AmountVictory(props) {
       <VictoryChart
         horizontal={true}
         animate={{
-            duration: 1000,               
+            duration: 500,               
         }}
         height={height} 
         width={width}

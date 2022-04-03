@@ -1,9 +1,12 @@
 export const Home = () => {
 
-    
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    const height = vh*0.99;
+    const width = vw;
     return(
         <div id="bg">
-            <svg height="1200" width="1600">
+            <svg height={height} width={width}>
                 <rect width="800" height="200" x="500" y="100" class="rect-home" />
                 <text class="vis-title" x="850" y="200">Welcome!</text>
 

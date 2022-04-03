@@ -88,9 +88,11 @@ export function EngageVictory(props) {
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_freq(data_by_engage)
   const dataset_final = transformData(data_sorted)
-  const width = 1920;
-  const height = 1080;
-  const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const height = vh*0.9;
+  const width = vw;
+  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   const colorScale = ["#19bbb0", "#68caa5", "#9dd79f", "#bee37b", "#f4e651"];
   const fontSize = 20
   const legend_data = [{name: "1-3 times/week"}, {name: "1-2 times/month"}, {name: "3-6 times/year"}, {name: "1-2 times/year"}, {name: "Never"}]
