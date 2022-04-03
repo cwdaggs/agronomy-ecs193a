@@ -16,17 +16,15 @@ export default function App() {
     checkDualDisplay(!dual_display);
   }
 
-  function getDisplay(){
-    if(dual_display){
-      return(
-        <div class='parent flex-parent'>
-          <div class='child flex-child'><Visualizations/></div>
-          <div class='child flex-child'><Visualizations/></div>
-        </div>
-        );
-    }else{
-      return(<Visualizations/>)
-    }
+  function getNewDisplay(dual_display) {
+    return (dual_display
+      ?
+      <div class='parent flex-parent'>
+        <div class='child flex-child'><Visualizations/></div>
+        <div class='child flex-child'><Visualizations/></div>
+      </div>
+      :
+      <Visualizations/>)
   }
 
   function getActiveTab(isActive, pageName){
@@ -64,11 +62,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="results" element={
-      //   <div>
-      // <Checkbox label={"Compare"} checked={dual_display} onChange={changeDual}/>
-      <Visualizations/>
-      // </div>
-    }/>
+          <div>
+            <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+              {getNewDisplay(dual_display)}
+          </div>
+        }/>
         <Route path="info" element={<InfoSummary/>}/>
         <Route path="about" element={<AboutSummary/>}/>
       </Routes>
