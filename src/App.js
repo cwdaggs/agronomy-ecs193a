@@ -7,6 +7,7 @@ import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 import {Home} from './components/Pages/Home'
 import background from "./images/farming-background.jfif";
+import { Link } from "react-router-dom";
 
 function App() {
   const [display, setDisplay] = useState("Home");
