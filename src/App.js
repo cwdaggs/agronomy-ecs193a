@@ -10,30 +10,64 @@ import background from "./images/farming-background.jfif";
 import { Link, NavLink, Outlet,Routes, Route } from "react-router-dom";
 
 export default function App() {
-  const types = ['Home', 'Visualizations', 'Info', 'About'];
+    const [dual_display, checkDualDisplay] = useState(false);
+  
+    function changeDual(){
+      checkDualDisplay(!dual_display);
+    }
+  
+    function getDisplay(){
+      if(dual_display){
+        return(
+          <div class='parent flex-parent'>
+            <div class='child flex-child'><Visualizations/></div>
+            <div class='child flex-child'><Visualizations/></div>
+          </div>
+          );
+      }else{
+        return(<Visualizations/>)
+      }
+    }
   return (
     <div id="outerContainer" class='font-metropolis'>
-             <div id="heading">
-               <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
-               <NavLink to ="/"> <Tab>Home</Tab></NavLink>
-               <NavLink to="/visualizations"><Tab>Visualizations</Tab></NavLink>
-               <NavLink to ="/info"><Tab>Info</Tab></NavLink>
-               <NavLink to ="/about"><Tab>About</Tab></NavLink>
-             </div>
-             {/* <div>
-             <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
-             </div> */}
-             <Outlet/>
-             <footer></footer>
-             <Routes>
-    <Route path="/" element={<Home/>}/>
-      {/* <Route path="home" element={<Home/>}/> */}
-      <Route path="visualizations" element={<Visualizations/>}/>
-      <Route path="info" element={<InfoSummary/>}/>
-      <Route path="about" element={<AboutSummary/>}/>
-    {/* </Route> */}
-  </Routes>
-           </div>
+      <div id="heading">
+        <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
+        <NavLink to ="/">
+          <Tab>
+            Home
+          </Tab>
+        </NavLink>
+        <NavLink to="/visualizations">
+          <Tab>
+            Visualizations
+          </Tab>
+        </NavLink>
+        <NavLink to ="/info">
+          <Tab>
+            Info
+          </Tab>
+        </NavLink>
+        <NavLink to ="/about">
+          <Tab>
+            About
+          </Tab>
+        </NavLink>
+      </div>
+      
+      <Outlet/>
+      <footer></footer>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="visualizations" element={
+      //   <div>
+      // <Checkbox label={"Compare"} checked={dual_display} onChange={changeDual}/>
+      <Visualizations/>
+      // </div>
+    }/>
+        <Route path="info" element={<InfoSummary/>}/>
+        <Route path="about" element={<AboutSummary/>}/>
+      </Routes>
+    </div>
   )
 }
 
