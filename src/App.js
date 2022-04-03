@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TabGroup, ToggleGroup, Checkbox, Tab} from './Button.js'
+import {Checkbox, Tab} from './Button.js'
 import 'react-pro-sidebar/dist/css/styles.css';
 import {InfoSummary} from './components/Pages/InfoSummary'
 import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 import {Home} from './components/Pages/Home'
-import background from "./images/farming-background.jfif";
-import { Link, NavLink, Outlet,Routes, Route } from "react-router-dom";
+import {NavLink, Outlet,Routes, Route } from "react-router-dom";
 
 export default function App() {
   const [dual_display, checkDualDisplay] = useState(false);
