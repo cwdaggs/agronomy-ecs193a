@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from "react-router-dom";
+import {InfoSummary} from './components/Pages/InfoSummary'
+import {AboutSummary} from './components/Pages/AboutSummary'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+  <Routes>
+    <Route path="/" element={<App/>}/>
+    <Route path="info" element={<InfoSummary/>}/>
+    <Route path="about" element={<AboutSummary/>}/>
+  </Routes>
   </BrowserRouter>,
   rootElement
 );
