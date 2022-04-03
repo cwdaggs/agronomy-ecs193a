@@ -10,83 +10,52 @@ import background from "./images/farming-background.jfif";
 import { Link, NavLink, Outlet,Routes, Route } from "react-router-dom";
 
 export default function App() {
-    const [dual_display, checkDualDisplay] = useState(false);
-  
-    function changeDual(){
-      checkDualDisplay(!dual_display);
-    }
-  
-    function getDisplay(){
-      if(dual_display){
-        return(
-          <div class='parent flex-parent'>
-            <div class='child flex-child'><Visualizations/></div>
-            <div class='child flex-child'><Visualizations/></div>
-          </div>
-          );
-      }else{
-        return(<Visualizations/>)
-      }
-    }
+  const [dual_display, checkDualDisplay] = useState(false);
 
-  let activeStyle = {
-    opacity: 1
-  };    
+  function changeDual(){
+    checkDualDisplay(!dual_display);
+  }
+
+  function getDisplay(){
+    if(dual_display){
+      return(
+        <div class='parent flex-parent'>
+          <div class='child flex-child'><Visualizations/></div>
+          <div class='child flex-child'><Visualizations/></div>
+        </div>
+        );
+    }else{
+      return(<Visualizations/>)
+    }
+  }
+
+  function getActiveTab(isActive, pageName){
+    return (isActive 
+            ? 
+            <Tab style={{opacity: 1}}>
+              {pageName}
+            </Tab> 
+            : 
+            <Tab style={{opacity: 0.7}}>
+              {pageName}
+            </Tab>)
+  }
+
   return (
     <div id="outerContainer" class='font-metropolis'>
       <div id="heading">
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <NavLink to ="/">
-        {({ isActive }) =>
-            isActive 
-            ? 
-            <Tab style={{opacity: 1}}>
-              Home
-            </Tab> 
-            : 
-            <Tab style={{opacity: 0.7}}>
-              Home
-            </Tab>
-          }
+          {({ isActive }) => getActiveTab(isActive, "Home")}
         </NavLink>
-        <NavLink to="/visualizations">
-        {({ isActive }) =>
-            isActive 
-            ? 
-            <Tab style={{opacity: 1}}>
-              Explore Results
-            </Tab> 
-            : 
-            <Tab style={{opacity: 0.7}}>
-              Explore Results
-            </Tab>
-          }
+        <NavLink to="/results">
+          {({ isActive }) => getActiveTab(isActive, "Explore Results")}
         </NavLink>
         <NavLink to ="/info">
-          {({ isActive }) =>
-            isActive 
-            ? 
-            <Tab style={{opacity: 1}}>
-              Info
-            </Tab> 
-            : 
-            <Tab style={{opacity: 0.7}}>
-              Info
-            </Tab>
-          }
+          {({ isActive }) => getActiveTab(isActive, "Info")}
         </NavLink>
         <NavLink to ="/about">
-        {({ isActive }) =>
-            isActive 
-            ? 
-            <Tab style={{opacity: 1}}>
-              About
-            </Tab> 
-            : 
-            <Tab style={{opacity: 0.7}}>
-              About
-            </Tab>
-          }
+          {({ isActive }) => getActiveTab(isActive, "About")}
         </NavLink>
       </div>
       
@@ -94,7 +63,7 @@ export default function App() {
       <footer></footer>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="visualizations" element={
+        <Route path="results" element={
       //   <div>
       // <Checkbox label={"Compare"} checked={dual_display} onChange={changeDual}/>
       <Visualizations/>
