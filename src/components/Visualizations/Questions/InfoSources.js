@@ -68,6 +68,7 @@ export function InfoSourcesBarChart(props) {
       "Wheat"
     ];
 
+    var titleText = "Information Sources vs Number of Responses";
     var data = filterByCropOrRegion(props.dataset, props.filter);
     if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
       data = props.dataset;
@@ -90,7 +91,7 @@ export function InfoSourcesBarChart(props) {
             padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
           >
 
-            <VictoryLabel text="Information Sources vs Number of Responses" 
+            <VictoryLabel text={titleText} 
               x={width/2 - 300} 
               y={80}
               style ={{fontSize:fontSize +10}}/>

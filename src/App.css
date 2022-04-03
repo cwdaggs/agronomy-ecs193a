@@ -17,6 +17,13 @@
   padding-right: 125px;
 }
 
+#visTop {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: large;
+  font-weight: bold;
+}
+
 #sidebar {
   position: fixed;
   right: 0;

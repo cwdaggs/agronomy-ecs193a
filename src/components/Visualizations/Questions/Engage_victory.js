@@ -79,6 +79,7 @@ export function EngageVictory(props) {
     "Wheat"
   ];
 
+  var titleText = "UCCE Engagement Frequency";
   var data = filterByCropOrRegion(props.dataset, props.filter);
   if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
     data = props.dataset;
@@ -109,7 +110,7 @@ export function EngageVictory(props) {
         <VictoryLegend 
               x={width/2 - 450}
               y={15}
-              title="Engagement Frequency"
+              title={titleText}
               centerTitle
               orientation="horizontal"
               colorScale={colorScale}
