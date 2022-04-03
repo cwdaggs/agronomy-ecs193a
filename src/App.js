@@ -15,9 +15,9 @@ export default function App() {
     <div id="outerContainer" class='font-metropolis'>
              <div id="heading">
                <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
-               <NavLink to ="/home"> <Tab>Home</Tab></NavLink> |{" "}
-               <NavLink to="/visualizations"><Tab>Visualizations</Tab></NavLink> |{" "}
-               <NavLink to ="/info"><Tab>Info</Tab></NavLink> |{" "}
+               <NavLink to ="/home"> <Tab>Home</Tab></NavLink>
+               <NavLink to="/visualizations"><Tab>Visualizations</Tab></NavLink>
+               <NavLink to ="/info"><Tab>Info</Tab></NavLink>
                <NavLink to ="/about"><Tab>About</Tab></NavLink>
              </div>
              {/* <div>
