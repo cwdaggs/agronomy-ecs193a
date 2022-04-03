@@ -5,15 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {InfoSummary} from './components/Pages/InfoSummary'
 import {AboutSummary} from './components/Pages/AboutSummary'
+import {Visualizations} from './components/Pages/Visualization'
+import {Home} from './components/Pages/Home'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <BrowserRouter>
   <Routes>
-    <Route path="/" element={<App/>}/>
-    <Route path="info" element={<InfoSummary/>}/>
-    <Route path="about" element={<AboutSummary/>}/>
+    <Route path="/" element={<App/>}>
+      <Route path="home" element={<Home/>}/>
+      <Route path="visualizations" element={<Visualizations/>}/>
+      <Route path="info" element={<InfoSummary/>}/>
+      <Route path="about" element={<AboutSummary/>}/>
+    </Route>
   </Routes>
   </BrowserRouter>,
   rootElement
