@@ -20,6 +20,9 @@ export default function App() {
                <NavLink to ="/info"><Tab>Info</Tab></NavLink> |{" "}
                <NavLink to ="/about"><Tab>About</Tab></NavLink>
              </div>
+             {/* <div>
+             <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+             </div> */}
              <Outlet/>
              <footer></footer>
            </div>
