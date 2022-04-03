@@ -7,7 +7,7 @@ import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 import {Home} from './components/Pages/Home'
 import background from "./images/farming-background.jfif";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet,Routes, Route } from "react-router-dom";
 
 export default function App() {
   const types = ['Home', 'Visualizations', 'Info', 'About'];
@@ -25,6 +25,14 @@ export default function App() {
              </div> */}
              <Outlet/>
              <footer></footer>
+             <Routes>
+    <Route path="/" element={<Home/>}/>
+      {/* <Route path="home" element={<Home/>}/> */}
+      <Route path="visualizations" element={<Visualizations/>}/>
+      <Route path="info" element={<InfoSummary/>}/>
+      <Route path="about" element={<AboutSummary/>}/>
+    {/* </Route> */}
+  </Routes>
            </div>
   )
 }

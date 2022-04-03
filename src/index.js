@@ -12,14 +12,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <BrowserRouter>
-  <Routes>
+  <App/>
+  {/* <Routes>
     <Route path="/" element={<App/>}>
       <Route path="home" element={<Home/>}/>
       <Route path="visualizations" element={<Visualizations/>}/>
       <Route path="info" element={<InfoSummary/>}/>
       <Route path="about" element={<AboutSummary/>}/>
     </Route>
-  </Routes>
+  </Routes> */}
   </BrowserRouter>,
   rootElement
 );
