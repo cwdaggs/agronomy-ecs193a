@@ -1,33 +1,27 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TabGroup, ToggleGroup, Checkbox} from './Button.js'
+import {TabGroup, ToggleGroup, Checkbox, Tab} from './Button.js'
 import 'react-pro-sidebar/dist/css/styles.css';
 import {InfoSummary} from './components/Pages/InfoSummary'
 import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 import {Home} from './components/Pages/Home'
 import background from "./images/farming-background.jfif";
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 export default function App() {
+  const types = ['Home', 'Visualizations', 'Info', 'About'];
   return (
     <div id="outerContainer" class='font-metropolis'>
              <div id="heading">
                <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
+               <NavLink to ="/home"> <Tab>Home</Tab></NavLink> |{" "}
+               <NavLink to="/visualizations"><Tab>Visualizations</Tab></NavLink> |{" "}
+               <NavLink to ="/info"><Tab>Info</Tab></NavLink> |{" "}
+               <NavLink to ="/about"><Tab>About</Tab></NavLink>
              </div>
-             <nav
-              style={{
-                borderBottom: "solid 1px",
-                paddingBottom: "1rem",
-              }}
-             >
-               <Link to ="/home">Home</Link> |{" "}
-               <Link to="/visualizations">Visualizations</Link> |{" "}
-               <Link to ="/info">Info</Link> |{" "}
-               <Link to ="/about">About</Link>
-             </nav>
              <Outlet/>
-               <footer></footer>
+             <footer></footer>
            </div>
   )
 }

@@ -115,4 +115,4 @@ function TabGroup(props){
     );
 }
 
-export {TabGroup, ToggleGroup, Checkbox}
+export {TabGroup, ToggleGroup, Checkbox, Tab}
