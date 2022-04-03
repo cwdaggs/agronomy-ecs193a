@@ -12,6 +12,7 @@ import { PriorityConcerns } from "./Questions/PriorityConcerns";
 import { AmountVictory } from "./Questions/AmountValued";
 import { EngageVictory } from "./Questions/Engage_victory";
 import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
+import { VisualizationLandingPage } from "./Questions/VisualizationLandingPage";
 import {MapChart} from "./CaliforniaCounties"
 import "@fontsource/metropolis";
 
@@ -129,7 +130,8 @@ function VocationAndRegion(props) {
 
 function getVis(vis_name, active, activeVocation, dataset){
 
-  var vis_key = { 
+  var vis_key = {
+              "Select Topic" :                      (<VisualizationLandingPage filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "Priorities vs Satisfaction" :        (<PrioritySatisfaction filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "Crop Percentages":                   (<CropPercentages filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "Priority Effect":                    (<AffectVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),

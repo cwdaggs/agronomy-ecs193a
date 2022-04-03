@@ -19,9 +19,10 @@ export const Visualizations = () => {
         "Priorities vs Satisfaction", //Q13
         "Internet Sources", //Q16
     ]
-    const [active, setActive] = useState("Acres Managed");
+    const [active, setActive] = useState("Select Topic");
     const [activeName, setActiveName] = useState("Select Topic");
     const [key, setKey] = useState(0);
+    
     return(
         <div id="outer-container">
                 <StyledUl>
