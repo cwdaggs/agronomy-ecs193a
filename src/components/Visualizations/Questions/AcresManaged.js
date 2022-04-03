@@ -52,15 +52,50 @@ function calculateSizeOfDataSet(data){
   return size;
 }
 
+function createTitle(props){
+  var title = "vocations";
+  const crops = [
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+  
+  if(props.vocationFilter != "All"){
+    title = props.vocationFilter;
+  }
+
+  if(crops.includes(props.filter)){
+    title = "All " + props.filter + " " + title.toLowerCase();
+  }
+  else if (props.filter != "All"){
+    title = "All " + title.toLowerCase() + " in the " + props.filter + " region";
+  }
+
+  if(title == "vocations"){
+    title = "All " + title;
+  }
+  return title;
+}
+
 export function AcresManagedBarChart(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
+
+
     var data = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter);
     var acre_data = calculateAcres(data);
     var dataLength = calculateSizeOfDataSet(acre_data)
     var lengthString = String("Number of Farms (n = " + dataLength + ")");
-    //var orgString = String("Acres vs Number of Farms (n = " + dataLength + ")");
+
+    
 
     const fontSize = 20
 
@@ -68,6 +103,7 @@ export function AcresManagedBarChart(props) {
 
     return (
         <div class='visualization-window'>
+          <h1 id="visHeading">{createTitle(props)}</h1>
           <VictoryChart height={1080} width={1920}
             //domainPadding={45}
             domainPadding={{ x: margin.right/5.3, y: margin.top }}
