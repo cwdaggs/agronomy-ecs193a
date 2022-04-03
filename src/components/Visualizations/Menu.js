@@ -207,16 +207,16 @@ function VisMenu(props) {
       )
     }
     case "AffectVictory": {
-      // let blah = ""
-      // if ({activeVocation} === "Consultants") {
-      //   blah = "How often do the following priorities affect your recommendations for field crop production?"
-      // } else {
-      //   blah = "How often do the following priorities affect your management decisions for field crop production?"
-      // }
+      let blah = ""
+      if (moreLimitedVocation === "Consultants") {
+        blah = "How often do the following priorities affect your recommendations for field crop production?"
+      } else {
+        blah = "How often do the following priorities affect your management decisions for field crop production?"
+      }
       let affectVis = getVis("Priority Effect", active, moreLimitedVocation, dataset);
       return (
           <>
-          <h3>How often do the following priorities affect your managements/recommendations for field crop production?</h3>
+          <h3>{blah}</h3>
           <VocationAndRegion regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={affectVis}/>
           </>
       )
