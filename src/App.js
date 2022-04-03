@@ -28,29 +28,65 @@ export default function App() {
         return(<Visualizations/>)
       }
     }
+
+  let activeStyle = {
+    opacity: 1
+  };    
   return (
     <div id="outerContainer" class='font-metropolis'>
       <div id="heading">
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <NavLink to ="/">
-          <Tab>
-            Home
-          </Tab>
+        {({ isActive }) =>
+            isActive 
+            ? 
+            <Tab style={{opacity: 1}}>
+              Home
+            </Tab> 
+            : 
+            <Tab style={{opacity: 0.7}}>
+              Home
+            </Tab>
+          }
         </NavLink>
         <NavLink to="/visualizations">
-          <Tab>
-            Visualizations
-          </Tab>
+        {({ isActive }) =>
+            isActive 
+            ? 
+            <Tab style={{opacity: 1}}>
+              Explore Results
+            </Tab> 
+            : 
+            <Tab style={{opacity: 0.7}}>
+              Explore Results
+            </Tab>
+          }
         </NavLink>
         <NavLink to ="/info">
-          <Tab>
-            Info
-          </Tab>
+          {({ isActive }) =>
+            isActive 
+            ? 
+            <Tab style={{opacity: 1}}>
+              Info
+            </Tab> 
+            : 
+            <Tab style={{opacity: 0.7}}>
+              Info
+            </Tab>
+          }
         </NavLink>
         <NavLink to ="/about">
-          <Tab>
-            About
-          </Tab>
+        {({ isActive }) =>
+            isActive 
+            ? 
+            <Tab style={{opacity: 1}}>
+              About
+            </Tab> 
+            : 
+            <Tab style={{opacity: 0.7}}>
+              About
+            </Tab>
+          }
         </NavLink>
       </div>
       
