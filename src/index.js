@@ -12,15 +12,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <BrowserRouter>
-  <App/>
-  {/* <Routes>
-    <Route path="/" element={<App/>}>
-      <Route path="home" element={<Home/>}/>
-      <Route path="visualizations" element={<Visualizations/>}/>
-      <Route path="info" element={<InfoSummary/>}/>
-      <Route path="about" element={<AboutSummary/>}/>
-    </Route>
-  </Routes> */}
+    <App/>
   </BrowserRouter>,
   rootElement
 );

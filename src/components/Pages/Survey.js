@@ -84,7 +84,7 @@ const surveyJson = {
 //Questions: What vocation and region, Total acreage of farms, what crops are grown/consulted on,
 // main production concerns
 
-function Survey() {
+export const MiniSurvey = () => {
     const survey = new Model(surveyJson);
     //get the results back and do math with them or whatever, output to pdf somehow
     return <Survey model={survey} />;
