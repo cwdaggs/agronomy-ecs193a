@@ -60,7 +60,7 @@ const surveyJson = {
         title: "Total acreage of farms you associate with?",
         isRequired: true,
         type: "text",
-        placeholder: "An int like 1500"
+        placeHolder: "An int like 1500"
     },
     {
         name: "production_concerns",
