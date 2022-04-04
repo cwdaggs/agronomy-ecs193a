@@ -5,6 +5,8 @@ import { Survey, StylesManager, Model } from "survey-react";
 StylesManager.applyTheme("modern");
 
 const surveyJson = {
+    "title": "Give us your data! Just kidding, we have no database :(",
+    "description": "Take the survey, just do it",
     "elements": [
     {
         name: "vocation",
@@ -85,7 +87,20 @@ const surveyJson = {
 // main production concerns
 
 export const MiniSurvey = () => {
+    
     const survey = new Model(surveyJson);
+    survey
+    .onComplete
+    .add(function (sender) {
+        document
+            .querySelector('#surveyResult')
+            .textContent = "Result JSON:\n" + JSON.stringify(sender.data, null, 3);
+    });
     //get the results back and do math with them or whatever, output to pdf somehow
-    return <Survey model={survey} />;
+    return (
+        // <div>
+        // <h1>Give us your data! Just kidding, we have no database :(</h1>
+        <Survey model={survey} />
+        // </div>
+    );
 }
