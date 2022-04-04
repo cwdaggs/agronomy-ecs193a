@@ -12,6 +12,7 @@ import { PriorityConcerns } from "./Questions/PriorityConcerns";
 import { AmountVictory } from "./Questions/AmountValued";
 import { EngageVictory } from "./Questions/Engage_victory";
 import { PrimaryGrowingReasons } from "./Questions/PrimaryGrowingReasons";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import {MapChart} from "./CaliforniaCounties"
 import "@fontsource/metropolis";
 

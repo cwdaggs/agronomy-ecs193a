@@ -8,3 +8,4 @@ npm install --save react-simple-maps
 npm install @fontsource/metropolis
 npm install @fontsource/newsreader
 npm install survey-react --save
+npm install react-router-dom@6
