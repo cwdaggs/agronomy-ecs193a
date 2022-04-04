@@ -50,9 +50,22 @@ function transformData(dataset) {
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: datum.Value + " (n=" + totals[i] + ")", y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Value };
+      return { x: datum.Value, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Value };
     });
   });
+}
+
+function calculateAverageResponses(dataset) {
+  const totals = dataset[0].map((data, i) => {
+    return dataset.reduce((memo, curr) => {
+      return memo + curr[i].Total;
+    }, 0);
+  });
+  var sum = 0;
+  for (var i = 0; i < totals.length; i++) {
+    sum += totals[i];
+  }
+  return Math.round(sum / totals.length);
 }
 
 export function AmountVictory(props) {
@@ -61,11 +74,41 @@ export function AmountVictory(props) {
       return <pre>Loading...</pre>;
   }
 
+  const crops = [
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+
   var titleText = "Level of Value";
+  if (crops.includes(props.filter)) {
+    titleText += " for " + props.filter;
+  }
+  if (props.vocationFilter !== "All") {
+    if (crops.includes(props.filter)) {
+      titleText += " " + props.vocationFilter;
+    } else {
+      titleText += " for " + props.vocationFilter;
+    }
+  }
+  if (!crops.includes(props.filter) && props.filter !== "All") {
+    titleText += " in the " + props.filter + " Region";
+  }
+
   var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
+
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+
   const width = 1920;
   const height = 1080;
   const margin = { top: height/10, right: width/4, bottom: height/5, left: width/4 };
