@@ -1,99 +1,81 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TabGroup, ToggleGroup, Checkbox} from './Button.js'
+import {Checkbox, Tab} from './Button.js';
 import 'react-pro-sidebar/dist/css/styles.css';
-import {InfoSummary} from './components/Pages/InfoSummary'
-import {AboutSummary} from './components/Pages/AboutSummary'
-import {Visualizations} from './components/Pages/Visualization'
-import {Home} from './components/Pages/Home'
-import background from "./images/farming-background.jfif";
+import {InfoSummary} from './components/Pages/InfoSummary';
+import {AboutSummary} from './components/Pages/AboutSummary';
+import {Visualizations} from './components/Pages/Visualization';
+import {Home} from './components/Pages/Home';
+import {NavLink, Outlet,Routes, Route } from "react-router-dom";
 
-function App() {
-  const [display, setDisplay] = useState("Home");
-  const [key, setKey] = useState(0);
-
+export default function App() {
   const [dual_display, checkDualDisplay] = useState(false);
-
-  function changeDisplay(newDisplay) {
-    if(newDisplay === "Explore Results" && dual_display){
-      changeDual();
-    }
-    setDisplay(newDisplay);
-  }
 
   function changeDual(){
     checkDualDisplay(!dual_display);
   }
 
-  function getDisplay(){
-    if(dual_display){
-      return(
-        <div class='flex-parent'>
-          <div class='child flex-child'><Visualizations/></div>
-          <div class='child flex-child'><Visualizations/></div>
-        </div>
-        );
-    }else{
-      return(<Visualizations/>)
-    }
-  }
-  if (display === "Explore Results") {
-    return (
-      <div id="outerContainer" class='font-metropolis'>
-        <div id="heading">
-          <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
-          <TabGroup changeFunc={changeDisplay}/>
-        </div>
-        <div id="visTop">
-          Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
-          Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
-          Full details of survey scope and representation here.
-        </div>
-        <div id="compare-box">
-          <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
-        </div>
-          {getDisplay()}
-          <footer></footer>
+  function getNewDisplay(dual_display) {
+    return (dual_display
+      ?
+      <div class='parent flex-parent'>
+        <div class='child flex-child'><Visualizations/></div>
+        <div class='child flex-child'><Visualizations/></div>
       </div>
-    );
+      :
+      <Visualizations/>)
   }
 
-  else if (display === "Info") {
-    return (
-      <div id="outerContainer" class='font-metropolis'>
-        <div id="heading">
-          <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
-          <TabGroup changeFunc={changeDisplay}/>
-        </div>
-          <InfoSummary />
-          <footer></footer>
-      </div>
-    );
+  function getActiveTab(isActive, pageName){
+    return (isActive 
+            ? 
+            <Tab style={{opacity: 1}}>
+              {pageName}
+            </Tab> 
+            : 
+            <Tab style={{opacity: 0.7}}>
+              {pageName}
+            </Tab>)
   }
-  if (display === "About") {
-    return (
-      <div id="outerContainer" class='font-metropolis'>
-        <div id="heading">
-          <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
-          <TabGroup changeFunc={changeDisplay}/>
-        </div>
-        <AboutSummary/>
-        <footer></footer>
-      </div>
-    );
-  }
+
   return (
     <div id="outerContainer" class='font-metropolis'>
       <div id="heading">
         <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
-        <TabGroup changeFunc={changeDisplay}/>
+        <NavLink to ="/">
+          {({ isActive }) => getActiveTab(isActive, "Home")}
+        </NavLink>
+        <NavLink to="/results">
+          {({ isActive }) => getActiveTab(isActive, "Explore Results")}
+        </NavLink>
+        <NavLink to ="/info">
+          {({ isActive }) => getActiveTab(isActive, "Info")}
+        </NavLink>
+        <NavLink to ="/about">
+          {({ isActive }) => getActiveTab(isActive, "About")}
+        </NavLink>
       </div>
-      <div  style={{ backgroundImage: `url(${background})` }}>
-        <Home/>
-      </div>
-      <footer></footer>  
+      
+      <Outlet/>
+      <footer></footer>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="results" element={
+          <div>
+            <div id="visTop">
+              Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
+              Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
+              Full details of survey scope and representation here.
+            </div>
+            <div id="compare-box">
+              <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+            </div>
+              {getNewDisplay(dual_display)}
+          </div>
+        }/>
+        <Route path="info" element={<InfoSummary/>}/>
+        <Route path="about" element={<AboutSummary/>}/>
+      </Routes>
     </div>
-  );
+  )
 }
-
-export default App;
