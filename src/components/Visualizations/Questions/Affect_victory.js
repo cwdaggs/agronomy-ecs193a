@@ -92,9 +92,22 @@ function transformData(dataset) {
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: datum.Affect + " (n=" + totals[i] + ")", y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Affect };
+      return { x: datum.Affect, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Affect };
     });
   });
+}
+
+function calculateAverageResponses(dataset) {
+  const totals = dataset[0].map((data, i) => {
+    return dataset.reduce((memo, curr) => {
+      return memo + curr[i].Total;
+    }, 0);
+  });
+  var sum = 0;
+  for (var i = 0; i < totals.length; i++) {
+    sum += totals[i];
+  }
+  return Math.round(sum / totals.length);
 }
 
 export function AffectVictory(props) {
@@ -133,6 +146,9 @@ export function AffectVictory(props) {
 
   var data_sorted = sort_by_freq(data_by_affect)
   const dataset_final = transformData(data_sorted)
+
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vh*0.9;

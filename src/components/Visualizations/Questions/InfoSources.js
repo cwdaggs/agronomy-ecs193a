@@ -68,10 +68,28 @@ export function InfoSourcesBarChart(props) {
       "Wheat"
     ];
 
-    var titleText = "Information Sources vs Number of Responses";
+    var centerTitle = 300;
+    if (props.vocationFilter === "All" || props.filter === "All") {
+      centerTitle = 200;
+    }
+
+    var titleText = "";
+    if (props.vocationFilter !== "All") {
+      titleText += "Vocation: " + props.vocationFilter;
+    }
+    if (crops.includes(props.filter)) {
+      if (props.vocationFilter !== "Allied Industry" && props.vocationFilter !== "Other") {
+        titleText += " Crop: " + props.filter;
+      }
+    }
+    if (!crops.includes(props.filter) && props.filter !== "All") {
+      titleText += " Region: " + props.filter;
+    }
+
     var data = filterByCropOrRegion(props.dataset, props.filter);
     if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
       data = props.dataset;
+      centerTitle = 200;
     }
     var filtered_data = filterByVocation(data, props.vocationFilter);
     var info_data = calculateInformationSources(filtered_data);
@@ -84,7 +102,6 @@ export function InfoSourcesBarChart(props) {
 
     return (
         <div class='visualization-window'>
-          {/* <h2>Who do you communicate with when seeking information about field crop production?</h2> */}
           <VictoryChart height={height} width={width}
             animate={{
               duration: 500,               
@@ -94,7 +111,7 @@ export function InfoSourcesBarChart(props) {
           >
 
             <VictoryLabel text={titleText} 
-              x={width/2 - 300} 
+              x={width/2 - centerTitle} 
               y={80}
               style ={{fontSize:fontSize +10}}/>
 
@@ -114,17 +131,21 @@ export function InfoSourcesBarChart(props) {
             }
             />
             <VictoryAxis dependentAxis
+              label = {"Number of Responses " + "(n = " + filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5}
+                tickLabels: {fontSize: fontSize, padding: 5},
+                axisLabel: {fontSize: fontSize*2, padding: 50}
               }}
             />
             <VictoryAxis
+              label = {"Information Sources"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0}
+                tickLabels: {fontSize: fontSize, padding: 0},
+                axisLabel: {fontSize: fontSize*2, padding: 350}
               }}
             tickLabelComponent={       
               <VictoryLabel    

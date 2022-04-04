@@ -48,16 +48,29 @@ export function calculateEngageTotalsForEachElement(data){
 
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
-    const totals = dataset[0].map((data, i) => {
+  const totals = dataset[0].map((data, i) => {
     return dataset.reduce((memo, curr) => {
       return memo + curr[i].Total;
     }, 0);
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: datum.Engage + " (n=" + totals[i] + ")", y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Engage };
+      return { x: datum.Engage, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Engage };
     });
   });
+}
+
+function calculateAverageResponses(dataset) {
+  const totals = dataset[0].map((data, i) => {
+    return dataset.reduce((memo, curr) => {
+      return memo + curr[i].Total;
+    }, 0);
+  });
+  var sum = 0;
+  for (var i = 0; i < totals.length; i++) {
+    sum += totals[i];
+  }
+  return Math.round(sum / totals.length);
 }
 
 export function EngageVictory(props) {
@@ -80,6 +93,29 @@ export function EngageVictory(props) {
   ];
 
   var titleText = "UCCE Engagement Frequency";
+  if (crops.includes(props.filter)) {
+    titleText += " for ";
+    if (props.vocationFilter !== "Allied Industry" && props.vocationFilter !== "Other") {
+      titleText += props.filter;
+    }
+  }
+  if (props.vocationFilter !== "All") {
+    if (crops.includes(props.filter)) {
+      titleText += " " + props.vocationFilter;
+      if (props.vocationFilter === "Other") {
+        titleText += " Vocations";
+      }
+    } else {
+      titleText += " for " + props.vocationFilter;
+      if (props.vocationFilter === "Other") {
+        titleText += " Vocations";
+      }
+    }
+  }
+  if (!crops.includes(props.filter) && props.filter !== "All") {
+    titleText += " in the " + props.filter + " Region";
+  }
+
   var data = filterByCropOrRegion(props.dataset, props.filter);
   if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
     data = props.dataset;
@@ -88,6 +124,8 @@ export function EngageVictory(props) {
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_freq(data_by_engage)
   const dataset_final = transformData(data_sorted)
+
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vh*0.9;
