@@ -19,6 +19,7 @@
     "react-scripts": "^5.0.0",
     "react-simple-maps": "^2.3.0",
     "styled-components": "^5.3.3",
+    "survey-react": "^1.9.22",
     "typeface-abeezee": "^1.1.13",
     "typeface-merriweather-sans": "^1.1.13",
     "typeface-metropolis": "^1.1.13",
