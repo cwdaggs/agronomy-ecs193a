@@ -59,9 +59,7 @@ export const Visualizations = () => {
                   </DropDownLi>
                 </StyledUl>
                 </div>
-            {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}
-                    
+            {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}                    
         </div>
-        
     );
 }

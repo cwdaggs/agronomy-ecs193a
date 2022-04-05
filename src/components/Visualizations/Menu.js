@@ -137,10 +137,10 @@ function getVis(vis_name, active, activeVocation, dataset){
               "Acres Managed":                      (<AcresManagedBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "Information Sources":                (<InfoSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "Internet Sources":                   (<InternetSourcesBarChart filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "Priority Concerns":                  (<PriorityConcerns filter={active} vocationFilter={activeVocation} myDataset={dataset}/>),
+              "Priority Concerns":                  (<PriorityConcerns filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "Values":                             (<AmountVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
               "UCCE Engagement":                    (<EngageVictory filter={active} vocationFilter={activeVocation} dataset={dataset}/>),
-              "Primary Growing Reasons":            (<PrimaryGrowingReasons filter={active} vocationFilter={activeVocation} myDataset={dataset}/>)
+              "Primary Growing Reasons":            (<PrimaryGrowingReasons filter={active} vocationFilter={activeVocation} dataset={dataset}/>)
             }
   return (vis_key[vis_name])
 }

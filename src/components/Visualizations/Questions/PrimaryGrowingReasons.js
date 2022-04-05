@@ -59,12 +59,12 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
     return modified_data
   }
 
-export function PrimaryGrowingReasons({myDataset, filter}) {
-    if (!myDataset) {
+export function PrimaryGrowingReasons({dataset, filter}) {
+    if (!dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCropOrRegion(myDataset, filter), "Growers")
+    var data_filtered = filterByVocation(filterByCropOrRegion(dataset, filter), "Growers")
     var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
     var legend_data = []
     var n = 0

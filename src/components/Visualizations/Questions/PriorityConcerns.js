@@ -59,10 +59,10 @@ function calculatePriorityConcerns(data, filter) { //labelled under concerns rig
 export function PriorityConcerns(props) {
     const regionTypes = ["Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
 
-    if (!props.myDataset) {
+    if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-    var data_filtered = filterByCropOrRegion(props.myDataset, props.filter)
+    var data_filtered = filterByCropOrRegion(props.dataset, props.filter)
 
     var filter = props.filter
     if (regionTypes.includes(props.filter)){
