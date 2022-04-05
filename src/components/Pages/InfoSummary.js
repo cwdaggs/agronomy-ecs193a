@@ -11,10 +11,7 @@ export const InfoSummary = () => {
       <C.Area>
         <C.Menu>
           <div >
-            <img
-              src="./assets/icons/UCCE.png"
-              alt="logo"
-            />
+            
           </div>
           <div className="menuItem">
             <ul>

@@ -1,9 +1,12 @@
 import * as C from './App.styles';
 import "@fontsource/newsreader";
-
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+const height = vh*0.99;
+const width = vw;
 export const AboutSummary = () => {
     return(
-      
+    <div id="aboutpage">
     <C.Container>
       <C.Area>
         {/* <C.Menu>
@@ -26,8 +29,8 @@ export const AboutSummary = () => {
               <img
                 src="./assets/icons/pittelkow.jpg"
                 alt="logo"
-                width={450}
-                height={250}
+                width={width/5}
+                height={height/4}
               />
             </div>
             <div class='flex-child'>
@@ -54,8 +57,8 @@ export const AboutSummary = () => {
             <img
               src="./assets/icons/us.jpg"
               alt="logo"
-              width={450}
-              height={250}
+              width={width/5}
+              height={height/4}
             />
             </div>
           </div>    
@@ -71,6 +74,6 @@ export const AboutSummary = () => {
         </C.Body>
       </C.Area>
     </C.Container>
-    
+    </div>
     );
 }

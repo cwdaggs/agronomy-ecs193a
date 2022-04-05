@@ -1,25 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
 #outerContainer {
   color: black;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height:80%;
+  width:100%;
   position: relative;
 }
 
 #heading {
   background-color: #022851;
   display: flex;
+  position: fixed;
+  width:100%;
+}
+
+#heading-static {
+  background-color: #022851;
+  display: flex;
 }
 
 #logo {
-  height: 50px;
-  padding: 25px;
-  padding-right: 125px;
+  height: 20px;
+  padding: 15px;
+  padding-right: 22%;
 }
 
 #visTop {
-  padding-top: 15px;
+  padding-top: 75px;
   padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   font-size: large;
   font-weight: bold;
 }
@@ -59,11 +72,55 @@
 
 }
 
+#compare-box{
+  padding-left: 15px;
+}
+
 #infosummary {
   color:black;
   padding-right: 50%;
   padding-top: 10px;
   padding-left: 10px;
+}
+
+#about-container{
+  height:50%;
+}
+
+#home-container{
+  font-family: 'Montserrat', sans-serif;
+  display: block;
+  text-align: left;
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+#main-title{
+  padding-top: 30%;
+  padding-left: 10%;
+  font-weight: 100;
+  font-size: large;
+  color: rgb(88, 88, 88);
+}
+
+#home-sub-title{
+  padding-left: 10%;
+  font-size: x-large;
+  font-weight: bolder;
+  color: rgb(0,0,0);
+}
+
+#home-info{
+  font-size: small;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-bottom: 10%;
+}
+
+#home-button{
+  padding-bottom: 30%;
+  text-align: center;
+  color: #022851;
 }
 
 .flex-parent {
@@ -101,11 +158,24 @@
 .visualization-window {
   font-family: 'Metropolis';
   font-size: 24px;
-  height: 80%;
-  width: 80%;
+  height: 70%;
+  width: 70%;
   /* outline: solid 1px black; */
   margin: auto;
   /* Center child horizontally*/
+}
+
+.inline-parent {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+  height: 100%;
+}
+.inline-child {
+  display: inline-block;
+  padding: 1rem 1rem;
+  vertical-align: middle;
 }
 
 footer {
@@ -128,8 +198,12 @@ footer {
   /* Center child horizontally*/
 }
 
-#homepage {
+#aboutpage {
   background-image: url(./images/farming-background.jfif);
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 /* #menuitem {
   background-color: blanchedalmond;
@@ -141,9 +215,17 @@ body,html {
 }
 
 #bg {
-  background-image: url(./images/farming-background.jfif);
+  /*background-image: url(./images/farming-background.jfif);*/
+  background-image: url(./images/bg.jpeg);
   height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  
+}
+
+.gfg {
+  color:white;
+  padding-top:5%;
+  padding-left:25%;
 }

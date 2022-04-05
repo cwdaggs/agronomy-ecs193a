@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Checkbox, Tab} from './Button.js'
+import {Checkbox, Tab} from './Button.js';
 import 'react-pro-sidebar/dist/css/styles.css';
-import {InfoSummary} from './components/Pages/InfoSummary'
-import {AboutSummary} from './components/Pages/AboutSummary'
-import {Visualizations} from './components/Pages/Visualization'
-import {Home} from './components/Pages/Home'
+import {InfoSummary} from './components/Pages/InfoSummary';
+import {AboutSummary} from './components/Pages/AboutSummary';
+import {Visualizations} from './components/Pages/Visualization';
+import {Home} from './components/Pages/Home';
 import {NavLink, Outlet,Routes, Route } from "react-router-dom";
 import { MiniSurvey } from './components/Pages/Survey'; 
 
@@ -19,9 +19,9 @@ export default function App() {
   function getNewDisplay(dual_display) {
     return (dual_display
       ?
-      <div class='parent flex-parent'>
-        <div class='child flex-child'><Visualizations/></div>
-        <div class='child flex-child'><Visualizations/></div>
+      <div class='flex-parent'>
+        <div class='flex-child'><Visualizations/></div>
+        <div class='flex-child'><Visualizations/></div>
       </div>
       :
       <Visualizations/>)
@@ -66,7 +66,14 @@ export default function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="results" element={
           <div>
-            <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+            <div id="visTop">
+              Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
+              Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
+              Full details of survey scope and representation here.
+            </div>
+            <div id="compare-box">
+              <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+            </div>
               {getNewDisplay(dual_display)}
           </div>
         }/>

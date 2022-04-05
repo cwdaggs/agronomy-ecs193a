@@ -62,13 +62,16 @@ export function AcresManagedBarChart(props) {
     var lengthString = String("Number of Farms (n = " + dataLength + ")");
     //var orgString = String("Acres vs Number of Farms (n = " + dataLength + ")");
 
-    const fontSize = 20
-
-    const margin = { top: 1080/12, right: 1920/8, bottom: 1080/4, left: 1920/8 };
+    const fontSize = 20;
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    const height = vh*0.9;
+    const width = vw;
+    const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
 
     return (
         <div class='visualization-window'>
-          <VictoryChart height={1080} width={1920}
+          <VictoryChart height={height} width={width}
             //domainPadding={45}
             domainPadding={{ x: margin.right/5.3, y: margin.top }}
             padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}

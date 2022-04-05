@@ -68,6 +68,13 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
     var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
     var legend_data = []
     var n = 0
+
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    const height = vh;
+    const width = vw;
+    const margin = { top: height/16, right: width/2, bottom: height/16, left: 0 };
+
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
         n += data_by_reason[i].y
@@ -96,13 +103,13 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                     animate={{
                       duration: 500,               
                     }}
-                    width={600}
-                    height={400}
+                    width={width}
+                    height={height}
                     padding={{
-                        left: 0,
-                        right: 120,
-                        bottom: 80,
-                        top: 50
+                      left: margin.left,
+                        right: margin.right,
+                        bottom: margin.bottom,
+                        top: margin.top
                     }}
                     // events={[{
                     //     target: "data",
@@ -131,11 +138,11 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                     labels={({ datum }) => `${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
-                        fontSize:20,
-                        fontFamily: 'ABeeZee'
+                          fontSize:35,
+                          fontFamily: 'ABeeZee'
                         }}
-                        flyoutHeight={25}
-                        flyoutWidth={45}    
+                        flyoutHeight={height/10}
+                        flyoutWidth={width/10}     
                     />}
                 />
             </div>

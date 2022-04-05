@@ -1,3 +1,4 @@
+npm install react-scripts --save
 npm install react-pro-sidebar
 npm install react-icons --save
 npm install d3 --save
