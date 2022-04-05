@@ -128,8 +128,38 @@ footer {
   /* Center child horizontally*/
 }
 
+#visLandingHeading{
+  text-align: center;
+  color: white;
+
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
 #visHeading{
   text-align: center;
+}
+
+#visLandingBody{
+  color: white;
+  position: fixed;
+  top: 50%;
+  margin: 10px;
+  font-weight: 600;
+  font-size: 22px;
+  /* bring your own prefixes */
+}
+
+#visLandingPage{
+  background-image: url(./images/pexels-seb-360013.jpg);
+  /* Need to make height dynamic */
+  height: 800px;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
 }
 
 #homepage {

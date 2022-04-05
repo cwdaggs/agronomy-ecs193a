@@ -44,15 +44,17 @@ function App() {
           <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
           <TabGroup changeFunc={changeDisplay}/>
         </div>
+        <div id ="visWelcome">
         <div id="visTop">
           Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
           Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
           Full details of survey scope and representation here.
         </div>
-        <div>
+        <div id="compareDiv">
           <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
         </div>
           {getDisplay()}
+        </div>
           <footer></footer>
       </div>
     );

@@ -25,7 +25,7 @@ export const Visualizations = () => {
     
     return(
         <div id="outer-container">
-                <StyledUl>
+                <StyledUl id="visButton">
                   <DropDownLi>
                     <Dropbtn>
                       {activeName}

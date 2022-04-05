@@ -73,6 +73,38 @@ function getInternetSources(data){
   return modified_data;
 }
 
+function createTitle(props){
+  var title = "vocations";
+  const crops = [
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+  
+  if(props.vocationFilter != "All"){
+    title = props.vocationFilter;
+  }
+
+  if(crops.includes(props.filter)){
+    title = "All " + props.filter + " " + title.toLowerCase();
+  }
+  else if (props.filter != "All"){
+    title = "All " + title.toLowerCase() + " in the " + props.filter + " region";
+  }
+
+  if(title == "vocations"){
+    title = "All " + title;
+  }
+  return title;
+}
+
 export function InternetSourcesBarChart(props) {
     
     if (!props.dataset) {
@@ -105,7 +137,7 @@ export function InternetSourcesBarChart(props) {
 
     return (
         <div class='visualization-window'>
-          
+          <h1 id="visHeading">{createTitle(props)}</h1>
           <VictoryChart height={height} width={width}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   

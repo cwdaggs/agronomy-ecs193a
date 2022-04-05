@@ -178,6 +178,9 @@ function VisMenu(props) {
 
   switch(vis.type.name){
     // Visualizations with no filters
+    case "VisualizationLandingPage": {
+      return (<>{vis}</>)
+    }
     case "CropPercentages": {
         return (
           <>
