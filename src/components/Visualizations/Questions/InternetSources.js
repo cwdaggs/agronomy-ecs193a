@@ -98,9 +98,11 @@ export function InternetSourcesBarChart(props) {
     }
     var filtered_data = filterByVocation(data, props.vocationFilter);
     var graph_data = getInternetSources(filtered_data);
-    const width = 1920;
-    const height = 1080;
-    const margin = { top: height/10, right: width/6, bottom: height/5, left: width/2.8 };
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    const height = vh*0.9;
+    const width = vw;
+    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
     const fontSize = 18;
 
     return (

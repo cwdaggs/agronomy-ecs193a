@@ -11,6 +11,13 @@ export function CropPercentages(props) {
 
     const data = calculateCropPercentageAverage(props.dataset)
     var legend_data = []
+
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    const height = vh;
+    const width = vw;
+    const margin = { top: height/16, right: width/2, bottom: height/16, left: 0 };
+
     for (var i = 0; i < data.length; i++) {
         legend_data.push({name: data[i].x})
     }
@@ -39,13 +46,13 @@ export function CropPercentages(props) {
                             duration: 500,               
                         }}
                         
-                        width={600}
-                        height={400}
+                        width={width}
+                        height={height}
                         padding={{
-                            left: 0,
-                            right: 320,
-                            bottom: 80,
-                            top: 50
+                            left: margin.left,
+                            right: margin.right,
+                            bottom: margin.bottom,
+                            top: margin.top
                         }}
                         style={{ data: { stroke: "black", strokeWidth: 1}}}
                         colorScale="heatmap"
@@ -54,11 +61,11 @@ export function CropPercentages(props) {
                         labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
                         labelComponent={<VictoryTooltip 
                             style={{
-                            fontSize:20,
-                            fontFamily: 'Metropolis'
+                                fontSize:35,
+                                fontFamily: 'ABeeZee'
                             }}
-                            flyoutHeight={25}
-                            flyoutWidth={45}    
+                            flyoutHeight={height/10}
+                            flyoutWidth={width/10}      
                         />}
                     />
                 </div>

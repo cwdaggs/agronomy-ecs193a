@@ -286,7 +286,7 @@ export function averageSatisfaction(data){
                 "Disease_Control", "Emerging_Crops", "Greenhouse_Gas_Emissions_Reduction", 
                 "Harvest_and_Postharvest", "Insect_Pest_Control", "Irrigation_Management",
                 "Manure_Management", "Niche_Marketing_Field_Crops", "Nutrient_Management",
-                "Organic_Production", "Other", "Salinity_Management",
+                "Organic_Production", "Salinity_Management",
                 "Soil_Health_Management", "Testing_New_Products", "Variety_Testing",
                 "Water_Conservation_and_Storage", "Weed_Control"]
 

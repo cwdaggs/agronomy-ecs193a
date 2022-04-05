@@ -28,7 +28,7 @@ function OnlyCrops(props) {
   const [activeName, setActiveName] = useState("Select Crop");
   return (
       <>
-      <div>
+      <div className="inline-child">
         <StyledUl>
           <DropDownLi>
             <Dropbtn>
@@ -65,7 +65,7 @@ function VocationAndRegion(props) {
   const [activeName, setActiveName] = useState("Select Vocation");
   return (
     <>
-    <div>
+    <div className="inline-child">
       <StyledUl>
       <DropDownLi>
         <Dropbtn>
@@ -120,7 +120,6 @@ function VocationAndRegion(props) {
     <br></br>
     {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop/Region: </b>{props.active}</p> */}
     {/* <p><b >Vocation: </b>{props.activeType} &ensp; <b >Crop: </b>{props.active}</p> */}
-    <div className='row' align-items='center'> </div>
     <div align-items='center'>
     {props.vis}
     </div>
@@ -180,7 +179,6 @@ function VisMenu(props) {
     case "CropPercentages": {
         return (
           <>
-          <h3>Of the total acres, what percentage of the crops grown are in each of the following categories?</h3>
           {vis}
           </>
         )
@@ -190,7 +188,6 @@ function VisMenu(props) {
     case "PrimaryGrowingReasons": {
       return (
         <>
-        <h3>What are the primary reasons you grow the following field crops?</h3> 
         <OnlyCrops active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -201,22 +198,14 @@ function VisMenu(props) {
       let pcVis = getVis("Priority Concerns", active, moreLimitedVocation, dataset);
       return (
         <>
-        <h3>What are the highest priority management challenges/concerns?</h3>
         <VocationAndRegion regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={pcVis}/>
         </>
       )
     }
     case "AffectVictory": {
-      let blah = ""
-      if (moreLimitedVocation === "Consultants") {
-        blah = "How often do the following priorities affect your recommendations for field crop production?"
-      } else {
-        blah = "How often do the following priorities affect your management decisions for field crop production?"
-      }
       let affectVis = getVis("Priority Effect", active, moreLimitedVocation, dataset);
       return (
           <>
-          <h3>{blah}</h3>
           <VocationAndRegion regionArray={regionTypes} vocationArray={evenMoreLimitedVocationTypes} func={setMoreLimitedVocation} activeType={moreLimitedVocation} active={active} types={types} setActive={setActive} vis={affectVis}/>
           </>
       )
@@ -225,7 +214,6 @@ function VisMenu(props) {
     case "AcresManagedBarChart": {
       return (
         <>
-        <h3>How many acres do you manage/consult annually?</h3> 
         <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes}  func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -233,7 +221,6 @@ function VisMenu(props) {
     case "AmountVictory": {
       return (
         <>
-        <h3>How much do you value the following:</h3>
         <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -241,10 +228,6 @@ function VisMenu(props) {
     case "PrioritySatisfaction": {
       return (
         <>
-        <div>
-          <h3>Rate what you believe should be the UCCE's priorities for field crop production, and 
-              rate your satisfaction with the UCCE's delivery of information on these topics. </h3>
-        </div>
         <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -252,7 +235,6 @@ function VisMenu(props) {
     case "ConcernsVictory": {
       return (
         <>
-        <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
         <VocationAndRegion regionArray={regionTypes} vocationArray={limitedVocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -261,7 +243,6 @@ function VisMenu(props) {
     case "InternetSourcesBarChart": {
       return (
         <>
-        <h3>Where do you most often look for field crop production information on the internet?</h3>
         <VocationAndRegion regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -270,7 +251,6 @@ function VisMenu(props) {
     case "InfoSourcesBarChart": {
       return (
         <>
-          <h3>Who do you communicate with when seeking information about field crop production?</h3>
           <VocationAndRegion regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
@@ -278,7 +258,6 @@ function VisMenu(props) {
     case "EngageVictory":{
       return (
         <>
-          <h3>How often do you engage with the UCCE in the following ways?</h3>
           <VocationAndRegion regionArray={regionTypes} vocationArray={vocationTypes} func={setActiveVocation} activeType={activeVocation} active={active} types={types} setActive={setActive} vis={vis}/>
         </>   
       )
