@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
 #outerContainer {
   color: black;
   display: flex;
@@ -81,6 +83,46 @@
   padding-left: 10px;
 }
 
+#about-container{
+  height:50%;
+}
+
+#home-container{
+  font-family: 'Montserrat', sans-serif;
+  display: block;
+  text-align: left;
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+#main-title{
+  padding-top: 30%;
+  padding-left: 10%;
+  font-weight: 100;
+  font-size: large;
+  color: rgb(88, 88, 88);
+}
+
+#home-sub-title{
+  padding-left: 10%;
+  font-size: x-large;
+  font-weight: bolder;
+  color: rgb(0,0,0);
+}
+
+#home-info{
+  font-size: small;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-bottom: 10%;
+}
+
+#home-button{
+  padding-bottom: 30%;
+  text-align: center;
+  color: #022851;
+}
+
 .flex-parent {
   display: flex;
 }
@@ -128,6 +170,7 @@
   margin: 1rem;
   padding: 2rem 2rem;
   text-align: center;
+  height: 100%;
 }
 .inline-child {
   display: inline-block;
@@ -155,8 +198,12 @@ footer {
   /* Center child horizontally*/
 }
 
-#homepage {
+#aboutpage {
   background-image: url(./images/farming-background.jfif);
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 /* #menuitem {
   background-color: blanchedalmond;
@@ -168,11 +215,13 @@ body,html {
 }
 
 #bg {
-  background-image: url(./images/farming-background.jfif);
+  /*background-image: url(./images/farming-background.jfif);*/
+  background-image: url(./images/bg.jpeg);
   height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  
 }
 
 .gfg {

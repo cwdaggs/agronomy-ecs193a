@@ -18,9 +18,9 @@ export default function App() {
   function getNewDisplay(dual_display) {
     return (dual_display
       ?
-      <div class='parent flex-parent'>
-        <div class='child flex-child'><Visualizations/></div>
-        <div class='child flex-child'><Visualizations/></div>
+      <div class='flex-parent'>
+        <div class='flex-child'><Visualizations/></div>
+        <div class='flex-child'><Visualizations/></div>
       </div>
       :
       <Visualizations/>)

@@ -1,11 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    min-height:100vh;
-    background-image: url('/assets/bg3.jpg');
-    background-position:center;
-    background-size:cover;
-    background-repeat: no-repeat;
+    min-height:90vh;
     padding-top: 50px;
 `;
 
@@ -87,13 +83,7 @@ export const Body = styled.div`
     flex-direction:column;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-top:80px;
-    @media (max-width:1024px) {
-        margin-top:120px;
-    }
-    @media (max-width:768px) {
-        margin-top:80px;
-    }
+    margin-top:5%;
 `;
 
 export const Title = styled.h1`
@@ -112,7 +102,7 @@ export const SubTitle = styled.h1`
 
 export const Desc = styled.p`
     margin-top:15px;
-    margin-bottom:40px;
+    margin-bottom:5%;
     font-weight: 400;
 `;
 

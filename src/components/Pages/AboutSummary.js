@@ -6,7 +6,7 @@ const height = vh*0.99;
 const width = vw;
 export const AboutSummary = () => {
     return(
-    <div id="about-page">
+    <div id="aboutpage">
     <C.Container>
       <C.Area>
         {/* <C.Menu>
