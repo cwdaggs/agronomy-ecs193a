@@ -59,13 +59,13 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
     return modified_data
   }
 
-export function PrimaryGrowingReasons({dataset, filter}) {
-    if (!dataset) {
+export function PrimaryGrowingReasons(props) {
+    if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCropOrRegion(dataset, filter), "Growers")
-    var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
+    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), "Growers")
+    var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, props.filter)
     var legend_data = []
     var n = 0
 
@@ -82,6 +82,31 @@ export function PrimaryGrowingReasons({dataset, filter}) {
     // const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
     const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
     return (
+      // <>
+      // <div className="inline-child">
+      //   <StyledUl>
+      //     <DropDownLi>
+      //       <Dropbtn>
+      //         {activeName}
+      //       </Dropbtn>
+      //       <DropDownContent>
+      //         {" "}
+      //         {props.types.map(type => (
+      //             <SubA 
+      //               key={type}
+      //               active={props.active === type}
+      //               onClick={() => {props.setActive(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
+      //               >{type}
+      //           </SubA>
+      //           ))}
+      //         </DropDownContent>
+      //     </DropDownLi>
+      //   </StyledUl>
+      // </div> 
+      // <br></br>
+      // {/* <p><b >&ensp;Crop: </b>{props.active}</p> */}
+      // <div className='row' align-items='center'> </div>
+      // <div align-items='center'>
       <div class='visualization-window'>
           <div class='parent flex-parent'>
             <div class='child flex-child'>
@@ -111,30 +136,9 @@ export function PrimaryGrowingReasons({dataset, filter}) {
                         bottom: margin.bottom,
                         top: margin.top
                     }}
-                    // events={[{
-                    //     target: "data",
-                    //     eventHandlers: {
-                    //       onMouseEnter: () => {
-                    //         return [
-                    //           {
-                    //             target: "data",
-                    //             mutation: ({ style }) => {
-                    //               return style.fill === "#c43a31" ? null : { style: { fill: "#c43a31" } };
-                    //             }
-                    //           }, {
-                    //             target: "labels",
-                    //             mutation: ({ text }) => {
-                    //               return text === "clicked" ? null : { text: "clicked" };
-                    //             }
-                    //           }
-                    //         ];
-                    //       }
-                    //     }
-                    //   }]}
                     style={{ data: { stroke: "black", strokeWidth: 1}}}
                     colorScale={colorScale}
                     data={data_by_reason}
-                    // labels={() => null}
                     labels={({ datum }) => `${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
@@ -148,5 +152,7 @@ export function PrimaryGrowingReasons({dataset, filter}) {
             </div>
         </div>
       </div>
+      // </div>
+      // </>  
     );
 }
