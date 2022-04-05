@@ -98,9 +98,12 @@ export const MiniSurvey = () => {
     });
     //get the results back and do math with them or whatever, output to pdf somehow
     return (
-        // <div>
-        // <h1>Give us your data! Just kidding, we have no database :(</h1>
+        <div>
         <Survey model={survey} />
-        // </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        </div>
     );
 }
