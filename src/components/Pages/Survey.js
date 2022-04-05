@@ -5,7 +5,7 @@ import { Survey, StylesManager, Model } from "survey-react";
 StylesManager.applyTheme("modern");
 
 const surveyJson = {
-    "title": "Give us your data! Just kidding, we have no database :(",
+    "title": "Survey Placeholder",
     "description": "Take the survey, just do it",
     "elements": [
     {
