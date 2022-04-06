@@ -7,13 +7,13 @@ import {InfoSummary} from './components/Pages/InfoSummary'
 import {AboutSummary} from './components/Pages/AboutSummary'
 import {Visualizations} from './components/Pages/Visualization'
 import {Home} from './components/Pages/Home'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <App/>
-  </BrowserRouter>,
+  </HashRouter>,
   rootElement
 );
 

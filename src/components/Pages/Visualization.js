@@ -3,8 +3,13 @@ import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
 import {Tab} from '../Visualizations/StyledDivs'
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
-import { NavLink, Outlet, Routes, Route } from 'react-router-dom';
+import { NavLink, Outlet, Routes, Route, useLocation } from 'react-router-dom';
 import { AboutSummary } from './AboutSummary';
+
+// function QueryNavLink({ to, ...props }) {
+//   let location = useLocation();
+//   return <NavLink to={to + location.search} {...props} />;
+// }
 
 export const Visualizations = () => {
     
@@ -21,7 +26,29 @@ export const Visualizations = () => {
         "Priorities vs Satisfaction", //Q13
         "Internet Sources", //Q16
     ]
-    const [active, setActive] = useState("Acres Managed");
+    var test_str = "";
+    // ----- Production ------------///
+    /*
+    if (window.location.href === "http://uccesurveyresults.com/#/results") {
+      test_str = "Acres Managed";
+    } else {
+      test_str = String(window.location.href).replace("http://uccesurveyresults.com/#/results/", "").replace("%20", " ");
+    }
+    */
+
+
+    if (window.location.href === "http://localhost:3000/#/results") {
+      test_str = "Acres Managed";
+    } else {
+      test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
+    }
+    console.log(window.location.pathname);
+    console.log(window.location.href);
+    console.log(test_str);
+    // console.log(active);
+    // const [active, setActive] = useState("Acres Managed");
+    const [active, setActive] = useState(test_str);
+   
     const [activeName, setActiveName] = useState("Select Topic");
     const [key, setKey] = useState(0);
 
@@ -74,9 +101,10 @@ export const Visualizations = () => {
               <NavLink
               key={type}
               onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}}
+              
               active={active === type}
               to={`/results/${type}`}>
-                {type}
+                {type+" "}
               </NavLink>
             ))}
             
