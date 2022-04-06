@@ -130,7 +130,20 @@ footer {
 
 #visLandingHeading{
   text-align: center;
+  color: black;
+  font-size: 48px;
+
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+#visLandingHeadingScroll{
+  text-align: center;
   color: white;
+  font-size: 48px;
 
   position: fixed;
   top: 40%;
@@ -144,7 +157,7 @@ footer {
 }
 
 #visLandingBody{
-  color: white;
+  /* color: white; */
   position: fixed;
   top: 50%;
   margin: 10px;
@@ -156,7 +169,7 @@ footer {
 #visLandingPage{
   background-image: url(./images/pexels-seb-360013.jpg);
   /* Need to make height dynamic */
-  height: 1000px;
+  height: 1100px;
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: 100% 100%;
@@ -165,14 +178,13 @@ footer {
 #visLandingPageScroll{
   background-image: url(./images/pexels-photo-7303409.jpeg);
   /* Need to make height dynamic */
-  height: 1000px;
+  height: 100vh;
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: 100% 100%;
 }
 
 #visLandingBodyScroll{
-  display: none;
   color: white;
   position: fixed;
   top: 50%;
