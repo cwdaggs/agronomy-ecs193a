@@ -156,10 +156,30 @@ footer {
 #visLandingPage{
   background-image: url(./images/pexels-seb-360013.jpg);
   /* Need to make height dynamic */
-  height: 800px;
+  height: 1000px;
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: 100% 100%;
+}
+
+#visLandingPageScroll{
+  background-image: url(./images/pexels-photo-7303409.jpeg);
+  /* Need to make height dynamic */
+  height: 1000px;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
+}
+
+#visLandingBodyScroll{
+  display: none;
+  color: white;
+  position: fixed;
+  top: 50%;
+  margin: 10px;
+  font-weight: 600;
+  font-size: 22px;
+  /* bring your own prefixes */
 }
 
 #homepage {
