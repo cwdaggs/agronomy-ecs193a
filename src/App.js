@@ -64,7 +64,7 @@ export default function App() {
       <footer></footer>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="results" element={
+        <Route path="results/*" element={
           <div>
             <div id="visTop">
               Hundreds of growers, consultants, and allied industry members across California participated in this survey. 

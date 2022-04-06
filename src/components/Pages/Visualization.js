@@ -3,6 +3,8 @@ import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
 import {Tab} from '../Visualizations/StyledDivs'
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
+import { NavLink, Outlet, Routes, Route } from 'react-router-dom';
+import { AboutSummary } from './AboutSummary';
 
 export const Visualizations = () => {
     
@@ -36,30 +38,57 @@ export const Visualizations = () => {
       ["Priorities vs Satisfaction"]: "Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). ",
       ["Internet Sources"]:"Where do you most often look for field crop production information on the internet?"
     };
+    // return(
+    //     <div className='inline-parent'>
+    //       <h3>{questions[String(active)]}</h3>
+    //       <div className='inline-child'>
+    //             <StyledUl>
+    //               <DropDownLi>
+    //                 <Dropbtn>
+    //                   {activeName}
+    //                 </Dropbtn>
+    //                 <DropDownContent>
+    //                   {" "}
+    //                   {types.map(type => (
+    //                       <SubA 
+    //                       key={type} 
+    //                       onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}} 
+    //                       active={active === type}
+    //                       >{type}
+    //                     </SubA>
+    //                     ))}
+    //                   </DropDownContent>
+    //               </DropDownLi>
+    //             </StyledUl>
+    //             </div>
+    //         {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}                    
+    //     </div>
+    // );
+
     return(
-        <div className='inline-parent'>
-          <h3>{questions[String(active)]}</h3>
-          <div className='inline-child'>
-                <StyledUl>
-                  <DropDownLi>
-                    <Dropbtn>
-                      {activeName}
-                    </Dropbtn>
-                    <DropDownContent>
-                      {" "}
-                      {types.map(type => (
-                          <SubA 
-                          key={type} 
-                          onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}} 
-                          active={active === type}
-                          >{type}
-                        </SubA>
-                        ))}
-                      </DropDownContent>
-                  </DropDownLi>
-                </StyledUl>
-                </div>
-            {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}                    
+      <div className='inline-parent'>
+        <h3>{questions[String(active)]}</h3>
+        <div className='inline-child'>
+          <nav style={{ borderRight: 'solid 1px', padding: '1rem' }}>
+            {types.map(type => (
+              <NavLink
+              key={type}
+              onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}}
+              active={active === type}
+              to={`/results/${type}`}>
+                {type}
+              </NavLink>
+            ))}
+            
+          </nav>
+          {/* <Outlet/>
+          <Routes>
+            <Route path="results/" element={AboutSummary}>
+              <Route path="Crop%20Percentages" element={AboutSummary}/>
+            </Route>
+          </Routes> */}
         </div>
+        {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}  
+      </div>
     );
 }

@@ -81,6 +81,7 @@ export function PrimaryGrowingReasons(props) {
     }
     // const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
     const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
+    // const [activeName, setActiveName] = useState("Select Crop");
     return (
       // <>
       // <div className="inline-child">
