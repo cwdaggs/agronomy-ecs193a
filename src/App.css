@@ -13,6 +13,8 @@
 #heading {
   background-color: #022851;
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   position: fixed;
   width:100%;
 }
@@ -221,7 +223,7 @@ body,html {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  
+  margin-bottom: 60px;
 }
 
 .gfg {
