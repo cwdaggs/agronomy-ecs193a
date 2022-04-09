@@ -1,5 +1,8 @@
 import {filterByCropOrRegion, filterByVocation} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
+import {OnlyCrops} from "../Menus/OnlyCrops.js"
+import React, { useState } from "react";
+
 import "typeface-abeezee";
 
 export function calculateAllPrimaryGrowingReasons(data, filter) {
@@ -58,14 +61,21 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
   
     return modified_data
   }
-
+  
 export function PrimaryGrowingReasons(props) {
+    
+    const [active, setActive] = useState("All");
+
+    function changeFunc(newValue){
+      setActive(newValue);
+    }
+
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), "Growers")
-    var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, props.filter)
+    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
+    var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
     var legend_data = []
     var n = 0
 
@@ -79,38 +89,19 @@ export function PrimaryGrowingReasons(props) {
         legend_data.push({name: data_by_reason[i].x})
         n += data_by_reason[i].y
     }
-    // const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
+
     const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
-    // const [activeName, setActiveName] = useState("Select Crop");
+
     return (
-      // <>
-      // <div className="inline-child">
-      //   <StyledUl>
-      //     <DropDownLi>
-      //       <Dropbtn>
-      //         {activeName}
-      //       </Dropbtn>
-      //       <DropDownContent>
-      //         {" "}
-      //         {props.types.map(type => (
-      //             <SubA 
-      //               key={type}
-      //               active={props.active === type}
-      //               onClick={() => {props.setActive(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
-      //               >{type}
-      //           </SubA>
-      //           ))}
-      //         </DropDownContent>
-      //     </DropDownLi>
-      //   </StyledUl>
-      // </div> 
-      // <br></br>
-      // {/* <p><b >&ensp;Crop: </b>{props.active}</p> */}
-      // <div className='row' align-items='center'> </div>
-      // <div align-items='center'>
+      <>
+      <div className="inline-child">
+        <OnlyCrops changeFunc={changeFunc} active={active}/>
+      </div>
+
+      <div align-items='center'>
       <div class='visualization-window'>
-          <div class='parent flex-parent'>
-            <div class='child flex-child'>
+          <div class='flex-parent'>
+            <div class='flex-child'>
                 <VictoryLegend      
                   x={150}
                   y={0}     
@@ -124,14 +115,14 @@ export function PrimaryGrowingReasons(props) {
                     data={legend_data}
                 />
                 </div>
-                <div class='child flex-child'>   
+                <div class='flex-child'>
                 <VictoryPie
                     animate={{
                       duration: 500,               
                     }}
                     width={width}
-                    height={height}
-                    padding={{
+                 height={height}
+                padding={{
                       left: margin.left,
                         right: margin.right,
                         bottom: margin.bottom,
@@ -153,7 +144,7 @@ export function PrimaryGrowingReasons(props) {
             </div>
         </div>
       </div>
-      // </div>
-      // </>  
+      </div>   
+      </>  
     );
 }
