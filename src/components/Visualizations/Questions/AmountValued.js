@@ -1,5 +1,7 @@
-import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {sort_by_very, filterByCropOrRegion, filterByVocation} from '../UseData.js'
+import {useState} from 'react';
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
 
 export function calculateValueEach(data, filter, answer){
@@ -69,7 +71,19 @@ function calculateAverageResponses(dataset) {
 }
 
 export function AmountVictory(props) {
-  
+  const vocationArray = ["All", "Growers", "Consultants"];
+
+  const [activeVocation, setActiveVocation] = useState("All");
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionOrCropFunction(newValue) {
+    setActiveRegionOrCrop(newValue);
+  }
+
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
@@ -88,21 +102,21 @@ export function AmountVictory(props) {
   ];
 
   var titleText = "Level of Value";
-  if (crops.includes(props.filter)) {
-    titleText += " for " + props.filter;
+  if (crops.includes(activeRegionOrCrop)) {
+    titleText += " for " + activeRegionOrCrop;
   }
-  if (props.vocationFilter !== "All") {
-    if (crops.includes(props.filter)) {
-      titleText += " " + props.vocationFilter;
+  if (activeVocation !== "All") {
+    if (crops.includes(activeRegionOrCrop)) {
+      titleText += " " + activeVocation;
     } else {
-      titleText += " for " + props.vocationFilter;
+      titleText += " for " + activeVocation;
     }
   }
-  if (!crops.includes(props.filter) && props.filter !== "All") {
-    titleText += " in the " + props.filter + " Region";
+  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
+    titleText += " in the " + activeRegionOrCrop + " Region";
   }
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter)
+  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
@@ -119,6 +133,11 @@ export function AmountVictory(props) {
   const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
 
   return (
+    <>
+    <div className="inline-child">
+      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+    </div>
+
     <div class='visualization-window'>
       
       <VictoryChart
@@ -192,5 +211,6 @@ export function AmountVictory(props) {
         />
       </VictoryChart>
     </div>
+    </>
   );
 }
