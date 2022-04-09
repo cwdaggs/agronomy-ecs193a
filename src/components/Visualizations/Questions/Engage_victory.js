@@ -1,6 +1,8 @@
-import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {filterByCropOrRegion, filterByVocation, sort_by_freq} from '../UseData.js'
 import "typeface-abeezee";
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import {useState} from 'react';
 
 export function calculateEngageEach(data, filter, answer){
     var total = 0
@@ -75,6 +77,19 @@ function calculateAverageResponses(dataset) {
 
 export function EngageVictory(props) {
   
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+
+  const [activeVocation, setActiveVocation] = useState("All");
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionOrCropFunction(newValue) {
+    setActiveRegionOrCrop(newValue);
+  }  
+
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
@@ -93,34 +108,34 @@ export function EngageVictory(props) {
   ];
 
   var titleText = "UCCE Engagement Frequency";
-  if (crops.includes(props.filter)) {
+  if (crops.includes(activeRegionOrCrop)) {
     titleText += " for ";
-    if (props.vocationFilter !== "Allied Industry" && props.vocationFilter !== "Other") {
-      titleText += props.filter;
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += activeRegionOrCrop;
     }
   }
-  if (props.vocationFilter !== "All") {
-    if (crops.includes(props.filter)) {
-      titleText += " " + props.vocationFilter;
-      if (props.vocationFilter === "Other") {
+  if (activeVocation !== "All") {
+    if (crops.includes(activeRegionOrCrop)) {
+      titleText += " " + activeVocation;
+      if (activeVocation === "Other") {
         titleText += " Vocations";
       }
     } else {
-      titleText += " for " + props.vocationFilter;
-      if (props.vocationFilter === "Other") {
+      titleText += " for " + activeVocation;
+      if (activeVocation === "Other") {
         titleText += " Vocations";
       }
     }
   }
-  if (!crops.includes(props.filter) && props.filter !== "All") {
-    titleText += " in the " + props.filter + " Region";
+  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
+    titleText += " in the " + activeRegionOrCrop + " Region";
   }
 
-  var data = filterByCropOrRegion(props.dataset, props.filter);
-  if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
+  var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
+  if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
     data = props.dataset;
   }
-  var data_filtered = filterByVocation(data, props.vocationFilter)
+  var data_filtered = filterByVocation(data, activeVocation)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_freq(data_by_engage)
   const dataset_final = transformData(data_sorted)
@@ -136,77 +151,84 @@ export function EngageVictory(props) {
   const legend_data = [{name: "1-3 times/week"}, {name: "1-2 times/month"}, {name: "3-6 times/year"}, {name: "1-2 times/year"}, {name: "Never"}]
 
   return (
-    <div class='visualization-window'>
-      <VictoryChart
-        horizontal={true}
-        animate={{
-            duration: 1000,               
-        }}
-        height={height} 
-        width={width}
-        domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-        padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
-      >
-        <VictoryLegend 
-              x={width/2 - 450}
-              y={15}
-              title={titleText}
-              centerTitle
-              orientation="horizontal"
-              colorScale={colorScale}
-              itemsPerRow={5}
-              gutter={30}
-              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
-                      // border: { stroke: "black" }, 
-                      title: {fontSize: fontSize }, 
-                      data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
-              data={legend_data}
-            />
-        <VictoryStack
-          style={{
-              data: { stroke: "black", strokeWidth: 0.2}
+
+    <>
+      <div className="inline-child">
+            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+      </div>
+
+      <div class='visualization-window'>
+        <VictoryChart
+          horizontal={true}
+          animate={{
+              duration: 1000,               
           }}
-          colorScale={colorScale}
+          height={height} 
+          width={width}
+          domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+          padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
         >
-          {dataset_final.map((data, i) => {
-            return <VictoryBar 
-              data={data} 
-              key={i} 
-              labels={({datum}) =>  Math.round(datum.y) + "%"}
-              labelComponent={
-                  <VictoryTooltip 
-                    style={{
-                      fontSize:fontSize
-                    }}
-                    flyoutHeight={25}
-                    flyoutWidth={40}    
-                  />
-              }/>;
-          })}
-        </VictoryStack>
-        <VictoryAxis dependentAxis
-          tickFormat={(tick) => `${tick}%`}
-          style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 5}
+          <VictoryLegend 
+                x={width/2 - 450}
+                y={15}
+                title={titleText}
+                centerTitle
+                orientation="horizontal"
+                colorScale={colorScale}
+                itemsPerRow={5}
+                gutter={30}
+                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
+                        // border: { stroke: "black" }, 
+                        title: {fontSize: fontSize }, 
+                        data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
+                data={legend_data}
+              />
+          <VictoryStack
+            style={{
+                data: { stroke: "black", strokeWidth: 0.2}
             }}
-        />
-        <VictoryAxis
-          // label="Type of Engagement"
-          style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0},
-              // axisLabel: {fontSize: 30, padding: 360}
-            }}
-          tickLabelComponent={       
-            <VictoryLabel    
-                textAnchor="end"
-            />   
-          }
-        />
-      </VictoryChart>
-    </div>
+            colorScale={colorScale}
+          >
+            {dataset_final.map((data, i) => {
+              return <VictoryBar 
+                data={data} 
+                key={i} 
+                labels={({datum}) =>  Math.round(datum.y) + "%"}
+                labelComponent={
+                    <VictoryTooltip 
+                      style={{
+                        fontSize:fontSize
+                      }}
+                      flyoutHeight={25}
+                      flyoutWidth={40}    
+                    />
+                }/>;
+            })}
+          </VictoryStack>
+          <VictoryAxis dependentAxis
+            tickFormat={(tick) => `${tick}%`}
+            style={{
+                axis: {stroke: "#756f6a"},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: fontSize, padding: 5}
+              }}
+          />
+          <VictoryAxis
+            // label="Type of Engagement"
+            style={{
+                axis: {stroke: "#756f6a"},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: fontSize, padding: 0},
+                // axisLabel: {fontSize: 30, padding: 360}
+              }}
+            tickLabelComponent={       
+              <VictoryLabel    
+                  textAnchor="end"
+              />   
+            }
+          />
+        </VictoryChart>
+      </div>
+    </>
   );
 }
