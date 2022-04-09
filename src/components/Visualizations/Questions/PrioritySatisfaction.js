@@ -1,8 +1,9 @@
-import {VictoryLegend, VictoryHistogram, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
+import {VictoryLegend, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
 import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation } from '../UseData';
 import * as d3 from 'd3'
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "typeface-abeezee";
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 
 function barData(dataset, topic){
   var values = []
@@ -18,11 +19,24 @@ export const PrioritySatisfaction = (props) => {
     
     const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
 
+    const vocationArray = ["All", "Growers", "Consultants"];
+
+    const [activeVocation, setActiveVocation] = useState("All");
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+    function vocationFunction(newValue){
+      setActiveVocation(newValue);
+    }
+
+    function regionOrCropFunction(newValue) {
+      setActiveRegionOrCrop(newValue);
+    }  
+
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter)
+    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
     var data = averageSatisfaction(data_filtered)
 
     var domain = d3.extent(data, function(d) { return d.Priority; })
@@ -160,6 +174,11 @@ export const PrioritySatisfaction = (props) => {
     const fontSize = 20
 
     return (
+
+      <>
+        <div className="inline-child">
+            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+        </div>
 
         <div class='visualization-window'>
             <VictoryChart 
@@ -320,4 +339,6 @@ export const PrioritySatisfaction = (props) => {
           </VictoryChart>
           {vis}
       </div>
+
+    </>
     )};
