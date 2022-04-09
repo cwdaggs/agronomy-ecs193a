@@ -1,5 +1,7 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
 import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
+import {useState} from 'react';
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
 
 export function calculateInformationSources(data){
@@ -50,7 +52,19 @@ export function calculateInformationSources(data){
 }
 
 export function InfoSourcesBarChart(props) {
-    
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+
+  const [activeVocation, setActiveVocation] = useState("All");
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionOrCropFunction(newValue) {
+    setActiveRegionOrCrop(newValue);
+  }
+
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
@@ -69,29 +83,29 @@ export function InfoSourcesBarChart(props) {
     ];
 
     var centerTitle = 300;
-    if (props.vocationFilter === "All" || props.filter === "All") {
+    if (activeVocation === "All" || activeRegionOrCrop === "All") {
       centerTitle = 200;
     }
 
     var titleText = "";
-    if (props.vocationFilter !== "All") {
-      titleText += "Vocation: " + props.vocationFilter;
+    if (activeVocation !== "All") {
+      titleText += "Vocation: " + activeVocation;
     }
-    if (crops.includes(props.filter)) {
-      if (props.vocationFilter !== "Allied Industry" && props.vocationFilter !== "Other") {
-        titleText += " Crop: " + props.filter;
+    if (crops.includes(activeRegionOrCrop)) {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        titleText += " Crop: " + activeRegionOrCrop;
       }
     }
-    if (!crops.includes(props.filter) && props.filter !== "All") {
-      titleText += " Region: " + props.filter;
+    if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
+      titleText += " Region: " + activeRegionOrCrop;
     }
 
-    var data = filterByCropOrRegion(props.dataset, props.filter);
-    if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
+    var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
+    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
       data = props.dataset;
       centerTitle = 200;
     }
-    var filtered_data = filterByVocation(data, props.vocationFilter);
+    var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -101,6 +115,10 @@ export function InfoSourcesBarChart(props) {
     const fontSize = 20;
 
     return (
+      <>
+        <div className="inline-child">
+          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+        </div>
         <div class='visualization-window'>
           <VictoryChart height={height} width={width}
             animate={{
@@ -155,5 +173,6 @@ export function InfoSourcesBarChart(props) {
             />
           </VictoryChart>
         </div>
-      );
+      </>
+    );
 }
