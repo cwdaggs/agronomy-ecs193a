@@ -42,9 +42,9 @@ export const Visualizations = () => {
     } else {
       test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
     }
-    console.log(window.location.pathname);
-    console.log(window.location.href);
-    console.log(test_str);
+    // console.log(window.location.pathname);
+    // console.log(window.location.href);
+    // console.log(test_str);
     // console.log(active);
     // const [active, setActive] = useState("Acres Managed");
     const [active, setActive] = useState(test_str);
