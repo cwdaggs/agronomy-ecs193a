@@ -102,37 +102,26 @@ function toggleSection4(boolean){
 
 export const InfoSummary = () => {
 
-  //const [isVisible1, setVisibility1] = useState(false);
-
   const listenToScroll = () => {
     let heightToHideFrom1 = 200;
     let heightToHideFrom2 = 400;
     let heightToHideFrom3 = 600;
-    //let heightToHideFrom4 = 1;
     const winScroll = document.body.scrollTop || 
         document.documentElement.scrollTop;
        
     if (winScroll > heightToHideFrom3) {
-      console.log("here4");
-      console.log(winScroll);
       toggleSection3(true);
       toggleSection4(false);
     }
     else if (winScroll > heightToHideFrom2) {
-      console.log("here3");
-      console.log(winScroll);
       toggleSection2(true);
       toggleSection3(false);
     }
     else if (winScroll > heightToHideFrom1) { 
-      console.log("here2");
-      console.log(winScroll);
       toggleSection1(true);
       toggleSection2(false);
     } 
     else {
-      console.log("here1");
-      console.log(winScroll);
       toggleSection1(false);
       
     }  
