@@ -4,11 +4,151 @@ import {RegionMapChart} from '../Visualizations/RegionMap'
 import { useData } from '../Visualizations/UseData';
 import "@fontsource/newsreader";
 import file from './downloads/ResearchPaper.pdf'
+import React, { useState, useEffect } from "react";
+
+function toggleSection1(boolean){
+  if (boolean) {
+    var text = document.getElementById("infoSection1");
+    text.style.display = "none";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "none";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "none";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "none";
+  }
+  else{
+    var text = document.getElementById("infoSection1");
+    text.style.display = "block";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "none";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "none";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "none";
+  }
+}
+
+function toggleSection2(boolean){
+  if (boolean) {
+    var text = document.getElementById("infoSection1");
+    text.style.display = "none";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "none";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "none";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "none";
+  }
+  else{
+    var text = document.getElementById("infoSection1");
+    text.style.display = "none";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "block";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "none";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "none";
+  }
+}
+
+function toggleSection3(boolean){
+  if (boolean) {
+    var text = document.getElementById("infoSection1");
+    text.style.display = "none";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "none";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "none";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "none";
+  }
+  else{
+    var text = document.getElementById("infoSection1");
+    text.style.display = "none";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "none";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "block";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "none";
+  }
+}
+
+function toggleSection4(boolean){
+  if (boolean) {
+    var text = document.getElementById("infoSection1");
+    text.style.display = "none";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "none";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "none";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "none";
+  }
+  else{
+    var text = document.getElementById("infoSection1");
+    text.style.display = "none";
+    var text2 = document.getElementById("infoSection2");
+    text2.style.display = "none";
+    var text3 = document.getElementById("infoSection3");
+    text3.style.display = "none";
+    var text4 = document.getElementById("infoSection4");
+    text4.style.display = "block";
+  }
+}
+
+
+
 export const InfoSummary = () => {
 
+  //const [isVisible1, setVisibility1] = useState(false);
+
+  const listenToScroll = () => {
+    let heightToHideFrom1 = 200;
+    let heightToHideFrom2 = 400;
+    let heightToHideFrom3 = 600;
+    //let heightToHideFrom4 = 1;
+    const winScroll = document.body.scrollTop || 
+        document.documentElement.scrollTop;
+       
+    if (winScroll > heightToHideFrom3) {
+      console.log("here4");
+      console.log(winScroll);
+      toggleSection3(true);
+      toggleSection4(false);
+    }
+    else if (winScroll > heightToHideFrom2) {
+      console.log("here3");
+      console.log(winScroll);
+      toggleSection2(true);
+      toggleSection3(false);
+    }
+    else if (winScroll > heightToHideFrom1) { 
+      console.log("here2");
+      console.log(winScroll);
+      toggleSection1(true);
+      toggleSection2(false);
+    } 
+    else {
+      console.log("here1");
+      console.log(winScroll);
+      toggleSection1(false);
+      
+    }  
+  };
+
+  useEffect(() => {   
+    window.addEventListener("scroll", listenToScroll);
+    return () => 
+       window.removeEventListener("scroll", listenToScroll); 
+  }, [])
+
   return (
+    <div id="infoSection">
     <C.Container>
       <C.Area>
+      {/* <div id="infoHeading">
         <C.Menu>
           <div >
             <img
@@ -24,8 +164,10 @@ export const InfoSummary = () => {
             </ul>
           </div>
         </C.Menu>
+      </div> */}
 
         <C.Body>
+          <div id="infoSection1">
           <C.Title>UCCE Information</C.Title>
           <C.Desc className='font-newsreader'>
                 Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who solve problems 
@@ -46,14 +188,21 @@ export const InfoSummary = () => {
                     The survey had hundreds of respondants from all over California. There was a large diversity of ages, crop specializations,
                     and occupations. Vocations interviewed for the survey included growers, consultants, members of allied industries, and others who did not fall into the aforementioned categories.
                     Below is a map representing the density of responses in respect to county, as well as the distribution of responses per occupation:
-            </C.Desc> 
+            </C.Desc>
+            </div>
+            <div id="infoSection2">
             <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+            </div>
+            <div id="infoSection3">
             <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
-            <C.Desc className='font-newsreader'>
+            </div>
+            <div id="infoSection4">
+            <C.Desc className='font-newsreader' id="infoBarText">
                     Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
                     responses for each crop:
             </C.Desc> 
             <CropBar data={useData('./data/Filtered_Crop_Data.csv')}/>
+            </div>
           {/* <C.Button>
             <button>
               See Full Survey results
@@ -66,5 +215,6 @@ export const InfoSummary = () => {
         </C.Body>
       </C.Area>
     </C.Container>
+    </div>
   );
 }

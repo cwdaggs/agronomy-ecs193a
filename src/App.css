@@ -130,7 +130,7 @@ footer {
 
 #visLandingHeading{
   text-align: center;
-  color: black;
+  color: white;
   font-size: 48px;
 
   position: fixed;
@@ -157,13 +157,63 @@ footer {
 }
 
 #visLandingBody{
-  /* color: white; */
+  color: white;
   position: fixed;
-  top: 50%;
-  margin: 10px;
+  top: 45%;
+  margin: 100px;
   font-weight: 600;
   font-size: 22px;
   /* bring your own prefixes */
+}
+
+#visLandingBodyExtended{
+  color: white;
+  position: fixed;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  font-size: 22px;
+  text-align: center;
+  /* bring your own prefixes */
+}
+
+#infoSection{
+  height: 1800px;
+}
+
+#infoSection1{
+  height: 1400px;
+  position: fixed;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#infoSection2{
+  height: 1100px;
+  display: none;
+  position: fixed;
+}
+
+#infoSection3{
+  height: 1100px;
+  display: none;
+  position: fixed;
+}
+
+#infoSection4{
+  height: 1100px;
+  width: 100%;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#infoBarText{
+  text-align: center;
 }
 
 #visLandingPage{
@@ -187,8 +237,8 @@ footer {
 #visLandingBodyScroll{
   color: white;
   position: fixed;
-  top: 50%;
-  margin: 10px;
+  top: 45%;
+  margin: 100px;
   font-weight: 600;
   font-size: 22px;
   /* bring your own prefixes */
