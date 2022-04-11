@@ -3,8 +3,7 @@ import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
 import {RegionMapChart} from '../Visualizations/RegionMap'
 import { useData } from '../Visualizations/UseData';
 import "@fontsource/newsreader";
-import file from './downloads/ResearchPaper.pdf'
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 function toggleSection1(boolean){
   if (boolean) {
@@ -13,19 +12,15 @@ function toggleSection1(boolean){
     var text2 = document.getElementById("infoSection2");
     text2.style.display = "none";
     var text3 = document.getElementById("infoSection3");
-    text3.style.display = "none";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "none";
+    text3.style.display = "none";    
   }
   else{
-    var text = document.getElementById("infoSection1");
+    text = document.getElementById("infoSection1");
     text.style.display = "block";
-    var text2 = document.getElementById("infoSection2");
+    text2 = document.getElementById("infoSection2");
     text2.style.display = "none";
-    var text3 = document.getElementById("infoSection3");
+    text3 = document.getElementById("infoSection3");
     text3.style.display = "none";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "none";
   }
 }
 
@@ -36,19 +31,15 @@ function toggleSection2(boolean){
     var text2 = document.getElementById("infoSection2");
     text2.style.display = "none";
     var text3 = document.getElementById("infoSection3");
-    text3.style.display = "none";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "none";
+    text3.style.display = "none";   
   }
   else{
-    var text = document.getElementById("infoSection1");
+    text = document.getElementById("infoSection1");
     text.style.display = "none";
-    var text2 = document.getElementById("infoSection2");
+    text2 = document.getElementById("infoSection2");
     text2.style.display = "block";
-    var text3 = document.getElementById("infoSection3");
+    text3 = document.getElementById("infoSection3");
     text3.style.display = "none";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "none";
   }
 }
 
@@ -60,41 +51,14 @@ function toggleSection3(boolean){
     text2.style.display = "none";
     var text3 = document.getElementById("infoSection3");
     text3.style.display = "none";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "none";
   }
   else{
-    var text = document.getElementById("infoSection1");
+    text = document.getElementById("infoSection1");
     text.style.display = "none";
-    var text2 = document.getElementById("infoSection2");
+    text2 = document.getElementById("infoSection2");
     text2.style.display = "none";
-    var text3 = document.getElementById("infoSection3");
+    text3 = document.getElementById("infoSection3");
     text3.style.display = "block";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "none";
-  }
-}
-
-function toggleSection4(boolean){
-  if (boolean) {
-    var text = document.getElementById("infoSection1");
-    text.style.display = "none";
-    var text2 = document.getElementById("infoSection2");
-    text2.style.display = "none";
-    var text3 = document.getElementById("infoSection3");
-    text3.style.display = "none";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "none";
-  }
-  else{
-    var text = document.getElementById("infoSection1");
-    text.style.display = "none";
-    var text2 = document.getElementById("infoSection2");
-    text2.style.display = "none";
-    var text3 = document.getElementById("infoSection3");
-    text3.style.display = "none";
-    var text4 = document.getElementById("infoSection4");
-    text4.style.display = "block";
   }
 }
 
@@ -103,17 +67,12 @@ function toggleSection4(boolean){
 export const InfoSummary = () => {
 
   const listenToScroll = () => {
-    let heightToHideFrom1 = 200;
-    let heightToHideFrom2 = 400;
-    let heightToHideFrom3 = 600;
+    let heightToHideFrom1 = 500;
+    let heightToHideFrom2 = 1000;
     const winScroll = document.body.scrollTop || 
         document.documentElement.scrollTop;
        
-    if (winScroll > heightToHideFrom3) {
-      toggleSection3(true);
-      toggleSection4(false);
-    }
-    else if (winScroll > heightToHideFrom2) {
+    if (winScroll > heightToHideFrom2) {
       toggleSection2(true);
       toggleSection3(false);
     }
@@ -181,11 +140,9 @@ export const InfoSummary = () => {
             </div>
             <div id="infoSection2">
             <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
-            </div>
-            <div id="infoSection3">
             <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
             </div>
-            <div id="infoSection4">
+            <div id="infoSection3">
             <C.Desc className='font-newsreader' id="infoBarText">
                     Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
                     responses for each crop:

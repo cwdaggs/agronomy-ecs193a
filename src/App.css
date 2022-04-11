@@ -179,7 +179,7 @@ footer {
 }
 
 #infoSection{
-  height: 1800px;
+  height: 2600px;
 }
 
 #infoSection1{
@@ -192,19 +192,13 @@ footer {
 
 #infoSection2{
   height: 1100px;
-  width: 100%;
+  width: 100vw;
   display: none;
   position: fixed;
+  top: 1vh;
 }
 
 #infoSection3{
-  height: 1100px;
-  width: 100%;
-  display: none;
-  position: fixed;
-}
-
-#infoSection4{
   height: 1100px;
   width: 100%;
   display: none;
