@@ -1,5 +1,7 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
 import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
+import {useState} from 'react';
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
 
 function getInternetSources(data){
@@ -74,6 +76,18 @@ function getInternetSources(data){
 }
 
 export function InternetSourcesBarChart(props) {
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+
+  const [activeVocation, setActiveVocation] = useState("All");
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionOrCropFunction(newValue) {
+    setActiveRegionOrCrop(newValue);
+  }
     
     if (!props.dataset) {
         return <pre>Loading...</pre>;
@@ -92,11 +106,11 @@ export function InternetSourcesBarChart(props) {
       "Wheat"
     ];
 
-    var data = filterByCropOrRegion(props.dataset, props.filter);
-    if ((props.vocationFilter === "Allied Industry" || props.vocationFilter === "Other") && crops.includes(props.filter)) {
+    var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
+    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
       data = props.dataset;
     }
-    var filtered_data = filterByVocation(data, props.vocationFilter);
+    var filtered_data = filterByVocation(data, activeVocation);
     var graph_data = getInternetSources(filtered_data);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -106,6 +120,10 @@ export function InternetSourcesBarChart(props) {
     const fontSize = 18;
 
     return (
+      <>
+      <div className="inline-child">
+        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+      </div>
         <div class='visualization-window'>
           
           <VictoryChart height={height} width={width}
@@ -157,5 +175,6 @@ export function InternetSourcesBarChart(props) {
             />
           </VictoryChart>
         </div>
+        </>
       );
 }

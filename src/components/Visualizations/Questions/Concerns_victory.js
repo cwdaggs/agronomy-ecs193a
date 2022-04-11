@@ -1,9 +1,9 @@
 
-import { Background, VictoryTheme, VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion, filterByVocation, useData} from '../UseData.js'
+import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion, filterByVocation} from '../UseData.js'
 import "typeface-abeezee";
-import React, { useState, useEffect } from "react";
-import { color } from 'd3';
+import React, { useState} from "react";
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
     
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
@@ -20,13 +20,26 @@ function transformData(dataset) {
 }
 
 export function ConcernsVictory(props) {
-  if ((!props.dataset) || (!props.filter)) {
-      return <pre>Loading...</pre>;
+
+  const vocationArray = ["All", "Growers", "Consultants"];
+
+  const [activeVocation, setActiveVocation] = useState("All");
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
   }
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter);
-  var data_by_concern = calculateConcernTotalsForEachElement(data_filtered)
-  var data_sorted = sort_by_very(data_by_concern)
+  function regionOrCropFunction(newValue) {
+    setActiveRegionOrCrop(newValue);
+  }  
+
+  if ((!props.dataset)) {
+      return <pre>Loading...</pre>;
+  }
+  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+  var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
+  var data_sorted = sort_by_very(data_by_concern);
   const dataset = transformData(data_sorted);
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -38,78 +51,84 @@ export function ConcernsVictory(props) {
   const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]
 
   return (
-    <div class='visualization-window'>
-    
-      <VictoryChart
-        horizontal={true}
-        animate={{
-            duration: 500,               
-        }}
-        height={height} 
-        width={width}
-        domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-        padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
-      >
-        <VictoryLegend 
-              x={width/2 - 300}
-              y={10}
-              title="Level of Concern"
-              centerTitle
-              orientation="horizontal"
-              colorScale={colorScale}
-              borderPadding = {{right: 10}}
-              gutter={20}
-              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
-                      // border: { stroke: "black" }, 
-                      title: {fontSize: fontSize }, 
-                      data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
-              data={legend_data}
-            />
-        <VictoryStack
-          style={{
-              data: { stroke: "black", strokeWidth: 1}
+    <>
+      <div className="inline-child">
+          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+      </div>
+
+      <div class='visualization-window'>
+      
+        <VictoryChart
+          horizontal={true}
+          animate={{
+              duration: 500,               
           }}
-          colorScale={colorScale}
+          height={height} 
+          width={width}
+          domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+          padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
         >
-          {dataset.map((data, i) => {
-            return <VictoryBar 
-              data={data} 
-              key={i} 
-              labels={({datum}) => Math.round(datum.y) + "%"}
-              labelComponent={
-                  <VictoryTooltip 
-                    style={{
-                      fontSize:fontSize
-                    }}
-                    flyoutHeight={25}
-                    flyoutWidth={40}    
-                  />
-              }/>;
-          })}
-        </VictoryStack>
-        <VictoryAxis dependentAxis
-          tickFormat={(tick) => `${tick}%`}
-          style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 5}
+          <VictoryLegend 
+                x={width/2 - 300}
+                y={10}
+                title="Level of Concern"
+                centerTitle
+                orientation="horizontal"
+                colorScale={colorScale}
+                borderPadding = {{right: 10}}
+                gutter={20}
+                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
+                        // border: { stroke: "black" }, 
+                        title: {fontSize: fontSize }, 
+                        data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
+                data={legend_data}
+              />
+          <VictoryStack
+            style={{
+                data: { stroke: "black", strokeWidth: 1}
             }}
-        />
-        <VictoryAxis
-          // label = "Concerns"
-          style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0},
-              // axisLabel: {fontSize: 30, padding: 380}
-            }}
-          tickLabelComponent={       
-            <VictoryLabel    
-                textAnchor="end"
-            />   
-          }
-        />
-      </VictoryChart>
-    </div>
+            colorScale={colorScale}
+          >
+            {dataset.map((data, i) => {
+              return <VictoryBar 
+                data={data} 
+                key={i} 
+                labels={({datum}) => Math.round(datum.y) + "%"}
+                labelComponent={
+                    <VictoryTooltip 
+                      style={{
+                        fontSize:fontSize
+                      }}
+                      flyoutHeight={25}
+                      flyoutWidth={40}    
+                    />
+                }/>;
+            })}
+          </VictoryStack>
+          <VictoryAxis dependentAxis
+            tickFormat={(tick) => `${tick}%`}
+            style={{
+                axis: {stroke: "#756f6a"},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: fontSize, padding: 5}
+              }}
+          />
+          <VictoryAxis
+            // label = "Concerns"
+            style={{
+                axis: {stroke: "#756f6a"},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: fontSize, padding: 0},
+                // axisLabel: {fontSize: 30, padding: 380}
+              }}
+            tickLabelComponent={       
+              <VictoryLabel    
+                  textAnchor="end"
+              />   
+            }
+          />
+        </VictoryChart>
+      </div>
+    </>
   );
 }

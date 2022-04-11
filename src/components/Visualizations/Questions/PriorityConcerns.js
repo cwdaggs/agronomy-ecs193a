@@ -1,12 +1,13 @@
 import {filterByCropOrRegion} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
-import {useState} from 'react';
 import "typeface-abeezee";
+import {useState} from 'react';
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 
 function calculateAllPriorityConcerns(data, filter, job) {
-    if(job == "Growers"){
+    if(job === "Growers"){
         job = "_Growing_";
-    } else{
+    } else {
         job = "_Consulting_";
     }
     var columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
@@ -51,24 +52,37 @@ function calculatePriorityConcerns(data, filter) { //labelled under concerns rig
    }
  
    for (const [key, value] of new Map([...myMap].sort())) {
-     key == "Other:" ? modified_data.push({x: "Other", y: value}) : modified_data.push({x: key, y: value})
+     key === "Other:" ? modified_data.push({x: "Other", y: value}) : modified_data.push({x: key, y: value})
    }
    return modified_data
  }
 
 export function PriorityConcerns(props) {
     const regionTypes = ["Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+    const vocationArray = ["Growers", "Consultants"];
 
-    if (!props.myDataset) {
+    const [activeVocation, setActiveVocation] = useState("Growers");
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+    function vocationFunction(newValue){
+      setActiveVocation(newValue);
+    }
+
+    function regionOrCropFunction(newValue) {
+      setActiveRegionOrCrop(newValue);
+    }
+
+
+    if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-    var data_filtered = filterByCropOrRegion(props.myDataset, props.filter)
+    var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
 
-    var filter = props.filter
-    if (regionTypes.includes(props.filter)){
+    var filter = activeRegionOrCrop
+    if (regionTypes.includes(activeRegionOrCrop)){
       filter = "All";
     }
-    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, props.vocationFilter)
+    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation)
 
     var legend_data = []
     var n = 0
@@ -83,55 +97,59 @@ export function PriorityConcerns(props) {
         legend_data.push({name: data_by_reason[i].x})
         n += data_by_reason[i].y
     }
-    // const colorScale = ["#552E3A", "#713E4C", "#8D505C", "#A7626C", "#C2747B", "#DB878A", "#E0979E", "#E5A6B1", "#EAB6C3", "#F4D6E1"]
     const colorScale = ["#c54132", "#cf6351", "#d78271", "#db9f93", "#dadada", "#bccfb6", "#9cc493", "#7cb970", "#57ad4c", "#21a124"]
 
     return (
+      <>
+      <div className="inline-child">
+        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+      </div>
       <div  class='visualization-window'>
         <div class='parent flex-parent'>
           <div class='child flex-child'>
-                  <VictoryLegend
-                      x={150}
-                      y={10}
-                      colorScale={colorScale}
-                      gutter={20}
-                      style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
-                              title:  {fontFamily: 'ABeeZee', fontSize: 13},
-                              data:   {stroke: "black", strokeWidth: 1}}}
-                      title={String("Management Concerns (n=" + n + ")")}
-                      centerTitle
-                      data={legend_data}
-                  />
-                  </div>
-                  <div class='child flex-child'>   
-                  <VictoryPie
-                      animate={{
-                          duration: 500,               
-                      }}
-                      width={width}
-                      height={height}
-                      padding={{
-                        left: margin.left,
-                          right: margin.right,
-                          bottom: margin.bottom,
-                          top: margin.top
-                      }}
-                      startAngle={0}
-                      style={{ data: { stroke: "black", strokeWidth: 1}}}
-                      colorScale={colorScale}
-                      data={data_by_reason}
-                      labels={({ datum }) => `${datum.y}`}
-                      labelComponent={<VictoryTooltip 
-                          style={{
-                            fontSize:35,
-                            fontFamily: 'ABeeZee'
-                          }}
-                          flyoutHeight={height/10}
-                          flyoutWidth={width/10}    
-                      />}
-                  />
-              </div>
+            <VictoryLegend
+                x={150}
+                y={10}
+                colorScale={colorScale}
+                gutter={20}
+                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
+                        title:  {fontFamily: 'ABeeZee', fontSize: 13},
+                        data:   {stroke: "black", strokeWidth: 1}}}
+                title={String("Management Concerns (n=" + n + ")")}
+                centerTitle
+                data={legend_data}
+            />
+          </div>
+          <div class='child flex-child'>   
+          <VictoryPie
+              animate={{
+                  duration: 500,               
+              }}
+              width={width}
+              height={height}
+              padding={{
+                left: margin.left,
+                  right: margin.right,
+                  bottom: margin.bottom,
+                  top: margin.top
+              }}
+              startAngle={0}
+              style={{ data: { stroke: "black", strokeWidth: 1}}}
+              colorScale={colorScale}
+              data={data_by_reason}
+              labels={({ datum }) => `${datum.y}`}
+              labelComponent={<VictoryTooltip 
+                  style={{
+                    fontSize:35,
+                    fontFamily: 'ABeeZee'
+                  }}
+                  flyoutHeight={height/10}
+                  flyoutWidth={width/10}    
+              />}
+          />
+          </div>
         </div>
       </div>
+      </>
     );
 }

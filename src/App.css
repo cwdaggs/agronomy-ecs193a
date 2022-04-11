@@ -15,11 +15,7 @@
   display: flex;
   position: fixed;
   width:100%;
-}
-
-#heading-static {
-  background-color: #022851;
-  display: flex;
+  z-index: 5;
 }
 
 #logo {
@@ -37,26 +33,8 @@
   font-weight: bold;
 }
 
-#sidebar {
-  position: fixed;
-  right: 0;
-  top: 40%;
-}
-
-#sidebar-container {
-  color: white;
-}
-
 #menu {
   background-color: #13639e;
-}
-
-#aboutsummary {
-  color:black;
-  /* display:flex; */
-  padding-right: 50%;
-  padding-top: 10px;
-  padding-left: 10px;
 }
 
 #visualization {
@@ -74,17 +52,6 @@
 
 #compare-box{
   padding-left: 15px;
-}
-
-#infosummary {
-  color:black;
-  padding-right: 50%;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-
-#about-container{
-  height:50%;
 }
 
 #home-container{

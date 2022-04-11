@@ -1,5 +1,7 @@
 import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
 import {filterByCropOrRegion, sort_by_freq} from '../UseData.js'
+import {useState} from 'react';
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
 
 export function calculateAffectEach(data, filter, answer){
@@ -112,6 +114,17 @@ function calculateAverageResponses(dataset) {
 
 export function AffectVictory(props) {
   
+  const [activeVocation, setActiveVocation] = useState("Growers");
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionOrCropFunction(newValue) {
+    setActiveRegionOrCrop(newValue);
+  }
+
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
@@ -129,19 +142,21 @@ export function AffectVictory(props) {
     "Wheat"
   ];
 
-  var data_filtered = filterByCropOrRegion(props.dataset, props.filter)
+  const vocationArray = ["Growers", "Consultants"];
+
+  var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
   var titleText = "Frequency of Effect on Management Decisions";
-  if (props.vocationFilter === "Consultants") {
+  if (activeVocation === "Consultants") {
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
     titleText = "Frequency of Effect on Recommendations";
   }
 
-  if (crops.includes(props.filter)) {
-    titleText += " for " + props.filter;
-  } else if (props.filter !== "All") {
-    titleText += " in the " + props.filter + " Region";
+  if (crops.includes(activeRegionOrCrop)) {
+    titleText += " for " + activeRegionOrCrop;
+  } else if (activeRegionOrCrop !== "All") {
+    titleText += " in the " + activeRegionOrCrop + " Region";
   }
 
   var data_sorted = sort_by_freq(data_by_affect)
@@ -159,6 +174,11 @@ export function AffectVictory(props) {
   const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
 
   return (
+    <>
+    <div className="inline-child">
+      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+    </div>
+
     <div class='visualization-window'>
       <VictoryChart
         horizontal={true}
@@ -231,5 +251,6 @@ export function AffectVictory(props) {
         />
       </VictoryChart>
     </div>
+    </>
   );
 }

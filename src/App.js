@@ -7,6 +7,7 @@ import {AboutSummary} from './components/Pages/AboutSummary';
 import {Visualizations} from './components/Pages/Visualization';
 import {Home} from './components/Pages/Home';
 import {NavLink, Outlet,Routes, Route } from "react-router-dom";
+import { MiniSurvey } from './components/Pages/Survey'; 
 
 export default function App() {
   const [dual_display, checkDualDisplay] = useState(false);
@@ -45,7 +46,7 @@ export default function App() {
         <NavLink to ="/">
           {({ isActive }) => getActiveTab(isActive, "Home")}
         </NavLink>
-        <NavLink to="/results">
+        <NavLink to ="/results">
           {({ isActive }) => getActiveTab(isActive, "Explore Results")}
         </NavLink>
         <NavLink to ="/info">
@@ -54,13 +55,16 @@ export default function App() {
         <NavLink to ="/about">
           {({ isActive }) => getActiveTab(isActive, "About")}
         </NavLink>
+        <NavLink to ="/survey">
+          {({ isActive }) => getActiveTab(isActive, "Survey")}
+        </NavLink>
       </div>
       
       <Outlet/>
       <footer></footer>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="results" element={
+        <Route path="results/*" element={
           <div>
             <div id="visTop">
               Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
@@ -75,6 +79,7 @@ export default function App() {
         }/>
         <Route path="info" element={<InfoSummary/>}/>
         <Route path="about" element={<AboutSummary/>}/>
+        <Route path="survey" element={<MiniSurvey/>}/>
       </Routes>
     </div>
   )

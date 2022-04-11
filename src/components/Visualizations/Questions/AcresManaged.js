@@ -1,5 +1,8 @@
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+import {VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
 import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
+import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import {useState} from "react";
+
 import "typeface-abeezee";
 
 function calculateAcres(data){
@@ -53,10 +56,23 @@ function calculateSizeOfDataSet(data){
 }
 
 export function AcresManagedBarChart(props) {
+    const vocationArray = ["All", "Growers", "Consultants"];
+
+    const [activeVocation, setActiveVocation] = useState("All");
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+    function vocationFunction(newValue){
+      setActiveVocation(newValue);
+    }
+
+    function regionOrCropFunction(newValue) {
+      setActiveRegionOrCrop(newValue);
+    }
+
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-    var data = filterByVocation(filterByCropOrRegion(props.dataset, props.filter), props.vocationFilter);
+    var data = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
     var acre_data = calculateAcres(data);
     var dataLength = calculateSizeOfDataSet(acre_data)
     var lengthString = String("Number of Farms (n = " + dataLength + ")");
@@ -70,6 +86,10 @@ export function AcresManagedBarChart(props) {
     const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
 
     return (
+      <>
+      <div className="inline-child">
+        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+      </div>
         <div class='visualization-window'>
           <VictoryChart height={height} width={width}
             //domainPadding={45}
@@ -113,5 +133,6 @@ export function AcresManagedBarChart(props) {
           </VictoryChart>
           
         </div>
+        </>
       );
 }

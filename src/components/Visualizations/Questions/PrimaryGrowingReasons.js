@@ -1,5 +1,8 @@
 import {filterByCropOrRegion, filterByVocation} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
+import {OnlyCrops} from "../Menus/OnlyCrops.js"
+import React, { useState } from "react";
+
 import "typeface-abeezee";
 
 export function calculateAllPrimaryGrowingReasons(data, filter) {
@@ -58,14 +61,21 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
   
     return modified_data
   }
+  
+export function PrimaryGrowingReasons(props) {
+    
+    const [active, setActive] = useState("All");
 
-export function PrimaryGrowingReasons({myDataset, filter}) {
-    if (!myDataset) {
+    function changeFunc(newValue){
+      setActive(newValue);
+    }
+
+    if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
-    var data_filtered = filterByVocation(filterByCropOrRegion(myDataset, filter), "Growers")
-    var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, filter)
+    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
+    var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
     var legend_data = []
     var n = 0
 
@@ -79,12 +89,19 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
         legend_data.push({name: data_by_reason[i].x})
         n += data_by_reason[i].y
     }
-    // const colorScale = ["#0A2F51", "#0E4D64", "#137177", "#188977", "#1D9A6C", "#39A96B", "#56B870", "#74C67A", "#99D492", "#BFE1B0"]
+
     const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
+
     return (
+      <>
+      <div className="inline-child">
+        <OnlyCrops changeFunc={changeFunc} active={active}/>
+      </div>
+
+      <div align-items='center'>
       <div class='visualization-window'>
-          <div class='parent flex-parent'>
-            <div class='child flex-child'>
+          <div class='flex-parent'>
+            <div class='flex-child'>
                 <VictoryLegend      
                   x={150}
                   y={0}     
@@ -98,43 +115,22 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
                     data={legend_data}
                 />
                 </div>
-                <div class='child flex-child'>   
+                <div class='flex-child'>
                 <VictoryPie
                     animate={{
                       duration: 500,               
                     }}
                     width={width}
-                    height={height}
-                    padding={{
+                 height={height}
+                padding={{
                       left: margin.left,
                         right: margin.right,
                         bottom: margin.bottom,
                         top: margin.top
                     }}
-                    // events={[{
-                    //     target: "data",
-                    //     eventHandlers: {
-                    //       onMouseEnter: () => {
-                    //         return [
-                    //           {
-                    //             target: "data",
-                    //             mutation: ({ style }) => {
-                    //               return style.fill === "#c43a31" ? null : { style: { fill: "#c43a31" } };
-                    //             }
-                    //           }, {
-                    //             target: "labels",
-                    //             mutation: ({ text }) => {
-                    //               return text === "clicked" ? null : { text: "clicked" };
-                    //             }
-                    //           }
-                    //         ];
-                    //       }
-                    //     }
-                    //   }]}
                     style={{ data: { stroke: "black", strokeWidth: 1}}}
                     colorScale={colorScale}
                     data={data_by_reason}
-                    // labels={() => null}
                     labels={({ datum }) => `${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
@@ -148,5 +144,7 @@ export function PrimaryGrowingReasons({myDataset, filter}) {
             </div>
         </div>
       </div>
+      </div>   
+      </>  
     );
 }
