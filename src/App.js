@@ -40,6 +40,7 @@ export default function App() {
   }
 
   return (
+
     <>
       <div id="outerContainer" class='font-metropolis'>
         <div id="heading">
@@ -74,6 +75,7 @@ export default function App() {
                 <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
               </div>
                 {getNewDisplay(dual_display)}
+
             </div>
           }/>
           <Route path="info" element={<InfoSummary/>}/>

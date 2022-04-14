@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
     min-height:90vh;
     padding-top: 50px;
+    margin-bottom: 60px;
 `;
 
 export const Area = styled.div`
