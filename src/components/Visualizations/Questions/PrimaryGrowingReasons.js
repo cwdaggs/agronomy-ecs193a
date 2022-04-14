@@ -83,7 +83,7 @@ export function PrimaryGrowingReasons(props) {
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vh;
     const width = vw;
-    const margin = { top: height/16, right: width/2, bottom: height/16, left: 0 };
+    const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
@@ -98,53 +98,51 @@ export function PrimaryGrowingReasons(props) {
         <OnlyCrops changeFunc={changeFunc} active={active}/>
       </div>
 
-      <div align-items='center'>
-      <div class='visualization-window'>
-          <div class='flex-parent'>
-            <div class='flex-child'>
-                <VictoryLegend      
-                  x={150}
-                  y={0}     
-                    colorScale={colorScale}
-                    gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 12}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: 12},
-                            data:   {stroke: "black", strokeWidth: 1}}}
-                    title={String("Reasons for Growing Crops (n=" + n + ")")}
-                    centerTitle
-                    data={legend_data}
-                />
-                </div>
-                <div class='flex-child'>
-                <VictoryPie
-                    animate={{
-                      duration: 500,               
-                    }}
-                    width={width}
-                 height={height}
-                padding={{
-                      left: margin.left,
-                        right: margin.right,
-                        bottom: margin.bottom,
-                        top: margin.top
-                    }}
-                    style={{ data: { stroke: "black", strokeWidth: 1}}}
-                    colorScale={colorScale}
-                    data={data_by_reason}
-                    labels={({ datum }) => `${datum.y}`}
-                    labelComponent={<VictoryTooltip 
-                        style={{
-                          fontSize:35,
-                          fontFamily: 'ABeeZee'
-                        }}
-                        flyoutHeight={height/10}
-                        flyoutWidth={width/10}     
-                    />}
-                />
-            </div>
+        <div class='visualization-window'>
+            <div class='flex-parent'>
+              <div class='flex-child'>
+                  <VictoryLegend      
+                    x={150}
+                    y={0}     
+                      colorScale={colorScale}
+                      gutter={20}
+                      style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 12}, 
+                              title:  {fontFamily: 'ABeeZee', fontSize: 12},
+                              data:   {stroke: "black", strokeWidth: 1}}}
+                      title={String("Reasons for Growing Crops (n=" + n + ")")}
+                      centerTitle
+                      data={legend_data}
+                  />
+                  </div>
+                  <div class='flex-child'>
+                  <VictoryPie
+                      animate={{
+                        duration: 500,               
+                      }}
+                      width={width}
+                  height={height}
+                  padding={{
+                        left: margin.left,
+                          right: margin.right,
+                          bottom: margin.bottom,
+                          top: margin.top
+                      }}
+                      style={{ data: { stroke: "black", strokeWidth: 1}}}
+                      colorScale={colorScale}
+                      data={data_by_reason}
+                      labels={({ datum }) => `${datum.y}`}
+                      labelComponent={<VictoryTooltip 
+                          style={{
+                            fontSize:35,
+                            fontFamily: 'ABeeZee'
+                          }}
+                          flyoutHeight={height/10}
+                          flyoutWidth={width/10}     
+                      />}
+                  />
+              </div>
+          </div>
         </div>
-      </div>
-      </div>   
       </>  
     );
 }

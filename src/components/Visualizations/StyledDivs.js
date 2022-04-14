@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Visualizations } from "../Pages/Visualization";
 
 const StyledUl = styled.ul`
   list-style-type: none;
@@ -78,6 +79,45 @@ const Tab = styled.button`
   `}
 `;
 
+const TabHome = styled.button`
+  cursor: pointer;
+  font-size: 25px;
+  font-family: ABeeZee, serif; 
+  opacity: 0.3;
+  background: white;
+  border: 0;
+  outline: 0;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+  ${({active}) => 
+  active && `
+  border-bottom: 2px solid black;
+  opacity: 1;
+  `}
+`;
+
+const TabVisualizations = styled.button`
+  padding: 5% ;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: ABeeZee, serif;
+  text-align: center; 
+  opacity: 0.7;
+  background: white;
+  border: 2%;
+  outline: 1%;
+  width:100%;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+  ${({active}) => 
+  active && `
+  border-bottom: 2px solid black;
+  opacity: 1;
+  `}
+`;
+
 const Button = styled.button`
   background-color: black;
   color: white;
@@ -107,4 +147,4 @@ const ButtonGroup = styled.div`
 `;
 
 
-export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, Tab, Button, ButtonGroup, ButtonSwitch};
+export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, Tab, Button, ButtonGroup, ButtonSwitch, TabVisualizations, TabHome};

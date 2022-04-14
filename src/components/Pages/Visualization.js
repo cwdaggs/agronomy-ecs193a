@@ -1,7 +1,7 @@
 import {useData} from '../Visualizations/UseData';
 import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
-import {Tab} from '../Visualizations/StyledDivs'
+import {Tab, TabVisualizations} from '../Visualizations/StyledDivs'
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
 import { NavLink, Outlet, Routes, Route, useLocation } from 'react-router-dom';
 import { AboutSummary } from './AboutSummary';
@@ -94,9 +94,9 @@ export const Visualizations = () => {
 
     return(
       <div className='inline-parent'>
-        <h3>{questions[String(active)]}</h3>
-        <div className='inline-child'>
-          <nav style={{ borderRight: 'solid 1px', padding: '1rem' }}>
+        <div className='vis-buttons-parent'>
+          <h2>Survey Questions</h2>
+          <nav>
             {types.map(type => (
               <NavLink
               key={type}
@@ -104,7 +104,9 @@ export const Visualizations = () => {
               
               active={active === type}
               to={`/results/${type}`}>
-                {type+" "}
+                <div className='vis-buttons-child'>
+                  <TabVisualizations>{type+" "}</TabVisualizations>
+                </div>
               </NavLink>
             ))}
             

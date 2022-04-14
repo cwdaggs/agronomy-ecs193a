@@ -199,8 +199,8 @@ export const PrioritySatisfaction = (props) => {
                 
             >
             <VictoryLegend 
-              x={100}
-              y={265}
+              x={width*.1}
+              y={height*.25}
               title="Legend"
               centerTitle
               orientation="vertical"

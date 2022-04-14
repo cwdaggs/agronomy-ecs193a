@@ -21,57 +21,49 @@
 #logo {
   height: 20px;
   padding: 15px;
-  padding-right: 22%;
+  padding-right: 25%;
 }
 
 #visTop {
   padding-top: 75px;
   padding-bottom: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 5vw;
+  padding-right: 5vw;
   font-size: large;
-  font-weight: bold;
+  font-style: italic;
+  opacity: 0.7;
+
 }
 
 #menu {
   background-color: #13639e;
 }
 
-#visualization {
-  font-family: arial;
-  font-size: 24px;
-  margin: 25px;
-  width: 350px;
-  height: 200px;
-  /* outline: dashed 1px black; */
-  /* Center child horizontally*/
-  display: flex;
-  justify-content: center;
-
-}
-
 #compare-box{
-  padding-left: 15px;
+  padding-left: 5vw;
+  padding-bottom: 1vh;
+  opacity: 0.7;
 }
 
 #home-container{
   font-family: 'Montserrat', sans-serif;
   display: block;
   text-align: left;
-  padding-left: 25%;
-  padding-right: 25%;
+  padding-left: 25vw;
+  padding-right: 25vw;
+  height:100vh;
 }
 
 #main-title{
-  padding-top: 30%;
-  padding-left: 10%;
+  padding-top: 30vh;
+  padding-left: 10vw;
   font-weight: 100;
   font-size: large;
   color: rgb(88, 88, 88);
 }
 
 #home-sub-title{
-  padding-left: 10%;
+  padding-left: 10vw;
   font-size: x-large;
   font-weight: bolder;
   color: rgb(0,0,0);
@@ -79,13 +71,12 @@
 
 #home-info{
   font-size: small;
-  padding-left: 15%;
-  padding-right: 15%;
-  padding-bottom: 10%;
+  padding-left: 12vw;
+  padding-right: 12vw;
+  padding-bottom: 10vh;
 }
 
 #home-button{
-  padding-bottom: 30%;
   text-align: center;
   color: #022851;
 }
@@ -125,24 +116,39 @@
 .visualization-window {
   font-family: 'Metropolis';
   font-size: 24px;
-  height: 70%;
+  height: 80%;
   width: 70%;
   /* outline: solid 1px black; */
   margin: auto;
   /* Center child horizontally*/
 }
 
+.vis-buttons-parent {
+  display: block;
+  position: fixed;
+  padding-top: 5vh;
+  padding-left: 2px;
+  width: 8%;
+}
+
+.vis-buttons-child {
+  z-index: 5;
+
+}
+
 .inline-parent {
   border: 1px solid black;
-  margin: 1rem;
-  padding: 2rem 2rem;
   text-align: center;
-  height: 100%;
+  height: 80vh;
 }
 .inline-child {
   display: inline-block;
   padding: 1rem 1rem;
   vertical-align: middle;
+}
+
+.pie-chart {
+  padding-top: 10%;
 }
 
 footer {
@@ -167,7 +173,7 @@ footer {
 
 #aboutpage {
   background-image: url(./images/farming-background.jfif);
-  height: 100%;
+  height: 100vh;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
