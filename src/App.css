@@ -11,7 +11,7 @@
 }
 
 #heading {
-  background-color: #022851;
+  background-color: #02285100;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -23,7 +23,9 @@
 #logo {
   height: 20px;
   padding: 15px;
-  padding-right: 25%;
+  position: fixed;
+  justify-content: left;
+  
 }
 
 #visTop {

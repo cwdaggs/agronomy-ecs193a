@@ -42,8 +42,9 @@ export default function App() {
   return (
     <>
       <div id="outerContainer" class='font-metropolis'>
+        <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
         <div id="heading">
-          <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
+          
           <NavLink to ="/">
             {({ isActive }) => getActiveTab(isActive, "Home")}
           </NavLink>
