@@ -28,13 +28,13 @@ export const Visualizations = () => {
     ]
     var test_str = "";
     // ----- Production ------------///
-    /*
-    if (window.location.href === "http://uccesurveyresults.com/#/results") {
+  /*
+    if (window.location.href === "http://www.uccesurveyresults.com/#/results") {
       test_str = "Acres Managed";
     } else {
-      test_str = String(window.location.href).replace("http://uccesurveyresults.com/#/results/", "").replace("%20", " ");
+      test_str = String(window.location.href).replace("http://www.uccesurveyresults.com/#/results/", "").replace("%20", " ");
     }
-    */
+  */  
 
 
     if (window.location.href === "http://localhost:3000/#/results") {
