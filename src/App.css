@@ -205,10 +205,74 @@ body,html {
   padding-left:25%;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
+  @media screen and (max-height: 800px) {
+    #home-container{
+      font-family: 'Montserrat', sans-serif;
+      display: block;
+      text-align: left;
+      padding-left: 10%;
+      padding-right: 10%;
+      height: 100vh;
+    }
+    
+    #main-title{
+      padding-top: 10%;
+      padding-left: 5%;
+      font-weight: 100;
+      font-size: medium;
+      color: rgb(88, 88, 88);
+    }
+    
+    #home-sub-title{
+      padding-left: 5%;
+      font-size: large;
+      font-weight: bolder;
+      color: rgb(0,0,0);
+    }
+    
+    #home-info{
+      font-size: smaller;
+      padding-left: 12vw;
+      padding-right: 12vw;
+      padding-bottom: 10vh;
+    }
+    
+    #home-button{
+      text-align: center;
+      color: #022851;
+    }
+  
+    .visualization-window {
+      font-family: 'Metropolis';
+      font-size: 24px;
+      height: 80vh;
+      width: 70vw;
+      /* outline: solid 1px black; */
+      margin: auto;
+      /* Center child horizontally*/
+    }
+    
+    .vis-buttons-parent {
+      display: block;
+      position: fixed;
+      padding-top: 5vh;
+      padding-left: 2px;
+      width: 8%;
+    }
+    
+    .vis-buttons-child {
+      z-index: 5;
+    
+    }
+    #bg {
+      height: 100%;
+    }
+  }
   #bg {
     height: 100vh;
   }
+  
 }
 
 @media screen and (min-width: 1500px) {
@@ -217,7 +281,7 @@ body,html {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
   
   #logo{
     z-index: -5;
@@ -259,6 +323,26 @@ body,html {
     color: #022851;
   }
 
-
-
+  .visualization-window {
+    font-family: 'Metropolis';
+    font-size: 24px;
+    height: 80vh;
+    width: 70vw;
+    /* outline: solid 1px black; */
+    margin: auto;
+    /* Center child horizontally*/
+  }
+  
+  .vis-buttons-parent {
+    display: block;
+    position: fixed;
+    padding-top: 5vh;
+    padding-left: 2px;
+    width: 8%;
+  }
+  
+  .vis-buttons-child {
+    z-index: 5;
+  
+  }
 }
