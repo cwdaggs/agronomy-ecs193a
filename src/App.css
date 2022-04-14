@@ -24,8 +24,6 @@
   height: 20px;
   padding: 15px;
   position: fixed;
-  justify-content: left;
-  
 }
 
 #visTop {
@@ -219,16 +217,48 @@ body,html {
   }
 }
 
-@media screen and (max-width: 350px) {
-  #main-title{
-    padding-left: 5%;
+@media screen and (max-width: 800px) {
+  
+  #logo{
+    z-index: -5;
   }
 
-  #home-sub-title{
-    padding-left: 0%;
-  }
-
-  #home-info{
+  #home-container{
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+    text-align: left;
     padding-left: 10%;
+    padding-right: 10%;
+    height: 100vh;
   }
+  
+  #main-title{
+    padding-top: 10%;
+    padding-left: 5%;
+    font-weight: 100;
+    font-size: medium;
+    color: rgb(88, 88, 88);
+  }
+  
+  #home-sub-title{
+    padding-left: 5%;
+    font-size: large;
+    font-weight: bolder;
+    color: rgb(0,0,0);
+  }
+  
+  #home-info{
+    font-size: smaller;
+    padding-left: 12vw;
+    padding-right: 12vw;
+    padding-bottom: 10vh;
+  }
+  
+  #home-button{
+    text-align: center;
+    color: #022851;
+  }
+
+
+
 }
