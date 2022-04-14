@@ -32,6 +32,11 @@ const Tab = styled.button`
   // border-bottom: 2px solid black;
   opacity: 1;
   `}
+  @media (max-width: 700px) {
+    padding: 10px 20px;
+    font: 10px Metropolis, sans-serif;
+    font-weight: 800;
+  }
 `;
 
 const CropTab = styled.button`

@@ -13,6 +13,8 @@
 #heading {
   background-color: #022851;
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   position: fixed;
   width:100%;
   z-index: 5;
@@ -188,11 +190,37 @@ body,html {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  
+  margin-bottom: 60px;
 }
 
 .gfg {
   color:white;
   padding-top:5%;
   padding-left:25%;
+}
+
+@media screen and (min-width: 1000px) {
+  #bg {
+    height: 100vh;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  #bg {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  #main-title{
+    padding-left: 5%;
+  }
+
+  #home-sub-title{
+    padding-left: 0%;
+  }
+
+  #home-info{
+    padding-left: 10%;
+  }
 }
