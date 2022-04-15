@@ -15,6 +15,14 @@ function barData(dataset, topic){
   return values.sort((a,b) => a.y-b.y)
 }
 
+
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+const height = vh*0.8;
+const width = vw;
+const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 };
+
+
 export const PrioritySatisfaction = (props) => {
     
     const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
@@ -50,17 +58,17 @@ export const PrioritySatisfaction = (props) => {
       setVis(
         ( 
           <div>
-          <h5>Selected Node's Average Importance/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
-          <VictoryChart 
-            x={50}
-            animate={{
-              duration: 500,               
-            }}
-            height={height} 
-            width={width}
+           <h5><br></br><br></br><br></br>Selected Node's Average Importance/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
+            <VictoryChart 
+              x={50}
+              animate={{
+                duration: 500,               
+              }}
+              height={height} 
+              width={width}
 
-            padding={{ top: margin.top + 100, bottom: margin.bottom, left: margin.left, right: margin.right }}
-            
+              padding={{ top: margin.top + 100, bottom: margin.bottom, left: margin.left, right: margin.right }}
+              
             >
             <VictoryLegend 
               x={width/3 + 100}
@@ -164,12 +172,6 @@ export const PrioritySatisfaction = (props) => {
     }
 
     function handleSelectionCleared(props){}  
-
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh*0.8;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 };
   
     const fontSize = 20
 

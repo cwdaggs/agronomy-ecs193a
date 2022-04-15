@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
 
-#outerContainer {
+/* #outerContainer {
   color: black;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,8 @@
   height:80%;
   width:100%;
   position: relative;
-}
+} */
+
 
 #heading {
   background-color: #02285100;
@@ -24,6 +25,7 @@
   height: 20px;
   padding: 15px;
   position: fixed;
+  display:none;
 }
 
 #visTop {
@@ -127,13 +129,16 @@
 .vis-buttons-parent {
   display: block;
   position: fixed;
-  padding-top: 5%;
   padding-left: 2px;
   font-size: large;
 }
 
 .vis-buttons-child {
   z-index: 5;
+}
+
+#vis-buttons-label {
+  font-size: 20px;
 }
 
 .inline-parent {
@@ -151,7 +156,7 @@
   padding-top: 10%;
 }
 
-footer {
+/* footer {
   text-align: center;
   height: 60px;
   position: absolute;
@@ -159,7 +164,7 @@ footer {
   width: 100%;
   background-color: #022851;
   color: white;
-}
+} */
 
 #about-visualization-window {
   font-family: 'Metropolis';
@@ -206,11 +211,9 @@ body,html {
 #bg {
   /*background-image: url(./images/farming-background.jfif);*/
   background-image: url(./images/bg.jpeg);
-  height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  margin-bottom: 60px;
 }
 
 .gfg {
@@ -219,30 +222,7 @@ body,html {
   padding-left:25%;
 }
 
-@media screen and (min-width: 1200px) {
-  
-  #bg {
-    height: 100vh;
-  }
-  
-}
-
-
-@media (max-height: 800){
-  #bg {
-    height: 120vh;
-  }
-  #home-container{
-    font-family: 'Montserrat', sans-serif;
-    display: block;
-    text-align: left;
-    padding-left: 10%;
-    padding-right: 10%;
-    height: 120vh;
-  }
-}
-
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1200px) and (min-height:800px) {
   #bg {
     height: 120vh;
   }
@@ -256,7 +236,9 @@ body,html {
     text-align: left;
     padding-left: 10%;
     padding-right: 10%;
+    padding-top: 20%;
     height: 100vh;
+    justify-content: center;
   }
   
   #main-title{
@@ -299,14 +281,21 @@ body,html {
   .vis-buttons-parent {
     display: block;
     position: fixed;
-    padding-top: 5vh;
     padding-left: 2px;
-    width: 8%;
+    width: 20%;
   }
   
   .vis-buttons-child {
     z-index: 5;
   
+  }
+
+  #vis-buttons-label {
+    font-size: 12px;
+  }
+
+  #vis-question-label{
+    font-size: 12px;
   }
 
   .visualization-window {
@@ -319,17 +308,10 @@ body,html {
     margin: auto;
     /* Center child horizontally*/
   }
-  
-  .vis-buttons-parent {
-    display: block;
-    position: fixed;
-    padding-top: 0;
-    padding-left: 2px;
-    width: 20%;
-  }
-  
-  .vis-buttons-child {
-    z-index: 5;
+
+  #visTop {
+    font-size: small;
+    font-style: italic;
   }
 
   .inline-parent {
@@ -345,12 +327,171 @@ body,html {
   }
 }
 
-@media (max-width: 650px) {
+@media screen and (max-width: 600px) and (max-height: 1000px)  {
+
+  #bg {
+    height: 120vh;
+  }
+  #logo{
+    display: none;
+  }
+
+  #home-container{
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+    text-align: left;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 20%;
+    height: 100vh;
+    justify-content: center;
+  }
+  
+  #main-title{
+    padding-top: 10%;
+    padding-left: 5%;
+    font-weight: 100;
+    font-size: medium;
+    color: rgb(88, 88, 88);
+  }
+  
+  #home-sub-title{
+    padding-left: 5%;
+    font-size: medium;
+    font-weight: bolder;
+    color: rgb(0,0,0);
+  }
+  
+  #home-info{
+    font-size: x-small;
+    padding-left: 12vw;
+    padding-right: 12vw;
+    padding-bottom: 10vh;
+  }
+  
+  #home-button{
+    text-align: center;
+    color: #022851;
+  }
+
+  .visualization-window {
+    font-family: 'Metropolis';
+    font-size: 12px;
+    height: 80%;
+    width: 70%;
+    /* outline: solid 1px black; */
+    margin: auto;
+    /* Center child horizontally*/
+  }
+  
+  .vis-buttons-parent {
+    display:block;
+    padding-top: 65%;
+    width: 100%;
+    position: absolute;
+  }
+  
+  .vis-buttons-child {
+    z-index: 5;
+  
+  }
+
+  #vis-buttons-label {
+    font-size: 12px;
+  }
+
+  #vis-question-label{
+    font-size: 8px;
+  }
+
+  .visualization-window {
+    font-family: 'Metropolis';
+    font-size: 24px;
+    height: 60%;
+    width: 70%;
+    padding-left: 5%;
+    /* outline: solid 1px black; */
+    margin: auto;
+    /* Center child horizontally*/
+  }
+
+  #visTop {
+    font-size: small;
+    font-style: italic;
+  }
+
+  .inline-parent {
+    border: 1px solid black;
+    text-align: center;
+    height: auto;
+    width:auto;
+  }
+  .inline-child {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+  }
+}
+
+@media screen and (max-height:800px) and (min-width: 600px) {
+
+  #logo{
+    display: none;
+  }
+
+  #home-container{
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+    text-align: left;
+    padding-left: 10%;
+    padding-right: 10%;
+    height: 200vh;
+    justify-content: center;
+  }
+  
+  #vis-question-label{
+    font-size: 12px;
+  }
+
+  .vis-buttons-parent {
+    display: block;
+    position:fixed;
+    padding-top: 0;
+    padding-left: 2px;
+    width:15%;
+  }
+
+  #visTop {
+    font-size: small;
+    font-style: italic;
+  }
+
+  #main-title{
+    padding-top: 10%;
+    padding-left: 5%;
+    font-weight: 100;
+    font-size: medium;
+    color: rgb(88, 88, 88);
+  }
+  
+  #home-sub-title{
+    padding-left: 5%;
+    font-size: large;
+    font-weight: bolder;
+    color: rgb(0,0,0);
+  }
+  
+  #home-info{
+    font-size: smaller;
+    padding-left: 12vw;
+    padding-right: 12vw;
+    padding-bottom: 10vh;
+  }
+  
+  #home-button{
+    text-align: center;
+    color: #022851;
+  }
   
 }
-
-@media (max-width: 375px) {
- 
-}
-
 

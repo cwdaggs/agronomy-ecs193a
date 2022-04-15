@@ -94,9 +94,13 @@ export const Visualizations = () => {
 
     return(
       <div className='inline-parent'>
-        <h3>{questions[String(active)]}</h3>
+        <div id='vis-question-label'>
+          <h3>{questions[String(active)]}</h3>
+        </div>
         <div className='vis-buttons-parent'>
-          <p>Survey Questions</p>
+          <div id='vis-buttons-label'>
+            Survey Questions
+          </div>
           <nav>
             {types.map(type => (
               <NavLink

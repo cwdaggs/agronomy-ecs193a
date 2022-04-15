@@ -28,6 +28,35 @@ const Dropbtn = styled.div`
   &:hover {
     background-color: green;
   }
+  @media (max-width: 950px) {
+    padding: 10px 20px;
+    font-size: 12px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 5px solid white;
+    border-right: 5px solid white;
+    border-radius: 25px;
+  }
+
+  @media (max-width: 675px) {
+    padding: 5px 10px;
+    font-size: 8px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 5px solid white;
+    border-right: 5px solid white;
+    border-radius: 25px;
+  }
+
+  @media (max-width: 375px) {
+    padding: 3px 5px;
+    font-size: 6px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 5px solid white;
+    border-right: 5px solid white;
+    border-radius: 25px;  
+  }
 `;
 
 const DropDownContent = styled.div`
@@ -57,6 +86,21 @@ const SubA = styled.a`
   text-align: left;
   &:hover {
     background-color: #f1f1f1;
+  }
+  @media (max-width: 950px) {
+    padding: 15px 40px;
+    font: 15px Metropolis, sans-serif;
+    font-weight: 800;
+  }
+
+  @media (max-width: 675px) {
+    padding: 10px 20px;
+    font: 10px Metropolis, sans-serif;
+    font-weight: 800;
+  }
+
+  @media (max-width: 380px) {
+    padding: 10px 10px;
   }
 `;
 
@@ -116,6 +160,24 @@ const TabVisualizations = styled.button`
   border-bottom: 2px solid black;
   opacity: 1;
   `}
+  @media (max-width: 1200px) {
+    padding: 3%;
+    font-size: 12px;
+  }
+  @media (max-width: 950px) {
+    padding: 2%;
+    font-size: 12px;
+  }
+
+  @media (max-width: 675px) {
+    padding: 1%;
+    font-size: 8px;
+  }
+
+  @media (max-width: 380px) {
+    padding: 0%;
+    font-size: 6px;
+  }
 `;
 
 const Button = styled.button`
