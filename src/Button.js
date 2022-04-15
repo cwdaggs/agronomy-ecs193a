@@ -32,19 +32,19 @@ const Tab = styled.button`
   // border-bottom: 2px solid black;
   opacity: 1;
   `}
-  @media (max-width: 900px) {
+  @media (max-width: 950px) {
     padding: 15px 40px;
     font: 15px Metropolis, sans-serif;
     font-weight: 800;
   }
 
-  @media (max-width: 450px) {
+  @media (max-width: 675px) {
     padding: 10px 20px;
     font: 10px Metropolis, sans-serif;
     font-weight: 800;
   }
 
-  @media (max-width: 350px) {
+  @media (max-width: 375px) {
     padding: 10px 10px;
   }
 `;
