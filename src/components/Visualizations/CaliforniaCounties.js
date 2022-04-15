@@ -12,6 +12,10 @@ import {
   Graticule
 } from "react-simple-maps";
 
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+const fontSize = 34;
+
 const geoUrl =
   "./data/california-counties.geojson";
 
@@ -38,112 +42,60 @@ export const MapChart = (props) => {
   const countyData = acresByCounty(data)
   const occupationData = occupationAmount(data);
   return (
-    <div>
-      {/* <h2>Density of Survey Responses By County</h2> */}
+    <div id='info-charts'>
+        <img src='./assets/county-map.png' id="map-image"></img>
+        <div className='flex-parent'>
+            <div id="info-legend">
 
-      <svg width={1320} height={700}>
-
-          
-          <VictoryLegend
-            standalone={false}
-            colorScale={colorScale}
-
-            x={0}
-            y={100}
-
-            gutter={20}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: 23},
-                  data:   {stroke: "black", strokeWidth: 1}}}
-            title="Responses by County"
-            centerTitle
-            data={[
-              { name: ">80", symbol: { fill: "#ff5233" }, labels:{fontSize: 20}},
-              { name: "60-80", symbol: { fill: "#ff7158" }, labels:{fontSize: 20}},
-              { name: "40-60", symbol: { fill: "#ff907d" }, labels:{fontSize: 20}},
-              { name: "20-40", symbol: { fill: "#ffafa2" }, labels:{fontSize: 20}},
-              { name: "1-20", symbol: { fill: "#ffcec7" }, labels:{fontSize: 20}},
-              { name: "0", symbol: { fill: "#ffedea" }, labels:{fontSize: 20}}
-
-            ]}
-            
-          />
-
-          <ComposableMap
-          projection={d3.geoAlbersUsa()}
-          projectionConfig={{
-              rotate: [-10, 0, 0],
-              scale: 47
-          }}
-          >
-          {data.length > 0 && (
-              <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                  geographies.map((geo) => {
-                  const d = data.find((s) => s.County === geo.properties.name);
-                  //console.log(d)
-                  //var total = ((String(d["Acres_Managed"]) !== "NA")? d["Acres_Managed"]:0) + (String(d["Acres_Consulted"]) !== "NA"? d["Acres_Consulted"] :0)
-                  return (
-                      <Geography
-                      key={geo.properties.cartodb_id}
-                      geography={geo}
-                      fill={d ? colorScale(countyData[geo.properties.name]): "#F5F5F5"}
-                      //onClick={console.log("Acres Managed? ", d)}
-                      />
-                  );
-                  })
-              }
-              </Geographies>
-          )}
-          </ComposableMap>
-          <VictoryPie
-            animate={{
-              duration: 500,               
-            }}
-            standalone={false}
-            width={1000}
-            height={600}
-            padding={{
-              left: 750,
-              bottom: 20,
-              top: 20
-            }}
-            style={{ data: { stroke: "black", strokeWidth: 1}}}
-            colorScale={pieColorScale}
-            data={occupationData}
-            // labels={() => null}
-            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
-            labelComponent={<VictoryTooltip 
-              style={{
-                fontSize:20,
-                fontFamily: 'ABeeZee'
-              }}
-              flyoutHeight={25}
-              flyoutWidth={45}    
-              />}
-            />
-            <VictoryLegend
-            standalone={false}
-            colorScale={colorScale}
-            x={500}
-            y={100}
-
-            gutter={20}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: 23},
-                  data:   {stroke: "black", strokeWidth: 1}}}
-            title="Responses by Occupation"
-            centerTitle
-            data={[
-              { name: "Growers", symbol: { fill: "#0A2F51" }, labels:{fontSize: 20}},
-              { name: "Consultants", symbol: { fill: "#0E4D64" }, labels:{fontSize: 20}},
-              { name: "Allied Industry", symbol: { fill: "#137177" }, labels:{fontSize: 20}},
-              { name: "Other", symbol: { fill: "#188977" }, labels:{fontSize: 20}}
-            ]}
-            
-          />
-      </svg>
-    </div>
+              <VictoryLegend
+                colorScale={colorScale}
+                x={50}
+                y={-vh*.07}
+                gutter={25}
+                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 32}, 
+                      title:  {fontFamily: 'ABeeZee', fontSize: 32},
+                      data:   {stroke: "black", strokeWidth: 1}}}
+                title="Responses by Occupation"
+                centerTitle
+                data={[
+                  { name: "Growers", symbol: { fill: "#0A2F51" }, labels:{fontSize: fontSize}},
+                  { name: "Consultants", symbol: { fill: "#0E4D64" }, labels:{fontSize: fontSize}},
+                  { name: "Allied Industry", symbol: { fill: "#137177" }, labels:{fontSize: fontSize}},
+                  { name: "Other", symbol: { fill: "#188977" }, labels:{fontSize: fontSize}}
+                ]}
+              
+              />
+            </div>
+            <div id='info-pie'>
+              <VictoryPie
+                animate={{
+                  duration: 500,               
+                }}
+                width={vw*.5}
+                height={vh}
+                padding={{
+                  left: 0,
+                  bottom: 0,
+                  top: 0
+                }}
+                style={{ data: { stroke: "black", strokeWidth: 1}}}
+                colorScale={pieColorScale}
+                data={occupationData}
+                labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+                labelComponent={
+                    <VictoryTooltip 
+                    style={{
+                        fontSize:100,
+                        fontFamily: 'ABeeZee'
+                    }}
+                    flyoutHeight={100}
+                    flyoutWidth={200}    
+                    />
+                }
+              />
+            </div>
+        </div>
+      </div>
   );
 };
 
