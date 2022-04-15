@@ -41,6 +41,7 @@ export const Visualizations = () => {
       test_str = "Acres Managed";
     } else {
       test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
+      test_str = test_str.replace("%20", " ");
     }
     // console.log(window.location.pathname);
     // console.log(window.location.href);

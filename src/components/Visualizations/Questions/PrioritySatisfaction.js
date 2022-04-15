@@ -25,12 +25,19 @@ const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 
 
 export const PrioritySatisfaction = (props) => {
     
+  
+
     const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
 
     const vocationArray = ["All", "Growers", "Consultants"];
 
     const [activeVocation, setActiveVocation] = useState("All");
     const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+
+    if (!props.dataset) {
+      return <pre>Loading...</pre>;
+    }
+
 
     function vocationFunction(newValue){
       setActiveVocation(newValue);
@@ -40,9 +47,7 @@ export const PrioritySatisfaction = (props) => {
       setActiveRegionOrCrop(newValue);
     }  
 
-    if (!props.dataset) {
-        return <pre>Loading...</pre>;
-    }
+
 
     var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
     var data = averageSatisfaction(data_filtered)
