@@ -32,10 +32,20 @@ const Tab = styled.button`
   // border-bottom: 2px solid black;
   opacity: 1;
   `}
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
+    padding: 15px 40px;
+    font: 15px Metropolis, sans-serif;
+    font-weight: 800;
+  }
+
+  @media (max-width: 450px) {
     padding: 10px 20px;
     font: 10px Metropolis, sans-serif;
     font-weight: 800;
+  }
+
+  @media (max-width: 350px) {
+    padding: 10px 10px;
   }
 `;
 

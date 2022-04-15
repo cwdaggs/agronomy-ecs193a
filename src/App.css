@@ -284,7 +284,7 @@ body,html {
 @media screen and (max-width: 1200px) {
   
   #logo{
-    z-index: -5;
+    display: none;
   }
 
   #home-container{

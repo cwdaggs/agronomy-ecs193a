@@ -21,7 +21,8 @@ export const Home = () => {
                     <h2>UCCE 2019 Needs Assessment Survey Analysis</h2>
                 </div>   
                 <div id="home-info">
-                    <h2>In 2019, a survey was given to hundreds of California farmers to assess their needs. This web application has been developed to extend those results to the public.</h2>
+                    <h2>Challenges to agronomic crop production in California</h2>
+                    <h2>Guiding UCCE research and extension efforts based on critical needs identified by growers and industry</h2>
                 </div>   
                 <div id="home-button">
                     <NavLink to ="/results">

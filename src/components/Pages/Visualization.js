@@ -94,6 +94,7 @@ export const Visualizations = () => {
 
     return(
       <div className='inline-parent'>
+        <h3>{questions[String(active)]}</h3>
         <div className='vis-buttons-parent'>
           <h2>Survey Questions</h2>
           <nav>

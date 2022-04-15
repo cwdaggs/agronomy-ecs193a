@@ -54,8 +54,8 @@ export default function App() {
           <NavLink to ="/info">
             {({ isActive }) => getActiveTab(isActive, "Info")}
           </NavLink>
-          <NavLink to ="/about">
-            {({ isActive }) => getActiveTab(isActive, "About")}
+          <NavLink to ="/team">
+            {({ isActive }) => getActiveTab(isActive, "Team")}
           </NavLink>
           <NavLink to ="/survey">
             {({ isActive }) => getActiveTab(isActive, "Survey")}
@@ -79,7 +79,7 @@ export default function App() {
             </div>
           }/>
           <Route path="info" element={<InfoSummary/>}/>
-          <Route path="about" element={<AboutSummary/>}/>
+          <Route path="team" element={<AboutSummary/>}/>
           <Route path="survey" element={<MiniSurvey/>}/>
         </Routes>
       </div>
