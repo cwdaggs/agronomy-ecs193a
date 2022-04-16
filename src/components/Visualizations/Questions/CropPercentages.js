@@ -18,6 +18,7 @@ export function CropPercentages(props) {
     const width = vw;
     const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
+    var fontSize = 20;
     for (var i = 0; i < data.length; i++) {
         legend_data.push({name: data[i].x})
     }
@@ -30,10 +31,10 @@ export function CropPercentages(props) {
                         <VictoryLegend
                             colorScale="heatmap"
                             x={150}
-                            y={70}  
+                            y={0}  
                             gutter={20}
-                            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
-                                    title:  {fontFamily: 'ABeeZee', fontSize: 13},
+                            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+                                    title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
                                     data:   {stroke: "black", strokeWidth: 1}}}
                             title="Crop Categories"
                             centerTitle
@@ -65,8 +66,8 @@ export function CropPercentages(props) {
                                     fontSize:35,
                                     fontFamily: 'ABeeZee'
                                 }}
-                                flyoutHeight={height/10}
-                                flyoutWidth={width/10}      
+                                flyoutHeight={40}
+                                flyoutWidth={80}      
                             />}
                         />
                     </div>

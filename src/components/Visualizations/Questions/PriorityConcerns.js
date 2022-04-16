@@ -89,9 +89,10 @@ export function PriorityConcerns(props) {
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh*0.9;
+    const height = vw;
     const width = vw;
-    const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+    const margin = { top: 0, right: 0, bottom: 0, left: width/10 };
+    var fontSize = 12;
 
     for (var i = 0; i < data_by_reason.length; i++) {
         legend_data.push({name: data_by_reason[i].x})
@@ -109,11 +110,11 @@ export function PriorityConcerns(props) {
           <div class='child flex-child'>
             <VictoryLegend
                 x={150}
-                y={10}
+                y={0}
                 colorScale={colorScale}
                 gutter={20}
-                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 13}, 
-                        title:  {fontFamily: 'ABeeZee', fontSize: 13},
+                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+                        title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
                         data:   {stroke: "black", strokeWidth: 1}}}
                 title={String("Management Concerns (n=" + n + ")")}
                 centerTitle
@@ -143,8 +144,8 @@ export function PriorityConcerns(props) {
                     fontSize:35,
                     fontFamily: 'ABeeZee'
                   }}
-                  flyoutHeight={height/10}
-                  flyoutWidth={width/10}    
+                  flyoutHeight={40}
+                  flyoutWidth={80}    
               />}
           />
           </div>

@@ -386,7 +386,8 @@ body,html {
   
   .vis-buttons-parent {
     display:block;
-    padding-top: 65%;
+    padding-top: 100%;
+    padding-bottom: 10%;
     width: 100%;
     position: absolute;
   }
@@ -397,7 +398,7 @@ body,html {
   }
 
   #vis-buttons-label {
-    font-size: 12px;
+    font-size: 8px;
   }
 
   #vis-question-label{

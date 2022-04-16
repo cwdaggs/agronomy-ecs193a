@@ -14,7 +14,7 @@ function transformData(dataset) {
   });
   return dataset.map((data) => {
     return data.map((datum, i) => {
-      return { x: String(datum.Concern + " n = " + totals[i]), y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
+      return { x: String(datum.Concern), y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
     });
   });
 }
@@ -43,11 +43,16 @@ export function ConcernsVictory(props) {
   const dataset = transformData(data_sorted);
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vh*0.9;
+  const height = vw*0.5;
   const width = vw;
+  const mobileWidth = 1000;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   const colorScale = ["#00471A", "#009141", "#02D46F"];
-  const fontSize = 20
+  var fontSize = 20
+  var mobileFontSize = 6
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
   const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]
 
   return (
@@ -66,18 +71,19 @@ export function ConcernsVictory(props) {
           height={height} 
           width={width}
           domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-          padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryLegend 
-                x={width/2 - 300}
-                y={10}
+                x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
+                y={(width>=mobileWidth) ? (0):15}
+                width={width-margin.left-margin.right}
                 title="Level of Concern"
                 centerTitle
                 orientation="horizontal"
                 colorScale={colorScale}
-                borderPadding = {{right: 10}}
+                borderPadding = {{right: height/100}}
                 gutter={20}
-                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
+                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
                         // border: { stroke: "black" }, 
                         title: {fontSize: fontSize }, 
                         data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}

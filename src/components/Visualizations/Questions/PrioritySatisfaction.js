@@ -18,16 +18,22 @@ function barData(dataset, topic){
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-const height = vh*0.8;
+const height = vw*0.5;
 const width = vw;
 const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 };
 
+const mobileWidth = 1000;
+var fontSize = 20
+var mobileFontSize = 10
+if(width < mobileWidth){
+  fontSize = mobileFontSize;
+}
 
 export const PrioritySatisfaction = (props) => {
     
   
 
-    const [vis,setVis]=useState(<p>Click and drag an area of points for more information</p>);
+    const [vis,setVis]=useState(<p id="vis-question-label">Click and drag an area of points for more information</p>);
 
     const vocationArray = ["All", "Growers", "Consultants"];
 
@@ -72,18 +78,18 @@ export const PrioritySatisfaction = (props) => {
               height={height} 
               width={width}
 
-              padding={{ top: margin.top + 100, bottom: margin.bottom, left: margin.left, right: margin.right }}
+              padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
               
             >
             <VictoryLegend 
-              x={width/3 + 100}
-              y={15}
+              x={(width>=mobileWidth)?width/4 + margin.left:0}
+              y={0}
               title="Engagement Frequency"
               centerTitle
               orientation="horizontal"
               itemsPerRow={3}
               gutter={30}
-              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
+              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
                       title: {fontSize: fontSize }, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
@@ -177,8 +183,7 @@ export const PrioritySatisfaction = (props) => {
     }
 
     function handleSelectionCleared(props){}  
-  
-    const fontSize = 20
+
 
     return (
 
@@ -202,19 +207,19 @@ export const PrioritySatisfaction = (props) => {
                 height={height} 
                 width={width}
                 domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-                padding={{ top: margin.top, bottom: margin.bottom, left: width/3.2, right: margin.right }}  
+                padding={{ top: margin.top, bottom: margin.bottom, left:width/3.2, right: margin.right }}  
                 
             >
             <VictoryLegend 
-              x={width*.1}
-              y={height*.25}
+              x={(width>=mobileWidth) ? width*.1 :0}
+              y={(width>=mobileWidth) ? height*.1 :0}
               title="Legend"
               centerTitle
               orientation="vertical"
-              gutter={50}
+              gutter={(width>=mobileWidth) ? 50 : 5}
               style={{ border: { stroke: "black" }, 
-                       title: {fontSize: fontSize+10, fontFamily: 'ABeeZee' }, 
-                       labels: {fontSize: fontSize+10, fontFamily: 'ABeeZee'}}}
+                       title: {fontSize: fontSize, fontFamily: 'ABeeZee' }, 
+                       labels: {fontSize: fontSize, fontFamily: 'ABeeZee'}}}
               data={[
                 { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a"} },
                 { name: "Average", symbol: { fill: "red", type:"square" } },
@@ -232,10 +237,10 @@ export const PrioritySatisfaction = (props) => {
                         strokeWidth: 1
                     },
                     axis: {stroke: "#756f6a"},
-                    ticks: {stroke: "grey", size: 20},
+                    ticks: {stroke: "grey", size: fontSize},
                     tickLabels: {fontSize: fontSize, padding: 5}
                   }}
-                size={10}
+                size={(width>=mobileWidth) ? fontSize/2 : fontSize/5}
                 data={data}
                 labels={({datum}) => datum.Topic.split('_').join(' ') + "\nSatisfaction Avg: " + String(datum.Satisfaction).substring(0, 4) + "\nPriority Avg: " + String(datum.Priority).substring(0,4)}
                 labelComponent={
@@ -262,7 +267,7 @@ export const PrioritySatisfaction = (props) => {
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 5},
-                        axisLabel: {fontSize: fontSize*2, fontFamily: 'ABeeZee', padding: 60 }
+                        axisLabel: {fontSize: (width>=mobileWidth) ? fontSize*2 : fontSize, fontFamily: 'ABeeZee', padding: 60 }
                         }}
                 />
                 <VictoryAxis
@@ -271,7 +276,7 @@ export const PrioritySatisfaction = (props) => {
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 0},
-                        axisLabel: {fontSize: fontSize*2, fontFamily: 'ABeeZee', padding: 60 }
+                        axisLabel: {fontSize: (width>=mobileWidth) ? fontSize*2 : fontSize, fontFamily: 'ABeeZee', padding: (width>=mobileWidth) ? 60 : 35 }
                         }}
                 />
             <VictoryLine horizontal

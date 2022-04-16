@@ -83,6 +83,8 @@ export function PrimaryGrowingReasons(props) {
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vh;
     const width = vw;
+    const mobileWidth = 1000;
+    var fontSize = 12;
     const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
     for (var i = 0; i < data_by_reason.length; i++) {
@@ -106,8 +108,8 @@ export function PrimaryGrowingReasons(props) {
                     y={0}     
                       colorScale={colorScale}
                       gutter={20}
-                      style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 12}, 
-                              title:  {fontFamily: 'ABeeZee', fontSize: 12},
+                      style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+                              title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
                               data:   {stroke: "black", strokeWidth: 1}}}
                       title={String("Reasons for Growing Crops (n=" + n + ")")}
                       centerTitle
@@ -136,8 +138,8 @@ export function PrimaryGrowingReasons(props) {
                             fontSize:35,
                             fontFamily: 'ABeeZee'
                           }}
-                          flyoutHeight={height/10}
-                          flyoutWidth={width/10}     
+                          flyoutHeight={40}
+                          flyoutWidth={80}     
                       />}
                   />
               </div>

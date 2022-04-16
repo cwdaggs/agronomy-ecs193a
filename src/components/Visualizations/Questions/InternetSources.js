@@ -114,10 +114,16 @@ export function InternetSourcesBarChart(props) {
     var graph_data = getInternetSources(filtered_data);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh*0.9;
+    const height = vw*0.5;
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-    const fontSize = 18;
+    
+    const mobileWidth = 1000;
+    var fontSize = 20
+    var mobileFontSize = 5
+    if(width < mobileWidth){
+      fontSize = mobileFontSize;
+    }
 
     return (
       <>
@@ -127,8 +133,8 @@ export function InternetSourcesBarChart(props) {
         <div class='visualization-window'>
           
           <VictoryChart height={height} width={width}
-            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
+            domainPadding={{ x: (width>=mobileWidth) ? margin.right/10 : 0, y:margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}   
             animate={{duration: 800}}
           >
             {/* <VictoryLabel 
