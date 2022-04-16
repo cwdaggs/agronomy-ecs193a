@@ -174,6 +174,80 @@ footer {
   background-attachment: fixed;
   background-size: cover;
 }
+
+#visLandingPage{
+  /* background-image: url(./images/wheat_field.png); */
+  /* Need to make height dynamic */
+  height: 1100px;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
+}
+
+#visLandingHeading{
+  text-align: center;
+  color: white;
+  font-size: 48px;
+
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+#visLandingBody{
+  color: white;
+  position: fixed;
+  top: 45%;
+  margin: 100px;
+  font-weight: 600;
+  font-size: 22px;
+  /* bring your own prefixes */
+}
+
+#visLandingBodyExtended{
+  color: white;
+  position: fixed;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  font-size: 22px;
+  text-align: center;
+  /* bring your own prefixes */
+}
+
+/* #infoSection{
+  height: 2600px;
+} */
+
+#infoSection1{
+  height: 100vh;
+  position: fixed;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#infoSection2{
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 50%;
+  left: 40%;
+  transform: translate(-20%, -50%);
+}
+
+#infoSection3{
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* #menuitem {
   background-color: blanchedalmond;
   color:#FFBF00
