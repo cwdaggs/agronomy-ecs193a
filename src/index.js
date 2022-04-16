@@ -11,9 +11,9 @@ import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
-  <HashRouter>
+  <BrowserRouter>
     <App/>
-  </HashRouter>,
+  </BrowserRouter>,
   rootElement
 );
 
