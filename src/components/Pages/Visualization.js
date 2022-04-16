@@ -3,13 +3,43 @@ import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
 import {Tab} from '../Visualizations/StyledDivs'
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
-import { NavLink, Outlet, Routes, Route, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
 import { AboutSummary } from './AboutSummary';
+import {PrioritySatisfaction} from '../Visualizations/Questions/PrioritySatisfaction.js'
+import {AffectVictory} from '../Visualizations/Questions/Affect_victory';
+import {ConcernsVictory} from '../Visualizations/Questions/Concerns_victory';
+import {AcresManagedBarChart} from '../Visualizations/Questions/AcresManaged.js';
+import { CropPercentages } from "../Visualizations/Questions/CropPercentages";
+import {InfoSourcesBarChart} from "../Visualizations/Questions/InfoSources";
+import {InternetSourcesBarChart} from "../Visualizations/Questions/InternetSources";
+import { PriorityConcerns } from "../Visualizations/Questions/PriorityConcerns";
+import { AmountVictory } from "../Visualizations/Questions/AmountValued";
+import { EngageVictory } from "../Visualizations/Questions/Engage_victory";
+import { PrimaryGrowingReasons } from "../Visualizations/Questions/PrimaryGrowingReasons";
 
 // function QueryNavLink({ to, ...props }) {
 //   let location = useLocation();
 //   return <NavLink to={to + location.search} {...props} />;
 // }
+
+function VisSelector(dataset, vis) {
+
+  var vis_key = { 
+    "Priorities vs Satisfaction" :        (<PrioritySatisfaction dataset={dataset}/>),
+    "Crop Percentages":                   (<CropPercentages dataset={dataset}/>),
+    "Priority Effect":                    (<AffectVictory dataset={dataset}/>),
+    "Production Concerns":                (<ConcernsVictory dataset={dataset}/>),
+    "Acres Managed":                      (<AcresManagedBarChart dataset={dataset}/>),
+    "Information Sources":                (<InfoSourcesBarChart dataset={dataset}/>),
+    "Internet Sources":                   (<InternetSourcesBarChart dataset={dataset}/>),
+    "Priority Concerns":                  (<PriorityConcerns dataset={dataset}/>),
+    "Values":                             (<AmountVictory dataset={dataset}/>),
+    "UCCE Engagement":                    (<EngageVictory dataset={dataset}/>),
+    "Primary Growing Reasons":            (<PrimaryGrowingReasons dataset={dataset}/>)
+  }
+
+  return (vis_key[vis])
+}
 
 export const Visualizations = () => {
     
@@ -37,11 +67,11 @@ export const Visualizations = () => {
     */
 
 
-    if (window.location.href === "http://localhost:3000/#/results") {
-      test_str = "Acres Managed";
-    } else {
-      test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
-    }
+    // if (window.location.href === "http://localhost:3000/#/results") {
+    //   test_str = "Acres Managed";
+    // } else {
+    //   test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
+    // }
     // console.log(window.location.pathname);
     // console.log(window.location.href);
     // console.log(test_str);
@@ -65,33 +95,8 @@ export const Visualizations = () => {
       ["Priorities vs Satisfaction"]: "Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). ",
       ["Internet Sources"]:"Where do you most often look for field crop production information on the internet?"
     };
-    // return(
-    //     <div className='inline-parent'>
-    //       <h3>{questions[String(active)]}</h3>
-    //       <div className='inline-child'>
-    //             <StyledUl>
-    //               <DropDownLi>
-    //                 <Dropbtn>
-    //                   {activeName}
-    //                 </Dropbtn>
-    //                 <DropDownContent>
-    //                   {" "}
-    //                   {types.map(type => (
-    //                       <SubA 
-    //                       key={type} 
-    //                       onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}} 
-    //                       active={active === type}
-    //                       >{type}
-    //                     </SubA>
-    //                     ))}
-    //                   </DropDownContent>
-    //               </DropDownLi>
-    //             </StyledUl>
-    //             </div>
-    //         {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}                    
-    //     </div>
-    // );
 
+    let [searchParams, setSearchParams] = useSearchParams({ replace: true });
     return(
       <div className='inline-parent'>
         <h3>{questions[String(active)]}</h3>
@@ -100,7 +105,8 @@ export const Visualizations = () => {
             {types.map(type => (
               <NavLink
               key={type}
-              onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}}
+              //setSearchParams({filter : type})
+              onClick={() => {setKey(key+1); setActiveName(type); setActive(type); }}
               
               active={active === type}
               to={`/results/${type}`}>
@@ -109,6 +115,7 @@ export const Visualizations = () => {
             ))}
             
           </nav>
+          <Outlet/>
           {/* <Outlet/>
           <Routes>
             <Route path="results/" element={AboutSummary}>
@@ -116,7 +123,8 @@ export const Visualizations = () => {
             </Route>
           </Routes> */}
         </div>
-        {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}  
+        {/* {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>} */}
+          {/* {VisSelector(useData('./data/Filtered_Crop_Data.csv'), active)} */}
       </div>
     );
 }
