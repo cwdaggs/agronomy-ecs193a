@@ -187,10 +187,12 @@
 #info-charts{
   display: flex;
   padding-bottom: 5vh;
+
 }
 #map-image {
   width: 50%;
   height: 40%;
+  vertical-align: center;
 } 
 
 #info-pie {
@@ -325,6 +327,13 @@ body,html {
     padding: 1rem 1rem;
     vertical-align: middle;
   }
+
+  #map-image {
+    width: 50%;
+    height: 40%;
+    padding-top: 25%;
+    vertical-align: center;
+  } 
 }
 
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
@@ -432,6 +441,13 @@ body,html {
     padding: 1rem 1rem;
     vertical-align: middle;
   }
+
+  #map-image {
+    width: 50%;
+    height: 40%;
+    padding-top: 25%;
+    vertical-align: center;
+  } 
 }
 
 @media screen and (max-height:800px) and (min-width: 600px) {
@@ -493,6 +509,13 @@ body,html {
     text-align: center;
     color: #022851;
   }
+
+  #map-image {
+    width: 50%;
+    height: 40%;
+    padding-top: 10%;
+    vertical-align: center;
+  } 
   
 }
 

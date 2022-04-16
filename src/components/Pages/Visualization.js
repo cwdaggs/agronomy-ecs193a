@@ -28,20 +28,20 @@ export const Visualizations = () => {
     ]
     var test_str = "";
     // ----- Production ------------///
-  /*
-    if (window.location.href === "http://www.uccesurveyresults.com/#/results") {
-      test_str = "Acres Managed";
-    } else {
-      test_str = String(window.location.href).replace("http://www.uccesurveyresults.com/#/results/", "").replace("%20", " ");
-    }
-  */  
-
-
-    if (window.location.href === "http://localhost:3000/#/results") {
-      test_str = "Acres Managed";
-    } else {
-      test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
-      test_str = test_str.replace("%20", " ");
+    if(String(window.location.href).includes("ucce")){
+      if (window.location.href === "http://www.uccesurveyresults.com/#/results") {
+        test_str = "Acres Managed";
+      } else {
+        test_str = String(window.location.href).replace("http://www.uccesurveyresults.com/#/results/", "").replace("%20", " ");
+        test_str = test_str.replace("%20", " ");
+      }
+    }else{
+      if (window.location.href === "http://localhost:3000/#/results") {
+        test_str = "Acres Managed";
+      } else {
+        test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
+        test_str = test_str.replace("%20", " ");
+      }
     }
     // console.log(window.location.pathname);
     // console.log(window.location.href);
