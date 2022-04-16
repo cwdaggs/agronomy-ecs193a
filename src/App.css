@@ -234,16 +234,16 @@ footer {
   height: 100vh;
   width: 100vw;
   position: fixed;
-  top: 50%;
-  left: 40%;
-  transform: translate(-20%, -50%);
+  top: 30%;
+  left: 50%;
+  transform: translate(-20%, -75%);
 }
 
 #infoSection3{
   height: 100vh;
   width: 100%;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

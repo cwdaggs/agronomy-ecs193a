@@ -6,6 +6,8 @@ import "@fontsource/newsreader";
 import file from './downloads/ResearchPaper.pdf';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import wheat from '../../images/wheat_field.png'
+import singleWheat from '../../images/one_wheat.jpg'
+import sky from '../../images/sky.jpg'
 
 
 export const InfoSummary = () => {
@@ -30,7 +32,7 @@ export const InfoSummary = () => {
 
             <C.Body>
               <ParallaxLayer factor={1} style={{
-                backgroundImage: `url(${wheat})`,
+                backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
               <div id = "infoSection1">
@@ -57,8 +59,8 @@ export const InfoSummary = () => {
                 </C.Desc>
                 </div>
                 </ParallaxLayer>
-                <ParallaxLayer factor={2} offset={1} style={{
-                backgroundImage: `url(${wheat})`,
+                <ParallaxLayer factor={3} offset={1} style={{
+                backgroundImage: `url(${singleWheat})`,
                 backgroundSize: 'cover'
               }}> 
                 <div id = "infoSection2">
@@ -66,10 +68,7 @@ export const InfoSummary = () => {
                 <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
                 </div>
                 </ParallaxLayer>
-                <ParallaxLayer factor={1} offset={3} style={{
-                backgroundImage: `url(${wheat})`,
-                backgroundSize: 'cover'
-              }}> 
+                <ParallaxLayer factor={1} offset={3}> 
                 <div id = "infoSection3">
                 <C.Desc className='font-newsreader' style={{textAlign: 'center'}}>
                         <br></br><br></br>Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
