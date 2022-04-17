@@ -31,10 +31,12 @@ export const InfoSummary = () => {
             </C.Menu>
 
             <C.Body>
-              <ParallaxLayer factor={1} style={{
+              <ParallaxLayer factor={2} style={{
                 backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
+              </ParallaxLayer>
+              <ParallaxLayer speed = {0.8}> 
               <div id = "infoSection1">
               <C.Title>UCCE Information</C.Title>
               <C.Desc className='font-newsreader'>
@@ -63,12 +65,14 @@ export const InfoSummary = () => {
                 backgroundImage: `url(${singleWheat})`,
                 backgroundSize: 'cover'
               }}> 
+              </ParallaxLayer>
+                <ParallaxLayer offset={2} speed = {0.4}> 
                 <div id = "infoSection2">
                 <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
                 <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
                 </div>
                 </ParallaxLayer>
-                <ParallaxLayer factor={1} offset={3}> 
+                <ParallaxLayer offset={3} speed = {0.2}>  
                 <div id = "infoSection3">
                 <C.Desc className='font-newsreader' style={{textAlign: 'center'}}>
                         <br></br><br></br>Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
