@@ -82,28 +82,9 @@ export function InfoSourcesBarChart(props) {
       "Wheat"
     ];
 
-    var centerTitle = 300;
-    if (activeVocation === "All" || activeRegionOrCrop === "All") {
-      centerTitle = 200;
-    }
-
-    var titleText = "";
-    if (activeVocation !== "All") {
-      titleText += "Vocation: " + activeVocation;
-    }
-    if (crops.includes(activeRegionOrCrop)) {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        titleText += " Crop: " + activeRegionOrCrop;
-      }
-    }
-    if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-      titleText += " Region: " + activeRegionOrCrop;
-    }
-
     var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
     if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
       data = props.dataset;
-      centerTitle = 200;
     }
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data);
@@ -133,11 +114,6 @@ export function InfoSourcesBarChart(props) {
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}  
           >
-
-            <VictoryLabel text={titleText} 
-              x={width/2 - centerTitle} 
-              y={80}
-              style ={{fontSize:fontSize +10}}/>
 
             <VictoryBar horizontal
               data={info_data}
