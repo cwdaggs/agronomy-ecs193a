@@ -97,7 +97,7 @@
 
 .font-newsreader{
   font-family: 'Newsreader';
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .rect-home{
@@ -183,6 +183,88 @@
   background-size: cover;
 }
 
+#visLandingPage{
+  /* background-image: url(./images/wheat_field.png); */
+  /* Need to make height dynamic */
+  height: 1100px;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
+}
+
+#visLandingHeading{
+  text-align: center;
+  color: white;
+  font-size: 48px;
+
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+#visLandingBody{
+  color: white;
+  position: fixed;
+  top: 45%;
+  margin: 100px;
+  font-weight: 600;
+  font-size: 22px;
+  /* bring your own prefixes */
+}
+
+#visLandingBodyExtended{
+  color: white;
+  position: fixed;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  font-size: 22px;
+  text-align: center;
+  /* bring your own prefixes */
+}
+
+/* #infoSection{
+  height: 2600px;
+} */
+
+#infoSection0{
+  margin-top: 50px;
+}
+
+#infoSection1{
+  height: 100vh;
+  position: fixed;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#infoSection2{
+  height: 100vh;
+  width: 0.5*100vw;
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  left: 50%;
+  transform: translate(-20%, -75%);
+}
+
+#infoSection3{
+  height: 100vh;
+  width: 80vw;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* #menuitem {
+  background-color: blanchedalmond;
+  color:#FFBF00
+} */
 #info-charts{
   display: flex;
   padding-bottom: 5vh;

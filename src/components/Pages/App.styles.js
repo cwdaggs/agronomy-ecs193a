@@ -90,14 +90,14 @@ export const Body = styled.div`
 export const Title = styled.h1`
     margin:0;
     padding:0;
-    font-size:50px;
+    font-size:60px;
     font-weight:600;
 `;
 
 export const SubTitle = styled.h1`
     margin:0;
     padding:0;
-    font-size:40px;
+    font-size:50px;
     font-weight:500;
 `;
 
