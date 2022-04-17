@@ -227,6 +227,8 @@ body,html {
   display: flex;
   flex-wrap: wrap;
   justify-content:space-between;
+  background-color: white;
+  padding: 3%;
 }
 
 .profile {
