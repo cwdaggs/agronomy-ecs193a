@@ -89,6 +89,9 @@ export function AcresManagedBarChart(props) {
 
     return (
       <>
+      <div id='vis-question-label'>
+          <h3>How many acres do you manage/consult annually?</h3>
+      </div>
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
       </div>

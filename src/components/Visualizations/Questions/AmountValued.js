@@ -142,6 +142,9 @@ export function AmountVictory(props) {
 
   return (
     <>
+    <div id='vis-question-label'>
+      <h3>How much do you value the following:</h3>
+    </div>
     <div className="inline-child">
       <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
     </div>

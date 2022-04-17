@@ -103,6 +103,9 @@ export function InfoSourcesBarChart(props) {
 
     return (
       <>
+        <div id='vis-question-label'>
+          <h3>Who do you communicate with when seeking information about field crop production?</h3>
+        </div>
         <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
         </div>

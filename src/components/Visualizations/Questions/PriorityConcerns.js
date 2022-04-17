@@ -102,6 +102,9 @@ export function PriorityConcerns(props) {
 
     return (
       <>
+      <div id='vis-question-label'>
+        <h3>What are the highest priority management challenges/concerns?</h3>
+      </div>
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
       </div>

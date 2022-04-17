@@ -183,6 +183,9 @@ export function AffectVictory(props) {
 
   return (
     <>
+    <div id='vis-question-label'>
+          <h3>How often do the following priorities affect your recommendations/management decisions for field crop production?</h3>
+      </div>
     <div className="inline-child">
       <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
     </div>

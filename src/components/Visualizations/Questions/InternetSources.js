@@ -127,6 +127,9 @@ export function InternetSourcesBarChart(props) {
 
     return (
       <>
+      <div id='vis-question-label'>
+        <h3>Where do you most often look for field crop production information on the internet?</h3>
+      </div>
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
       </div>

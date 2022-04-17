@@ -24,6 +24,10 @@ export function CropPercentages(props) {
     }
 
     return (
+        <>
+        <div id='vis-question-label'>
+            <h3>Of the total acres, what percentage of the crops grown are in each of the following categories?</h3>
+        </div>
         <div  class='visualization-window'>
             <div class="pie-chart">
                 <div class='parent flex-parent'>
@@ -75,5 +79,6 @@ export function CropPercentages(props) {
                 </div>
             </div>
         </div>
+        </>
     );
 }

@@ -57,6 +57,9 @@ export function ConcernsVictory(props) {
 
   return (
     <>
+      <div id='vis-question-label'>
+        <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
+      </div>
       <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
       </div>
