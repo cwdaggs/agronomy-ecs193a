@@ -51,7 +51,7 @@ export const Visualizations = () => {
         "Priorities vs Satisfaction", //Q13
         "Internet Sources", //Q16
     ]
-    // var test_str = "";
+    var test_str = "";
     // // ----- Production ------------///
     // if(String(window.location.href).includes("ucce")){
     //   if (window.location.href === "http://www.uccesurveyresults.com/#/results") {
