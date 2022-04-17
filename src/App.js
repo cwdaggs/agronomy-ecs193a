@@ -93,7 +93,7 @@ export default function App() {
           <Route path="Crop%20Percentages" element={<CropPercentages dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
           <Route path="Production%20Concerns" element={<ConcernsVictory dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
           <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Primary Growing%20Reasons" element={<PrimaryGrowingReasons dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
+          <Route path="Primary%20Growing%20Reasons" element={<PrimaryGrowingReasons dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
           <Route path="Priority%20Effect" element={<AffectVictory dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
           <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
           <Route path="UCCE%20Engagement" element={<EngageVictory dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>

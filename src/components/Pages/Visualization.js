@@ -17,11 +17,6 @@ import { AmountVictory } from "../Visualizations/Questions/AmountValued";
 import { EngageVictory } from "../Visualizations/Questions/Engage_victory";
 import { PrimaryGrowingReasons } from "../Visualizations/Questions/PrimaryGrowingReasons";
 
-// function QueryNavLink({ to, ...props }) {
-//   let location = useLocation();
-//   return <NavLink to={to + location.search} {...props} />;
-// }
-
 function VisSelector(dataset, vis) {
 
   var vis_key = { 
@@ -78,8 +73,6 @@ export const Visualizations = () => {
     // console.log(active);
     // const [active, setActive] = useState("Acres Managed");
     const [active, setActive] = useState(test_str);
-   
-    const [activeName, setActiveName] = useState("Select Topic");
     const [key, setKey] = useState(0);
 
     const questions = {      
@@ -95,8 +88,7 @@ export const Visualizations = () => {
       ["Priorities vs Satisfaction"]: "Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). ",
       ["Internet Sources"]:"Where do you most often look for field crop production information on the internet?"
     };
-
-    let [searchParams, setSearchParams] = useSearchParams({ replace: true });
+    
     return(
       <div className='inline-parent'>
         <h3>{questions[String(active)]}</h3>
@@ -106,7 +98,7 @@ export const Visualizations = () => {
               <NavLink
               key={type}
               //setSearchParams({filter : type})
-              onClick={() => {setKey(key+1); setActiveName(type); setActive(type); }}
+              onClick={() => {setKey(key+1); setActive(type);}}
               
               active={active === type}
               to={`/results/${type}`}>
@@ -116,12 +108,6 @@ export const Visualizations = () => {
             
           </nav>
           <Outlet/>
-          {/* <Outlet/>
-          <Routes>
-            <Route path="results/" element={AboutSummary}>
-              <Route path="Crop%20Percentages" element={AboutSummary}/>
-            </Route>
-          </Routes> */}
         </div>
         {/* {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>} */}
           {/* {VisSelector(useData('./data/Filtered_Crop_Data.csv'), active)} */}
