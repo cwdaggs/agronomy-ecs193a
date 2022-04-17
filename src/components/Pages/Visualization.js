@@ -1,15 +1,40 @@
 import {useData} from '../Visualizations/UseData';
 import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
-import {Tab, TabVisualizations} from '../Visualizations/StyledDivs'
-import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
-import { NavLink, Outlet, Routes, Route, useLocation } from 'react-router-dom';
+import {Tab} from '../Visualizations/StyledDivs'
+import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, TabVisualizations} from '../Visualizations/StyledDivs';
+import { NavLink, Outlet, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
 import { AboutSummary } from './AboutSummary';
+import {PrioritySatisfaction} from '../Visualizations/Questions/PrioritySatisfaction.js'
+import {AffectVictory} from '../Visualizations/Questions/Affect_victory';
+import {ConcernsVictory} from '../Visualizations/Questions/Concerns_victory';
+import {AcresManagedBarChart} from '../Visualizations/Questions/AcresManaged.js';
+import { CropPercentages } from "../Visualizations/Questions/CropPercentages";
+import {InfoSourcesBarChart} from "../Visualizations/Questions/InfoSources";
+import {InternetSourcesBarChart} from "../Visualizations/Questions/InternetSources";
+import { PriorityConcerns } from "../Visualizations/Questions/PriorityConcerns";
+import { AmountVictory } from "../Visualizations/Questions/AmountValued";
+import { EngageVictory } from "../Visualizations/Questions/Engage_victory";
+import { PrimaryGrowingReasons } from "../Visualizations/Questions/PrimaryGrowingReasons";
 
-// function QueryNavLink({ to, ...props }) {
-//   let location = useLocation();
-//   return <NavLink to={to + location.search} {...props} />;
-// }
+function VisSelector(dataset, vis) {
+
+  var vis_key = { 
+    "Priorities vs Satisfaction" :        (<PrioritySatisfaction dataset={dataset}/>),
+    "Crop Percentages":                   (<CropPercentages dataset={dataset}/>),
+    "Priority Effect":                    (<AffectVictory dataset={dataset}/>),
+    "Production Concerns":                (<ConcernsVictory dataset={dataset}/>),
+    "Acres Managed":                      (<AcresManagedBarChart dataset={dataset}/>),
+    "Information Sources":                (<InfoSourcesBarChart dataset={dataset}/>),
+    "Internet Sources":                   (<InternetSourcesBarChart dataset={dataset}/>),
+    "Priority Concerns":                  (<PriorityConcerns dataset={dataset}/>),
+    "Values":                             (<AmountVictory dataset={dataset}/>),
+    "UCCE Engagement":                    (<EngageVictory dataset={dataset}/>),
+    "Primary Growing Reasons":            (<PrimaryGrowingReasons dataset={dataset}/>)
+  }
+
+  return (vis_key[vis])
+}
 
 export const Visualizations = () => {
     
@@ -27,32 +52,13 @@ export const Visualizations = () => {
         "Internet Sources", //Q16
     ]
     var test_str = "";
-    // ----- Production ------------///
-    if(String(window.location.href).includes("ucce")){
-      if (window.location.href === "http://www.uccesurveyresults.com/#/results") {
-        test_str = "Acres Managed";
-      } else {
-        test_str = String(window.location.href).replace("http://www.uccesurveyresults.com/#/results/", "").replace("%20", " ");
-        test_str = test_str.replace("%20", " ");
-      }
-    }else{
-      if (window.location.href === "http://localhost:3000/#/results") {
-        test_str = "Acres Managed";
-      } else {
-        test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
-        test_str = test_str.replace("%20", " ");
-      }
-    }
 
     const [active, setActive] = useState(test_str);
-   
-    const [activeName, setActiveName] = useState("Select Topic");
     const [key, setKey] = useState(0);
 
- 
+    
     return(
       <div className='inline-parent'>
-        
         <div className='vis-buttons-parent'>
           <div id='vis-buttons-label'>
             Survey Questions
@@ -61,7 +67,7 @@ export const Visualizations = () => {
             {types.map(type => (
               <NavLink
               key={type}
-              onClick={() => {setKey(key+1); setActiveName(type); setActive(type)}}
+              onClick={() => {setKey(key+1); setActive(type)}}
               
               active={active === type}
               to={`/results/${type}`}>
@@ -73,7 +79,7 @@ export const Visualizations = () => {
             
           </nav>
         </div>
-        {<VisMenu dataset={useData('./data/Filtered_Crop_Data.csv')} vis={active} key={key}/>}  
+        <Outlet/>
       </div>
     );
 }
