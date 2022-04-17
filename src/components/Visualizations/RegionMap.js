@@ -174,6 +174,10 @@ export const CropBar = (props) => {
           tickLabels: {fontSize: 20, padding: 15},
           axisLabel: {fontSize: fontSize*2, padding: 60}
         }}/>
+        <VictoryLegend 
+                title="Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
+                responses for each crop:"
+              />
         <VictoryBar horizontal
           // barRatio={0.6}
           sortKey= "y"

@@ -18,13 +18,13 @@ export const InfoSummary = () => {
         <C.Container>
           <C.Area>          
             <C.Body>
-              <ParallaxLayer factor={2} style={{
+              <ParallaxLayer factor={1} style={{
                 backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
               </ParallaxLayer>
               <ParallaxLayer speed = {0.8}> 
-                <div id = "infoSection0">
+                {/* <div id = "infoSection0">
                   <C.Menu>
                   <div >
                     
@@ -37,11 +37,11 @@ export const InfoSummary = () => {
                     </ul>
                   </div>
                 </C.Menu>
-              </div>
+              </div> */}
             <div id = "infoSection1">
               <C.Title>UCCE Information</C.Title>
               <C.Desc className='font-newsreader'>
-                    Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who solve problems 
+                    <a href='https://caes.ucdavis.edu/outreach/ce' target="_blank">Cooperative Extension (CE)</a> is a nationwide network of land-grant university researchers and educators who solve problems 
                     in agriculture, the environment, and human and community well-being. They work to foster a connection between the university 
                     and the public by delivering science-based information. However, UC Cooperative Extension is facing reductions in personnel, 
                     meaning current advisors are stretched thin and need to prioritize their efforts. At the same time, the landscape of 
@@ -56,7 +56,7 @@ export const InfoSummary = () => {
                 
                 <C.SubTitle>Survey Scope</C.SubTitle>
                 <C.Desc className='font-newsreader'>
-                        The survey had hundreds of respondants from all over California. There was a large diversity of ages, crop specializations,
+                        The <a href={file} target="_blank">survey</a> had hundreds of respondants from all over California. There was a large diversity of ages, crop specializations,
                         and occupations. Vocations interviewed for the survey included growers, consultants, members of allied industries, and others who did not fall into the aforementioned categories.
                         Below is a map representing the density of responses in respect to county, as well as the distribution of responses per occupation:
                 </C.Desc>
