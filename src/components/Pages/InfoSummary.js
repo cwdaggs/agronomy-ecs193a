@@ -17,18 +17,7 @@ export const InfoSummary = () => {
       <Parallax pages={4}>
         <C.Container>
           <C.Area>
-            <C.Menu>
-              <div >
-                
-              </div>
-              <div className="menuItem">
-                <ul>
-                  <li><a href={file} download>Survey Research Paper</a></li>
-                  <li><a href='https://caes.ucdavis.edu/outreach/ce'>About UCCE</a> </li>
-                  <li><a href='https://caes.ucdavis.edu/outreach/geo/projects'>Get Involved</a></li>
-                </ul>
-              </div>
-            </C.Menu>
+            
 
             <C.Body>
               <ParallaxLayer factor={2} style={{
@@ -37,7 +26,21 @@ export const InfoSummary = () => {
               }}>
               </ParallaxLayer>
               <ParallaxLayer speed = {0.8}> 
-              <div id = "infoSection1">
+                <div id = "infoSection0">
+                  <C.Menu>
+                  <div >
+                    
+                  </div>
+                  <div className="menuItem">
+                    <ul>
+                      <li><a href={file} download>Survey Research Paper</a></li>
+                      <li><a href='https://caes.ucdavis.edu/outreach/ce'>About UCCE</a> </li>
+                      <li><a href='https://caes.ucdavis.edu/outreach/geo/projects'>Get Involved</a></li>
+                    </ul>
+                  </div>
+                </C.Menu>
+              </div>
+            <div id = "infoSection1">
               <C.Title>UCCE Information</C.Title>
               <C.Desc className='font-newsreader'>
                     Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who solve problems 

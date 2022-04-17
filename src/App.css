@@ -222,6 +222,10 @@ footer {
   height: 2600px;
 } */
 
+#infoSection0{
+  margin-top: 50px;
+}
+
 #infoSection1{
   height: 100vh;
   position: fixed;
