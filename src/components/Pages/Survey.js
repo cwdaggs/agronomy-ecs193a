@@ -1,8 +1,14 @@
 import "survey-react/modern.min.css";
 import { useCallback } from "react";
-import { Survey, StylesManager, Model } from "survey-react";
+import { Survey, StylesManager, FunctionFactory, Model } from "survey-react";
 
 StylesManager.applyTheme("modern");
+
+function validateInt(farmSize){
+    return Number.isInteger(farmSize[0]);
+}
+
+FunctionFactory.Instance.register("validateInt", validateInt);
 
 const surveyJson = {
     "title": "Survey Placeholder",
@@ -60,7 +66,11 @@ const surveyJson = {
         title: "Total acreage of farms you associate with?",
         isRequired: true,
         type: "text",
-        placeHolder: "An int like 1500"
+        placeHolder: "An int like 1500",
+        validators: [{
+            "type": "expression",
+            "text": "Please enter a valid integer.",
+            "expression": "validateInt({acreage}) == True"}]
     },
     {
         name: "production_concerns",
@@ -89,6 +99,7 @@ const surveyJson = {
 export const MiniSurvey = () => {
     
     const survey = new Model(surveyJson);
+
     survey
     .onComplete
     .add(function (sender) {
@@ -96,6 +107,8 @@ export const MiniSurvey = () => {
             .querySelector('#surveyResult')
             .textContent = "Result JSON:\n" + JSON.stringify(sender.data, null, 3);
     });
+
+
     //get the results back and do math with them or whatever, output to pdf somehow
     return (
         <div>
