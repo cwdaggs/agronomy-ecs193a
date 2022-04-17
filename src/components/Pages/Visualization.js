@@ -1,7 +1,7 @@
 import {useData} from '../Visualizations/UseData';
 import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
-import {Tab} from '../Visualizations/StyledDivs'
+import {Tab, TabVisualizations} from '../Visualizations/StyledDivs'
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../Visualizations/StyledDivs';
 import { NavLink, Outlet, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
 import { AboutSummary } from './AboutSummary';
@@ -51,15 +51,23 @@ export const Visualizations = () => {
         "Priorities vs Satisfaction", //Q13
         "Internet Sources", //Q16
     ]
-    var test_str = "";
-    // ----- Production ------------///
-    /*
-    if (window.location.href === "http://uccesurveyresults.com/#/results") {
-      test_str = "Acres Managed";
-    } else {
-      test_str = String(window.location.href).replace("http://uccesurveyresults.com/#/results/", "").replace("%20", " ");
-    }
-    */
+    // var test_str = "";
+    // // ----- Production ------------///
+    // if(String(window.location.href).includes("ucce")){
+    //   if (window.location.href === "http://www.uccesurveyresults.com/#/results") {
+    //     test_str = "Acres Managed";
+    //   } else {
+    //     test_str = String(window.location.href).replace("http://www.uccesurveyresults.com/#/results/", "").replace("%20", " ");
+    //     test_str = test_str.replace("%20", " ");
+    //   }
+    // }else{
+    //   if (window.location.href === "http://localhost:3000/#/results") {
+    //     test_str = "Acres Managed";
+    //   } else {
+    //     test_str = String(window.location.href).replace("http://localhost:3000/#/results/", "").replace("%20", " ");
+    //     test_str = test_str.replace("%20", " ");
+    //   }
+    // }
 
 
     // if (window.location.href === "http://localhost:3000/#/results") {
@@ -75,25 +83,15 @@ export const Visualizations = () => {
     const [active, setActive] = useState(test_str);
     const [key, setKey] = useState(0);
 
-    const questions = {      
-      ["Acres Managed"]:"How many acres do you manage/consult annually?",
-      ["Crop Percentages"]:"Of the total acres, what percentage of the crops grown are in each of the following categories?",
-      ["Production Concerns"]:"In regards to the production of field crops in California, rate your concern for the following:",
-      ["Priority Concerns"]:"What are the highest priority management challenges/concerns?",
-      ["Primary Growing Reasons"]:"What are the primary reasons you grow the following field crops?",
-      ["Priority Effect"]:"How often do the following priorities affect your recommendations/management decisions for field crop production?",
-      ["Information Sources"]:"Who do you communicate with when seeking information about field crop production?",
-      ["UCCE Engagement"]:"How often do you engage with the UCCE in the following ways?",
-      ["Values"]:"How much do you value the following:",
-      ["Priorities vs Satisfaction"]: "Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). ",
-      ["Internet Sources"]:"Where do you most often look for field crop production information on the internet?"
-    };
-    
+ 
     return(
       <div className='inline-parent'>
-        <h3>{questions[String(active)]}</h3>
-        <div className='inline-child'>
-          <nav style={{ borderRight: 'solid 1px', padding: '1rem' }}>
+        
+        <div className='vis-buttons-parent'>
+          <div id='vis-buttons-label'>
+            Survey Questions
+          </div>
+          <nav>
             {types.map(type => (
               <NavLink
               key={type}
@@ -102,7 +100,9 @@ export const Visualizations = () => {
               
               active={active === type}
               to={`/results/${type}`}>
-                {type+" "}
+                <div className='vis-buttons-child'>
+                  <TabVisualizations>{type+" "}</TabVisualizations>
+                </div>
               </NavLink>
             ))}
             

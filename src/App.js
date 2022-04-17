@@ -54,25 +54,49 @@ export default function App() {
   const dataset = useData('./data/Filtered_Crop_Data.csv');
 
   return (
-    <div id="outerContainer" class='font-metropolis'>
-      <div id="heading">
-        {/*<img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>*/}
-        <NavLink to ="/">
-          {({ isActive }) => getActiveTab(isActive, "Home")}
-        </NavLink>
-        <NavLink to ="/results">
-          {({ isActive }) => getActiveTab(isActive, "Explore Results")}
-        </NavLink>
-        <NavLink to ="/info">
-          {({ isActive }) => getActiveTab(isActive, "Info")}
-        </NavLink>
-        <NavLink to ="/about">
-          {({ isActive }) => getActiveTab(isActive, "About")}
-        </NavLink>
-        <NavLink to ="/survey">
-          {({ isActive }) => getActiveTab(isActive, "Survey")}
-        </NavLink>
-      </div>
+    <>
+      <div id="outerContainer" class='font-metropolis'>
+        <img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>
+        <div id="heading">
+          
+          <NavLink to ="/">
+            {({ isActive }) => getActiveTab(isActive, "Home")}
+          </NavLink>
+          <NavLink to ="/results">
+            {({ isActive }) => getActiveTab(isActive, "Explore Results")}
+          </NavLink>
+          <NavLink to ="/info">
+            {({ isActive }) => getActiveTab(isActive, "Info")}
+          </NavLink>
+          <NavLink to ="/team">
+            {({ isActive }) => getActiveTab(isActive, "Team")}
+          </NavLink>
+          <NavLink to ="/survey">
+            {({ isActive }) => getActiveTab(isActive, "Survey")}
+          </NavLink>
+        </div>
+        
+        {/* <Outlet/>
+        <footer></footer>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="results/*" element={
+            <div>
+              <div id="visTop"> 
+                Select a topic to view responses for each question. The responses can also be sorted by vocation and crop/region. Feel free to compare multiple questions by checking the 'compare' box.
+              </div>
+              <div id="compare-box">
+                <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
+              </div>
+                {getNewDisplay(dual_display)}
+
+            </div>
+          }/>
+          <Route path="info" element={<InfoSummary/>}/>
+          <Route path="team" element={<AboutSummary/>}/>
+          <Route path="survey" element={<MiniSurvey/>}/>
+        </Routes>
+      </div> */}
       
       <Outlet/>
       <footer></footer>
@@ -81,9 +105,7 @@ export default function App() {
         <Route path="results/" element={
           <div>
             <div id="visTop">
-              Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
-              Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
-              Full details of survey scope and representation here.
+            Select a topic to view responses for each question. The responses can also be sorted by vocation and crop/region. Feel free to compare multiple questions by checking the 'compare' box.
             </div>
             <div id="compare-box">
               <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
@@ -106,9 +128,10 @@ export default function App() {
         {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}
 
         <Route path="info" element={<InfoSummary/>}/>
-        <Route path="about" element={<AboutSummary/>}/>
+        <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
       </Routes>
     </div>
+    </>
   )
 }
