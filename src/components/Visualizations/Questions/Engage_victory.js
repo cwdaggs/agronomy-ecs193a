@@ -143,16 +143,27 @@ export function EngageVictory(props) {
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vh*0.9;
+  const height = vw*0.5;
   const width = vw;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   const colorScale = ["#19bbb0", "#68caa5", "#9dd79f", "#bee37b", "#f4e651"];
-  const fontSize = 20
-  const legend_data = [{name: "1-3 times/week"}, {name: "1-2 times/month"}, {name: "3-6 times/year"}, {name: "1-2 times/year"}, {name: "Never"}]
+  
+  const mobileWidth = 1000;
+  const mobileFontSize = 6
+  var fontSize = 20
+
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+
+  const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
 
   return (
 
     <>
+      <div id='vis-question-label'>
+        <h3>How often do you engage with the UCCE in the following ways?</h3>
+      </div>
       <div className="inline-child">
             <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
       </div>
@@ -166,18 +177,18 @@ export function EngageVictory(props) {
           height={height} 
           width={width}
           domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-          padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryLegend 
-                x={width/2 - 450}
-                y={15}
+                x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
+                y={(width>=mobileWidth) ? (0):15}
                 title={titleText}
                 centerTitle
                 orientation="horizontal"
                 colorScale={colorScale}
                 itemsPerRow={5}
-                gutter={30}
-                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: 20}, 
+                gutter={25}
+                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
                         // border: { stroke: "black" }, 
                         title: {fontSize: fontSize }, 
                         data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}

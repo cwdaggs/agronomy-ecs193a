@@ -16,9 +16,7 @@ export const InfoSummary = () => {
     <div>
       <Parallax pages={4}>
         <C.Container>
-          <C.Area>
-            
-
+          <C.Area>          
             <C.Body>
               <ParallaxLayer factor={2} style={{
                 backgroundImage: `url(${sky})`,
@@ -33,7 +31,7 @@ export const InfoSummary = () => {
                   </div>
                   <div className="menuItem">
                     <ul>
-                      <li><a href={file} download>Survey Research Paper</a></li>
+                      <li><a href={file} target="_blank">Survey Research Paper</a></li>
                       <li><a href='https://caes.ucdavis.edu/outreach/ce'>About UCCE</a> </li>
                       <li><a href='https://caes.ucdavis.edu/outreach/geo/projects'>Get Involved</a></li>
                     </ul>

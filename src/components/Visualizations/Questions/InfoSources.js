@@ -82,40 +82,30 @@ export function InfoSourcesBarChart(props) {
       "Wheat"
     ];
 
-    var centerTitle = 300;
-    if (activeVocation === "All" || activeRegionOrCrop === "All") {
-      centerTitle = 200;
-    }
-
-    var titleText = "";
-    if (activeVocation !== "All") {
-      titleText += "Vocation: " + activeVocation;
-    }
-    if (crops.includes(activeRegionOrCrop)) {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        titleText += " Crop: " + activeRegionOrCrop;
-      }
-    }
-    if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-      titleText += " Region: " + activeRegionOrCrop;
-    }
-
     var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
     if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
       data = props.dataset;
-      centerTitle = 200;
     }
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh*0.9;
+    const height = vw*0.5;
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-    const fontSize = 20;
+
+    const mobileWidth = 1000;
+    var fontSize = 20
+    var mobileFontSize = 6
+    if(width < mobileWidth){
+      fontSize = mobileFontSize;
+    }
 
     return (
       <>
+        <div id='vis-question-label'>
+          <h3>Who do you communicate with when seeking information about field crop production?</h3>
+        </div>
         <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
         </div>
@@ -125,13 +115,8 @@ export function InfoSourcesBarChart(props) {
               duration: 500,               
             }}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}   
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}  
           >
-
-            <VictoryLabel text={titleText} 
-              x={width/2 - centerTitle} 
-              y={80}
-              style ={{fontSize:fontSize +10}}/>
 
             <VictoryBar horizontal
               data={info_data}

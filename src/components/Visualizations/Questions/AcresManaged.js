@@ -78,15 +78,20 @@ export function AcresManagedBarChart(props) {
     var lengthString = String("Number of Farms (n = " + dataLength + ")");
     //var orgString = String("Acres vs Number of Farms (n = " + dataLength + ")");
 
-    const fontSize = 20;
+    
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh*0.9;
+    const height = vw*0.5;
     const width = vw;
+    const mobileWidth=1000;
+    var fontSize = (width >= mobileWidth) ? 20: 10;
     const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
 
     return (
       <>
+      <div id='vis-question-label'>
+          <h3>How many acres do you manage/consult annually?</h3>
+      </div>
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
       </div>
@@ -101,7 +106,7 @@ export function AcresManagedBarChart(props) {
               label={"Acres"}
               style={{
                 tickLabels: {fontSize: fontSize*1.25, padding: 5},
-                axisLabel: {fontSize: fontSize*2.5, padding: 60}
+                axisLabel: {fontSize: fontSize*1.5, padding: (width >= mobileWidth) ? 60: 20}
                 }}
               // style={{
               //   tickLabels: {fontSize: 30, padding: 5},
@@ -111,8 +116,8 @@ export function AcresManagedBarChart(props) {
             <VictoryAxis dependentAxis
             label = {lengthString}
             style={{
-              tickLabels: {fontSize: 20, padding: 15},
-              axisLabel: {fontSize: fontSize*1.5, padding: 60}
+              tickLabels: {fontSize: fontSize, padding: 15},
+              axisLabel: {fontSize: fontSize*1.5, padding: (width >= mobileWidth) ? 60: 35}
             }}/>
             <VictoryBar
               // barRatio={0.6}

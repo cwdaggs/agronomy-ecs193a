@@ -1,4 +1,6 @@
-
+import {TabHome} from '../Visualizations/StyledDivs'
+import {NavLink} from "react-router-dom";
+import React, {useState} from 'react';
 
 export const Home = () => {
 
@@ -6,6 +8,8 @@ export const Home = () => {
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vh*0.9;
     const width = vw;
+
+
     return(
         <div id="bg">
             
@@ -17,21 +21,16 @@ export const Home = () => {
                     <h2>UCCE 2019 Needs Assessment Survey Analysis</h2>
                 </div>   
                 <div id="home-info">
-                    <h2>In 2019, a survey was given to hundreds of California farmers to assess their needs. This web application has been developed to extend those results to the public.</h2>
+                    <h2>Challenges to agronomic crop production in California</h2>
+                    <h2>Guiding UCCE research and extension efforts based on critical needs identified by growers and industry</h2>
                 </div>   
                 <div id="home-button">
-                    <button>Learn More!</button>
+                    <NavLink to ="/results">
+                        <TabHome>Learn More!</TabHome>
+                    </NavLink>   
                 </div>
             </div>    
 
-                {/* <rect width="400" height="400" x="200" y="400" class="rect-home" />
-                <text class="vis-title" x="330" y="500">Place Holder</text>
-
-                <rect width="400" height="400" x="700" y="400" class="rect-home" />
-                <text class="vis-title" x="850" y="500">Place Holder</text>
-
-                <rect width="400" height="400" x="1200" y="400" class="rect-home" />
-                <text class="vis-title" x="1320" y="500">Place Holder</text> */}
         </div>
     );
 }

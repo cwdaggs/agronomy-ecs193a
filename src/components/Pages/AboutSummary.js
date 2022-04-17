@@ -9,68 +9,95 @@ export const AboutSummary = () => {
     <div id="aboutpage">
     <C.Container>
       <C.Area>
-        {/* <C.Menu>
-          <div >
-            <img
-              src="./assets/icons/UCCE.png"
-              alt="logo"
-            />
-          </div>
-        </C.Menu> */}
-
         <C.Body>
-          <C.Title>Who We Are</C.Title>
+          <C.Title>Project Team</C.Title>
           <br></br>
-          <div class='title-info'>
-            <C.SubTitle>Dr. Cameron Pittelkow</C.SubTitle>
+          <div id='team-profiles'>
+            <div className='profile'>
+              <img src="./assets/1-Jessie-Kanter-UCCE.jpg" alt="Jessie Kanter" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Jessie Kanter - </span>
+                <a href='https://smallfarmsfresno.ucanr.edu/Staff/' target="_blank">UCCE</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/2-Nick-Clark-UCCE.jpg" alt="Nick Clark" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Nick Clark - </span>
+                <a href='https://ucanr.edu/sites/Bees_and_Pollination/Contact_Us/?facultyid=26947' target="_blank">UCCE</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/3-Mark-Lundy-Davis.jpg" alt="Mark Lundy" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Mark Lundy - </span>
+                <a href='https://www.plantsciences.ucdavis.edu/people/mark-lundy' target="_blank">UC Davis</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/4-Vikram-Koundinya-Davis.jpg" alt="Vikram Koundinya" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Vikram Koundinya - </span>
+                <a href='https://humanecology.ucdavis.edu/people/vikram-koundinya' target="_blank">UC Davis</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/5-Michelle-Leinfelder-Miles-UCCE.jpg" alt="Michelle Leinfelder-Miles" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Michelle Leinfelder-Miles - </span>
+                <a href='https://ucanr.edu/?facultyid=20507' target="_blank">UCCE</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/6-Rachael-Long-UCCE.jpg" alt="Rachael Long" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Rachael Long - </span>
+                <a href='https://ucanr.edu/?facultyid=1355' target="_blank">UCCE</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/7-Sarah-Light-UCCE.jpg" alt="Sarah Light" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Sarah Light - </span>
+                <a href='https://cesutter.ucanr.edu/http___cesutterucanredu/?facultyid=36230' target="_blank">UCCE</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/8-Whitney-Brim-DeForest-UCCE.jpg" alt="Whitney Brim-DeForest" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Whitney Brim-DeForest - </span>
+                <a href='https://ucanr.edu/?facultyid=33566' target="_blank">UCCE</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/9-Bruce-Linquist-Davis.jpg" alt="Bruce Linquist" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Bruce Linquist - </span>
+                <a href='https://www.plantsciences.ucdavis.edu/people/bruce-linquist' target="_blank">UC Davis</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/10-Dan-Putnam-Davis.jpg" alt="Dan Putnam" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Dan Putnam - </span>
+                <a href='https://www.plantsciences.ucdavis.edu/people/daniel-putnam' target="_blank">UC Davis</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/11-Robert-B.-Hutmacher-Davis.jpg" alt="Robert B. Hutmacher" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Robert B. Hutmacher - </span>
+                <a href='https://www.plantsciences.ucdavis.edu/people/robert-hutmacher' target="_blank">UC Davis</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/12-Cameron-Pittelkow-Davis.jpg" alt="Cameron Pittelkow" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Cameron Pittelkow - </span>
+                <a href='https://www.plantsciences.ucdavis.edu/people/cameron-pittelkow' target="_blank">UC Davis</a>
+              </div>
+            </div>
           </div>
-          <div class='flex-parent'>
-            <div class='flex-child'>
-              <img
-                src="./assets/icons/pittelkow.jpg"
-                alt="logo"
-                width={width/5}
-                height={height/4}
-              />
-            </div>
-            <div class='flex-child'>
-              <C.Desc className='font-newsreader'>
-                  Cameron joined the Department of Plant Sciences in 2019. He is an agronomist who places equal emphasis on food security and 
-                  environmental sustainability. His research is focused on developing cropping systems and management strategies to enhance 
-                  productivity while minimizing nitrogen, carbon, water, and energy footprints in agriculture. Cameron was Assistant Professor 
-                  at the University of Illinois from 2014-2019 before moving to UC Davis. He maintains Adjunct status there while finishing 
-                  projects and advising graduate students until completion of their degrees. He received his BA in Environmental Biology from 
-                  Colgate University, and his MS and PhD degrees from UC Davis in International Agricultural Development and Agronomy, 
-                  respectively.
-              </C.Desc>
-            </div>
-          </div>
-            <C.SubTitle>Development Team</C.SubTitle>
-          <div class='flex-parent'>
-            <div class='flex-child'>
-            <C.Desc className='font-newsreader'>
-                    The team that developed this web application is a group of four UC Davis students that were enlisted by Dr. Pittelkow to
-                    create interactive visualizations for the survey findings that could be easily accessed by survey participants. 
-            </C.Desc>
-            </div>
-            <div class='flex-child'>
-            <img
-              src="./assets/icons/us.jpg"
-              alt="logo"
-              width={width/5}
-              height={height/4}
-            />
-            </div>
-          </div>    
-          {/* <C.Button>
-            <button>
-              Contact Cameron Pittelkow
-              <img 
-                src="/assets/icons/arrow.png"
-                alt="arrow"
-              />
-            </button>
-          </C.Button> */}
         </C.Body>
       </C.Area>
     </C.Container>
