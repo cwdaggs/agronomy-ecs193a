@@ -15,7 +15,7 @@ export const InfoSummary = () => {
           </div>
           <div className="menuItem">
             <ul>
-              <li><a href={file} download>Survey Research Paper</a></li>
+              <li><a href={file} target="_blank">Survey Research Paper</a></li>
               <li><a href='https://caes.ucdavis.edu/outreach/ce'>About UCCE</a> </li>
               <li><a href='https://caes.ucdavis.edu/outreach/geo/projects'>Get Involved</a></li>
             </ul>
@@ -44,8 +44,10 @@ export const InfoSummary = () => {
                     and occupations. Vocations interviewed for the survey included growers, consultants, members of allied industries, and others who did not fall into the aforementioned categories.
                     Below is a map representing the density of responses in respect to county, as well as the distribution of responses per occupation:
             </C.Desc> 
+            
             <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
             <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+           
             <C.Desc className='font-newsreader'>
                     Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
                     responses for each crop:

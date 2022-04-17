@@ -10,6 +10,10 @@ import {
   Geography
 } from "react-simple-maps";
 
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+const fontSize = 34;
+
 const geoUrl =
   "./data/california-counties.geojson";
 
@@ -59,72 +63,42 @@ export const RegionMapChart = (props) => {
   const data = counties
   const regionData = regionAmount(props.data);
   return (
-    <div>
-      {/* <h2>Density of Survey Responses By County</h2> */}
-
-      <svg width={1320} height={700}>
-
-          
-      <VictoryLegend
-            standalone={false}
-            colorScale={regionColorScale}
-
-            y={100}
-
-            gutter={20}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: 23},
-                  data:   {stroke: "black", strokeWidth: 1}}}
-            title="Regions"
-            centerTitle
-            data={[
-              { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: 20}},
-              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: 20}},
-              { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: 20}},
-              { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: 20}},
-              { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: 20}},
-              { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: 20}},
-              { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: 20}}
-            ]}
-          />
-
-          <ComposableMap
-          projection={d3.geoAlbersUsa()}
-          projectionConfig={{
-              rotate: [-10, 0, 0],
-              scale: 47
-          }}
-          >
-          {data.length > 0 && (
-              <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                  geographies.map((geo) => {
-                  const d = data.find((s) => s === geo.properties.name);
-                  
-                  return (
-                      <Geography
-                      key={geo.properties.cartodb_id}
-                      geography={geo}
-                      fill={d ? getRegionColor(countyToRegion[geo.properties.name]): "#F5F5F5"}
-                      //onClick={console.log("Acres Managed? ", d)}
-                      />
-                  );
-                  })
-              }
-              </Geographies>
-          )}
-          </ComposableMap>
+    <div id='info-charts'>
+      <img src='./assets/region-map.png' id="map-image"></img>
+      <div className='flex-parent'>
+          <div id="info-legend">
+            <VictoryLegend
+              colorScale={regionColorScale}
+              x={50}
+              y={-vh*.10}
+              gutter={25}
+              style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 32}, 
+                    title:  {fontFamily: 'ABeeZee', fontSize: 32},
+                    data:   {stroke: "black", strokeWidth: 1}}}
+              title="Responses by Region"
+              centerTitle
+              data={[
+                { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: fontSize}},
+                { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
+                { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
+                { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
+                { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: fontSize}},
+                { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: fontSize}},
+                { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: fontSize}}
+              ]}
+            />
+          </div>
+          <div id='info-pie'>
           <VictoryPie
             animate={{
               duration: 500,               
             }}
-            standalone={false}
-            width={1000}
-            height={600}
+            width={vw*.5}
+            height={vh}
             padding={{
-              left: 750,
-              bottom: 20,
-              top: 20
+              left: 0,
+              bottom: 0,
+              top: 0
             }}
             style={{ data: { stroke: "black", strokeWidth: 1}}}
             colorScale={regionColorScale}
@@ -134,37 +108,16 @@ export const RegionMapChart = (props) => {
             labelComponent={
                 <VictoryTooltip 
                 style={{
-                    fontSize:20,
+                    fontSize:100,
                     fontFamily: 'ABeeZee'
                 }}
-                flyoutHeight={25}
-                flyoutWidth={45}    
+                flyoutHeight={100}
+                flyoutWidth={200}    
                 />
             }
             />
-            <VictoryLegend
-            standalone={false}
-            colorScale={regionColorScale}
-            x={500}
-            y={100}
-
-            gutter={20}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 23}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: 23},
-                  data:   {stroke: "black", strokeWidth: 1}}}
-            title="Responses by Region"
-            centerTitle
-            data={[
-              { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: 20}},
-              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: 20}},
-              { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: 20}},
-              { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: 20}},
-              { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: 20}},
-              { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: 20}},
-              { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: 20}}
-            ]}
-          />
-      </svg>
+          </div>
+      </div>
     </div>
   );
 };
@@ -193,12 +146,12 @@ export const CropBar = (props) => {
 
   const fontSize = 20
 
-  const margin = { top: 1080/12, right: 1920/8, bottom: 1080/4, left: 1920/6 };
+  const margin = { top: vh/12, right: vw/8, bottom: vh/4, left: vw/6 };
 
   return (
     <div id='about-visualization-window'>
       {/* <h2>How many acres do you manage/consult annually?</h2> */}
-      <VictoryChart height={1080} width={1920}
+      <VictoryChart height={vh} width={vw}
         //domainPadding={45}
         domainPadding={{ x: margin.right/5.3, y: margin.top }}
         padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}
@@ -208,7 +161,7 @@ export const CropBar = (props) => {
           //label={"Crop"}
           style={{
             tickLabels: {fontSize: fontSize*1.25, padding: 5},
-            axisLabel: {fontSize: fontSize*2, padding: 180}
+            axisLabel: {fontSize: fontSize*2, padding: vw/10}
             }}
           // style={{
           //   tickLabels: {fontSize: 30, padding: 5},
