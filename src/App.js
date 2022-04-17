@@ -51,6 +51,8 @@ export default function App() {
             </Tab>)
   }
 
+  const dataset = useData('./data/Filtered_Crop_Data.csv');
+
   return (
     <div id="outerContainer" class='font-metropolis'>
       <div id="heading">
@@ -89,17 +91,17 @@ export default function App() {
               {getNewDisplay(dual_display)}
           </div>
         }>
-          <Route path="Acres%20Managed" element={<AcresManagedBarChart dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Crop%20Percentages" element={<CropPercentages dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Production%20Concerns" element={<ConcernsVictory dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Primary%20Growing%20Reasons" element={<PrimaryGrowingReasons dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Priority%20Effect" element={<AffectVictory dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="UCCE%20Engagement" element={<EngageVictory dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Values" element={<AmountVictory dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
-          <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={useData('./data/Filtered_Crop_Data.csv')}/>}/>
+          <Route path="Acres%20Managed" element={<AcresManagedBarChart dataset={dataset}/>}/>
+          <Route path="Crop%20Percentages" element={<CropPercentages dataset={dataset}/>}/>
+          <Route path="Production%20Concerns" element={<ConcernsVictory dataset={dataset}/>}/>
+          <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={dataset}/>}/>
+          <Route path="Primary%20Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
+          <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}/>
+          <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={dataset}/>}/>
+          <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}/>
+          <Route path="Values" element={<AmountVictory dataset={dataset}/>}/>
+          <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}/>
+          <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}/>
         </Route>
         {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}
 
