@@ -19,7 +19,33 @@ function transformData(dataset) {
   });
 }
 
+function calculateAverageResponses(dataset) {
+  const totals = dataset[0].map((data, i) => {
+    return dataset.reduce((memo, curr) => {
+      return memo + curr[i].Total;
+    }, 0);
+  });
+  var sum = 0;
+  for (var i = 0; i < totals.length; i++) {
+    sum += totals[i];
+  }
+  return Math.round(sum / totals.length);
+}
+
 export function ConcernsVictory(props) {
+
+  const crops = [
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
 
   const vocationArray = ["All", "Growers", "Consultants"];
 
@@ -37,10 +63,27 @@ export function ConcernsVictory(props) {
   if ((!props.dataset)) {
       return <pre>Loading...</pre>;
   }
+
+  var titleText = "Level of Concern";
+  if (crops.includes(activeRegionOrCrop)) {
+    titleText += " for " + activeRegionOrCrop;
+  }
+  if (activeVocation !== "All") {
+    if (crops.includes(activeRegionOrCrop)) {
+      titleText += " " + activeVocation;
+    } else {
+      titleText += " for " + activeVocation;
+    }
+  }
+  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
+    titleText += " in the " + activeRegionOrCrop + " Region";
+  }
+
   var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
   var data_sorted = sort_by_very(data_by_concern);
   const dataset = transformData(data_sorted);
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
@@ -80,7 +123,7 @@ export function ConcernsVictory(props) {
                 x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
                 y={(width>=mobileWidth) ? (0):15}
                 width={width-margin.left-margin.right}
-                title="Level of Concern"
+                title={titleText}
                 centerTitle
                 orientation="horizontal"
                 colorScale={colorScale}

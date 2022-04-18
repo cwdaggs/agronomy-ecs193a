@@ -72,10 +72,16 @@ export function PriorityConcerns(props) {
       setActiveRegionOrCrop(newValue);
     }
 
-
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
+
+    var titleText = "Concerns for ";
+    if (activeRegionOrCrop !== "All") {
+      titleText += activeRegionOrCrop + " ";
+    }
+    titleText += activeVocation;
+
     var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
 
     var filter = activeRegionOrCrop
@@ -119,8 +125,7 @@ export function PriorityConcerns(props) {
                 style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize}, 
                         title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
                         data:   {stroke: "black", strokeWidth: 1}}}
-                title={String("Management Concerns (n=" + n + ")")}
-                centerTitle
+                title={String(titleText + " (n=" + n + ")")}
                 data={legend_data}
             />
           </div>
