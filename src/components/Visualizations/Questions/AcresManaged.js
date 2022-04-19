@@ -76,8 +76,17 @@ export function AcresManagedBarChart(props) {
     var acre_data = calculateAcres(data);
     var dataLength = calculateSizeOfDataSet(acre_data)
     var lengthString = String("Number of Farms (n = " + dataLength + ")");
-    //var orgString = String("Acres vs Number of Farms (n = " + dataLength + ")");
-
+    
+    var labelText = "Acres";
+    if (activeVocation === "Growers") {
+      labelText = "Acres Managed by " + activeRegionOrCrop + " Growers";
+    } else if (activeVocation === "Consultants") {
+      labelText = "Acres Consulted by " + activeRegionOrCrop + " Consultants";
+    } else {
+      if (activeRegionOrCrop !== "All") {
+        labelText = activeRegionOrCrop + " " + labelText;
+      }
+    }
     
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -103,7 +112,7 @@ export function AcresManagedBarChart(props) {
             animate={{duration: 800}}
           >
             <VictoryAxis
-              label={"Acres"}
+              label={labelText}
               style={{
                 tickLabels: {fontSize: fontSize*1.25, padding: 5},
                 axisLabel: {fontSize: fontSize*1.5, padding: (width >= mobileWidth) ? 60: 20}

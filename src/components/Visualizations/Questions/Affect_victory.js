@@ -147,9 +147,11 @@ export function AffectVictory(props) {
   var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
+  var questionText = "How often do the following priorities affect your management decisions for field crop production?";
   var titleText = "Frequency of Effect on Management Decisions";
   if (activeVocation === "Consultants") {
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
+    questionText = "How often do the following priorities affect your recommendations for field crop production?";
     titleText = "Frequency of Effect on Recommendations";
   }
 
@@ -184,8 +186,8 @@ export function AffectVictory(props) {
   return (
     <>
     <div id='vis-question-label'>
-          <h3>How often do the following priorities affect your recommendations/management decisions for field crop production?</h3>
-      </div>
+       <h3>{questionText}</h3>
+    </div>
     <div className="inline-child">
       <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
     </div>

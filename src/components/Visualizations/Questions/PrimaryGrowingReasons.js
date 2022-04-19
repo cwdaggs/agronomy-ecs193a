@@ -74,6 +74,11 @@ export function PrimaryGrowingReasons(props) {
         return <pre>Loading...</pre>;
     }
 
+    var titleText = "Reasons for Growing " + active;
+    if (active === "All") {
+      titleText += " Crops"
+    }
+
     var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
     var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
     var legend_data = []
@@ -114,7 +119,7 @@ export function PrimaryGrowingReasons(props) {
                       style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
                               title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
                               data:   {stroke: "black", strokeWidth: 1}}}
-                      title={String("Reasons for Growing Crops (n=" + n + ")")}
+                      title={String(titleText + " (n=" + n + ")")}
                       centerTitle
                       data={legend_data}
                   />

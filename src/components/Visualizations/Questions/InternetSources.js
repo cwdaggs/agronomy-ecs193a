@@ -106,6 +106,16 @@ export function InternetSourcesBarChart(props) {
       "Wheat"
     ];
 
+    var labelText = activeRegionOrCrop;
+    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
+      labelText = activeVocation;
+    } else {
+      if (activeVocation !== "All") {
+        labelText += " " + activeVocation;
+      }
+    }
+    labelText += " Responses ";
+
     var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
     if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
       data = props.dataset;
@@ -160,7 +170,7 @@ export function InternetSourcesBarChart(props) {
             }
             />
             <VictoryAxis dependentAxis
-              label = {"Number of Responses " + "(n = " + filtered_data.length + ")"}
+              label = {labelText + "(n = " + filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
