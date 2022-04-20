@@ -582,7 +582,7 @@ body,html {
   .vis-buttons-parent {
     display: block;
     position:fixed;
-    padding-top: 0;
+    padding-top: 100px;
     padding-left: 2px;
     width:15%;
   }
@@ -634,4 +634,3 @@ body,html {
   }
   
 }
-
