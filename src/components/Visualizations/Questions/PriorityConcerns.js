@@ -97,7 +97,7 @@ export function PriorityConcerns(props) {
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw;
     const width = vw;
-    const margin = { top: 0, right: 0, bottom: 0, left: width/10 };
+    const margin = { top: 0, right: 0, bottom: 30, left: width/10 };
     var fontSize = 12;
 
     for (var i = 0; i < data_by_reason.length; i++) {
@@ -135,7 +135,7 @@ export function PriorityConcerns(props) {
                   duration: 500,               
               }}
               width={width}
-              height={height}
+              height={height/2}
               padding={{
                 left: margin.left,
                   right: margin.right,
