@@ -121,7 +121,7 @@ const TabHome = styled.button`
   cursor: pointer;
   font-size: 25px;
   font-family: ABeeZee, serif; 
-  opacity: 0.3;
+  opacity: 0.7;
   background: white;
   border: 0;
   outline: 0;
