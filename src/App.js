@@ -71,8 +71,7 @@ export default function App() {
           <div>
             <div id="visTop">
               Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
-              Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
-              Full details of survey scope and representation here.
+              Select a topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
             </div>
             <div id="compare-box">
               <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
