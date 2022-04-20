@@ -152,7 +152,7 @@
 }
 
 .inline-parent {
-  border: 1px solid black;
+  border-top: 1px solid black;
   text-align: center;
   height: 80vh;
 }
