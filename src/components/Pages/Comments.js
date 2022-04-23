@@ -4,8 +4,8 @@ import { Survey, StylesManager, Model } from "survey-react";
 StylesManager.applyTheme("modern");
 
 const surveyJson = {
-    "title": "Survey Placeholder",
-    "description": "Take the survey, just do it",
+    "title": "Comments and Suggestions Placeholder",
+    "description": "Enter your comments and suggestions here",
     "elements": [
     {
         name: "Suggestions Box",
@@ -21,7 +21,7 @@ const surveyJson = {
     ]
   };
 
-export const commentBox = () => {
+export const CommentBox = () => {
     
     const survey = new Model(surveyJson);
 

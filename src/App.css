@@ -194,7 +194,7 @@
 
 #visLandingHeading{
   text-align: center;
-  color: white;
+  color: black;
   font-size: 48px;
 
   position: fixed;
@@ -205,7 +205,7 @@
 }
 
 #visLandingBody{
-  color: white;
+  color: black;
   position: fixed;
   top: 45%;
   margin: 100px;
@@ -215,7 +215,7 @@
 }
 
 #visLandingBodyExtended{
-  color: white;
+  color: black;
   position: fixed;
   top: 65%;
   left: 50%;
