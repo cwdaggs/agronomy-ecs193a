@@ -63,8 +63,8 @@ export default function App() {
         <NavLink to ="/results">
           {({ isActive }) => getActiveTab(isActive, "Explore Results")}
         </NavLink>
-        <NavLink to ="/info">
-          {({ isActive }) => getActiveTab(isActive, "Info")}
+        <NavLink to ="/about">
+          {({ isActive }) => getActiveTab(isActive, "About")}
         </NavLink>
         <NavLink to ="/team">
           {({ isActive }) => getActiveTab(isActive, "Team")}
@@ -81,7 +81,6 @@ export default function App() {
         <Route path="results/" element={
           <div>
             <div id="visTop">
-              Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
               Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
               Full details of survey scope and representation here.
             </div>
@@ -105,7 +104,7 @@ export default function App() {
         </Route>
         {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}
 
-        <Route path="info" element={<InfoSummary/>}/>
+        <Route path="about" element={<InfoSummary/>}/>
         <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
       </Routes>

@@ -50,8 +50,9 @@
 
 #home-container{
   font-family: 'Montserrat', sans-serif;
-  display: block;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   padding-left: 25vw;
   padding-right: 25vw;
   height:100vh;
@@ -66,16 +67,15 @@
 }
 
 #home-sub-title{
-  padding-left: 10vw;
+  padding-top: 20vh;
   font-size: x-large;
-  font-weight: bolder;
   color: rgb(0,0,0);
 }
 
 #home-info{
-  font-size: small;
-  padding-left: 12vw;
-  padding-right: 12vw;
+  font-size: x-large;
+  padding-left: 5vw;
+  padding-right: 5vw;
   padding-bottom: 10vh;
 }
 
@@ -332,14 +332,10 @@ body,html {
   }
 
   #home-container{
-    font-family: 'Montserrat', sans-serif;
-    display: block;
-    text-align: left;
     padding-left: 10%;
     padding-right: 10%;
     padding-top: 20%;
     height: 100vh;
-    justify-content: center;
   }
   
   #main-title{
@@ -351,22 +347,15 @@ body,html {
   }
   
   #home-sub-title{
-    padding-left: 5%;
+    padding-top: 10%;
     font-size: large;
-    font-weight: bolder;
-    color: rgb(0,0,0);
   }
   
   #home-info{
-    font-size: smaller;
-    padding-left: 12vw;
-    padding-right: 12vw;
+    font-size: large;
+    padding-left: 10vw;
+    padding-right: 10vw;
     padding-bottom: 10vh;
-  }
-  
-  #home-button{
-    text-align: center;
-    color: #022851;
   }
 
   .visualization-window {
@@ -445,14 +434,10 @@ body,html {
   }
 
   #home-container{
-    font-family: 'Montserrat', sans-serif;
-    display: block;
-    text-align: left;
     padding-left: 10%;
     padding-right: 10%;
     padding-top: 20%;
     height: 100vh;
-    justify-content: center;
   }
   
   #main-title{
@@ -464,22 +449,15 @@ body,html {
   }
   
   #home-sub-title{
-    padding-left: 5%;
-    font-size: medium;
-    font-weight: bolder;
-    color: rgb(0,0,0);
+    padding-top: 10%;
+    font-size: small;
   }
   
   #home-info{
-    font-size: x-small;
-    padding-left: 12vw;
-    padding-right: 12vw;
-    padding-bottom: 10vh;
-  }
-  
-  #home-button{
-    text-align: center;
-    color: #022851;
+    font-size: small;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-bottom: 5vh;
   }
 
   .visualization-window {
@@ -556,13 +534,9 @@ body,html {
   }
 
   #home-container{
-    font-family: 'Montserrat', sans-serif;
-    display: block;
-    text-align: left;
     padding-left: 10%;
     padding-right: 10%;
     height: 200vh;
-    justify-content: center;
   }
   
   #vis-question-label{
@@ -591,22 +565,14 @@ body,html {
   }
   
   #home-sub-title{
-    padding-left: 5%;
-    font-size: large;
-    font-weight: bolder;
-    color: rgb(0,0,0);
+    font-size: medium;
   }
   
   #home-info{
-    font-size: smaller;
-    padding-left: 12vw;
-    padding-right: 12vw;
+    font-size: medium;
+    padding-left: 10vw;
+    padding-right: 10vw;
     padding-bottom: 10vh;
-  }
-  
-  #home-button{
-    text-align: center;
-    color: #022851;
   }
 
   #map-image {
