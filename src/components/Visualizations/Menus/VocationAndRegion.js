@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
+import { useSearchParams } from "react-router-dom";
+import { Icon } from "semantic-ui-react";
 
 
 export function VocationAndRegion(props) {
@@ -8,6 +10,9 @@ export function VocationAndRegion(props) {
     const [activeCropName, setActiveCropName] = useState("Select Crop");
     const [activeRegionName, setActiveRegionName] = useState("Select Region");
     const [activeName, setActiveName] = useState("Select Vocation");
+    const [searchParams, setSearchParams] = useSearchParams(window.location.search);
+    console.log(window.location.search);
+    // console.log(searchParams);
 
     const types = [
         "All", 
@@ -29,10 +34,10 @@ export function VocationAndRegion(props) {
       <>
         <div className="inline-child">
             <StyledUl>
-
                 <DropDownLi>
                     <Dropbtn>
-                        {activeName}
+                        {activeName + " "}
+                        <Icon name="angle down"/>
                     </Dropbtn>
                     <DropDownContent>
                         {" "}
@@ -40,8 +45,9 @@ export function VocationAndRegion(props) {
                             <SubA 
                                 key={type}
                                 active={props.activeVocation === type}
-                                onClick={() => {props.vocationFunction(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
-                                >{type}
+                                onClick={() => {props.vocationFunction(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim()); setSearchParams({vocation: `${type}`}); console.log(searchParams.values);}}
+                            >
+                            {type}
                             </SubA>
                         ))}
                     </DropDownContent>
@@ -49,7 +55,8 @@ export function VocationAndRegion(props) {
 
                 <DropDownLi>
                     <Dropbtn>
-                        {activeCropName}
+                        {activeCropName + " "}
+                        <Icon name="angle down"/>
                     </Dropbtn>
                     <DropDownContent>
                         {" "}
@@ -57,7 +64,7 @@ export function VocationAndRegion(props) {
                             <SubA 
                                 key={type}
                                 active={props.activeRegionOrCrop === type}
-                                onClick={() => {props.regionOrCropFunction(type);setActiveRegionName("Select Region");setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim());}}
+                                onClick={() => {props.regionOrCropFunction(type);setActiveRegionName("Select Region");setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim()); setSearchParams({crop: `${type}`})}}
                                 >{type}
                             </SubA>
                             ))}
@@ -66,7 +73,8 @@ export function VocationAndRegion(props) {
 
                 <DropDownLi>
                     <Dropbtn>
-                        {activeRegionName}
+                        {activeRegionName + " "}
+                        <Icon name="angle down"/>
                     </Dropbtn>
                     <DropDownContent>
                     {" "}
@@ -74,7 +82,7 @@ export function VocationAndRegion(props) {
                         <SubA 
                             key={type}
                             active={props.activeRegionOrCrop === type}
-                            onClick={() =>  {props.regionOrCropFunction(type);setActiveCropName("Select Crop");setActiveRegionName(type)}}
+                            onClick={() =>  {props.regionOrCropFunction(type);setActiveCropName("Select Crop"); setActiveRegionName(type); setSearchParams({region: `${type}`})}}
                             >{type}
                         </SubA>
                         ))}
