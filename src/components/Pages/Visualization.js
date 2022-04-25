@@ -55,7 +55,6 @@ export const Visualizations = () => {
 
     const [active, setActive] = useState(test_str);
     const [key, setKey] = useState(0);
-
     
     return(
       <div className='inline-parent'>

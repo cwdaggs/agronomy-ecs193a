@@ -20,6 +20,7 @@ import { AffectVictory } from './components/Visualizations/Questions/Affect_vict
 import { AmountVictory } from './components/Visualizations/Questions/AmountValued';
 import { PrioritySatisfaction } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
+// import 'semantic-ui-css/semantic.min.css';
 
 export default function App() {
   const [dual_display, checkDualDisplay] = useState(false);
@@ -91,7 +92,9 @@ export default function App() {
               {getNewDisplay(dual_display)}
           </div>
         }>
-          <Route path="Acres%20Managed" element={<AcresManagedBarChart dataset={dataset}/>}/>
+          <Route path="Acres%20Managed" element={<AcresManagedBarChart dataset={dataset}/>}>
+          <Route path="?vocation=Growers" element={<AcresManagedBarChart dataset={dataset}/>}/>
+          </Route>
           <Route path="Crop%20Percentages" element={<CropPercentages dataset={dataset}/>}/>
           <Route path="Production%20Concerns" element={<ConcernsVictory dataset={dataset}/>}/>
           <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={dataset}/>}/>
