@@ -199,7 +199,7 @@
 
 #visLandingPage{
   background-image: url(./images/wheat_field2.jpg);
-  height: 100%;
+  height: 80vh;
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: cover;
