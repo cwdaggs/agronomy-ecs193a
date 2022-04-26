@@ -4,19 +4,14 @@ import { Survey, StylesManager, Model } from "survey-react";
 StylesManager.applyTheme("modern");
 
 const surveyJson = {
-    "title": "Comments and Suggestions Placeholder",
-    "description": "Enter your comments and suggestions here",
+    "title": "Comments and Suggestions",
     "elements": [
     {
         name: "Suggestions Box",
-        title: "Please leave any suggestions you have for us!",
+        title: "Please enter any comments and suggestions here",
         isRequired: true,
         type: "comment",
-        placeHolder: "Start typing here...",
-        // validators: [{
-        //     "type": "expression",
-        //     "text": "Please enter a valid integer.",
-        //     "expression": "validateInt({acreage}) == True"}]
+        placeHolder: "Start typing...",
     }
     ]
   };

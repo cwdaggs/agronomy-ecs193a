@@ -184,51 +184,37 @@
 }
 
 #visLandingPage{
-  /* background-image: url(./images/wheat_field.png); */
-  /* Need to make height dynamic */
-  height: 1100px;
+  background-image: url(./images/wheat_field2.jpg);
+  height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed; 
-  background-size: 100% 100%;
+  background-size: cover;
 }
 
 #visLandingHeading{
   text-align: center;
   color: black;
-  font-size: 48px;
-
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
+  font-size: 72px;
+  margin: 0;
+  padding-top: 10%;
 }
 
 #visLandingBody{
+  text-align: center;
   color: black;
-  position: fixed;
-  top: 45%;
-  margin: 100px;
-  font-weight: 600;
-  font-size: 22px;
-  /* bring your own prefixes */
+  margin: 15%;
+  margin-top: 5%;
+  margin-bottom: 0;
+  font-weight: 900;
+  font-size: 32px;
 }
 
 #visLandingBodyExtended{
   color: black;
-  position: fixed;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: 600;
-  font-size: 22px;
+  font-weight: 900;
+  font-size: 26px;
   text-align: center;
-  /* bring your own prefixes */
 }
-
-/* #infoSection{
-  height: 2600px;
-} */
 
 #infoSection0{
   margin-top: 50px;
