@@ -4,6 +4,7 @@ import {Checkbox, Tab} from './Button.js';
 import 'react-pro-sidebar/dist/css/styles.css';
 import {InfoSummary} from './components/Pages/InfoSummary';
 import {AboutSummary} from './components/Pages/AboutSummary';
+import {CommentBox} from './components/Pages/Comments'
 import {Visualizations} from './components/Pages/Visualization';
 import {Home} from './components/Pages/Home';
 import {NavLink, Outlet,Routes, Route } from "react-router-dom";
@@ -20,6 +21,8 @@ import { AffectVictory } from './components/Visualizations/Questions/Affect_vict
 import { AmountVictory } from './components/Visualizations/Questions/AmountValued';
 import { PrioritySatisfaction } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
+import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
+
 
 export default function App() {
   var [dual_display, checkDualDisplay] = useState(false);
@@ -61,6 +64,9 @@ export default function App() {
         <NavLink to ="/survey">
           {({ isActive }) => getActiveTab(isActive, "Survey")}
         </NavLink>
+        <NavLink to ="/feedback">
+          {({ isActive }) => getActiveTab(isActive, "Feedback")}
+        </NavLink>
       </div>
       
       <Outlet/>
@@ -79,6 +85,7 @@ export default function App() {
               {<Visualizations dual={dual_display}/>}
           </div>
         }>
+          <Route index element={<VisualizationLandingPage/>}/>
           <Route path="Acres%20Managed" element={<AcresManagedBarChart dataset={dataset}/>}/>
           <Route path="Crop%20Percentages" element={<CropPercentages dataset={dataset}/>}/>
           <Route path="Production%20Concerns" element={<ConcernsVictory dataset={dataset}/>}/>
@@ -96,6 +103,7 @@ export default function App() {
         <Route path="info" element={<InfoSummary/>}/>
         <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
+        <Route path="feedback" element={<CommentBox/>}/>
       </Routes>
     </div>
   )
