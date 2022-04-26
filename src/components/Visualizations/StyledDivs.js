@@ -28,17 +28,8 @@ const Dropbtn = styled.div`
   &:hover {
     background-color: green;
   }
-  @media (max-width: 950px) {
-    padding: 10px 20px;
-    font-size: 12px;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    border-left: 5px solid white;
-    border-right: 5px solid white;
-    border-radius: 25px;
-  }
 
-  @media (max-width: 675px) {
+  @media (max-width: 1200px) {
     padding: 5px 10px;
     font-size: 8px;
     border-top: 1px solid white;
@@ -74,6 +65,9 @@ const DropDownLi = styled(StyledLi)`
   //   background-color: red;
   // }
   &:hover ${DropDownContent} {
+    display: block;
+  }
+  &:active ${DropDownContent} {
     display: block;
   }
 `;
@@ -127,7 +121,7 @@ const TabHome = styled.button`
   cursor: pointer;
   font-size: 25px;
   font-family: ABeeZee, serif; 
-  opacity: 0.3;
+  opacity: 0.7;
   background: white;
   border: 0;
   outline: 0;

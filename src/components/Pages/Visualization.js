@@ -36,7 +36,7 @@ function VisSelector(dataset, vis) {
   return (vis_key[vis])
 }
 
-export const Visualizations = () => {
+export const Visualizations = (props) => {
     
     const types = [
         "Acres Managed", //Q2
@@ -56,30 +56,64 @@ export const Visualizations = () => {
     const [active, setActive] = useState(test_str);
     const [key, setKey] = useState(0);
 
-    
-    return(
-      <div className='inline-parent'>
-        <div className='vis-buttons-parent'>
-          <div id='vis-buttons-label'>
-            Survey Questions
-          </div>
-          <nav>
-            {types.map(type => (
-              <NavLink
-              key={type}
-              onClick={() => {setKey(key+1); setActive(type)}}
+    if(!props.dual){
+      return(
+        <div className='inline-parent'>
+          <div className='vis-buttons-parent'>
+            <div id='vis-buttons-label'>
+              Survey Questions
+            </div>
+            <nav>
+              {types.map(type => (
+                <NavLink
+                key={type}
+                onClick={() => {setKey(key+1); setActive(type)}}
+                
+                active={active === type}
+                to={`/results/${type}`}>
+                  <div className='vis-buttons-child'>
+                    <TabVisualizations>{type+" "}</TabVisualizations>
+                  </div>
+                </NavLink>
+              ))}
               
-              active={active === type}
-              to={`/results/${type}`}>
-                <div className='vis-buttons-child'>
-                  <TabVisualizations>{type+" "}</TabVisualizations>
-                </div>
-              </NavLink>
-            ))}
-            
-          </nav>
+            </nav>
+          </div>
+          <Outlet/>
         </div>
-        <Outlet/>
-      </div>
-    );
+      );
+    }else{
+      return(
+        <div className='inline-parent'>
+          <div className='vis-buttons-parent'>
+            <div id='vis-buttons-label'>
+              Survey Questions
+            </div>
+            <nav>
+              {types.map(type => (
+                <NavLink
+                key={type}
+                onClick={() => {setKey(key+1); setActive(type)}}
+                
+                active={active === type}
+                to={`/results/${type}`}>
+                  <div className='vis-buttons-child'>
+                    <TabVisualizations>{type+" "}</TabVisualizations>
+                  </div>
+                </NavLink>
+              ))}
+              
+            </nav>
+          </div>
+          <div className='dual-display'>
+            <div id='dual-display-child'>
+              <Outlet/>
+            </div>
+            <div id='dual-display-child'>
+              <Outlet/>
+            </div>
+          </div>
+        </div>
+      )
+    }
 }
