@@ -77,8 +77,14 @@ export const InfoSummary = () => {
               </ParallaxLayer>
               <ParallaxLayer offset={2} speed = {0.4}> 
                 <div id = "infoSection2">
-                  <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
-                  <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+                  <div>
+                    <C.SubTitle>Responses by Region, County, Occupation, and Crop</C.SubTitle>
+                      <C.Desc className='font-newsreader'>
+                        The visualizations below reflect the amount of respondents given a specific county, region, occupation, or crop. 
+                      </C.Desc>
+                  </div>
+                    <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+                    <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
                 </div>
               </ParallaxLayer>
               <ParallaxLayer offset={3} speed = {0.2}>  

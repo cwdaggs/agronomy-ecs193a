@@ -86,7 +86,7 @@ export const RegionMapChart = (props) => {
             ]}
           />
         </div>
-        <img src='./assets/region-map-2.png' id="map-image"></img>
+        <img src='./assets/region-map-2.png' id="map-image" width={vw*.1} height={vh*.2}></img>
       </div>
       <div className='flex-parent'>
           <div id="info-legend">

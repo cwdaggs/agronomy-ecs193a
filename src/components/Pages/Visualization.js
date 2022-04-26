@@ -59,11 +59,12 @@ export const Visualizations = (props) => {
     if(!props.dual){
       return(
         <div className='inline-parent'>
-          <div className='vis-buttons-parent'>
+          <div>
+
             <div id='vis-buttons-label'>
-              Survey Questions
-            </div>
-            <nav>
+                Survey Questions
+            </div>        
+            <nav className='vis-buttons-parent'>
               {types.map(type => (
                 <NavLink
                 key={type}
@@ -78,18 +79,19 @@ export const Visualizations = (props) => {
               ))}
               
             </nav>
-          </div>
           <Outlet/>
+          </div>
         </div>
       );
     }else{
       return(
-        <div className='inline-parent'>
-          <div className='vis-buttons-parent'>
+         <div className='inline-parent'>
+          <div>
+            
             <div id='vis-buttons-label'>
-              Survey Questions
-            </div>
-            <nav>
+                Survey Questions
+            </div>        
+            <nav className='vis-buttons-parent'>
               {types.map(type => (
                 <NavLink
                 key={type}

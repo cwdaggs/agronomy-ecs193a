@@ -20,6 +20,7 @@ import { AffectVictory } from './components/Visualizations/Questions/Affect_vict
 import { AmountVictory } from './components/Visualizations/Questions/AmountValued';
 import { PrioritySatisfaction } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
+import { TabHome } from './components/Visualizations/StyledDivs';
 
 export default function App() {
   var [dual_display, checkDualDisplay] = useState(false);
@@ -61,6 +62,13 @@ export default function App() {
         <NavLink to ="/survey">
           {({ isActive }) => getActiveTab(isActive, "Survey")}
         </NavLink>
+        
+        <a href="https://ucanr.edu/" target="_blank">
+          <Tab>
+            UCCE
+          </Tab>
+        </a>
+
       </div>
       
       <Outlet/>

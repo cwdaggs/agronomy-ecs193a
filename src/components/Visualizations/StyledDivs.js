@@ -146,6 +146,8 @@ const TabVisualizations = styled.button`
   border: 2%;
   outline: 1%;
   width:100%;
+  height:100%;
+  padding:10px;
   &:hover {
     background-color: #f1f1f1;
   }

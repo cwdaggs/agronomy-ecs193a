@@ -21,11 +21,11 @@ export const Home = () => {
                     <h2>Critical Needs for UCCE Research and Extension</h2>
                 </div>   
                 <div id="home-info">
-                    <h2>
+                    
                         Agronomic crop production in California faces many challenges. This website displays the results of a 
                         survey involving hundreds of growers, consultants, and allied industry members across the state to 
                         identify needs and set priorities.
-                    </h2>
+                    
                 </div>   
                 <div id="home-button">
                     <NavLink to ="/results">

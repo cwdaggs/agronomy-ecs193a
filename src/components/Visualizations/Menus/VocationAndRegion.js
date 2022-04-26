@@ -1,6 +1,32 @@
 import React, { useState } from "react";
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
+import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
+import {IoMdArrowDropdown} from "react-icons/io";
 
+
+function DetermineIcon(type) {
+  if (type === "Wheat") {
+    return (<><GiWheat/></>)
+  } else if (type === "Rice") {
+    return (<><GiBowlOfRice/></>)
+  } else if (type === "Small Grain Silage") {
+    return (<><GiGrainBundle/></>)
+  } else if (type === "Cotton") {
+    return (<><GiCottonFlower/></>)
+  } else if (type === "Corn") {
+    return (<><GiCorn/></>)
+  } else if (type === "Sunflower") {
+    return (<><GiSunflower/></>)
+  } else if (type === "Dry Beans") {
+    return (<><GiJellyBeans/></>)
+  } else if (type === "Alfalfa") {
+    return (<><GiVineFlower/></>)
+  } else if (type === "Barley") {
+    return (<><GiBerriesBowl/></>)
+  } else if (type === "Corn Silage") {
+    return (<><GiCoolSpices/></>)
+  }
+}
 
 export function VocationAndRegion(props) {
 
@@ -32,7 +58,8 @@ export function VocationAndRegion(props) {
 
                 <DropDownLi>
                     <Dropbtn>
-                        {activeName}
+                        {activeName + " "}
+                        {<IoMdArrowDropdown/>}
                     </Dropbtn>
                     <DropDownContent>
                         {" "}
@@ -42,6 +69,7 @@ export function VocationAndRegion(props) {
                                 active={props.activeVocation === type}
                                 onClick={() => {props.vocationFunction(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
                                 >{type}
+                                
                             </SubA>
                         ))}
                     </DropDownContent>
@@ -49,7 +77,8 @@ export function VocationAndRegion(props) {
 
                 <DropDownLi>
                     <Dropbtn>
-                        {activeCropName}
+                        {activeCropName + " "}
+                        {<IoMdArrowDropdown/>}
                     </Dropbtn>
                     <DropDownContent>
                         {" "}
@@ -58,7 +87,9 @@ export function VocationAndRegion(props) {
                                 key={type}
                                 active={props.activeRegionOrCrop === type}
                                 onClick={() => {props.regionOrCropFunction(type);setActiveRegionName("Select Region");setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim());}}
-                                >{type}
+                                >
+                                {DetermineIcon(type)}
+                                {" " + type}
                             </SubA>
                             ))}
                     </DropDownContent>
@@ -66,7 +97,8 @@ export function VocationAndRegion(props) {
 
                 <DropDownLi>
                     <Dropbtn>
-                        {activeRegionName}
+                        {activeRegionName + " "}
+                        {<IoMdArrowDropdown/>}
                     </Dropbtn>
                     <DropDownContent>
                     {" "}
