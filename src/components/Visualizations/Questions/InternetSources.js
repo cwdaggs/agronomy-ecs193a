@@ -1,4 +1,4 @@
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryZoomContainer} from 'victory';
 import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
@@ -149,6 +149,11 @@ export function InternetSourcesBarChart(props) {
             domainPadding={{ x: (width>=mobileWidth) ? margin.right/10 : 0, y:margin.top/10 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}   
             animate={{duration: 800}}
+            containerComponent={
+              <VictoryZoomContainer
+                zoomDimension="x"
+              />
+            }
           >
             {/* <VictoryLabel 
             x={width/2 - 300} 

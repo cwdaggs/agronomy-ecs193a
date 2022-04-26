@@ -12,7 +12,7 @@ import {
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-const fontSize = 34;
+const fontSize = 16;
 
 const geoUrl =
   "./data/california-counties.geojson";
@@ -64,16 +64,39 @@ export const RegionMapChart = (props) => {
   const regionData = regionAmount(props.data);
   return (
     <div id='info-charts'>
-      <img src='./assets/region-map.png' id="map-image"></img>
+      <div className='flex-parent'>
+        <div className="flex-child">
+          <VictoryLegend
+            colorScale={regionColorScale}
+
+            gutter={25}
+            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
+                  title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+                  data:   {stroke: "black", strokeWidth: 1}}}
+            title="Regions"
+            centerTitle
+            data={[
+              { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: fontSize}},
+              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
+              { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
+              { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
+              { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: fontSize}},
+              { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: fontSize}},
+              { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: fontSize}}
+            ]}
+          />
+        </div>
+        <img src='./assets/region-map-2.png' id="map-image"></img>
+      </div>
       <div className='flex-parent'>
           <div id="info-legend">
             <VictoryLegend
               colorScale={regionColorScale}
-              x={50}
-              y={-vh*.10}
+              x={100}
+              y={0}
               gutter={25}
-              style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 32}, 
-                    title:  {fontFamily: 'ABeeZee', fontSize: 32},
+              style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+2}, 
+                    title:  {fontFamily: 'ABeeZee', fontSize: fontSize+2},
                     data:   {stroke: "black", strokeWidth: 1}}}
               title="Responses by Region"
               centerTitle
@@ -89,32 +112,32 @@ export const RegionMapChart = (props) => {
             />
           </div>
           <div id='info-pie'>
-          <VictoryPie
-            animate={{
-              duration: 500,               
-            }}
-            width={vw*.5}
-            height={vh}
-            padding={{
-              left: 0,
-              bottom: 0,
-              top: 0
-            }}
-            style={{ data: { stroke: "black", strokeWidth: 1}}}
-            colorScale={regionColorScale}
-            data={regionData}
-            // labels={() => null}
-            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
-            labelComponent={
-                <VictoryTooltip 
-                style={{
-                    fontSize:100,
-                    fontFamily: 'ABeeZee'
-                }}
-                flyoutHeight={100}
-                flyoutWidth={200}    
-                />
-            }
+            <VictoryPie
+              animate={{
+                duration: 500,               
+              }}
+              width={vw*.15}
+              height={vh*.15}
+              padding={{
+                left: 0,
+                bottom: 0,
+                top: 0
+              }}
+              style={{ data: { stroke: "black", strokeWidth: 1}}}
+              colorScale={regionColorScale}
+              data={regionData}
+              // labels={() => null}
+              labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+              labelComponent={
+                  <VictoryTooltip 
+                  style={{
+                      fontSize:fontSize,
+                      fontFamily: 'ABeeZee'
+                  }}
+                  flyoutHeight={20}
+                  flyoutWidth={40}    
+                  />
+              }
             />
           </div>
       </div>

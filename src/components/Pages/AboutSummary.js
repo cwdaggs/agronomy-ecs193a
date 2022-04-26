@@ -17,7 +17,7 @@ export const AboutSummary = () => {
               <img src="./assets/1-Jessie-Kanter-UCCE.jpg" alt="Jessie Kanter" height={height/3} width={height/3}/>
               <div className='profile-name'>
                 <span>Jessie Kanter - </span>
-                <a href='https://smallfarmsfresno.ucanr.edu/Staff/' target="_blank">UCCE</a>
+                <a href='https://ucanr.edu/About/DirectorySearch/?facultyid=45966' target="_blank">UCCE</a>
               </div>
             </div>
             <div className='profile'>

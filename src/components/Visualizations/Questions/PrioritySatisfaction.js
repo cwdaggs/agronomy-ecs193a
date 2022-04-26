@@ -83,7 +83,6 @@ export const PrioritySatisfaction = (props) => {
             >
             <VictoryLegend 
               x={(width>=mobileWidth)?width/4 + margin.left:0}
-              y={0}
               title="Engagement Frequency"
               centerTitle
               orientation="horizontal"

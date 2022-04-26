@@ -22,21 +22,10 @@ import { PrioritySatisfaction } from './components/Visualizations/Questions/Prio
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
 
 export default function App() {
-  const [dual_display, checkDualDisplay] = useState(false);
+  var [dual_display, checkDualDisplay] = useState(false);
 
   function changeDual(){
     checkDualDisplay(!dual_display);
-  }
-
-  function getNewDisplay(dual_display) {
-    return (dual_display
-      ?
-      <div class='flex-parent'>
-        <div class='flex-child'><Visualizations/></div>
-        <div class='flex-child'><Visualizations/></div>
-      </div>
-      :
-      <Visualizations/>)
   }
 
   function getActiveTab(isActive, pageName){
@@ -82,13 +71,12 @@ export default function App() {
           <div>
             <div id="visTop">
               Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
-              Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
-              Full details of survey scope and representation here.
+              Select a topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
             </div>
             <div id="compare-box">
               <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
             </div>
-              {getNewDisplay(dual_display)}
+              {<Visualizations dual={dual_display}/>}
           </div>
         }>
           <Route path="Acres%20Managed" element={<AcresManagedBarChart dataset={dataset}/>}/>
