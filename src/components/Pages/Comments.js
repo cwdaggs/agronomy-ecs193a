@@ -23,6 +23,9 @@ export const CommentBox = () => {
     survey
     .onComplete
     .add(function (sender) {
+        var surveyData = sender.data;
+        // send this comment to email
+        console.log(surveyData["Suggestions Box"]);
         document
             .querySelector('#comments')
             .textContent = "Result JSON:\n" + JSON.stringify(sender.data, null, 3);
