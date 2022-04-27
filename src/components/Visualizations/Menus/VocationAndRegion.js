@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation, useParams, Link, NavLink } from "react-router-dom";
 import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
 import {MdOutlineKeyboardArrowDown, MdKeyboardArrowDown, MdArrowDropDown} from "react-icons/md";
 import {RiArrowDropDownLine} from "react-icons/ri";
 import {IoMdArrowDropdown} from "react-icons/io";
+// import { Link} from "react-router-dom";
 
 function DetermineCropIcon(type) {
     if (type === "Wheat") {
@@ -38,11 +39,12 @@ export function VocationAndRegion(props) {
 
     // These go in visualizations
     const [activeCropName, setActiveCropName] = useState("Select Crop");
+    console.log("active crop name: " + activeCropName);
     const [activeRegionName, setActiveRegionName] = useState("Select Region");
-    const [activeName, setActiveName] = useState("Select Vocation");
-    const [searchParams, setSearchParams] = useSearchParams(window.location.search);
-    console.log(window.location.search);
-    // console.log(searchParams);
+    const [activeName, setActiveName] = useState(props.activeVocation);
+    // const location = useLocation().pathname;
+    const location = "/results/Acres%20Managed";
+    console.log(useLocation().pathname);
 
     const types = [
         "All", 
@@ -75,9 +77,14 @@ export function VocationAndRegion(props) {
                             <SubA 
                                 key={type}
                                 active={props.activeVocation === type}
-                                onClick={() => {props.vocationFunction(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim()); setSearchParams({vocation: `${type}`}); console.log(searchParams.values);}}
+                                onClick={() => {props.vocationFunction(type); 
+                                                setActiveName(type.replace(/([A-Z])/g, ' $1').trim());
+                                                }}
                             >
-                            {type}
+                            <Link style={{ textDecoration: 'none' }} to={location + "/" + type + "/" + activeCropName + "/" + activeRegionName}>
+                                {DetermineCropIcon(type)}
+                                {" " + type}
+                                </Link>
                             </SubA>
                         ))}
                     </DropDownContent>
@@ -94,9 +101,15 @@ export function VocationAndRegion(props) {
                             <SubA 
                                 key={type}
                                 active={props.activeRegionOrCrop === type}
-                                onClick={() => {props.regionOrCropFunction(type);setActiveRegionName("Select Region");setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim()); setSearchParams({crop: `${type}`})}}
-                                >{DetermineCropIcon(type)}
+                                onClick={() => {props.regionOrCropFunction(type);
+                                                setActiveRegionName("Select Region");
+                                                setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim()); 
+                                                }}
+                            >
+                                <Link style={{ textDecoration: 'none' }} to={location + "/" + activeName + "/" + type + "/Select Region"}>
+                                {DetermineCropIcon(type)}
                                 {" " + type}
+                                </Link>
                             </SubA>
                             ))}
                     </DropDownContent>
@@ -113,8 +126,15 @@ export function VocationAndRegion(props) {
                         <SubA 
                             key={type}
                             active={props.activeRegionOrCrop === type}
-                            onClick={() =>  {props.regionOrCropFunction(type);setActiveCropName("Select Crop"); setActiveRegionName(type); setSearchParams({region: `${type}`})}}
-                            >{type}
+                            onClick={() =>  {props.regionOrCropFunction(type);
+                                            setActiveCropName("Select Crop"); 
+                                            setActiveRegionName(type); 
+                                            }}
+                            >
+                                <Link style={{ textDecoration: 'none' }} to={location + "/" + activeName + "/Select Crop/" + type}>
+                                {DetermineCropIcon(type)}
+                                {" " + type}
+                                </Link>
                         </SubA>
                         ))}
                     </DropDownContent>

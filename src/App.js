@@ -92,8 +92,8 @@ export default function App() {
               {getNewDisplay(dual_display)}
           </div>
         }>
-          <Route path="Acres%20Managed" element={<AcresManagedBarChart dataset={dataset}/>}>
-          <Route path="?vocation=Growers" element={<AcresManagedBarChart dataset={dataset}/>}/>
+          <Route path="Acres%20Managed/" element={<AcresManagedBarChart dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<AcresManagedBarChart dataset={dataset}/>}/>
           </Route>
           <Route path="Crop%20Percentages" element={<CropPercentages dataset={dataset}/>}/>
           <Route path="Production%20Concerns" element={<ConcernsVictory dataset={dataset}/>}/>
@@ -106,7 +106,6 @@ export default function App() {
           <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}/>
           <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}/>
         </Route>
-        {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}
 
         <Route path="info" element={<InfoSummary/>}/>
         <Route path="team" element={<AboutSummary/>}/>
