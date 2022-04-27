@@ -99,6 +99,41 @@ export const AboutSummary = () => {
             </div>
           </div>
         </C.Body>
+
+        <C.Body>
+          <C.Title>Application Development Team</C.Title>
+          <br></br>
+          <div id='team-profiles'>
+            <div className='profile'>
+              <img src="./assets/Austin-Kosnikowski.jpg" alt="Austin Kosnikowski" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Austin Kosnikowski - </span>
+                <a href='https://www.linkedin.com/in/austin-kosnikowski-769206236/' target="_blank">LinkedIn</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/Cameron-Daggs.jpg" alt="Cameron Daggs" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Cameron Daggs - </span>
+                <a href='https://www.linkedin.com/in/cameron-daggs-45a2a6163/' target="_blank">LinkedIn</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/Christopher-Pires.jpg" alt="Christopher Pires" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Christopher Pires - </span>
+                <a href='https://www.linkedin.com/in/christopher-pires-0280ba20b/' target="_blank">LinkedIn</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/Darin-Lee.jpg" alt="Darin Lee" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Darin Lee - </span>
+                <a href='https://www.linkedin.com/in/darin-lee-3486031b1/' target="_blank">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </C.Body>
       </C.Area>
     </C.Container>
     </div>

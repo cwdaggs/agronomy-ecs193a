@@ -49,7 +49,7 @@ export const MapChart = (props) => {
             
             colorScale={colorScale}
 
-            x={0}
+            x={150}
             y={0}
 
             gutter={25}
@@ -77,7 +77,7 @@ export const MapChart = (props) => {
 
               <VictoryLegend
                 colorScale={colorScale}
-                x={50}
+                x={150}
                 y={0}
                 gutter={25}
                 style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 

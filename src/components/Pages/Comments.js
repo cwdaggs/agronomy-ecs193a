@@ -5,6 +5,7 @@ StylesManager.applyTheme("modern");
 
 const surveyJson = {
     "title": "Comments and Suggestions",
+    "description": "Work in progress, feedback will not be sent until completion",
     "elements": [
     {
         name: "Suggestions Box",

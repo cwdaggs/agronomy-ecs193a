@@ -61,9 +61,12 @@ function getInternetSources(data){
       }
     }
   }
-  sources[5] = "UC Cooperative Extension\nMagazine Articles"
-  sources[6] = "Personal contact\n(phone, email, on-farm consultation)";
-  sources[7] = "In-person meetings\n(Field Days, Grower Meetings)";
+  sources[0] = "Internet";
+  sources[5] = "UCCE Magazine Articles";
+  sources[6] = "Personal Contact";
+  sources[7] = "In-Person Meetings";
+  sources[14] = "2-3 Day Destination Meetings"
+
 
   for(var l=0; l<totals.length; l++){
     modified_data.push({x: sources[l], y: totals[l]});

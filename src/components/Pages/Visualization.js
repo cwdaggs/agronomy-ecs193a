@@ -1,40 +1,8 @@
-import {useData} from '../Visualizations/UseData';
-import {VisMenu} from '../Visualizations/Menu';
 import React, { useState } from "react";
-import {Tab} from '../Visualizations/StyledDivs'
-import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, TabVisualizations} from '../Visualizations/StyledDivs';
-import { NavLink, Outlet, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
-import { AboutSummary } from './AboutSummary';
-import {PrioritySatisfaction} from '../Visualizations/Questions/PrioritySatisfaction.js'
-import {AffectVictory} from '../Visualizations/Questions/Affect_victory';
-import {ConcernsVictory} from '../Visualizations/Questions/Concerns_victory';
-import {AcresManagedBarChart} from '../Visualizations/Questions/AcresManaged.js';
-import { CropPercentages } from "../Visualizations/Questions/CropPercentages";
-import {InfoSourcesBarChart} from "../Visualizations/Questions/InfoSources";
-import {InternetSourcesBarChart} from "../Visualizations/Questions/InternetSources";
-import { PriorityConcerns } from "../Visualizations/Questions/PriorityConcerns";
-import { AmountVictory } from "../Visualizations/Questions/AmountValued";
-import { EngageVictory } from "../Visualizations/Questions/Engage_victory";
-import { PrimaryGrowingReasons } from "../Visualizations/Questions/PrimaryGrowingReasons";
+import {TabVisualizations} from '../Visualizations/StyledDivs';
+import {Tab} from "../../Button"
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
-function VisSelector(dataset, vis) {
-
-  var vis_key = { 
-    "Priorities vs Satisfaction" :        (<PrioritySatisfaction dataset={dataset}/>),
-    "Crop Percentages":                   (<CropPercentages dataset={dataset}/>),
-    "Priority Effect":                    (<AffectVictory dataset={dataset}/>),
-    "Production Concerns":                (<ConcernsVictory dataset={dataset}/>),
-    "Acres Managed":                      (<AcresManagedBarChart dataset={dataset}/>),
-    "Information Sources":                (<InfoSourcesBarChart dataset={dataset}/>),
-    "Internet Sources":                   (<InternetSourcesBarChart dataset={dataset}/>),
-    "Priority Concerns":                  (<PriorityConcerns dataset={dataset}/>),
-    "Values":                             (<AmountVictory dataset={dataset}/>),
-    "UCCE Engagement":                    (<EngageVictory dataset={dataset}/>),
-    "Primary Growing Reasons":            (<PrimaryGrowingReasons dataset={dataset}/>)
-  }
-
-  return (vis_key[vis])
-}
 
 export const Visualizations = (props) => {
     
@@ -43,12 +11,12 @@ export const Visualizations = (props) => {
         "Crop Percentages", //Q3
         "Production Concerns", //Q6
         "Priority Concerns", //Q7
-        "Primary Growing Reasons", //Q8
+        "Growing Reasons", //Q8
         "Priority Effect", //Q9
         "Information Sources", //Q10
         "UCCE Engagement", //Q11
-        "Values", //Q12
-        "Priorities vs Satisfaction", //Q13
+        "Value Assessment", //Q12
+        "Priority Satisfaction", //Q13
         "Internet Sources", //Q16
     ]
     var test_str = "";
@@ -56,14 +24,17 @@ export const Visualizations = (props) => {
     const [active, setActive] = useState(test_str);
     const [key, setKey] = useState(0);
 
-    if(!props.dual){
+    var path = useLocation().pathname;
+
+    if(!props.dual || (path === "/results")){
       return(
         <div className='inline-parent'>
-          <div className='vis-buttons-parent'>
+          <div>
+
             <div id='vis-buttons-label'>
-              Survey Questions
-            </div>
-            <nav>
+                Survey Questions
+            </div>        
+            <nav className='vis-buttons-parent'>
               {types.map(type => (
                 <NavLink
                 key={type}
@@ -78,18 +49,19 @@ export const Visualizations = (props) => {
               ))}
               
             </nav>
-          </div>
           <Outlet/>
+          </div>
         </div>
       );
     }else{
       return(
-        <div className='inline-parent'>
-          <div className='vis-buttons-parent'>
+         <div className='inline-parent'>
+          <div>
+            
             <div id='vis-buttons-label'>
-              Survey Questions
-            </div>
-            <nav>
+                Survey Questions
+            </div>        
+            <nav className='vis-buttons-parent'>
               {types.map(type => (
                 <NavLink
                 key={type}

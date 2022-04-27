@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 /* #outerContainer {
   color: black;
   display: flex;
@@ -12,7 +12,7 @@
 
 
 #heading {
-  background-color: #02285100;
+  background-color: #00000017;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -49,33 +49,28 @@
 }
 
 #home-container{
-  font-family: 'Montserrat', sans-serif;
-  display: block;
-  text-align: left;
+  display: flex;
+  font-weight: 200;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   padding-left: 25vw;
   padding-right: 25vw;
   height:100vh;
 }
 
-#main-title{
-  padding-top: 30vh;
-  padding-left: 10vw;
-  font-weight: 100;
-  font-size: large;
-  color: rgb(88, 88, 88);
-}
-
 #home-sub-title{
-  padding-left: 10vw;
+  font-family: 'Montserrat', sans-serif;
   font-size: x-large;
-  font-weight: bolder;
   color: rgb(0,0,0);
 }
 
 #home-info{
-  font-size: small;
-  padding-left: 12vw;
-  padding-right: 12vw;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  font-size: x-large;
+  padding-left: 10vw;
+  padding-right: 10vw;
   padding-bottom: 10vh;
 }
 
@@ -97,6 +92,11 @@
 
 .font-newsreader{
   font-family: 'Newsreader';
+  font-size: 22px;
+}
+
+.font-roboto{
+  font-family: 'Roboto', sans-serif;
   font-size: 22px;
 }
 
@@ -126,20 +126,30 @@
   /* Center child horizontally*/
 }
 
+.visualization-window-compare {
+  font-family: 'Metropolis';
+  font-size: 24px;
+  /* outline: solid 1px black; */
+  margin: auto;
+  /* Center child horizontally*/
+}
+
 .vis-buttons-parent {
-  display: block;
-  position: fixed;
-  padding-left: 2px;
-  padding-top: 100px;
+  display: flex;
+  justify-content: center;
   font-size: large;
+  background-color: #f2f5f8;
 }
 
 .vis-buttons-child {
-  z-index: 5;
+ flex:1;
 }
 
 #vis-buttons-label {
+  padding:10px;
+  text-align: center;
   font-size: 20px;
+  background-color: #f2f5f8;
 }
 
 .dual-display{
@@ -148,7 +158,6 @@
 
 #dual-display-child{
   flex:1;
-  height:50vh;
 }
 
 .inline-parent {
@@ -195,7 +204,7 @@
 
 #visLandingPage{
   background-image: url(./images/wheat_field2.jpg);
-  height: 100%;
+  height: 120vh;
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: cover;
@@ -204,26 +213,31 @@
 #visLandingHeading{
   text-align: center;
   color: black;
-  font-size: 72px;
+  font-size: 8vh;
   margin: 0;
   padding-top: 10%;
+
 }
 
 #visLandingBody{
+  font-family: 'Roboto', sans-serif;
   text-align: center;
   color: black;
   margin: 15%;
   margin-top: 5%;
   margin-bottom: 0;
   font-weight: 900;
-  font-size: 32px;
+  font-size: 3vh;
+
 }
 
 #visLandingBodyExtended{
+  font-family: 'Roboto', sans-serif;
   color: black;
   font-weight: 900;
-  font-size: 26px;
+  font-size: 2vh;
   text-align: center;
+
 }
 
 #infoSection0{
@@ -239,13 +253,10 @@
 }
 
 #infoSection2{
-  height: 100vh;
-  width: 0.5*100vw;
-  position: relative;
-  display: table-cell;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   vertical-align: middle;
-  left: 50%;
-  transform: translate(-20%, -75%);
 }
 
 #infoSection3{
@@ -263,9 +274,9 @@
 } */
 #info-charts{
   display: flex;
+  justify-content: center;
   width:100vw;
-  padding-bottom: 5vh;
-
+  padding-bottom: 10%;
 }
 #map-image {
   padding-top: 10%;
@@ -281,6 +292,7 @@
 }
 
 #info-legend {
+  justify-content: center;
   width: 50%;
   color: black;
 }
@@ -318,6 +330,7 @@ body,html {
 }
 
 .profile-name {
+  font-family: 'Roboto', sans-serif;
   padding: 10px 0px;
 }
 
@@ -330,41 +343,21 @@ body,html {
   }
 
   #home-container{
-    font-family: 'Montserrat', sans-serif;
-    display: block;
-    text-align: left;
     padding-left: 10%;
     padding-right: 10%;
-    padding-top: 20%;
     height: 100vh;
-    justify-content: center;
   }
-  
-  #main-title{
-    padding-top: 10%;
-    padding-left: 5%;
-    font-weight: 100;
-    font-size: medium;
-    color: rgb(88, 88, 88);
-  }
+
   
   #home-sub-title{
-    padding-left: 5%;
     font-size: large;
-    font-weight: bolder;
-    color: rgb(0,0,0);
   }
   
   #home-info{
-    font-size: smaller;
-    padding-left: 12vw;
-    padding-right: 12vw;
+    font-size: large;
+    padding-left: 10vw;
+    padding-right: 10vw;
     padding-bottom: 10vh;
-  }
-  
-  #home-button{
-    text-align: center;
-    color: #022851;
   }
 
   .visualization-window {
@@ -377,17 +370,6 @@ body,html {
     /* Center child horizontally*/
   }
   
-  .vis-buttons-parent {
-    display: block;
-    position: fixed;
-    padding-left: 2px;
-    width: 20%;
-  }
-  
-  .vis-buttons-child {
-    z-index: 5;
-  
-  }
 
   #vis-buttons-label {
     font-size: 12px;
@@ -395,17 +377,6 @@ body,html {
 
   #vis-question-label{
     font-size: 12px;
-  }
-
-  .visualization-window {
-    font-family: 'Metropolis';
-    font-size: 24px;
-    height: 60%;
-    width: 70%;
-    padding-left: 5%;
-    /* outline: solid 1px black; */
-    margin: auto;
-    /* Center child horizontally*/
   }
 
   #visTop {
@@ -443,64 +414,20 @@ body,html {
   }
 
   #home-container{
-    font-family: 'Montserrat', sans-serif;
-    display: block;
-    text-align: left;
     padding-left: 10%;
     padding-right: 10%;
-    padding-top: 20%;
     height: 100vh;
-    justify-content: center;
-  }
-  
-  #main-title{
-    padding-top: 10%;
-    padding-left: 5%;
-    font-weight: 100;
-    font-size: medium;
-    color: rgb(88, 88, 88);
   }
   
   #home-sub-title{
-    padding-left: 5%;
-    font-size: medium;
-    font-weight: bolder;
-    color: rgb(0,0,0);
+    font-size: small;
   }
   
   #home-info{
-    font-size: x-small;
-    padding-left: 12vw;
-    padding-right: 12vw;
-    padding-bottom: 10vh;
-  }
-  
-  #home-button{
-    text-align: center;
-    color: #022851;
-  }
-
-  .visualization-window {
-    font-family: 'Metropolis';
-    font-size: 12px;
-    height: 80%;
-    width: 70%;
-    /* outline: solid 1px black; */
-    margin: auto;
-    /* Center child horizontally*/
-  }
-  
-  .vis-buttons-parent {
-    display:block;
-    padding-top: 100%;
-    padding-bottom: 10%;
-    width: 100%;
-    position: absolute;
-  }
-  
-  .vis-buttons-child {
-    z-index: 5;
-  
+    font-size: small;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-bottom: 5vh;
   }
 
   #vis-buttons-label {
@@ -516,7 +443,6 @@ body,html {
     font-size: 24px;
     height: 60%;
     width: 70%;
-    padding-left: 5%;
     /* outline: solid 1px black; */
     margin: auto;
     /* Center child horizontally*/
@@ -546,12 +472,6 @@ body,html {
     vertical-align: center;
   } 
 
-  #info-charts{
-    display: block;
-    width:50%;
-    padding-bottom: 5vh;
-  
-  }
 }
 
 @media screen and (max-height:800px) and (min-width: 600px) {
@@ -561,25 +481,13 @@ body,html {
   }
 
   #home-container{
-    font-family: 'Montserrat', sans-serif;
-    display: block;
-    text-align: left;
     padding-left: 10%;
     padding-right: 10%;
-    height: 200vh;
-    justify-content: center;
+    height: 100vh;
   }
   
   #vis-question-label{
     font-size: 12px;
-  }
-
-  .vis-buttons-parent {
-    display: block;
-    position:fixed;
-    padding-top: 100px;
-    padding-left: 2px;
-    width:15%;
   }
 
   #visTop {
@@ -587,31 +495,13 @@ body,html {
     font-style: italic;
   }
 
-  #main-title{
-    padding-top: 10%;
-    padding-left: 5%;
-    font-weight: 100;
-    font-size: medium;
-    color: rgb(88, 88, 88);
-  }
-  
   #home-sub-title{
-    padding-left: 5%;
-    font-size: large;
-    font-weight: bolder;
-    color: rgb(0,0,0);
+    font-size: medium;
   }
   
   #home-info{
-    font-size: smaller;
-    padding-left: 12vw;
-    padding-right: 12vw;
+    font-size: medium;
     padding-bottom: 10vh;
-  }
-  
-  #home-button{
-    text-align: center;
-    color: #022851;
   }
 
   #map-image {
@@ -620,12 +510,5 @@ body,html {
     padding-top: 10%;
     vertical-align: center;
   } 
-
-  #info-charts{
-    display: block;
-    width:50%;
-    padding-bottom: 10%;
-    align-items: center;
-  }
   
 }

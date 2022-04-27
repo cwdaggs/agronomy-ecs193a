@@ -21,7 +21,10 @@ import { AffectVictory } from './components/Visualizations/Questions/Affect_vict
 import { AmountVictory } from './components/Visualizations/Questions/AmountValued';
 import { PrioritySatisfaction } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
+
+import { TabHome } from './components/Visualizations/StyledDivs';
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
+
 
 
 export default function App() {
@@ -55,8 +58,8 @@ export default function App() {
         <NavLink to ="/results">
           {({ isActive }) => getActiveTab(isActive, "Explore Results")}
         </NavLink>
-        <NavLink to ="/info">
-          {({ isActive }) => getActiveTab(isActive, "Info")}
+        <NavLink to ="/about">
+          {({ isActive }) => getActiveTab(isActive, "About")}
         </NavLink>
         <NavLink to ="/team">
           {({ isActive }) => getActiveTab(isActive, "Team")}
@@ -67,6 +70,15 @@ export default function App() {
         <NavLink to ="/feedback">
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
         </NavLink>
+
+        
+        <a href="https://ucanr.edu/" target="_blank">
+          <Tab>
+            UCCE
+          </Tab>
+        </a>
+
+
       </div>
       
       <Outlet/>
@@ -76,8 +88,8 @@ export default function App() {
         <Route path="results/" element={
           <div>
             <div id="visTop">
-              Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
-              Select a topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
+              Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
+              Full details of survey scope and representation here.
             </div>
             <div id="compare-box">
               <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
@@ -90,17 +102,17 @@ export default function App() {
           <Route path="Crop%20Percentages" element={<CropPercentages dataset={dataset}/>}/>
           <Route path="Production%20Concerns" element={<ConcernsVictory dataset={dataset}/>}/>
           <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={dataset}/>}/>
-          <Route path="Primary%20Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
+          <Route path="Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
           <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}/>
           <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={dataset}/>}/>
           <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}/>
-          <Route path="Values" element={<AmountVictory dataset={dataset}/>}/>
-          <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}/>
+          <Route path="Value%20Assessment" element={<AmountVictory dataset={dataset}/>}/>
+          <Route path="Priority%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}/>
           <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}/>
         </Route>
         {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}
 
-        <Route path="info" element={<InfoSummary/>}/>
+        <Route path="about" element={<InfoSummary/>}/>
         <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
         <Route path="feedback" element={<CommentBox/>}/>
