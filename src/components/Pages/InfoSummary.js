@@ -12,11 +12,11 @@ export const InfoSummary = () => {
 
   return (
     <div>
-      <Parallax pages={4}>
+      <Parallax pages={5}>
         <C.Container>
           <C.Area>          
             <C.Body>
-              <ParallaxLayer factor={1} style={{
+              <ParallaxLayer factor={2} style={{
                 backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
@@ -70,7 +70,7 @@ export const InfoSummary = () => {
                   </C.Desc>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer factor={3} offset={1} style={{
+              <ParallaxLayer factor={3} offset={2} style={{
                 backgroundImage: `url(${singleWheat})`,
                 backgroundSize: 'cover'
               }}> 
@@ -87,7 +87,7 @@ export const InfoSummary = () => {
                     <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer offset={3} speed = {0.2}>  
+              <ParallaxLayer offset={4} speed = {0.2}>  
                 <div id = "infoSection3">
                   <C.Desc className='font-roboto' style={{textAlign: 'center'}}>
                     <br></br><br></br>Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of

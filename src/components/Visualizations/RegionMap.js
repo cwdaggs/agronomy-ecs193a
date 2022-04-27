@@ -68,7 +68,7 @@ export const RegionMapChart = (props) => {
         <div className="flex-child">
           <VictoryLegend
             colorScale={regionColorScale}
-
+            x={150}
             gutter={25}
             style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
                   title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
@@ -92,7 +92,7 @@ export const RegionMapChart = (props) => {
           <div id="info-legend">
             <VictoryLegend
               colorScale={regionColorScale}
-              x={100}
+              x={150}
               y={0}
               gutter={25}
               style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+2}, 

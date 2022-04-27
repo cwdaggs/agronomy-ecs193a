@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Visualizations } from "../Pages/Visualization";
 
+
 const StyledUl = styled.ul`
   list-style-type: none;
   margin: 0;
@@ -102,7 +103,7 @@ const Tab = styled.button`
   padding: 35px 60px;
   cursor: pointer;
   font-size: 25px;
-  font-family: ABeeZee, serif; 
+  font-family: Metropolis,sans-serif; 
   opacity: 0.7;
   background: white;
   border: 0;
@@ -138,8 +139,9 @@ const TabHome = styled.button`
 const TabVisualizations = styled.button`
   padding: 5% ;
   cursor: pointer;
+  font-family: Metropolis,sans-serif; 
+  font-weight: bold;
   font-size: 16px;
-  font-family: ABeeZee, serif;
   text-align: center; 
   opacity: 0.7;
   background: white;
