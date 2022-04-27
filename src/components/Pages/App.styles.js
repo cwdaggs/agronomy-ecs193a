@@ -99,12 +99,55 @@ export const SubTitle = styled.h1`
     padding:0;
     font-size:50px;
     font-weight:500;
+
+    @media (max-width: 1350px) {
+        font-size:40px;
+    }
+
+    @media (max-width: 1000px) {
+        font-size:30px;
+    }
+    
+    @media (max-width: 730px) {
+        font-size:20px;
+    }
+    
+    @media (max-width: 545px) {
+        font-size:15px;
+    
+    }
+    
+    @media (max-width: 400px){
+        font-size:10px;
+    }
 `;
 
 export const Desc = styled.p`
     margin-top:15px;
     margin-bottom:5%;
     font-weight: 400;
+    font-size: 22px;
+
+    @media (max-width: 1350px) {
+        font-size:18px;
+    }
+
+    @media (max-width: 1000px) {
+        font-size:14px;
+    }
+    
+    @media (max-width: 730px) {
+        font-size:12px;
+    }
+    
+    @media (max-width: 545px) {
+        font-size:8px;
+    
+    }
+    
+    @media (max-width: 400px){
+        font-size:5px;
+    }
 `;
 
 export const Button = styled.div`
