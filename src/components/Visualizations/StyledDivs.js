@@ -158,23 +158,28 @@ const TabVisualizations = styled.button`
   border-bottom: 2px solid black;
   opacity: 1;
   `}
-  @media (max-width: 1200px) {
-    
+  @media (max-width: 1350px) {
+    padding: 8px;
+    font-size: 14px;
+  }
+  @media (max-width: 1000px) {
+    padding: 6px;
     font-size: 12px;
   }
-  @media (max-width: 950px) {
-   
-    font-size: 12px;
+
+  @media (max-width: 800px) {
+    padding: 4px;
+    font-size: 10px;
   }
 
-  @media (max-width: 675px) {
-  
-    font-size: 8px;
-  }
-
-  @media (max-width: 380px) {
-
+  @media (max-width: 650px) {
+    padding: 2px;
     font-size: 6px;
+  }
+
+  @media (max-width: 400px){
+    padding: 5px 1px;
+    font-size: 4px;
   }
 `;
 

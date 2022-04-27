@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {TabVisualizations} from '../Visualizations/StyledDivs';
+import {Tab} from "../../Button"
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
 
@@ -15,7 +16,7 @@ export const Visualizations = (props) => {
         "Information Sources", //Q10
         "UCCE Engagement", //Q11
         "Value Assessment", //Q12
-        "Priorities vs Satisfaction", //Q13
+        "Priority Satisfaction", //Q13
         "Internet Sources", //Q16
     ]
     var test_str = "";

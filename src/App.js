@@ -107,7 +107,7 @@ export default function App() {
           <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={dataset}/>}/>
           <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}/>
           <Route path="Value%20Assessment" element={<AmountVictory dataset={dataset}/>}/>
-          <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}/>
+          <Route path="Priority%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}/>
           <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}/>
         </Route>
         {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}

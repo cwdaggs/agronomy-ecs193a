@@ -204,8 +204,7 @@
 
 #visLandingPage{
   background-image: url(./images/wheat_field2.jpg);
-  
-  height: 80vh;
+  height: 120vh;
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: cover;
@@ -214,7 +213,7 @@
 #visLandingHeading{
   text-align: center;
   color: black;
-  font-size: 72px;
+  font-size: 8vh;
   margin: 0;
   padding-top: 10%;
 
@@ -228,7 +227,7 @@
   margin-top: 5%;
   margin-bottom: 0;
   font-weight: 900;
-  font-size: 32px;
+  font-size: 3vh;
 
 }
 
@@ -236,7 +235,7 @@
   font-family: 'Roboto', sans-serif;
   color: black;
   font-weight: 900;
-  font-size: 26px;
+  font-size: 2vh;
   text-align: center;
 
 }
