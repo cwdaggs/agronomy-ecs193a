@@ -23,7 +23,6 @@ import { PrioritySatisfaction } from './components/Visualizations/Questions/Prio
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
 
 import { TabHome } from './components/Visualizations/StyledDivs';
-import myimg from "./assets/2-Nick-Clark-UCCE.jpg";
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
 
 
@@ -114,7 +113,7 @@ export default function App() {
         {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}
 
         <Route path="about" element={<InfoSummary/>}/>
-        <Route path="team" element={<AboutSummary myimg={myimg}/>}/>
+        <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
         <Route path="feedback" element={<CommentBox/>}/>
       </Routes>
