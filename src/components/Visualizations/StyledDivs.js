@@ -157,21 +157,21 @@ const TabVisualizations = styled.button`
   opacity: 1;
   `}
   @media (max-width: 1200px) {
-    padding: 3%;
+    
     font-size: 12px;
   }
   @media (max-width: 950px) {
-    padding: 2%;
+   
     font-size: 12px;
   }
 
   @media (max-width: 675px) {
-    padding: 1%;
+  
     font-size: 8px;
   }
 
   @media (max-width: 380px) {
-    padding: 0%;
+
     font-size: 6px;
   }
 `;

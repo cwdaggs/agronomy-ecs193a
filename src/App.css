@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 /* #outerContainer {
   color: black;
   display: flex;
@@ -12,7 +12,7 @@
 
 
 #heading {
-  background-color: #02285100;
+  background-color: #00000017;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -92,6 +92,11 @@
 
 .font-newsreader{
   font-family: 'Newsreader';
+  font-size: 22px;
+}
+
+.font-roboto{
+  font-family: 'Roboto', sans-serif;
   font-size: 22px;
 }
 
@@ -199,6 +204,7 @@
 
 #visLandingPage{
   background-image: url(./images/wheat_field2.jpg);
+  
   height: 80vh;
   background-repeat: no-repeat;
   background-attachment: fixed; 
@@ -211,9 +217,11 @@
   font-size: 72px;
   margin: 0;
   padding-top: 10%;
+
 }
 
 #visLandingBody{
+  font-family: 'Roboto', sans-serif;
   text-align: center;
   color: black;
   margin: 15%;
@@ -221,13 +229,16 @@
   margin-bottom: 0;
   font-weight: 900;
   font-size: 32px;
+
 }
 
 #visLandingBodyExtended{
+  font-family: 'Roboto', sans-serif;
   color: black;
   font-weight: 900;
   font-size: 26px;
   text-align: center;
+
 }
 
 #infoSection0{
@@ -319,6 +330,7 @@ body,html {
 }
 
 .profile-name {
+  font-family: 'Roboto', sans-serif;
   padding: 10px 0px;
 }
 

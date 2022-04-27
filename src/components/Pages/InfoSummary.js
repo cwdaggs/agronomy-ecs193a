@@ -24,7 +24,7 @@ export const InfoSummary = () => {
               <ParallaxLayer speed = {0.8}> 
                 <div id = "infoSection1">
                   <C.SubTitle>Survey Objectives</C.SubTitle>
-                  <C.Desc className='font-newsreader'>
+                  <C.Desc className='font-roboto'>
                     Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who 
                     solve problems in agriculture, the environment, and human and community well-being. They work to foster a 
                     connection between the university and the public by delivering science-based information. In 
@@ -33,14 +33,14 @@ export const InfoSummary = () => {
                     time, the landscape of California agriculture is rapidly changing and farmers are encountering new challenges 
                     such as regulations on labor and inputs.
                   </C.Desc>
-                  <C.Desc className='font-newsreader'>
+                  <C.Desc className='font-roboto'>
                     We recently conducted a statewide collaborative needs assessment to give a voice to farmers and others working 
                     in agronomic crop production. The goal was to understand their priorities, concerns, and top management 
                     challenges, helping identify critical needs for research and extension. Our online survey questions were 
                     designed to shed light on the most important issues and preferences for extension information and approaches 
                     based on input from growers, consultants, and allied industry for agronomic crops across the state.
                   </C.Desc>
-                  <C.Desc className='font-newsreader'>
+                  <C.Desc className='font-roboto'>
                     Through this interactive website, our goal is to share the findings with survey participants, collaborating
                     organizations, and the general public. We want your feedback and ideas, so that your needs and interests can 
                     better guide UCCE research and extension efforts and inform future programs, increasing engagement and impact. 
@@ -49,20 +49,20 @@ export const InfoSummary = () => {
                   </C.Desc>
                 
                   <C.SubTitle>Survey Scope</C.SubTitle>
-                  <C.Desc className='font-newsreader'>
+                  <C.Desc className='font-roboto'>
                     A total of 483 growers, consultants, and members of allied industries responded to the survey. All seven
                     regions of California were represented. As depicted in the figures below, there was a large diversity of
                     primary occupation, geographic distribution, crops grown or managed, and respondent demographics
                     (farm size, age, years of experience). The Central Valley had the most respondents and is where the
                     majority of agronomic crop production is located.
                   </C.Desc>
-                  <C.Desc className='font-newsreader'>
+                  <C.Desc className='font-roboto'>
                     The five agronomic crops most frequently grown by respondents whose primary vocation was “grower” included 
                     rice, alfalfa, wheat (grain), corn (grain), and corn (silage), representing 48% of total responses. The next 
                     five crops most frequently grown were dry bean, cotton, sunflower, barley, and small grain silage, 
                     representing 25% of total responses.
                   </C.Desc>
-                  <C.Desc className='font-newsreader'>
+                  <C.Desc className='font-roboto'>
                     A peer-reviewed research paper summarizing the survey results has been published. See the 
                     open-access <a href='https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/agj2.20897' target="_blank">full 
                     article</a> in Agronomy Journal for further details on the 
@@ -79,7 +79,7 @@ export const InfoSummary = () => {
                 <div id = "infoSection2">
                   <div>
                     <C.SubTitle>Responses by Region, County, Occupation, and Crop</C.SubTitle>
-                      <C.Desc className='font-newsreader'>
+                      <C.Desc className='font-roboto'>
                         The visualizations below reflect the amount of respondents given a specific county, region, occupation, or crop. 
                       </C.Desc>
                   </div>
@@ -89,7 +89,7 @@ export const InfoSummary = () => {
               </ParallaxLayer>
               <ParallaxLayer offset={3} speed = {0.2}>  
                 <div id = "infoSection3">
-                  <C.Desc className='font-newsreader' style={{textAlign: 'center'}}>
+                  <C.Desc className='font-roboto' style={{textAlign: 'center'}}>
                     <br></br><br></br>Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
                     responses for each crop:
                   </C.Desc> 
