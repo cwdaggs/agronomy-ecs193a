@@ -406,6 +406,6 @@ export function useData(url) {
 
     d3.csv(csvUrl, row).then(setData);
   }, []);
-  // console.log(data)
+  console.log(data)
   return data;
 };

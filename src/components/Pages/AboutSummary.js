@@ -4,7 +4,7 @@ const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 const height = vh*0.99;
 const width = vw;
-export const AboutSummary = () => {
+export const AboutSummary = (props) => {
     return(
     <div id="aboutpage">
     <C.Container>
@@ -14,7 +14,7 @@ export const AboutSummary = () => {
           <br></br>
           <div id='team-profiles'>
             <div className='profile'>
-              <img src="./assets/1-Jessie-Kanter-UCCE.jpg" alt="Jessie Kanter" height={height/3} width={height/3}/>
+              <img src={props.myimg} alt="Jessie Kanter" height={height/3} width={height/3}/>
               <div className='profile-name'>
                 <span>Jessie Kanter - </span>
                 <a href='https://ucanr.edu/About/DirectorySearch/?facultyid=45966' target="_blank">UCCE</a>
