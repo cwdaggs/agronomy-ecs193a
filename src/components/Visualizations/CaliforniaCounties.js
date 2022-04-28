@@ -168,6 +168,7 @@ export const CropBar = (props) => {
         <VictoryAxis dependentAxis
           label= {"Additionally, survey participants could list their top grown or consulted crops. \nBelow is a bar chart depicting the number of responses for each crop:"}
           style = {{
+            tickLabels: {fontSize: 0},
             axisLabel: {fontSize: 40, padding: -height}}}>
           {/*stroke: "black", strokeWidth: "1.25", fill: "white" */}
         </VictoryAxis>
