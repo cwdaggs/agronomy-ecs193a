@@ -5,16 +5,19 @@ const clientID = '652800520818-5rp0q395un8cc2urq17bctiij15hmqn6.apps.googleuserc
 
 function Logout() {
     const onSuccess = () => {
+        window.location.reload(true);
         alert('Logged out successfully');
     };
 
     return(
         <div>
-            <GoogleLogout
-                clientId={clientID}
-                buttonText="Logout"
-                onLogoutSuccess={onSuccess}
-            />
+            <div id="logoutButton">
+                <GoogleLogout
+                    clientId={clientID}
+                    buttonText="Logout"
+                    onLogoutSuccess={onSuccess}
+                />
+            </div>
         </div>
     )
 }

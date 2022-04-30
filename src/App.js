@@ -4,6 +4,7 @@ import {Checkbox, Tab} from './Button.js';
 import 'react-pro-sidebar/dist/css/styles.css';
 import {InfoSummary} from './components/Pages/InfoSummary';
 import {AboutSummary} from './components/Pages/AboutSummary';
+import Login from './components/Pages/Login.js';
 import {CommentBox} from './components/Pages/Comments'
 import {Visualizations} from './components/Pages/Visualization';
 import {Home} from './components/Pages/Home';
@@ -115,7 +116,7 @@ export default function App() {
         <Route path="about" element={<InfoSummary/>}/>
         <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
-        <Route path="feedback" element={<CommentBox/>}/>
+        <Route path="feedback" element={<Login/>}/>
       </Routes>
     </div>
   )

@@ -270,6 +270,32 @@
   transform: translate(-50%, -50%);
 }
 
+#login{
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#loginButton{
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+#logoutButton{
+  position: fixed;
+  left: 6%;
+  /* top: 29.25%; */
+}
+
+@media screen and (max-width: 1000px){
+  #logoutButton{
+    position: fixed;
+    left: 2.5%;
+  }
+}
+
 /* #menuitem {
   background-color: blanchedalmond;
   color:#FFBF00
