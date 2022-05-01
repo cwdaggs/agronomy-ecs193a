@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
-import { useSearchParams } from "react-router-dom";
 import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
 import {IoMdArrowDropdown} from "react-icons/io";
 import { useLocation, Link } from "react-router-dom";
@@ -54,8 +53,8 @@ export function OnlyCrops(props) {
             <StyledUl>
               <DropDownLi>
                 <Dropbtn>
-                    {activeName + " "}
-                    {<IoMdArrowDropdown/>}
+                  {activeName + " "}
+                  {<IoMdArrowDropdown/>}
                 </Dropbtn>
                 <DropDownContent>
                   {" "}

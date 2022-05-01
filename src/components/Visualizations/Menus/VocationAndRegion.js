@@ -28,7 +28,6 @@ function DetermineCropIcon(type) {
     }
 }
 
-
 export function VocationAndRegion(props) {
     const [activeCropName, setActiveCropName] = useState("Select Crop");
     const [activeRegionName, setActiveRegionName] = useState("Select Region");

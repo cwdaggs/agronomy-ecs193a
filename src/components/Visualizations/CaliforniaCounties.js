@@ -14,7 +14,7 @@ import {
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-const fontSize = 34;
+const fontSize = 16;
 
 const geoUrl =
   "./data/california-counties.geojson";
@@ -43,17 +43,45 @@ export const MapChart = (props) => {
   const occupationData = occupationAmount(data);
   return (
     <div id='info-charts'>
-        <img src='./assets/county-map.png' id="map-image"></img>
+      <div className='flex-parent'>
+        <div className='flex-child'>
+          <VictoryLegend
+            
+            colorScale={colorScale}
+
+            x={150}
+            y={0}
+
+            gutter={25}
+            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
+                  title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+                  data:   {stroke: "black", strokeWidth: 1}}}
+            title="Responses by County"
+            centerTitle
+            data={[
+              { name: ">80", symbol: { fill: "#ff5233" }, labels:{fontSize: fontSize}},
+              { name: "60-80", symbol: { fill: "#ff7158" }, labels:{fontSize: fontSize}},
+              { name: "40-60", symbol: { fill: "#ff907d" }, labels:{fontSize: fontSize}},
+              { name: "20-40", symbol: { fill: "#ffafa2" }, labels:{fontSize: fontSize}},
+              { name: "1-20", symbol: { fill: "#ffcec7" }, labels:{fontSize: fontSize}},
+              { name: "0", symbol: { fill: "#ffedea" }, labels:{fontSize: fontSize}}
+
+            ]}
+
+          />
+        </div>
+        <img src='./assets/county-map-2.png' id="map-image"></img>
+      </div>
         <div className='flex-parent'>
             <div id="info-legend">
 
               <VictoryLegend
                 colorScale={colorScale}
-                x={50}
-                y={-vh*.07}
+                x={150}
+                y={0}
                 gutter={25}
-                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: 32}, 
-                      title:  {fontFamily: 'ABeeZee', fontSize: 32},
+                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
+                      title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
                       data:   {stroke: "black", strokeWidth: 1}}}
                 title="Responses by Occupation"
                 centerTitle
@@ -71,8 +99,8 @@ export const MapChart = (props) => {
                 animate={{
                   duration: 500,               
                 }}
-                width={vw*.5}
-                height={vh}
+                width={vw*.15}
+                height={vh*.15}
                 padding={{
                   left: 0,
                   bottom: 0,
@@ -85,11 +113,11 @@ export const MapChart = (props) => {
                 labelComponent={
                     <VictoryTooltip 
                     style={{
-                        fontSize:100,
+                        fontSize:fontSize,
                         fontFamily: 'ABeeZee'
                     }}
-                    flyoutHeight={100}
-                    flyoutWidth={200}    
+                    flyoutHeight={20}
+                    flyoutWidth={40}  
                     />
                 }
               />

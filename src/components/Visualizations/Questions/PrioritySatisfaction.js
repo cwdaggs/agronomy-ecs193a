@@ -39,7 +39,7 @@ export const PrioritySatisfaction = (props) => {
 
     const vocationArray = ["All", "Growers", "Consultants"];
 
-    const baseURL = "/results/Priorities%20vs%20Satisfaction";
+    const baseURL = "/results/Priority%20Satisfaction";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
     const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
@@ -87,7 +87,6 @@ export const PrioritySatisfaction = (props) => {
             >
             <VictoryLegend 
               x={(width>=mobileWidth)?width/4 + margin.left:0}
-              y={0}
               title="Engagement Frequency"
               centerTitle
               orientation="horizontal"

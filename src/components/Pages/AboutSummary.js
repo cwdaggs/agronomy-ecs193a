@@ -17,7 +17,7 @@ export const AboutSummary = () => {
               <img src="./assets/1-Jessie-Kanter-UCCE.jpg" alt="Jessie Kanter" height={height/3} width={height/3}/>
               <div className='profile-name'>
                 <span>Jessie Kanter - </span>
-                <a href='https://smallfarmsfresno.ucanr.edu/Staff/' target="_blank">UCCE</a>
+                <a href='https://ucanr.edu/About/DirectorySearch/?facultyid=45966' target="_blank">UCCE</a>
               </div>
             </div>
             <div className='profile'>
@@ -95,6 +95,41 @@ export const AboutSummary = () => {
               <div className='profile-name'>
                 <span>Cameron Pittelkow - </span>
                 <a href='https://www.plantsciences.ucdavis.edu/people/cameron-pittelkow' target="_blank">UC Davis</a>
+              </div>
+            </div>
+          </div>
+        </C.Body>
+
+        <C.Body>
+          <C.Title>Application Development Team</C.Title>
+          <br></br>
+          <div id='team-profiles'>
+            <div className='profile'>
+              <img src="./assets/Austin-Kosnikowski.jpg" alt="Austin Kosnikowski" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Austin Kosnikowski - </span>
+                <a href='https://www.linkedin.com/in/austin-kosnikowski-769206236/' target="_blank">LinkedIn</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/Cameron-Daggs.jpg" alt="Cameron Daggs" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Cameron Daggs - </span>
+                <a href='https://www.linkedin.com/in/cameron-daggs-45a2a6163/' target="_blank">LinkedIn</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/Christopher-Pires.jpg" alt="Christopher Pires" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Christopher Pires - </span>
+                <a href='https://www.linkedin.com/in/christopher-pires-0280ba20b/' target="_blank">LinkedIn</a>
+              </div>
+            </div>
+            <div className='profile'>
+              <img src="./assets/Darin-Lee.jpg" alt="Darin Lee" height={height/3} width={height/3}/>
+              <div className='profile-name'>
+                <span>Darin Lee - </span>
+                <a href='https://www.linkedin.com/in/darin-lee-3486031b1/' target="_blank">LinkedIn</a>
               </div>
             </div>
           </div>

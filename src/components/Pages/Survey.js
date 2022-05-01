@@ -12,7 +12,7 @@ FunctionFactory.Instance.register("validateInt", validateInt);
 
 const surveyJson = {
     "title": "Survey Placeholder",
-    "description": "Take the survey, just do it",
+    "description": "Place holder for potential survey",
     "elements": [
     {
         name: "vocation",

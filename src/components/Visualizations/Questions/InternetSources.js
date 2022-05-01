@@ -1,4 +1,4 @@
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryZoomContainer} from 'victory';
 import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
@@ -63,9 +63,12 @@ function getInternetSources(data){
       }
     }
   }
-  sources[5] = "UC Cooperative Extension\nMagazine Articles"
-  sources[6] = "Personal contact\n(phone, email, on-farm consultation)";
-  sources[7] = "In-person meetings\n(Field Days, Grower Meetings)";
+  sources[0] = "Internet";
+  sources[5] = "UCCE Magazine Articles";
+  sources[6] = "Personal Contact";
+  sources[7] = "In-Person Meetings";
+  sources[14] = "2-3 Day Destination Meetings"
+
 
   for(var l=0; l<totals.length; l++){
     modified_data.push({x: sources[l], y: totals[l]});
@@ -153,6 +156,11 @@ export function InternetSourcesBarChart(props) {
             domainPadding={{ x: (width>=mobileWidth) ? margin.right/10 : 0, y:margin.top/10 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}   
             animate={{duration: 800}}
+            containerComponent={
+              <VictoryZoomContainer
+                zoomDimension="x"
+              />
+            }
           >
             {/* <VictoryLabel 
             x={width/2 - 300} 

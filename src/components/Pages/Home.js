@@ -14,15 +14,18 @@ export const Home = () => {
         <div id="bg">
             
             <div id="home-container">
-                <div id="main-title">
+                {/*<div id="main-title">
                     <h2>Welcome!</h2>
-                </div>
+                </div>*/}
                 <div id="home-sub-title">
-                    <h2>UCCE 2019 Needs Assessment Survey Analysis</h2>
+                    <h2>Critical Needs for UCCE Research and Extension</h2>
                 </div>   
                 <div id="home-info">
-                    <h2>Challenges to agronomic crop production in California</h2>
-                    <h2>Guiding UCCE research and extension efforts based on critical needs identified by growers and industry</h2>
+                    
+                        Agronomic crop production in California faces many challenges. This website displays the results of a 
+                        survey involving hundreds of growers, consultants, and allied industry members across the state to 
+                        identify needs and set priorities.
+                    
                 </div>   
                 <div id="home-button">
                     <NavLink to ="/results">

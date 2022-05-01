@@ -83,7 +83,7 @@ function parseURL(baseURL, path) {
   
 export function PrimaryGrowingReasons(props) {
     
-  const baseURL = "/results/Primary%20Growing%20Reasons";
+  const baseURL = "/results/Growing%20Reasons";
   const filter = parseURL(baseURL, useLocation().pathname);
   const [active, setActive] = useState(filter);
 

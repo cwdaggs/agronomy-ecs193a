@@ -4,6 +4,7 @@ import {Checkbox, Tab} from './Button.js';
 import 'react-pro-sidebar/dist/css/styles.css';
 import {InfoSummary} from './components/Pages/InfoSummary';
 import {AboutSummary} from './components/Pages/AboutSummary';
+import {CommentBox} from './components/Pages/Comments'
 import {Visualizations} from './components/Pages/Visualization';
 import {Home} from './components/Pages/Home';
 import {NavLink, Outlet,Routes, Route } from "react-router-dom";
@@ -22,22 +23,16 @@ import { PrioritySatisfaction } from './components/Visualizations/Questions/Prio
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
 // import 'semantic-ui-css/semantic.min.css';
 
+import { TabHome } from './components/Visualizations/StyledDivs';
+import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
+
+
+
 export default function App() {
-  const [dual_display, checkDualDisplay] = useState(false);
+  var [dual_display, checkDualDisplay] = useState(false);
 
   function changeDual(){
     checkDualDisplay(!dual_display);
-  }
-
-  function getNewDisplay(dual_display) {
-    return (dual_display
-      ?
-      <div class='flex-parent'>
-        <div class='flex-child'><Visualizations/></div>
-        <div class='flex-child'><Visualizations/></div>
-      </div>
-      :
-      <Visualizations/>)
   }
 
   function getActiveTab(isActive, pageName){
@@ -64,8 +59,8 @@ export default function App() {
         <NavLink to ="/results">
           {({ isActive }) => getActiveTab(isActive, "Explore Results")}
         </NavLink>
-        <NavLink to ="/info">
-          {({ isActive }) => getActiveTab(isActive, "Info")}
+        <NavLink to ="/about">
+          {({ isActive }) => getActiveTab(isActive, "About")}
         </NavLink>
         <NavLink to ="/team">
           {({ isActive }) => getActiveTab(isActive, "Team")}
@@ -73,6 +68,18 @@ export default function App() {
         <NavLink to ="/survey">
           {({ isActive }) => getActiveTab(isActive, "Survey")}
         </NavLink>
+        <NavLink to ="/feedback">
+          {({ isActive }) => getActiveTab(isActive, "Feedback")}
+        </NavLink>
+
+        
+        <a href="https://ucanr.edu/" target="_blank">
+          <Tab>
+            UCCE
+          </Tab>
+        </a>
+
+
       </div>
       
       <Outlet/>
@@ -82,16 +89,16 @@ export default function App() {
         <Route path="results/" element={
           <div>
             <div id="visTop">
-              Hundreds of growers, consultants, and allied industry members across California participated in this survey. 
               Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
               Full details of survey scope and representation here.
             </div>
             <div id="compare-box">
               <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
             </div>
-              {getNewDisplay(dual_display)}
+              {<Visualizations dual={dual_display}/>}
           </div>
         }>
+          <Route index element={<VisualizationLandingPage/>}/>
           <Route path="Acres%20Managed/" element={<AcresManagedBarChart dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<AcresManagedBarChart dataset={dataset}/>}/>
           </Route>
@@ -102,7 +109,7 @@ export default function App() {
           <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<PriorityConcerns dataset={dataset}/>}/>
           </Route>
-          <Route path="Primary%20Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}>
+          <Route path="Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}>
             <Route path=":crop" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
           </Route>
           <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}>
@@ -114,10 +121,10 @@ export default function App() {
           <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<EngageVictory dataset={dataset}/>}/>
           </Route>
-          <Route path="Values" element={<AmountVictory dataset={dataset}/>}>
+          <Route path="Value%20Assessment" element={<AmountVictory dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<AmountVictory dataset={dataset}/>}/>
           </Route>
-          <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}>
+          <Route path="Priority%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<PrioritySatisfaction dataset={dataset}/>}/>
           </Route>
           <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}>
@@ -125,9 +132,10 @@ export default function App() {
           </Route>
         </Route>
 
-        <Route path="info" element={<InfoSummary/>}/>
+        <Route path="about" element={<InfoSummary/>}/>
         <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
+        <Route path="feedback" element={<CommentBox/>}/>
       </Routes>
     </div>
   )

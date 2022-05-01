@@ -1,4 +1,4 @@
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryZoomContainer} from 'victory';
 import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
@@ -130,6 +130,11 @@ export function InfoSourcesBarChart(props) {
             }}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}  
+            containerComponent={
+              <VictoryZoomContainer
+                zoomDimension="x"
+              />
+            }
           >
 
             <VictoryBar horizontal

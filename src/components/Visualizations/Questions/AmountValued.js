@@ -75,7 +75,7 @@ function calculateAverageResponses(dataset) {
 export function AmountVictory(props) {
   const vocationArray = ["All", "Growers", "Consultants"];
 
-  const baseURL = "/results/Values";
+  const baseURL = "/results/Value%20Assessment";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
   const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);

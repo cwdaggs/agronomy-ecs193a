@@ -1,4 +1,4 @@
-import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryZoomContainer } from 'victory';
 import {filterByCropOrRegion, sort_by_freq} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
@@ -206,6 +206,12 @@ export function AffectVictory(props) {
         width={width}
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
         padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
+      
+        containerComponent={
+          <VictoryZoomContainer
+            zoomDimension="x"
+          />
+        }
       >
         <VictoryLegend 
               x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
