@@ -96,15 +96,33 @@ export default function App() {
             <Route path=":vocation/:crop/:region" element={<AcresManagedBarChart dataset={dataset}/>}/>
           </Route>
           <Route path="Crop%20Percentages" element={<CropPercentages dataset={dataset}/>}/>
-          <Route path="Production%20Concerns" element={<ConcernsVictory dataset={dataset}/>}/>
-          <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={dataset}/>}/>
-          <Route path="Primary%20Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
-          <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}/>
-          <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={dataset}/>}/>
-          <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}/>
-          <Route path="Values" element={<AmountVictory dataset={dataset}/>}/>
-          <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}/>
-          <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}/>
+          <Route path="Production%20Concerns" element={<ConcernsVictory dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<ConcernsVictory dataset={dataset}/>}/>
+          </Route>
+          <Route path="Priority%20Concerns" element={<PriorityConcerns dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<PriorityConcerns dataset={dataset}/>}/>
+          </Route>
+          <Route path="Primary%20Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}>
+            <Route path=":crop" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
+          </Route>
+          <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<AffectVictory dataset={dataset}/>}/>
+          </Route>
+          <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<InfoSourcesBarChart dataset={dataset}/>}/>
+          </Route>
+          <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<EngageVictory dataset={dataset}/>}/>
+          </Route>
+          <Route path="Values" element={<AmountVictory dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<AmountVictory dataset={dataset}/>}/>
+          </Route>
+          <Route path="Priorities%20vs%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<PrioritySatisfaction dataset={dataset}/>}/>
+          </Route>
+          <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}>
+            <Route path=":vocation/:crop/:region" element={<InternetSourcesBarChart dataset={dataset}/>}/>
+          </Route>
         </Route>
 
         <Route path="info" element={<InfoSummary/>}/>

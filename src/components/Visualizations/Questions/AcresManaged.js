@@ -85,7 +85,7 @@ function calculateSizeOfDataSet(data){
 export function AcresManagedBarChart(props) {
     const vocationArray = ["All", "Growers", "Consultants"];
     const baseURL = "/results/Acres%20Managed";
-    const filters = parseURL(baseURL, useLocation().pathname);
+    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
     const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 

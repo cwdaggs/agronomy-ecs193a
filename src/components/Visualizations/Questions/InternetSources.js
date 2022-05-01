@@ -3,6 +3,8 @@ import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 function getInternetSources(data){
   var sources = [
@@ -78,8 +80,10 @@ function getInternetSources(data){
 export function InternetSourcesBarChart(props) {
   const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
-  const [activeVocation, setActiveVocation] = useState("All");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const baseURL = "/results/Internet%20Sources";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);

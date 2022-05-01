@@ -3,6 +3,8 @@ import {filterByCropOrRegion, sort_by_freq} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 export function calculateAffectEach(data, filter, answer){
   var total = 0
@@ -113,9 +115,11 @@ function calculateAverageResponses(dataset) {
 }
 
 export function AffectVictory(props) {
-  
-  const [activeVocation, setActiveVocation] = useState("Growers");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const vocationArray = ["Growers", "Consultants"];
+  const baseURL = "/results/Priority%20Effect";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
@@ -142,7 +146,7 @@ export function AffectVictory(props) {
     "Wheat"
   ];
 
-  const vocationArray = ["Growers", "Consultants"];
+  
 
   var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
 

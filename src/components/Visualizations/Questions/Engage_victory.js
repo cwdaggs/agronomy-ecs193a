@@ -3,6 +3,8 @@ import {filterByCropOrRegion, filterByVocation, sort_by_freq} from '../UseData.j
 import "typeface-abeezee";
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import {useState} from 'react';
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 export function calculateEngageEach(data, filter, answer){
     var total = 0
@@ -79,8 +81,10 @@ export function EngageVictory(props) {
   
   const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
-  const [activeVocation, setActiveVocation] = useState("All");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const baseURL = "/results/UCCE%20Engagement";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);

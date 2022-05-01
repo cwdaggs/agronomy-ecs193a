@@ -394,9 +394,9 @@ export function acresByCounty(data){
   return county_acres
 }
 
-export function parseURL(baseURL, path) {
+export function parseURL(baseURL, path, vocationArray) {
   var pathname = path;
-  var vocation = "All";
+  var vocation = vocationArray[0];
   var cropOrRegion = "All";
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");

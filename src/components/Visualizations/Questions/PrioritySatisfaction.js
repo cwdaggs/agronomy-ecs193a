@@ -4,6 +4,8 @@ import * as d3 from 'd3'
 import React, { useState } from "react";
 import "typeface-abeezee";
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 function barData(dataset, topic){
   var values = []
@@ -37,8 +39,10 @@ export const PrioritySatisfaction = (props) => {
 
     const vocationArray = ["All", "Growers", "Consultants"];
 
-    const [activeVocation, setActiveVocation] = useState("All");
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+    const baseURL = "/results/Priorities%20vs%20Satisfaction";
+    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+    const [activeVocation, setActiveVocation] = useState(filters.vocation);
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
     if (!props.dataset) {
       return <pre>Loading...</pre>;

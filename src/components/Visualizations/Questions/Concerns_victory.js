@@ -4,6 +4,8 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion
 import "typeface-abeezee";
 import React, { useState} from "react";
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
     
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
@@ -48,9 +50,10 @@ export function ConcernsVictory(props) {
   ];
 
   const vocationArray = ["All", "Growers", "Consultants"];
-
-  const [activeVocation, setActiveVocation] = useState("All");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const baseURL = "/results/Production%20Concerns";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
