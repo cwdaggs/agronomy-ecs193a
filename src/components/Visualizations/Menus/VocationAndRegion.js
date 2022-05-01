@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
-import { useSearchParams, useLocation, useParams, Link, NavLink } from "react-router-dom";
+import { useLocation, Link, NavLink } from "react-router-dom";
 import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
-import {MdOutlineKeyboardArrowDown, MdKeyboardArrowDown, MdArrowDropDown} from "react-icons/md";
-import {RiArrowDropDownLine} from "react-icons/ri";
 import {IoMdArrowDropdown} from "react-icons/io";
-// import { Link} from "react-router-dom";
 
 function DetermineCropIcon(type) {
     if (type === "Wheat") {
@@ -31,20 +28,15 @@ function DetermineCropIcon(type) {
     }
 }
 
-function DetermineRegionIcon(type) {
-
-}
 
 export function VocationAndRegion(props) {
-
-    // These go in visualizations
     const [activeCropName, setActiveCropName] = useState("Select Crop");
-    console.log("active crop name: " + activeCropName);
     const [activeRegionName, setActiveRegionName] = useState("Select Region");
     const [activeName, setActiveName] = useState(props.activeVocation);
-    // const location = useLocation().pathname;
-    const location = "/results/Acres%20Managed";
-    console.log(useLocation().pathname);
+    const preLocation = useLocation().pathname.split("/");
+    var location = "/" + preLocation[1] + "/" + preLocation[2];
+    // const location = "/results/Acres%20Managed";
+    // console.log("location:" + location);
 
     const types = [
         "All", 

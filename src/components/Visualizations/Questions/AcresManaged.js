@@ -56,8 +56,7 @@ function calculateSizeOfDataSet(data){
   return size;
 }
 
-function parseURL(path) {
-  const baseURL = "/results/Acres%20Managed";
+function parseURL(baseURL, path) {
   var pathname = path;
   var vocation = "All";
   var cropOrRegion = "All";
@@ -84,7 +83,8 @@ function parseURL(path) {
 
 export function AcresManagedBarChart(props) {
     const vocationArray = ["All", "Growers", "Consultants"];
-    const filters = parseURL(useLocation().pathname);
+    const baseURL = "/results/Acres%20Managed";
+    const filters = parseURL(baseURL, useLocation().pathname);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
     const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
