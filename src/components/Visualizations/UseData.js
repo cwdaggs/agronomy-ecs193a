@@ -394,6 +394,31 @@ export function acresByCounty(data){
   return county_acres
 }
 
+export function parseURL(baseURL, path) {
+  var pathname = path;
+  var vocation = "All";
+  var cropOrRegion = "All";
+  if (baseURL !== pathname) {
+    pathname = pathname.replace(baseURL, "");
+    const filters = pathname.split("/");
+    filters.shift();
+    // console.log(filters);
+    if (filters[0] !== "Select%20Vocation") {
+      vocation = filters[0];
+    }
+    
+    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+      cropOrRegion = "All";
+    } else if (filters[1] === "Select%20Crop"){
+      cropOrRegion = filters[2].replaceAll("%20", " ");
+    } else {
+      cropOrRegion = filters[1].replaceAll("%20", " ");
+    }
+  } 
+  // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
+  return {vocation: vocation, cropOrRegion: cropOrRegion};
+}
+
 export function useData(url) {
   
   const csvUrl = url;
