@@ -3,6 +3,7 @@ import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDiv
 import { useSearchParams } from "react-router-dom";
 import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
 import {IoMdArrowDropdown} from "react-icons/io";
+import { useLocation, Link } from "react-router-dom";
 
 
 function DetermineIcon(type) {
@@ -31,8 +32,8 @@ function DetermineIcon(type) {
 
 export function OnlyCrops(props) {
     const [activeName, setActiveName] = useState("Select Crop");
-    const [searchParams, setSearchParams] = useSearchParams(window.location.search);
-    console.log(window.location.href);
+    const preLocation = useLocation().pathname.split("/");
+    var location = "/" + preLocation[1] + "/" + preLocation[2];
 
     const types = [
       "All", 
@@ -62,11 +63,12 @@ export function OnlyCrops(props) {
                       <SubA 
                         key={type}
                         active={props.active === type}
-                        onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim()); setSearchParams({crop: `${type}`})}}
+                        onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
                         >
+                          <Link style={{ textDecoration: 'none' }} to={location + "/" + type}>
                         {DetermineIcon(type)}
                         {" " + type}
-                        
+                        </Link>
                     </SubA>
                     ))}
                   </DropDownContent>
