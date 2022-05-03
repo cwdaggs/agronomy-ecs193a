@@ -11,3 +11,4 @@ npm install @fontsource/newsreader
 npm install survey-react --save
 npm install react-router-dom@6
 npm install @react-spring/parallax
+npm i react-google-login

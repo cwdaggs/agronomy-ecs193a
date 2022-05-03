@@ -11,11 +11,11 @@ export const InfoSummary = (props) => {
 
   return (
     <div>
-      <Parallax pages={5}>
+      <Parallax pages={3.4}>
         <C.Container>
           <C.Area>          
             <C.Body>
-              <ParallaxLayer factor={2} style={{
+              <ParallaxLayer factor={1.5} style={{
                 backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
@@ -69,12 +69,12 @@ export const InfoSummary = (props) => {
                   </C.Desc>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer factor={3} offset={2} style={{
+              <ParallaxLayer factor={2} offset={1.5} style={{
                 backgroundImage: `url(${singleWheat})`,
                 backgroundSize: 'cover'
               }}> 
               </ParallaxLayer>
-              <ParallaxLayer offset={2} speed = {0.4}> 
+              <ParallaxLayer offset={1.95} speed = {0.8}> 
                 <div id = "infoSection2">
                   <div>
                     <C.SubTitle>Responses by Region, County, Occupation, and Crop</C.SubTitle>
@@ -86,12 +86,8 @@ export const InfoSummary = (props) => {
                     <RegionMapChart data={props.dataset} filter={"All"}/>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer offset={4} speed = {0.2}>  
+              <ParallaxLayer offset={2.95} speed = {0.8}>  
                 <div id = "infoSection3">
-                  <C.Desc className='font-roboto' style={{textAlign: 'center'}}>
-                    <br></br><br></br>Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
-                    responses for each crop:
-                  </C.Desc> 
                   <CropBar data={props.dataset}/>
                 </div>
               </ParallaxLayer>
