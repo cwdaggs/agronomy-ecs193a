@@ -29,7 +29,7 @@ function Login() {
             <div>
                 <br></br><br></br><br></br>
                 <div id="login">
-                    <h2>Please log in to Google to leave a comment or suggestion</h2>
+                    <h2>Please log in to Google to leave a comment or suggestion.</h2>
                     <div id="loginButton">
                         <GoogleLogin
                             clientId={clientID}
