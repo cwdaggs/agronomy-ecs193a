@@ -116,7 +116,7 @@ export function PriorityConcerns(props) {
         <h3>What are the highest priority management challenges/concerns?</h3>
       </div>
       <div className="inline-child">
-        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <div  class='visualization-window'>
         <div class='parent flex-parent'>

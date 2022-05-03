@@ -83,7 +83,7 @@ export function EngageVictory(props) {
 
   const baseURL = "/results/UCCE%20Engagement";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
   const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
@@ -169,7 +169,7 @@ export function EngageVictory(props) {
         <h3>How often do you engage with the UCCE in the following ways?</h3>
       </div>
       <div className="inline-child">
-            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
 
       <div class='visualization-window'>

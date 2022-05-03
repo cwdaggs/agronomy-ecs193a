@@ -58,7 +58,7 @@ export function InfoSourcesBarChart(props) {
 
   const baseURL = "/results/Information%20Sources";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
   const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
@@ -121,7 +121,7 @@ export function InfoSourcesBarChart(props) {
           <h3>Who do you communicate with when seeking information about field crop production?</h3>
         </div>
         <div className="inline-child">
-          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
         <div class='visualization-window'>
           <VictoryChart height={height} width={width}

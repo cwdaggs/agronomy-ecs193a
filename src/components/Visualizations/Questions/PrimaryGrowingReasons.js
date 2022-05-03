@@ -66,26 +66,26 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
 function parseURL(baseURL, path) {
   var pathname = path;
   var crop = "All";
+  var baseAll = true;
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
-    // console.log(filters);
     filters.shift();
-    // console.log(filters);
     if (filters[0] !== "Select%20Crop") {
       crop = filters[0];
+      baseAll = false;
     }
   } 
-  // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
-  // console.log(crop);
-  return crop;
+  return {crop: crop, baseAll: baseAll};
 }
   
 export function PrimaryGrowingReasons(props) {
     
   const baseURL = "/results/Growing%20Reasons";
+  // console.log(useLocation().pathname);
   const filter = parseURL(baseURL, useLocation().pathname);
-  const [active, setActive] = useState(filter);
+  const [active, setActive] = useState(filter.crop);
+  // console.log(active);
 
   function changeFunc(newValue){
     setActive(newValue);
@@ -126,7 +126,7 @@ export function PrimaryGrowingReasons(props) {
       <h3>What are the primary reasons you grow the following field crops?</h3>
     </div>
     <div className="inline-child">
-      <OnlyCrops changeFunc={changeFunc} active={active}/>
+      <OnlyCrops changeFunc={changeFunc} active={active} baseAll={filter.baseAll}/>
     </div>
 
       <div class='visualization-window'>

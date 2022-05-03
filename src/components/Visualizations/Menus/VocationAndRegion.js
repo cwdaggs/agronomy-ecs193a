@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDivs';
-import { useLocation, Link, NavLink } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
 import {IoMdArrowDropdown} from "react-icons/io";
 
@@ -29,14 +29,6 @@ function DetermineCropIcon(type) {
 }
 
 export function VocationAndRegion(props) {
-    const [activeCropName, setActiveCropName] = useState("Select Crop");
-    const [activeRegionName, setActiveRegionName] = useState("Select Region");
-    const [activeName, setActiveName] = useState(props.activeVocation);
-    const preLocation = useLocation().pathname.split("/");
-    var location = "/" + preLocation[1] + "/" + preLocation[2];
-    // const location = "/results/Acres%20Managed";
-    // console.log("location:" + location);
-
     const types = [
         "All", 
         "Alfalfa", 
@@ -52,6 +44,29 @@ export function VocationAndRegion(props) {
       ];
     
     const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
+    var stateVocation= "";
+    var stateCrop = "";
+    var stateRegion = "";
+    if (props.baseAll) {
+        stateVocation = "Select Vocation";
+        stateCrop = "Select Crop";
+        stateRegion = "Select Region";
+    } else {
+        stateVocation = props.activeVocation.replace("%20", " ");
+        if (types.includes(props.activeRegionOrCrop)) {
+            stateCrop = props.activeRegionOrCrop;
+            stateRegion = "Select Region";
+        } else {
+            stateCrop = "Select Crop";
+            stateRegion = props.activeRegionOrCrop;
+        }
+    }
+    const [activeCropName, setActiveCropName] = useState(stateCrop);
+    const [activeRegionName, setActiveRegionName] = useState(stateRegion);
+    const [activeName, setActiveName] = useState(stateVocation);
+    const preLocation = useLocation().pathname.split("/");
+    var location = "/" + preLocation[1] + "/" + preLocation[2];
 
     return (
       <>
@@ -69,7 +84,8 @@ export function VocationAndRegion(props) {
                                 key={type}
                                 active={props.activeVocation === type}
                                 onClick={() => {props.vocationFunction(type); 
-                                                setActiveName(type.replace(/([A-Z])/g, ' $1').trim());
+                                                setActiveName(type.replace("%20", " "));
+                                                // console.log(type.replace(/([A-Z])/g, ' $1').trim());
                                                 }}
                             >
                             <Link style={{ textDecoration: 'none' }} to={location + "/" + type + "/" + activeCropName + "/" + activeRegionName}>

@@ -30,50 +30,55 @@ function DetermineIcon(type) {
 }
 
 export function OnlyCrops(props) {
-    const [activeName, setActiveName] = useState("Select Crop");
-    const preLocation = useLocation().pathname.split("/");
-    var location = "/" + preLocation[1] + "/" + preLocation[2];
+  var stateString = "";
+  if (props.baseAll) {
+    stateString = "Select Crop";
+  } else {
+    stateString = props.active;
+  }
+  const [activeName, setActiveName] = useState(stateString);
+  const preLocation = useLocation().pathname.split("/");
+  var location = "/" + preLocation[1] + "/" + preLocation[2];
+  // console.log(location);
 
-    const types = [
-      "All", 
-      "Alfalfa", 
-      "Barley", 
-      "Corn", 
-      "Corn Silage", 
-      "Cotton", 
-      "Dry Beans", 
-      "Rice", 
-      "Small Grain Silage", 
-      "Sunflower", 
-      "Wheat"
-    ];
-    return (
-        <>
-          
-            <StyledUl>
-              <DropDownLi>
-                <Dropbtn>
-                  {activeName + " "}
-                  {<IoMdArrowDropdown/>}
-                </Dropbtn>
-                <DropDownContent>
-                  {" "}
-                  {types.map(type => (
-                      <SubA 
-                        key={type}
-                        active={props.active === type}
-                        onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
-                        >
-                          <Link style={{ textDecoration: 'none' }} to={location + "/" + type}>
-                        {DetermineIcon(type)}
-                        {" " + type}
-                        </Link>
-                    </SubA>
-                    ))}
-                  </DropDownContent>
-              </DropDownLi>
-            </StyledUl>
-          
-        </>     
-      )
+  const types = [
+    "All", 
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+  return (
+      <>
+        <StyledUl>
+          <DropDownLi>
+          <Dropbtn>
+            {activeName + " "}
+            {<IoMdArrowDropdown/>}
+          </Dropbtn>
+          <DropDownContent>
+            {" "}
+            {types.map(type => (
+            <SubA 
+              key={type}
+              active={props.active === type}
+              onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
+            >
+              <Link style={{ textDecoration: 'none' }} to={location + "/" + type}>
+              {DetermineIcon(type)}
+              {" " + type}
+              </Link>
+            </SubA>
+            ))}
+          </DropDownContent>
+          </DropDownLi>
+        </StyledUl>
+      </>     
+    )
   }
