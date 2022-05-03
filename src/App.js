@@ -22,11 +22,7 @@ import { AffectVictory } from './components/Visualizations/Questions/Affect_vict
 import { AmountVictory } from './components/Visualizations/Questions/AmountValued';
 import { PrioritySatisfaction } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
-
-import { TabHome } from './components/Visualizations/StyledDivs';
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
-
-
 
 export default function App() {
   var [dual_display, checkDualDisplay] = useState(false);
@@ -113,7 +109,7 @@ export default function App() {
         </Route>
         {/* <Route path=":topic" element={getNewDisplay(dual_display)}/> */}
 
-        <Route path="about" element={<InfoSummary/>}/>
+        <Route path="about" element={<InfoSummary dataset={dataset}/>}/>
         <Route path="team" element={<AboutSummary/>}/>
         <Route path="survey" element={<MiniSurvey/>}/>
         <Route path="feedback" element={<Login/>}/>

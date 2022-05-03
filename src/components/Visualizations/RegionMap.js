@@ -63,9 +63,9 @@ export const RegionMapChart = (props) => {
   const data = counties
   const regionData = regionAmount(props.data);
   return (
-    <div id='info-charts'>
-      <div className='flex-parent'>
-        <div className="flex-child">
+    <div className='info-charts'>
+      <div className='info-row'>
+        <div className="info-legend">
           <VictoryLegend
             colorScale={regionColorScale}
             x={150}
@@ -86,10 +86,12 @@ export const RegionMapChart = (props) => {
             ]}
           />
         </div>
-        <img src='./assets/region-map-2.png' id="map-image" width={vw*.1} height={vh*.2}></img>
+        <div className="info-map">
+          <img src='./assets/region-map-2.png' className="map-image"></img>
+        </div>
       </div>
-      <div className='flex-parent'>
-          <div id="info-legend">
+      <div className='info-row'>
+          <div className="info-legend">
             <VictoryLegend
               colorScale={regionColorScale}
               x={150}
@@ -111,7 +113,7 @@ export const RegionMapChart = (props) => {
               ]}
             />
           </div>
-          <div id='info-pie'>
+          <div className='info-pie'>
             <VictoryPie
               animate={{
                 duration: 500,               

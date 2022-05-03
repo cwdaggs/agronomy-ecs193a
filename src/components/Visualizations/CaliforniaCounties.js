@@ -42,9 +42,9 @@ export const MapChart = (props) => {
   const countyData = acresByCounty(data)
   const occupationData = occupationAmount(data);
   return (
-    <div id='info-charts'>
-      <div className='flex-parent'>
-        <div className='flex-child'>
+    <div className='info-charts'>
+      <div className='info-row'>
+        <div className='info-legend'>
           <VictoryLegend
             
             colorScale={colorScale}
@@ -70,10 +70,12 @@ export const MapChart = (props) => {
 
           />
         </div>
-        <img src='./assets/county-map-2.png' id="map-image"></img>
+        <div className="info-map">
+          <img src='./assets/county-map-2.png' className="map-image"></img>
+        </div>
       </div>
-        <div className='flex-parent'>
-            <div id="info-legend">
+        <div className='info-row'>
+            <div className="info-legend">
 
               <VictoryLegend
                 colorScale={colorScale}
@@ -94,7 +96,7 @@ export const MapChart = (props) => {
               
               />
             </div>
-            <div id='info-pie'>
+            <div className='info-pie'>
               <VictoryPie
                 animate={{
                   duration: 500,               
