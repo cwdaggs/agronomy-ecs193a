@@ -135,9 +135,33 @@ export function AmountVictory(props) {
     fontSize = mobileFontSize;
   }
 
-  const colorScale = ["#003f5c",
-    "#bc5090",
-    "#ffa600"];
+  // const colorScale = ["#003f5c",
+  //   "#bc5090",
+  //   "#ffa600"];
+
+  // var colorScale = [   
+  //   "#577B44",  
+  //   "#90A770",
+  //   "#C7BFA0",
+  // ];
+  var colorScale = 
+  [  
+    "#003F72",   
+    "#00728C",
+    "#00A498",
+    "#01AC90",
+    "#02B488",
+    "#15BC80",
+    "#29C37A",
+    "#3DCA77",
+    "#52D176",
+    "#66D779",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
   const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
 
   return (
@@ -171,15 +195,15 @@ export function AmountVictory(props) {
               colorScale={colorScale}
               itemsPerRow={5}
               gutter={25}
-              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+              style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
-                      title: {fontSize: fontSize }, 
-                      data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
+                      title: {fontSize: fontSize , fontFamily: 'Roboto'}, 
+                      data: {fontSize: fontSize, stroke: "black", strokeWidth: 1, fontFamily: 'Roboto'}}}
               data={legend_data}
             />
         <VictoryStack
           style={{
-              data: { stroke: "black", strokeWidth: 0.2}
+              data: { stroke: "black", strokeWidth: 0.2, fontFamily: 'Roboto'}
           }}
           colorScale={colorScale}
         >
@@ -191,7 +215,7 @@ export function AmountVictory(props) {
               labelComponent={
                   <VictoryTooltip 
                     style={{
-                      fontSize:fontSize
+                      fontSize:fontSize, fontFamily: 'Roboto'
                     }}
                     flyoutHeight={25}
                     flyoutWidth={40}    
@@ -202,9 +226,9 @@ export function AmountVictory(props) {
         <VictoryAxis dependentAxis
           tickFormat={(tick) => `${tick}%`}
           style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 5}
+              axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
+              ticks: {stroke: "grey", size: 5, fontFamily: 'Roboto'},
+              tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
             }}
         />
         <VictoryAxis
@@ -212,8 +236,8 @@ export function AmountVictory(props) {
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0},
-              axisLabel: {fontSize: 30, padding: 340}
+              tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
+              axisLabel: {fontSize: 30, padding: 340, fontFamily: 'Roboto'}
             }}
           tickLabelComponent={       
             <VictoryLabel    

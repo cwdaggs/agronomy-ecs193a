@@ -88,7 +88,7 @@ export const PrioritySatisfaction = (props) => {
               orientation="horizontal"
               itemsPerRow={3}
               gutter={30}
-              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+              style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
                       title: {fontSize: fontSize }, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
@@ -202,7 +202,7 @@ export const PrioritySatisfaction = (props) => {
                     onSelectionCleared={(props) => handleSelectionCleared(props)}
                   />}
                 theme={VictoryTheme.material}
-                domain={{ x: [domain[0] - domainPadding, domain[1] + domainPadding], y: [range[0] - domainPadding, range[1] + domainPadding] }}
+                domain={{ x: [Math.min(domain[0], range[0]) - domainPadding, Math.max(domain[1], range[1]) + domainPadding], y: [Math.min(domain[0], range[0]) - domainPadding, Math.max(domain[1], range[1]) + domainPadding] }}
                 animate={{
                     duration: 500,               
                 }}
@@ -220,8 +220,8 @@ export const PrioritySatisfaction = (props) => {
               orientation="vertical"
               gutter={(width>=mobileWidth) ? 50 : 5}
               style={{ border: { stroke: "black" }, 
-                       title: {fontSize: fontSize, fontFamily: 'ABeeZee' }, 
-                       labels: {fontSize: fontSize, fontFamily: 'ABeeZee'}}}
+                       title: {fontSize: fontSize, fontFamily: 'Roboto' }, 
+                       labels: {fontSize: fontSize, fontFamily: 'Roboto'}}}
               data={[
                 { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a"} },
                 { name: "Average", symbol: { fill: "red", type:"square" } },
@@ -240,7 +240,8 @@ export const PrioritySatisfaction = (props) => {
                     },
                     axis: {stroke: "#756f6a"},
                     ticks: {stroke: "grey", size: fontSize},
-                    tickLabels: {fontSize: fontSize, padding: 5}
+                    tickLabels: {fontSize: fontSize, padding: 5}, 
+                    fontFamily: 'Roboto'
                   }}
                 size={(width>=mobileWidth) ? fontSize/2 : fontSize/5}
                 data={data}
@@ -250,7 +251,7 @@ export const PrioritySatisfaction = (props) => {
                         style={{
                           fontSize:fontSize-5,
                           strokeWidth:0.1,
-                          fontFamily: 'ABeeZee'
+                          fontFamily: 'Roboto'
                         }}
                         flyoutHeight={60}
                         flyoutWidth={270}    
@@ -269,16 +270,16 @@ export const PrioritySatisfaction = (props) => {
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 5},
-                        axisLabel: {fontSize: (width>=mobileWidth) ? fontSize*2 : fontSize, fontFamily: 'ABeeZee', padding: 60 }
+                        axisLabel: {fontSize: (width>=mobileWidth) ? fontSize*2 : fontSize, fontFamily: 'Roboto', padding: 60 }
                         }}
                 />
                 <VictoryAxis
-                    label="Importance"
+                    label="Priority"
                     style={{
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
                         tickLabels: {fontSize: fontSize, padding: 0},
-                        axisLabel: {fontSize: (width>=mobileWidth) ? fontSize*2 : fontSize, fontFamily: 'ABeeZee', padding: (width>=mobileWidth) ? 60 : 35 }
+                        axisLabel: {fontSize: (width>=mobileWidth) ? fontSize*2 : fontSize, fontFamily: 'Roboto', padding: (width>=mobileWidth) ? 60 : 35 }
                         }}
                 />
             <VictoryLine horizontal
