@@ -97,7 +97,20 @@ export function PrimaryGrowingReasons(props) {
         n += data_by_reason[i].y
     }
 
-    const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
+    //const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
+    var colorScale = [
+
+      "#35381D",
+      "#444F2A",
+      "#4F6536",
+      "#577B44",
+      "#5B9151",
+      "#769C60",
+      "#90A770",
+      "#A8B280",
+      "#BDBD90",
+      "#C7BFA0",
+    ];
 
     return (
       <>
@@ -116,8 +129,8 @@ export function PrimaryGrowingReasons(props) {
                     y={0}     
                       colorScale={colorScale}
                       gutter={20}
-                      style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
-                              title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
+                      style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
+                              title:  {fontFamily: 'Roboto', fontSize: fontSize},
                               data:   {stroke: "black", strokeWidth: 1}}}
                       title={String(titleText + " (n=" + n + ")")}
                       centerTitle
@@ -137,17 +150,17 @@ export function PrimaryGrowingReasons(props) {
                           bottom: margin.bottom,
                           top: margin.top
                       }}
-                      style={{ data: { stroke: "black", strokeWidth: 1}}}
+                      style={{ data: { stroke: "black", strokeWidth: 1}, fontFamily: 'Roboto'}}
                       colorScale={colorScale}
                       data={data_by_reason}
                       labels={({ datum }) => `${datum.y}`}
                       labelComponent={<VictoryTooltip 
                           style={{
-                            fontSize:35,
-                            fontFamily: 'ABeeZee'
+                            fontSize:45,
+                            fontFamily: 'Roboto'
                           }}
-                          flyoutHeight={40}
-                          flyoutWidth={80}     
+                          flyoutHeight={50}
+                          flyoutWidth={100}     
                       />}
                   />
               </div>

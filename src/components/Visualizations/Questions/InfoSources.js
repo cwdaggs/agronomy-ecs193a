@@ -24,11 +24,35 @@ export function calculateInformationSources(data){
     "Water Quality Coalition",
   ];
 
+  // var colors = [
+  //   "#021837", "#031544", "#051050", "#07085B", "#150A67", "#260D71", "#3A117C", 
+  //   "#4F1586", "#65198F", "#682D99", "#6E40A2", "#7554AC", "#7E67B5", "#887BBF", 
+  //   "#958EC8", "#A3A2D2", "#B5B8DB"
+  // ];
   var colors = [
-    "#021837", "#031544", "#051050", "#07085B", "#150A67", "#260D71", "#3A117C", 
-    "#4F1586", "#65198F", "#682D99", "#6E40A2", "#7554AC", "#7E67B5", "#887BBF", 
-    "#958EC8", "#A3A2D2", "#B5B8DB"
+    "#212011",
+    "#2C2D17",
+    "#35381D",
+    "#3D4323",
+    "#444F2A",
+    "#4A5A30",
+    "#4F6536",
+    "#53703D",
+    "#577B44",
+    "#59864A",
+    "#5B9151",
+    "#699759",
+    "#769C60",
+    "#83A268",
+    "#90A770",
+    "#9CAD78",
+    "#A8B280",
+    "#B2B888",
+    "#BDBD90",
+    "#C2BE98",
+    "#C7BFA0",
   ];
+
 
   var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   var modified_data = [];
@@ -48,6 +72,9 @@ export function calculateInformationSources(data){
     modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
   }
   modified_data.sort(function(a,b){return a.y - b.y;});
+  for(var l=0; l<modified_data.length; l++){
+    modified_data[l].fill = colors[l];
+  }
   return modified_data;
 }
 
@@ -136,12 +163,12 @@ export function InfoSourcesBarChart(props) {
             <VictoryBar horizontal
               data={info_data}
               sortKey = "y"
-              style={{ data:  { fill: ({datum}) => datum.fill}}}
+              style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
               labels={({datum}) => datum.y}
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:fontSize
+                    fontSize:fontSize, fontFamily: 'Roboto'
                   }}
                   flyoutHeight={25}
                   flyoutWidth={40}    
@@ -151,10 +178,11 @@ export function InfoSourcesBarChart(props) {
             <VictoryAxis dependentAxis
               label = {labelText + "(n = " + filtered_data.length + ")"}
               style={{
-                axis: {stroke: "#756f6a"},
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5},
-                axisLabel: {fontSize: fontSize*2, padding: 50}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*2, padding: 50, fontFamily: 'Roboto'},
+                fontFamily: 'Roboto'
               }}
             />
             <VictoryAxis
@@ -162,8 +190,9 @@ export function InfoSourcesBarChart(props) {
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0},
-                axisLabel: {fontSize: fontSize*2, padding: 350}
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*2, padding: 350, fontFamily: 'Roboto'},
+                fontFamily: 'Roboto'
               }}
             tickLabelComponent={       
               <VictoryLabel    

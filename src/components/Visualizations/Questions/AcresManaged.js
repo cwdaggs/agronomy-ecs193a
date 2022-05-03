@@ -96,6 +96,30 @@ export function AcresManagedBarChart(props) {
     var fontSize = (width >= mobileWidth) ? 20: 10;
     const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
 
+    var colors = [
+      "#212011",
+      "#2C2D17",
+      "#35381D",
+      "#3D4323",
+      "#444F2A",
+      "#4A5A30",
+      "#4F6536",
+      "#53703D",
+      "#577B44",
+      "#59864A",
+      "#5B9151",
+      "#699759",
+      "#769C60",
+      "#83A268",
+      "#90A770",
+      "#9CAD78",
+      "#A8B280",
+      "#B2B888",
+      "#BDBD90",
+      "#C2BE98",
+      "#C7BFA0",
+    ];
+
     return (
       <>
       <div id='vis-question-label'>
@@ -114,8 +138,8 @@ export function AcresManagedBarChart(props) {
             <VictoryAxis
               label={labelText}
               style={{
-                tickLabels: {fontSize: fontSize*1.25, padding: 5},
-                axisLabel: {fontSize: fontSize*1.5, padding: (width >= mobileWidth) ? 60: 20}
+                tickLabels: {fontSize: fontSize*1.25, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
                 }}
               // style={{
               //   tickLabels: {fontSize: 30, padding: 5},
@@ -125,8 +149,9 @@ export function AcresManagedBarChart(props) {
             <VictoryAxis dependentAxis
             label = {lengthString}
             style={{
-              tickLabels: {fontSize: fontSize, padding: 15},
-              axisLabel: {fontSize: fontSize*1.5, padding: (width >= mobileWidth) ? 60: 35}
+              fontFamily: 'Roboto',
+              tickLabels: {fontSize: fontSize, padding: 15, fontFamily: 'Roboto'},
+              axisLabel: {fontSize: fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 35}
             }}/>
             <VictoryBar
               // barRatio={0.6}
@@ -137,7 +162,8 @@ export function AcresManagedBarChart(props) {
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:30
+                    fontSize:30,
+                    fontFamily: 'Roboto'
                   }}
                   flyoutHeight={45}
                   flyoutWidth={60}    

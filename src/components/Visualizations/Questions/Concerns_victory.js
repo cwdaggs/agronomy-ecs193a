@@ -90,7 +90,12 @@ export function ConcernsVictory(props) {
   const width = vw;
   const mobileWidth = 1000;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-  const colorScale = ["#00471A", "#009141", "#02D46F"];
+  //const colorScale = ["#00471A", "#009141", "#02D46F"]; 
+  var colorScale = [   
+    "#577B44",  
+    "#90A770",
+    "#C7BFA0",
+  ];
   var fontSize = 20
   var mobileFontSize = 6
   if(width < mobileWidth){
@@ -129,7 +134,7 @@ export function ConcernsVictory(props) {
                 colorScale={colorScale}
                 borderPadding = {{right: height/100}}
                 gutter={20}
-                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+                style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                         // border: { stroke: "black" }, 
                         title: {fontSize: fontSize }, 
                         data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
@@ -137,7 +142,7 @@ export function ConcernsVictory(props) {
               />
           <VictoryStack
             style={{
-                data: { stroke: "black", strokeWidth: 1}
+                data: { stroke: "black", strokeWidth: 1}, fontFamily: 'Roboto'
             }}
             colorScale={colorScale}
           >
@@ -149,7 +154,7 @@ export function ConcernsVictory(props) {
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:fontSize
+                        fontSize:fontSize, fontFamily: 'Roboto'
                       }}
                       flyoutHeight={25}
                       flyoutWidth={40}    
@@ -162,7 +167,7 @@ export function ConcernsVictory(props) {
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
               }}
           />
           <VictoryAxis
@@ -170,7 +175,7 @@ export function ConcernsVictory(props) {
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0},
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
                 // axisLabel: {fontSize: 30, padding: 380}
               }}
             tickLabelComponent={       

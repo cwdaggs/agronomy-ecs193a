@@ -146,8 +146,14 @@ export function EngageVictory(props) {
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-  const colorScale = ["#19bbb0", "#68caa5", "#9dd79f", "#bee37b", "#f4e651"];
-  
+  //const colorScale = ["#19bbb0", "#68caa5", "#9dd79f", "#bee37b", "#f4e651"];
+  var colorScale = [
+    "#35381D",
+    "#4F6536",
+    "#5B9151",
+    "#90A770",
+    "#BDBD90",
+  ];
   const mobileWidth = 1000;
   const mobileFontSize = 6
   var fontSize = 20
@@ -188,15 +194,16 @@ export function EngageVictory(props) {
                 colorScale={colorScale}
                 itemsPerRow={5}
                 gutter={25}
-                style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+                style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
+                        
                         // border: { stroke: "black" }, 
-                        title: {fontSize: fontSize }, 
-                        data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
+                        title: {fontSize: fontSize , fontFamily: 'Roboto'}, 
+                        data: {fontSize: fontSize, stroke: "black", strokeWidth: 1, fontFamily: 'Roboto'}}}
                 data={legend_data}
               />
           <VictoryStack
             style={{
-                data: { stroke: "black", strokeWidth: 0.2}
+                data: { stroke: "black", strokeWidth: 0.2, fontFamily: 'Roboto'}
             }}
             colorScale={colorScale}
           >
@@ -208,7 +215,7 @@ export function EngageVictory(props) {
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:fontSize
+                        fontSize:fontSize, fontFamily: 'Roboto'
                       }}
                       flyoutHeight={25}
                       flyoutWidth={40}    
@@ -221,7 +228,7 @@ export function EngageVictory(props) {
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
               }}
           />
           <VictoryAxis
@@ -229,7 +236,7 @@ export function EngageVictory(props) {
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0},
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
                 // axisLabel: {fontSize: 30, padding: 360}
               }}
             tickLabelComponent={       

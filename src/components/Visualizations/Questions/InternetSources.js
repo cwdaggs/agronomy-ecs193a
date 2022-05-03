@@ -165,12 +165,12 @@ export function InternetSourcesBarChart(props) {
             <VictoryBar horizontal
               data={graph_data}
               sortKey = "y"
-              style={{ data:  { fill: ({datum}) => datum.fill}}}
+              style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
               labels={({datum}) => datum.y}
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:fontSize
+                    fontSize:fontSize, fontFamily: 'Roboto'
                   }}
                   flyoutHeight={25}
                   flyoutWidth={40}    
@@ -180,19 +180,19 @@ export function InternetSourcesBarChart(props) {
             <VictoryAxis dependentAxis
               label = {labelText + "(n = " + filtered_data.length + ")"}
               style={{
-                axis: {stroke: "#756f6a"},
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5},
-                axisLabel: {fontSize: fontSize*2, padding: 50}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*2, padding: 50, fontFamily: 'Roboto'}
               }}
             />
             <VictoryAxis
               label = {"Online Sources"}
               style={{
-                axis: {stroke: "#756f6a"},
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0},
-                axisLabel: {fontSize: fontSize*2, padding: 350}
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*2, padding: 350, fontFamily: 'Roboto'}
               }}
             tickLabelComponent={       
               <VictoryLabel    
