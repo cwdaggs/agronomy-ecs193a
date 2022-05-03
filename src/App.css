@@ -270,33 +270,58 @@
   transform: translate(-50%, -50%);
 }
 
+#login{
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#loginButton{
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+#logoutButton{
+  position: fixed;
+  left: 6%;
+  /* top: 29.25%; */
+}
+
+@media screen and (max-width: 1000px){
+  #logoutButton{
+    position: fixed;
+    left: 2.5%;
+  }
+}
+
 /* #menuitem {
   background-color: blanchedalmond;
   color:#FFBF00
 } */
-#info-charts{
+.info-charts{
   display: flex;
   justify-content: center;
   width:100vw;
   padding-bottom: 10%;
 }
-#map-image {
-  padding-top: 10%;
-  width: 30%;
-  height: 60%;
-  vertical-align: center;
-} 
 
-#info-pie {
+.info-row {
+  display: flex;
   width: 50%;
-  height: 100%;
-  color: black;
 }
 
-#info-legend {
-  justify-content: center;
+.info-map {
   width: 50%;
-  color: black;
+}
+
+.info-pie {
+  width: 50%;
+}
+
+.info-legend {
+  width: 50%;
 }
 
 body,html {
@@ -398,12 +423,6 @@ body,html {
     vertical-align: middle;
   }
 
-  #map-image {
-    width: 50%;
-    height: 40%;
-    padding-top: 25%;
-    vertical-align: center;
-  } 
 }
 
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
@@ -467,12 +486,10 @@ body,html {
     vertical-align: middle;
   }
 
-  #map-image {
-    width: 50%;
-    height: 40%;
-    padding-top: 25%;
-    vertical-align: center;
-  } 
+  .map-image {
+    height: 50%;
+    margin-top: 50%;
+  }
 
 }
 
@@ -505,12 +522,10 @@ body,html {
     font-size: medium;
     padding-bottom: 10vh;
   }
-
-  #map-image {
-    width: 50%;
-    height: 40%;
-    padding-top: 10%;
-    vertical-align: center;
-  } 
   
+  .map-image{
+    margin-top: 10%;
+    height: 80%;
+  }
+
 }

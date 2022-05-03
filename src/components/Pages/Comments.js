@@ -1,5 +1,8 @@
 import "survey-react/modern.min.css";
+import React from "react";
 import { Survey, StylesManager, Model } from "survey-react";
+import Logout from './Logout.js';
+
 
 StylesManager.applyTheme("modern");
 
@@ -16,6 +19,7 @@ const surveyJson = {
     }
     ]
   };
+
 
 export const CommentBox = () => {
     
@@ -36,6 +40,7 @@ export const CommentBox = () => {
     return (
         <div>
         <Survey model={survey} />
+        <Logout />
         <br></br>
         <br></br>
         <br></br>

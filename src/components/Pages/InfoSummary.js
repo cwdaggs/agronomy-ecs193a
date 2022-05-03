@@ -1,22 +1,21 @@
 import * as C from './App.styles';
 import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
 import {RegionMapChart} from '../Visualizations/RegionMap'
-import { useData } from '../Visualizations/UseData';
 import "@fontsource/newsreader";
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import singleWheat from '../../images/one_wheat.jpg'
 import sky from '../../images/sky.jpg'
 
 
-export const InfoSummary = () => {
+export const InfoSummary = (props) => {
 
   return (
     <div>
-      <Parallax pages={5}>
+      <Parallax pages={3.4}>
         <C.Container>
           <C.Area>          
             <C.Body>
-              <ParallaxLayer factor={2} style={{
+              <ParallaxLayer factor={1.5} style={{
                 backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
@@ -70,12 +69,12 @@ export const InfoSummary = () => {
                   </C.Desc>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer factor={3} offset={2} style={{
+              <ParallaxLayer factor={2} offset={1.5} style={{
                 backgroundImage: `url(${singleWheat})`,
                 backgroundSize: 'cover'
               }}> 
               </ParallaxLayer>
-              <ParallaxLayer offset={2} speed = {0.4}> 
+              <ParallaxLayer offset={1.95} speed = {0.8}> 
                 <div id = "infoSection2">
                   <div>
                     <C.SubTitle>Responses by Region, County, Occupation, and Crop</C.SubTitle>
@@ -83,17 +82,13 @@ export const InfoSummary = () => {
                         The visualizations below reflect the amount of respondents given a specific county, region, occupation, or crop. 
                       </C.Desc>
                   </div>
-                    <MapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
-                    <RegionMapChart data={useData('./data/Filtered_Crop_Data.csv')} filter={"All"} />
+                    <MapChart data={props.dataset} filter={"All"}/>
+                    <RegionMapChart data={props.dataset} filter={"All"}/>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer offset={4} speed = {0.2}>  
+              <ParallaxLayer offset={2.95} speed = {0.8}>  
                 <div id = "infoSection3">
-                  <C.Desc className='font-roboto' style={{textAlign: 'center'}}>
-                    <br></br><br></br>Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
-                    responses for each crop:
-                  </C.Desc> 
-                  <CropBar data={useData('./data/Filtered_Crop_Data.csv')}/>
+                  <CropBar data={props.dataset}/>
                 </div>
               </ParallaxLayer>
             </C.Body>

@@ -42,9 +42,9 @@ export const MapChart = (props) => {
   const countyData = acresByCounty(data)
   const occupationData = occupationAmount(data);
   return (
-    <div id='info-charts'>
-      <div className='flex-parent'>
-        <div className='flex-child'>
+    <div className='info-charts'>
+      <div className='info-row'>
+        <div className='info-legend'>
           <VictoryLegend
             
             colorScale={colorScale}
@@ -70,10 +70,12 @@ export const MapChart = (props) => {
 
           />
         </div>
-        <img src='./assets/county-map-2.png' id="map-image"></img>
+        <div className="info-map">
+          <img src='./assets/county-map-2.png' className="map-image"></img>
+        </div>
       </div>
-        <div className='flex-parent'>
-            <div id="info-legend">
+        <div className='info-row'>
+            <div className="info-legend">
 
               <VictoryLegend
                 colorScale={colorScale}
@@ -94,7 +96,7 @@ export const MapChart = (props) => {
               
               />
             </div>
-            <div id='info-pie'>
+            <div className='info-pie'>
               <VictoryPie
                 animate={{
                   duration: 500,               
@@ -149,19 +151,29 @@ export const CropBar = (props) => {
   }
   const cropData = cropAmount(props.data);
 
-  const fontSize = 20
+  const fontSize = 20;
 
-  const margin = { top: 1080/12, right: 1920/8, bottom: 1080/4, left: 1920/6 };
+  const height = 1080;
+  const width = 1920;
+
+  const margin = { top: height/12, right: width/8, bottom: height/4, left: width/6 };
 
   return (
     <div id='about-visualization-window'>
       {/* <h2>How many acres do you manage/consult annually?</h2> */}
-      <VictoryChart height={1080} width={1920}
+      <VictoryChart height={height} width={width}
         //domainPadding={45}
-        domainPadding={{ x: margin.right/5.3, y: margin.top }}
-        padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}
+        domainPadding={{ x: margin.right/5.3 }}
+        padding={{bottom: margin.bottom, left: margin.left, right: margin.right}}
         animate={{duration: 800}}
       >
+        <VictoryAxis dependentAxis
+          label= {"Additionally, survey participants could list their top grown or consulted crops. \nBelow is a bar chart depicting the number of responses for each crop:"}
+          style = {{
+            tickLabels: {fontSize: 0},
+            axisLabel: {fontSize: 40, padding: -height}}}>
+          {/*stroke: "black", strokeWidth: "1.25", fill: "white" */}
+        </VictoryAxis>
         <VictoryAxis
           //label={"Crop"}
           style={{
