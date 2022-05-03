@@ -3,12 +3,20 @@ import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
 import "@fontsource/metropolis";
 
-var colors = [
-    "#444F2A",
-    "#577B44",
-    "#90A770",
-    "#C7BFA0",
-  ];
+// var colors = [
+//     "#444F2A",
+//     "#577B44",
+//     "#90A770",
+//     "#C7BFA0",
+//   ];
+
+var colors = 
+[
+"#002360",
+"#006083",
+"#008694",
+"#00A4A8",
+]
 
 export function CropPercentages(props) {
 

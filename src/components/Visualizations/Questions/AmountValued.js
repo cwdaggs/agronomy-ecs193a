@@ -139,11 +139,29 @@ export function AmountVictory(props) {
   //   "#bc5090",
   //   "#ffa600"];
 
-  var colorScale = [   
-    "#577B44",  
-    "#90A770",
-    "#C7BFA0",
-  ];
+  // var colorScale = [   
+  //   "#577B44",  
+  //   "#90A770",
+  //   "#C7BFA0",
+  // ];
+  var colorScale = 
+  [  
+    "#003F72",   
+    "#00728C",
+    "#00A498",
+    "#01AC90",
+    "#02B488",
+    "#15BC80",
+    "#29C37A",
+    "#3DCA77",
+    "#52D176",
+    "#66D779",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
   const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
 
   return (

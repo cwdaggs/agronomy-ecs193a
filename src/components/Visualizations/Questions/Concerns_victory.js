@@ -91,11 +91,29 @@ export function ConcernsVictory(props) {
   const mobileWidth = 1000;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   //const colorScale = ["#00471A", "#009141", "#02D46F"]; 
-  var colorScale = [   
-    "#577B44",  
-    "#90A770",
-    "#C7BFA0",
-  ];
+  // var colorScale = [   
+  //   "#577B44",  
+  //   "#90A770",
+  //   "#C7BFA0",
+  // ];
+  var colorScale = 
+  [  
+    "#003F72",   
+    "#00728C",
+    "#00A498",
+    "#01AC90",
+    "#02B488",
+    "#15BC80",
+    "#29C37A",
+    "#3DCA77",
+    "#52D176",
+    "#66D779",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
   var fontSize = 20
   var mobileFontSize = 6
   if(width < mobileWidth){

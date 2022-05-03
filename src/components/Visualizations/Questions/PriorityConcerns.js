@@ -130,19 +130,44 @@ export function PriorityConcerns(props) {
         n += data_by_reason[i].y
     }
     //const colorScale = ["#c54132", "#cf6351", "#d78271", "#db9f93", "#dadada", "#bccfb6", "#9cc493", "#7cb970", "#57ad4c", "#21a124"]
-    var colorScale = [
+    // var colorScale = [
      
-      "#2C2D17",
-      "#35381D",
-      "#3D4323",
-      "#444F2A",
-      "#4F6536",
-      "#59864A",
-      "#769C60",
-      "#9CAD78",
-      "#BDBD90",
+    //   "#2C2D17",
+    //   "#35381D",
+    //   "#3D4323",
+    //   "#444F2A",
+    //   "#4F6536",
+    //   "#59864A",
+    //   "#769C60",
+    //   "#9CAD78",
+    //   "#BDBD90",
 
-    ];
+    // ];
+
+    var colorScale = 
+    [
+      "#002360",
+      
+      "#003F72",
+    
+      "#006083",
+
+      "#008694",
+  
+      "#00A498",
+ 
+      "#02B488",
+ 
+      "#29C37A",
+
+      "#52D176",
+    
+      "#7ADE7F",
+   
+      "#A9E9A3",
+     
+      "#D8F4CC"
+    ]
 
     return (
       <>

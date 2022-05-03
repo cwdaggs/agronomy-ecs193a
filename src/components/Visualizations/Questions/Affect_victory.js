@@ -181,13 +181,25 @@ export function AffectVictory(props) {
   }
 
   //const colorScale = ["#245f81", "#8f97c5", "#f8d3ff", "#ef88b7", "#d43d51"];
-  var colorScale = [
-    "#35381D",
-    "#4F6536",
-    "#5B9151",
-    "#90A770",
-    "#BDBD90",
-  ];
+  // var colorScale = [
+  //   "#35381D",
+  //   "#4F6536",
+  //   "#5B9151",
+  //   "#90A770",
+  //   "#BDBD90",
+  // ];
+  var colorScale = 
+  [
+    "#002360", 
+    "#006083",  
+    "#009B9C",
+    "#02B488",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
   const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
 
   return (

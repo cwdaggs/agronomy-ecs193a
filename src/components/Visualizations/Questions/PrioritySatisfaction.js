@@ -88,7 +88,7 @@ export const PrioritySatisfaction = (props) => {
               orientation="horizontal"
               itemsPerRow={3}
               gutter={30}
-              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+              style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
                       title: {fontSize: fontSize }, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
@@ -202,7 +202,7 @@ export const PrioritySatisfaction = (props) => {
                     onSelectionCleared={(props) => handleSelectionCleared(props)}
                   />}
                 theme={VictoryTheme.material}
-                domain={{ x: [domain[0] - domainPadding, domain[1] + domainPadding], y: [range[0] - domainPadding, range[1] + domainPadding] }}
+                domain={{ x: [Math.min(domain[0], range[0]) - domainPadding, Math.max(domain[1], range[1]) + domainPadding], y: [Math.min(domain[0], range[0]) - domainPadding, Math.max(domain[1], range[1]) + domainPadding] }}
                 animate={{
                     duration: 500,               
                 }}
@@ -274,7 +274,7 @@ export const PrioritySatisfaction = (props) => {
                         }}
                 />
                 <VictoryAxis
-                    label="Importance"
+                    label="Priority"
                     style={{
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},

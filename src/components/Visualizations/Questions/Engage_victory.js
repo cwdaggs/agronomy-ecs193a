@@ -147,13 +147,25 @@ export function EngageVictory(props) {
   const width = vw;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   //const colorScale = ["#19bbb0", "#68caa5", "#9dd79f", "#bee37b", "#f4e651"];
-  var colorScale = [
-    "#35381D",
-    "#4F6536",
-    "#5B9151",
-    "#90A770",
-    "#BDBD90",
-  ];
+  // var colorScale = [
+  //   "#35381D",
+  //   "#4F6536",
+  //   "#5B9151",
+  //   "#90A770",
+  //   "#BDBD90",
+  // ];
+  var colorScale = 
+  [
+    "#002360", 
+    "#006083",  
+    "#009B9C",
+    "#02B488",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
   const mobileWidth = 1000;
   const mobileFontSize = 6
   var fontSize = 20
