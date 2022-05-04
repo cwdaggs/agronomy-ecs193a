@@ -270,6 +270,12 @@
   transform: translate(-50%, -50%);
 }
 
+#cropBarTitle{
+  text-align: center;
+  font-size: 32px;
+  font-weight: normal;
+}
+
 #login{
   position: fixed;
   top: 40%;
@@ -423,6 +429,11 @@ body,html {
     vertical-align: middle;
   }
 
+  #cropBarTitle{
+    font-size: 22px;
+    margin-bottom: -15vh;
+  }
+
 }
 
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
@@ -491,6 +502,11 @@ body,html {
     margin-top: 50%;
   }
 
+  #cropBarTitle{
+    font-size: 20px;
+    margin-bottom: -20vh;
+  }
+
 }
 
 @media screen and (max-height:800px) and (min-width: 600px) {
@@ -527,5 +543,11 @@ body,html {
     margin-top: 10%;
     height: 80%;
   }
+
+  #cropBarTitle{
+    font-size: 22px;
+    margin-bottom: -15vh;
+  }
+  
 
 }
