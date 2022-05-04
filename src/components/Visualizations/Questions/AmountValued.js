@@ -3,6 +3,8 @@ import {sort_by_very, filterByCropOrRegion, filterByVocation} from '../UseData.j
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 export function calculateValueEach(data, filter, answer){
   var total = 0
@@ -73,8 +75,10 @@ function calculateAverageResponses(dataset) {
 export function AmountVictory(props) {
   const vocationArray = ["All", "Growers", "Consultants"];
 
-  const [activeVocation, setActiveVocation] = useState("All");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const baseURL = "/results/Value%20Assessment";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
@@ -170,7 +174,7 @@ export function AmountVictory(props) {
       <h3>How much do you value the following:</h3>
     </div>
     <div className="inline-child">
-      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
 
     <div class='visualization-window'>
@@ -183,7 +187,7 @@ export function AmountVictory(props) {
         height={height} 
         width={width}
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-        padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }} 
+        padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }} 
       >
          <VictoryLegend 
               x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
@@ -197,7 +201,7 @@ export function AmountVictory(props) {
               gutter={25}
               style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
-                      title: {fontSize: fontSize , fontFamily: 'Roboto'}, 
+                      title: {fontSize: fontSize + 4, fontFamily: 'Roboto'}, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1, fontFamily: 'Roboto'}}}
               data={legend_data}
             />

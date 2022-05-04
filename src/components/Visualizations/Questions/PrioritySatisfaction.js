@@ -4,6 +4,8 @@ import * as d3 from 'd3'
 import React, { useState } from "react";
 import "typeface-abeezee";
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 function barData(dataset, topic){
   var values = []
@@ -30,15 +32,14 @@ if(width < mobileWidth){
 }
 
 export const PrioritySatisfaction = (props) => {
-    
-  
-
-    const [vis,setVis]=useState(<p id="vis-question-label">Click and drag an area of points for more information</p>);
+    const [vis,setVis]=useState(<p id="vis-question-label">Click and drag on an area of points for more information.</p>);
 
     const vocationArray = ["All", "Growers", "Consultants"];
 
-    const [activeVocation, setActiveVocation] = useState("All");
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+    const baseURL = "/results/Priority%20Satisfaction";
+    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+    const [activeVocation, setActiveVocation] = useState(filters.vocation);
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
     if (!props.dataset) {
       return <pre>Loading...</pre>;
@@ -69,7 +70,7 @@ export const PrioritySatisfaction = (props) => {
       setVis(
         ( 
           <div>
-           <h5><br></br><br></br><br></br>Selected Node's Average Importance/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
+           <h5><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
             <VictoryChart 
               x={50}
               animate={{
@@ -78,11 +79,11 @@ export const PrioritySatisfaction = (props) => {
               height={height} 
               width={width}
 
-              padding={{ top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right }}
+              padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
               
             >
             <VictoryLegend 
-              x={(width>=mobileWidth)?width/4 + margin.left:0}
+              x={(width>=mobileWidth)?width/5.4+ margin.left:0}
               title="Engagement Frequency"
               centerTitle
               orientation="horizontal"
@@ -90,8 +91,8 @@ export const PrioritySatisfaction = (props) => {
               gutter={30}
               style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
-                      title: {fontSize: fontSize }, 
-                      data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
+                      title: {fontSize: fontSize + 4, fontFamily: 'Roboto'  }, 
+                      data: {fontSize: fontSize, fontFamily: 'Roboto', stroke: "black", strokeWidth: 1}}}
               data={[
                 { name: "Sufficient", symbol: { fill: "green", type:"square"} },
                 { name: "Surplus", symbol: { fill: "green", fillOpacity:0.5, type:"square" } },
@@ -109,7 +110,7 @@ export const PrioritySatisfaction = (props) => {
                     style={{
                       fontSize:fontSize-3,
                       strokeWidth:1,
-                      fontFamily: 'ABeeZee'
+                      fontFamily: 'Roboto'
                     }}
                     flyoutHeight={40}
                     flyoutWidth={345}    
@@ -127,7 +128,7 @@ export const PrioritySatisfaction = (props) => {
             />
             <VictoryBar horizontal
               alignment='start'
-              labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nImportance of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
+              labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nPriority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
               labelComponent={
                   <VictoryTooltip 
                   orientation={"bottom"}
@@ -135,7 +136,7 @@ export const PrioritySatisfaction = (props) => {
                     style={{
                       fontSize:fontSize-3,
                       strokeWidth: 1,
-                      fontFamily: 'ABeeZee'
+                      fontFamily: 'Roboto'
                     }}
                     flyoutHeight={100}
                     flyoutWidth={400}    
@@ -158,15 +159,15 @@ export const PrioritySatisfaction = (props) => {
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5},
-                axisLabel: {fontSize: fontSize}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize, fontFamily: 'Roboto'}
               }}
             />
             <VictoryAxis
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0}
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'}
               }}
             />
           </VictoryChart>
@@ -191,7 +192,7 @@ export const PrioritySatisfaction = (props) => {
           <h3>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). </h3>
         </div>
         <div className="inline-child">
-            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
 
         <div class='visualization-window'>
@@ -269,7 +270,7 @@ export const PrioritySatisfaction = (props) => {
                     style={{
                         axis: {stroke: "#756f6a"},
                         ticks: {stroke: "grey", size: 5},
-                        tickLabels: {fontSize: fontSize, padding: 5},
+                        tickLabels: {fontSize: fontSize, padding: 0},
                         axisLabel: {fontSize: (width>=mobileWidth) ? fontSize*2 : fontSize, fontFamily: 'Roboto', padding: 60 }
                         }}
                 />

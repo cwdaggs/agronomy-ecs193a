@@ -2,6 +2,8 @@ import {VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
 import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import {useState} from "react";
+import { useLocation } from 'react-router-dom';
+import { parseURL } from '../UseData.js';
 
 import "typeface-abeezee";
 
@@ -79,9 +81,10 @@ function calculateSizeOfDataSet(data){
 
 export function AcresManagedBarChart(props) {
     const vocationArray = ["All", "Growers", "Consultants"];
-
-    const [activeVocation, setActiveVocation] = useState("All");
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+    const baseURL = "/results/Acres%20Managed";
+    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+    const [activeVocation, setActiveVocation] = useState(filters.vocation);
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
     function vocationFunction(newValue){
       setActiveVocation(newValue);
@@ -148,7 +151,7 @@ export function AcresManagedBarChart(props) {
           <h3>How many acres do you manage/consult annually?</h3>
       </div>
       <div className="inline-child">
-        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
         <div class='visualization-window'>
           <VictoryChart height={height} width={width}

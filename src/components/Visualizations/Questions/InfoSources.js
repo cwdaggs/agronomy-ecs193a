@@ -3,6 +3,8 @@ import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 export function calculateInformationSources(data){
   var sources = [
@@ -104,8 +106,10 @@ export function calculateInformationSources(data){
 export function InfoSourcesBarChart(props) {
   const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
-  const [activeVocation, setActiveVocation] = useState("All");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const baseURL = "/results/Information%20Sources";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
@@ -167,7 +171,7 @@ export function InfoSourcesBarChart(props) {
           <h3>Who do you communicate with when seeking information about field crop production?</h3>
         </div>
         <div className="inline-child">
-          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
         <div class='visualization-window'>
           <VictoryChart height={height} width={width}
@@ -175,7 +179,7 @@ export function InfoSourcesBarChart(props) {
               duration: 500,               
             }}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}  
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
             containerComponent={
               <VictoryZoomContainer
                 zoomDimension="x"

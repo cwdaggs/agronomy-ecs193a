@@ -3,6 +3,8 @@ import {filterByCropOrRegion, sort_by_freq} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 export function calculateAffectEach(data, filter, answer){
   var total = 0
@@ -113,9 +115,11 @@ function calculateAverageResponses(dataset) {
 }
 
 export function AffectVictory(props) {
-  
-  const [activeVocation, setActiveVocation] = useState("Growers");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const vocationArray = ["Growers", "Consultants"];
+  const baseURL = "/results/Priority%20Effect";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
@@ -142,7 +146,7 @@ export function AffectVictory(props) {
     "Wheat"
   ];
 
-  const vocationArray = ["Growers", "Consultants"];
+  
 
   var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
 
@@ -208,7 +212,7 @@ export function AffectVictory(props) {
        <h3>{questionText}</h3>
     </div>
     <div className="inline-child">
-      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
 
     <div class='visualization-window'>
@@ -220,7 +224,7 @@ export function AffectVictory(props) {
         height={height} 
         width={width}
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-        padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
+        padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         
         containerComponent={
           <VictoryZoomContainer
@@ -236,12 +240,12 @@ export function AffectVictory(props) {
               centerTitle
               orientation="horizontal"
               colorScale={colorScale}
-              borderPadding = {{right: height/100}}
+              // borderPadding = {{right: height/100}}
               itemsPerRow={5}
               gutter={20}
               style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
-                      title: {fontSize: fontSize }, 
+                      title: {fontSize: fontSize + 4, fontFamily: 'Roboto' }, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
               data={legend_data}
             />

@@ -2,6 +2,7 @@ import {filterByCropOrRegion, filterByVocation} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {OnlyCrops} from "../Menus/OnlyCrops.js"
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import "typeface-abeezee";
 
@@ -61,43 +62,64 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
   
     return modified_data
   }
+
+function parseURL(baseURL, path) {
+  var pathname = path;
+  var crop = "All";
+  var baseAll = true;
+  if (baseURL !== pathname) {
+    pathname = pathname.replace(baseURL, "");
+    const filters = pathname.split("/");
+    filters.shift();
+    if (filters[0] !== "Select%20Crop") {
+      crop = filters[0];
+      baseAll = false;
+    }
+  } 
+  return {crop: crop, baseAll: baseAll};
+}
   
 export function PrimaryGrowingReasons(props) {
     
-    const [active, setActive] = useState("All");
+  const baseURL = "/results/Growing%20Reasons";
+  // console.log(useLocation().pathname);
+  const filter = parseURL(baseURL, useLocation().pathname);
+  const [active, setActive] = useState(filter.crop);
+  // console.log(active);
 
-    function changeFunc(newValue){
-      setActive(newValue);
-    }
+  function changeFunc(newValue){
+    setActive(newValue);
+  }
 
-    if (!props.dataset) {
-        return <pre>Loading...</pre>;
-    }
+  if (!props.dataset) {
+      return <pre>Loading...</pre>;
+  }
 
-    var titleText = "Reasons for Growing " + active;
-    if (active === "All") {
-      titleText += " Crops"
-    }
+  var titleText = "Reasons for Growing " + active;
+  if (active === "All") {
+    titleText += " Crops"
+  }
 
-    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
-    var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
-    var legend_data = []
-    var n = 0
+  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
+  var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
+  var legend_data = []
+  var n = 0
 
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh;
-    const width = vw;
-    const mobileWidth = 1000;
-    var fontSize = 12;
-    const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const height = vh;
+  const width = vw;
+  const mobileWidth = 1000;
+  var fontSize = 12;
+  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
-    for (var i = 0; i < data_by_reason.length; i++) {
-        legend_data.push({name: data_by_reason[i].x})
-        n += data_by_reason[i].y
-    }
+  for (var i = 0; i < data_by_reason.length; i++) {
+      legend_data.push({name: data_by_reason[i].x})
+      n += data_by_reason[i].y
+  }
 
-    //const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
+  // const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
+  //const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
     // var colorScale = [
 
     //   "#35381D",
@@ -136,60 +158,60 @@ export function PrimaryGrowingReasons(props) {
       "#C3EFB8",
       "#D8F4CC"
     ]
-    return (
-      <>
-      <div id='vis-question-label'>
-        <h3>What are the primary reasons you grow the following field crops?</h3>
-      </div>
-      <div className="inline-child">
-        <OnlyCrops changeFunc={changeFunc} active={active}/>
-      </div>
+  return (
+    <>
+    <div id='vis-question-label'>
+      <h3>What are the primary reasons you grow the following field crops?</h3>
+    </div>
+    <div className="inline-child">
+      <OnlyCrops changeFunc={changeFunc} active={active} baseAll={filter.baseAll}/>
+    </div>
 
-        <div class='visualization-window'>
-            <div class='flex-parent'>
-              <div class='flex-child'>
-                  <VictoryLegend      
-                    x={150}
-                    y={0}     
-                      colorScale={colorScale}
-                      gutter={20}
-                      style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
-                              title:  {fontFamily: 'Roboto', fontSize: fontSize},
-                              data:   {stroke: "black", strokeWidth: 1}}}
-                      title={String(titleText + " (n=" + n + ")")}
-                      centerTitle
-                      data={legend_data}
-                  />
-                  </div>
-                  <div class='flex-child'>
-                  <VictoryPie
-                      animate={{
-                        duration: 500,               
-                      }}
-                      width={width}
-                  height={height}
-                  padding={{
-                        left: margin.left,
-                          right: margin.right,
-                          bottom: margin.bottom,
-                          top: margin.top
-                      }}
-                      style={{ data: { stroke: "black", strokeWidth: 1}, fontFamily: 'Roboto'}}
-                      colorScale={colorScale}
-                      data={data_by_reason}
-                      labels={({ datum }) => `${datum.y}`}
-                      labelComponent={<VictoryTooltip 
-                          style={{
-                            fontSize:45,
-                            fontFamily: 'Roboto'
-                          }}
-                          flyoutHeight={50}
-                          flyoutWidth={100}     
-                      />}
-                  />
-              </div>
-          </div>
+      <div class='visualization-window'>
+          <div class='flex-parent'>
+            <div class='flex-child'>
+                <VictoryLegend      
+                  x={150}
+                  y={0}     
+                    colorScale={colorScale}
+                    gutter={20}
+                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
+                            title:  {fontFamily: 'Roboto', fontSize: fontSize},
+                            data:   {stroke: "black", strokeWidth: 1}}}
+                    title={String(titleText + " (n=" + n + ")")}
+                    centerTitle
+                    data={legend_data}
+                />
+                </div>
+                <div class='flex-child'>
+                <VictoryPie
+                    animate={{
+                      duration: 500,               
+                    }}
+                    width={width}
+                height={height}
+                padding={{
+                      left: margin.left,
+                        right: margin.right,
+                        bottom: margin.bottom,
+                        top: margin.top
+                    }}
+                    style={{ data: { stroke: "black", strokeWidth: 1}}}
+                    colorScale={colorScale}
+                    data={data_by_reason}
+                    labels={({ datum }) => `${datum.y}`}
+                    labelComponent={<VictoryTooltip 
+                        style={{
+                          fontSize:35,
+                          fontFamily: 'ABeeZee'
+                        }}
+                        flyoutHeight={40}
+                        flyoutWidth={80}     
+                    />}
+                />
+            </div>
         </div>
-      </>  
-    );
+      </div>
+    </>  
+  );
 }

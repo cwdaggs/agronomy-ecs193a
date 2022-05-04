@@ -3,6 +3,8 @@ import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 var colors = [
   "#212011",
@@ -86,8 +88,10 @@ export function PriorityConcerns(props) {
     const regionTypes = ["Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
     const vocationArray = ["Growers", "Consultants"];
 
-    const [activeVocation, setActiveVocation] = useState("Growers");
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+    const baseURL = "/results/Priority%20Concerns";
+    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+    const [activeVocation, setActiveVocation] = useState(filters.vocation);
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
     function vocationFunction(newValue){
       setActiveVocation(newValue);
@@ -175,7 +179,7 @@ export function PriorityConcerns(props) {
         <h3>What are the highest priority management challenges/concerns?</h3>
       </div>
       <div className="inline-child">
-        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <div  class='visualization-window'>
         <div class='parent flex-parent'>

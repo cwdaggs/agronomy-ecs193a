@@ -78,7 +78,42 @@ export function CropPercentages(props) {
                             style={{ data: { stroke: "black", strokeWidth: 1}}}
                             colorScale={colors}
                             data={data}
+                            // radius={({ datum, active }) => (active ? 800 : 650)}
                             // labels={() => null}
+                            //the onclick is for if we want pie slice to be bigger
+                            //problem is we dont know how radius is calculated
+                            // events={[{
+                            //     target: "data",
+                            //     eventHandlers: {
+                            //         onClick: () => {
+                            //             return [
+                            //               {
+                            //                 eventKey: "all",
+                            //                 mutation: () => ({ active: false })
+                            //               },
+                            //               {
+                            //                 mutation: () => ({ active: true })
+                            //               }
+                            //             ];
+                            //           },
+                            //         onMouseOver: () => {
+                            //           return [{
+                            //             mutation: (props) => {
+                            //               return {
+                            //                 style: Object.assign({}, props.style, {})
+                            //               };
+                            //             }
+                            //           }];
+                            //         },
+                            //         onMouseOut: () => {
+                            //           return [{
+                            //             mutation: () => {
+                            //               return null;
+                            //             }
+                            //           }];
+                            //         }
+                            //       }
+                            //   }]}
                             labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
                             labelComponent={
                             <VictoryTooltip 

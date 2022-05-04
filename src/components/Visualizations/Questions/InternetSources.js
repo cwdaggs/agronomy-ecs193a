@@ -3,6 +3,8 @@ import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
 
 function getInternetSources(data){
   var sources = [
@@ -105,8 +107,10 @@ var colors =
 export function InternetSourcesBarChart(props) {
   const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
-  const [activeVocation, setActiveVocation] = useState("All");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const baseURL = "/results/Internet%20Sources";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
@@ -168,13 +172,13 @@ export function InternetSourcesBarChart(props) {
         <h3>Where do you most often look for field crop production information on the internet?</h3>
       </div>
       <div className="inline-child">
-        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
         <div class='visualization-window'>
           
           <VictoryChart height={height} width={width}
             domainPadding={{ x: (width>=mobileWidth) ? margin.right/10 : 0, y:margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}   
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}   
             animate={{duration: 800}}
             containerComponent={
               <VictoryZoomContainer

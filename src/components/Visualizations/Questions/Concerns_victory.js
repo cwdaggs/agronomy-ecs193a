@@ -4,6 +4,8 @@ import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion
 import "typeface-abeezee";
 import React, { useState} from "react";
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import { parseURL } from '../UseData.js';
+import { useLocation } from 'react-router-dom';
     
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
@@ -48,9 +50,10 @@ export function ConcernsVictory(props) {
   ];
 
   const vocationArray = ["All", "Growers", "Consultants"];
-
-  const [activeVocation, setActiveVocation] = useState("All");
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState("All");
+  const baseURL = "/results/Production%20Concerns";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
@@ -127,7 +130,7 @@ export function ConcernsVictory(props) {
         <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
       </div>
       <div className="inline-child">
-          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray}/>
+          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
 
       <div class='visualization-window'>
@@ -140,7 +143,7 @@ export function ConcernsVictory(props) {
           height={height} 
           width={width}
           domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryLegend 
                 x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
@@ -154,7 +157,7 @@ export function ConcernsVictory(props) {
                 gutter={20}
                 style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                         // border: { stroke: "black" }, 
-                        title: {fontSize: fontSize }, 
+                        title: {fontSize: fontSize + 4, fontFamily: 'Roboto'}, 
                         data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
                 data={legend_data}
               />
