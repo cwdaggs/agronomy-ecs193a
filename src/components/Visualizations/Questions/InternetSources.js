@@ -26,29 +26,53 @@ function getInternetSources(data){
     "\"California Agriculture\" Journal"
   ];
 
-  var colors = [
-    "#212011",
-    "#2C2D17",
-    "#35381D",
-    "#3D4323",
-    "#444F2A",
-    "#4A5A30",
-    "#4F6536",
-    "#53703D",
-    "#577B44",
-    "#59864A",
-    "#5B9151",
-    "#699759",
-    "#769C60",
-    "#83A268",
-    "#90A770",
-    "#9CAD78",
-    "#A8B280",
-    "#B2B888",
-    "#BDBD90",
-    "#C2BE98",
-    "#C7BFA0",
-  ];
+  // var colors = [
+  //   "#212011",
+  //   "#2C2D17",
+  //   "#35381D",
+  //   "#3D4323",
+  //   "#444F2A",
+  //   "#4A5A30",
+  //   "#4F6536",
+  //   "#53703D",
+  //   "#577B44",
+  //   "#59864A",
+  //   "#5B9151",
+  //   "#699759",
+  //   "#769C60",
+  //   "#83A268",
+  //   "#90A770",
+  //   "#9CAD78",
+  //   "#A8B280",
+  //   "#B2B888",
+  //   "#BDBD90",
+  //   "#C2BE98",
+  //   "#C7BFA0",
+  // ];
+
+var colors = 
+["#002360",
+"#003069",
+"#003F72",
+"#004F7B",
+"#006083",
+"#00728C",
+"#008694",
+"#009B9C",
+"#00A498",
+"#01AC90",
+"#02B488",
+"#15BC80",
+"#29C37A",
+"#3DCA77",
+"#52D176",
+"#66D779",
+"#7ADE7F",
+"#8FE48F",
+"#A9E9A3",
+"#C3EFB8",
+"#D8F4CC"
+]
 
   var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   var modified_data = [];
@@ -169,12 +193,12 @@ export function InternetSourcesBarChart(props) {
             <VictoryBar horizontal
               data={graph_data}
               sortKey = "y"
-              style={{ data:  { fill: ({datum}) => datum.fill}}}
+              style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
               labels={({datum}) => datum.y}
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:fontSize
+                    fontSize:fontSize, fontFamily: 'Roboto'
                   }}
                   flyoutHeight={25}
                   flyoutWidth={40}    
@@ -184,19 +208,19 @@ export function InternetSourcesBarChart(props) {
             <VictoryAxis dependentAxis
               label = {labelText + "(n = " + filtered_data.length + ")"}
               style={{
-                axis: {stroke: "#756f6a"},
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5},
-                axisLabel: {fontSize: fontSize*2, padding: 50}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*2, padding: 50, fontFamily: 'Roboto'}
               }}
             />
             <VictoryAxis
               label = {"Online Sources"}
               style={{
-                axis: {stroke: "#756f6a"},
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0},
-                axisLabel: {fontSize: fontSize*2, padding: 350}
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*2, padding: 350, fontFamily: 'Roboto'}
               }}
             tickLabelComponent={       
               <VictoryLabel    

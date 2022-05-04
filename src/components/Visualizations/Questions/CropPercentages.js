@@ -3,6 +3,21 @@ import {calculateCropPercentageAverage} from '../UseData.js';
 import "typeface-abeezee";
 import "@fontsource/metropolis";
 
+// var colors = [
+//     "#444F2A",
+//     "#577B44",
+//     "#90A770",
+//     "#C7BFA0",
+//   ];
+
+var colors = 
+[
+"#002360",
+"#006083",
+"#008694",
+"#00A4A8",
+]
+
 export function CropPercentages(props) {
 
     if (!props.dataset) {
@@ -33,12 +48,12 @@ export function CropPercentages(props) {
                 <div class='parent flex-parent'>
                     <div class='child flex-child'>
                         <VictoryLegend
-                            colorScale="heatmap"
+                            colorScale={colors}
                             x={150}
                             y={0}  
                             gutter={20}
-                            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize}, 
-                                    title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
+                            style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize}, 
+                                    title:  {fontFamily: 'Roboto', fontSize: fontSize},
                                     data:   {stroke: "black", strokeWidth: 1}}}
                             title="Crop Categories"
                             centerTitle
@@ -61,7 +76,7 @@ export function CropPercentages(props) {
                                 top: margin.top
                             }}
                             style={{ data: { stroke: "black", strokeWidth: 1}}}
-                            colorScale="heatmap"
+                            colorScale={colors}
                             data={data}
                             // radius={({ datum, active }) => (active ? 800 : 650)}
                             // labels={() => null}
@@ -100,14 +115,16 @@ export function CropPercentages(props) {
                             //       }
                             //   }]}
                             labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
-                            labelComponent={<VictoryTooltip 
+                            labelComponent={
+                            <VictoryTooltip 
                                 style={{
-                                    fontSize:35,
-                                    fontFamily: 'ABeeZee'
+                                    fontSize:45,
+                                    fontFamily: 'Roboto'
                                 }}
-                                flyoutHeight={40}
-                                flyoutWidth={80}      
-                            />}
+                                flyoutHeight={50}
+                                flyoutWidth={100}      
+                            />
+                        }
                         />
                     </div>
 

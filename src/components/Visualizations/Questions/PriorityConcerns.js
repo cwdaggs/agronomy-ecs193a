@@ -6,6 +6,31 @@ import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
+var colors = [
+  "#212011",
+  "#2C2D17",
+  "#35381D",
+  "#3D4323",
+  "#444F2A",
+  "#4A5A30",
+  "#4F6536",
+  "#53703D",
+  "#577B44",
+  "#59864A",
+  "#5B9151",
+  "#699759",
+  "#769C60",
+  "#83A268",
+  "#90A770",
+  "#9CAD78",
+  "#A8B280",
+  "#B2B888",
+  "#BDBD90",
+  "#C2BE98",
+  "#C7BFA0",
+];
+
+
 function calculateAllPriorityConcerns(data, filter, job) {
     if(job === "Growers"){
         job = "_Growing_";
@@ -108,7 +133,45 @@ export function PriorityConcerns(props) {
         legend_data.push({name: data_by_reason[i].x})
         n += data_by_reason[i].y
     }
-    const colorScale = ["#c54132", "#cf6351", "#d78271", "#db9f93", "#dadada", "#bccfb6", "#9cc493", "#7cb970", "#57ad4c", "#21a124"]
+    //const colorScale = ["#c54132", "#cf6351", "#d78271", "#db9f93", "#dadada", "#bccfb6", "#9cc493", "#7cb970", "#57ad4c", "#21a124"]
+    // var colorScale = [
+     
+    //   "#2C2D17",
+    //   "#35381D",
+    //   "#3D4323",
+    //   "#444F2A",
+    //   "#4F6536",
+    //   "#59864A",
+    //   "#769C60",
+    //   "#9CAD78",
+    //   "#BDBD90",
+
+    // ];
+
+    var colorScale = 
+    [
+      "#002360",
+      
+      "#003F72",
+    
+      "#006083",
+
+      "#008694",
+  
+      "#00A498",
+ 
+      "#02B488",
+ 
+      "#29C37A",
+
+      "#52D176",
+    
+      "#7ADE7F",
+   
+      "#A9E9A3",
+     
+      "#D8F4CC"
+    ]
 
     return (
       <>
@@ -126,8 +189,8 @@ export function PriorityConcerns(props) {
                 y={0}
                 colorScale={colorScale}
                 gutter={20}
-                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize}, 
-                        title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
+                style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize}, 
+                        title:  {fontFamily: 'Roboto', fontSize: fontSize},
                         data:   {stroke: "black", strokeWidth: 1}}}
                 title={String(titleText + " (n=" + n + ")")}
                 data={legend_data}
@@ -153,11 +216,11 @@ export function PriorityConcerns(props) {
               labels={({ datum }) => `${datum.y}`}
               labelComponent={<VictoryTooltip 
                   style={{
-                    fontSize:35,
-                    fontFamily: 'ABeeZee'
+                    fontSize:45,
+                    fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={40}
-                  flyoutWidth={80}    
+                  flyoutHeight={50}
+                  flyoutWidth={100}    
               />}
           />
           </div>
