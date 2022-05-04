@@ -65,16 +65,18 @@ export function OnlyCrops(props) {
           <DropDownContent>
             {" "}
             {types.map(type => (
-            <SubA 
-              key={type}
-              active={props.active === type}
-              onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
-            >
-              <Link style={{ textDecoration: 'none' }} to={location + "/" + type}>
-              {DetermineIcon(type)}
-              {" " + type}
+              <Link style={{ textDecoration: 'none' }} 
+                    to={location + "/" + type}
+                    onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
+              >
+                <SubA 
+                  key={type}
+                  active={props.active === type}
+                >
+                  {DetermineIcon(type)}
+                  {" " + type}
+                </SubA>
               </Link>
-            </SubA>
             ))}
           </DropDownContent>
           </DropDownLi>
