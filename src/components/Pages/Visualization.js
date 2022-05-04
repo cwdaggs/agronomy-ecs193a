@@ -2,10 +2,24 @@ import React, { useState } from "react";
 import {TabVisualizations} from '../Visualizations/StyledDivs';
 import {Tab} from "../../Button"
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { rgb } from "d3";
 
+
+function getActiveTab(visName, location){
+  return (location === visName
+          ? 
+          <TabVisualizations style={{opacity: 1, background: `linear-gradient(-70deg, rgba(47, 185, 201, 0.3) 50%, rgba(0, 35, 96, 0.3) )`}}>
+            {visName}
+          </TabVisualizations> 
+          : 
+          <TabVisualizations style={{opacity: 1}}>
+            {visName}
+          </TabVisualizations>)
+}
 
 export const Visualizations = (props) => {
-    
+    var preLocation = useLocation().pathname.split("/")
+    var location = preLocation[2].replace("%20", " ");
     const types = [
         "Acres Managed", //Q2
         "Crop Percentages", //Q3
@@ -43,7 +57,7 @@ export const Visualizations = (props) => {
                 active={active === type}
                 to={`/results/${type}`}>
                   <div className='vis-buttons-child'>
-                    <TabVisualizations>{type+" "}</TabVisualizations>
+                  {getActiveTab(type, location)}
                   </div>
                 </NavLink>
               ))}

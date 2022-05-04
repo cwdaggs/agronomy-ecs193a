@@ -179,7 +179,7 @@ export function InfoSourcesBarChart(props) {
               duration: 500,               
             }}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}  
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
             containerComponent={
               <VictoryZoomContainer
                 zoomDimension="x"

@@ -175,8 +175,8 @@ export function PrimaryGrowingReasons(props) {
                   y={0}     
                     colorScale={colorScale}
                     gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
-                            title:  {fontFamily: 'ABeeZee', fontSize: fontSize},
+                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
+                            title:  {fontFamily: 'Roboto', fontSize: fontSize},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title={String(titleText + " (n=" + n + ")")}
                     centerTitle

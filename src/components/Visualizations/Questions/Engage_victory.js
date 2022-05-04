@@ -199,7 +199,7 @@ export function EngageVictory(props) {
           height={height} 
           width={width}
           domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryLegend 
                 x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
@@ -213,7 +213,7 @@ export function EngageVictory(props) {
                 style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                         
                         // border: { stroke: "black" }, 
-                        title: {fontSize: fontSize , fontFamily: 'Roboto'}, 
+                        title: {fontSize: fontSize + 4, fontFamily: 'Roboto'}, 
                         data: {fontSize: fontSize, stroke: "black", strokeWidth: 1, fontFamily: 'Roboto'}}}
                 data={legend_data}
               />

@@ -178,7 +178,7 @@ export function InternetSourcesBarChart(props) {
           
           <VictoryChart height={height} width={width}
             domainPadding={{ x: (width>=mobileWidth) ? margin.right/10 : 0, y:margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left:margin.left*1.25, right: margin.right }}   
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}   
             animate={{duration: 800}}
             containerComponent={
               <VictoryZoomContainer
