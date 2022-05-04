@@ -11,7 +11,7 @@ export const InfoSummary = (props) => {
 
   return (
     <div>
-      <Parallax pages={3.4}>
+      <Parallax pages={3.5}>
         <C.Container>
           <C.Area>          
             <C.Body>
