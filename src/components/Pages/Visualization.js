@@ -18,8 +18,7 @@ function getActiveTab(visName, location){
 }
 
 export const Visualizations = (props) => {
-    var preLocation = useLocation().pathname.split("/")
-    var location = preLocation[2].replace("%20", " ");
+    
     const types = [
         "Acres Managed", //Q2
         "Crop Percentages", //Q3
@@ -39,7 +38,11 @@ export const Visualizations = (props) => {
     const [key, setKey] = useState(0);
 
     var path = useLocation().pathname;
-
+    var preLocation = useLocation().pathname.split("/")
+    var location ="";
+    if (path !== "/results") {
+      location = preLocation[2].replace("%20", " ");
+    }
     if(!props.dual || (path === "/results")){
       return(
         <div className='inline-parent'>
