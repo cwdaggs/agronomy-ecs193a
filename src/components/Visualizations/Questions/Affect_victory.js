@@ -180,7 +180,26 @@ export function AffectVictory(props) {
     fontSize = mobileFontSize;
   }
 
-  const colorScale = ["#245f81", "#8f97c5", "#f8d3ff", "#ef88b7", "#d43d51"];
+  //const colorScale = ["#245f81", "#8f97c5", "#f8d3ff", "#ef88b7", "#d43d51"];
+  // var colorScale = [
+  //   "#35381D",
+  //   "#4F6536",
+  //   "#5B9151",
+  //   "#90A770",
+  //   "#BDBD90",
+  // ];
+  var colorScale = 
+  [
+    "#002360", 
+    "#006083",  
+    "#009B9C",
+    "#02B488",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
   const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
 
   return (
@@ -202,7 +221,7 @@ export function AffectVictory(props) {
         width={width}
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
         padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
-      
+        
         containerComponent={
           <VictoryZoomContainer
             zoomDimension="x"
@@ -220,7 +239,7 @@ export function AffectVictory(props) {
               borderPadding = {{right: height/100}}
               itemsPerRow={5}
               gutter={20}
-              style={{labels: {fill: "black", fontFamily: 'ABeeZee', fontSize: fontSize}, 
+              style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
                       // border: { stroke: "black" }, 
                       title: {fontSize: fontSize }, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
@@ -240,7 +259,7 @@ export function AffectVictory(props) {
               labelComponent={
                   <VictoryTooltip 
                     style={{
-                      fontSize:fontSize
+                      fontSize:fontSize, fontFamily: 'Roboto'
                     }}
                     flyoutHeight={25}
                     flyoutWidth={40}    
@@ -253,7 +272,7 @@ export function AffectVictory(props) {
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 5}
+              tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
             }}
         />
         <VictoryAxis
@@ -261,7 +280,7 @@ export function AffectVictory(props) {
           style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0},
+              tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
               // axisLabel: {fontSize: 30, padding: 410}
             }}
           tickLabelComponent={       
