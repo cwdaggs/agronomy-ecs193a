@@ -84,7 +84,7 @@ export const Visualizations = (props) => {
                 active={active === type}
                 to={`/results/${type}`}>
                   <div className='vis-buttons-child'>
-                    <TabVisualizations>{type+" "}</TabVisualizations>
+                  {getActiveTab(type, location)}
                   </div>
                 </NavLink>
               ))}
