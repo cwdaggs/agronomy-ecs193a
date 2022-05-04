@@ -131,10 +131,13 @@ export function AmountVictory(props) {
   const width = vw;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
 
-  const mobileWidth = 1000;
-  const mobileFontSize = 6
   var fontSize = 20
-
+  var mobileFontSize = 6
+  const mobileWidth = 1000;
+  const laptopWidth = 1500;
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
   if(width < mobileWidth){
     fontSize = mobileFontSize;
   }

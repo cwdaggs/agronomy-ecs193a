@@ -158,9 +158,13 @@ export function InfoSourcesBarChart(props) {
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
 
-    const mobileWidth = 1000;
     var fontSize = 20
     var mobileFontSize = 6
+    const mobileWidth = 1000;
+    const laptopWidth = 2000;
+    if(width < laptopWidth){
+      fontSize = mobileFontSize*2
+    }
     if(width < mobileWidth){
       fontSize = mobileFontSize;
     }
@@ -179,6 +183,7 @@ export function InfoSourcesBarChart(props) {
               duration: 500,               
             }}
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            margin={{top: height/8, right: width/8, bottom: height/4, left: width/4 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
             containerComponent={
               <VictoryZoomContainer

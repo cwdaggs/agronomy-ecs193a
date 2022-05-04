@@ -91,7 +91,6 @@ export function ConcernsVictory(props) {
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
-  const mobileWidth = 1000;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
   //const colorScale = ["#00471A", "#009141", "#02D46F"]; 
   // var colorScale = [   
@@ -119,6 +118,11 @@ export function ConcernsVictory(props) {
   ]
   var fontSize = 20
   var mobileFontSize = 6
+  const mobileWidth = 1000;
+  const laptopWidth = 1500;
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
   if(width < mobileWidth){
     fontSize = mobileFontSize;
   }
