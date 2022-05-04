@@ -160,20 +160,20 @@ export const CropBar = (props) => {
 
   return (
     <div id='about-visualization-window'>
-      {/* <h2>How many acres do you manage/consult annually?</h2> */}
+      <h3 id = "cropBarTitle">Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of responses for each crop:</h3>
       <VictoryChart height={height} width={width}
         //domainPadding={45}
         domainPadding={{ x: margin.right/5.3 }}
         padding={{bottom: margin.bottom, left: margin.left, right: margin.right}}
         animate={{duration: 800}}
       >
-        <VictoryAxis dependentAxis
+        {/* <VictoryAxis dependentAxis
           label= {"Additionally, survey participants could list their top grown or consulted crops. \nBelow is a bar chart depicting the number of responses for each crop:"}
           style = {{
             tickLabels: {fontSize: 0},
-            axisLabel: {fontSize: 40, padding: -height}}}>
-          {/*stroke: "black", strokeWidth: "1.25", fill: "white" */}
-        </VictoryAxis>
+            axisLabel: {fontSize: 40, padding: -height*0.9}}}>
+          stroke: "black", strokeWidth: "1.25", fill: "white"
+        </VictoryAxis> */}
         <VictoryAxis
           //label={"Crop"}
           style={{
