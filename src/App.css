@@ -272,8 +272,8 @@
 
 #cropBarTitle{
   text-align: center;
-  font-size: 32px;
-  font-weight: normal;
+  font-size: 30px;
+  margin-bottom: -10vh;
 }
 
 #login{
@@ -429,9 +429,9 @@ body,html {
     vertical-align: middle;
   }
 
-  #cropBarTitle{
-    font-size: 22px;
-    margin-bottom: -15vh;
+  #cropBarTitle {
+    font-size: 20px;
+    margin-bottom: -20vh;
   }
 
 }
@@ -498,13 +498,13 @@ body,html {
   }
 
   .map-image {
-    height: 50%;
-    margin-top: 50%;
+    height: 30%;
+    margin-top: 130%;
   }
 
-  #cropBarTitle{
-    font-size: 20px;
-    margin-bottom: -20vh;
+  #cropBarTitle {
+    font-size: 15px;
+    margin-bottom: -30vh;
   }
 
 }
@@ -544,10 +544,9 @@ body,html {
     height: 80%;
   }
 
-  #cropBarTitle{
-    font-size: 22px;
-    margin-bottom: -15vh;
+  #cropBarTitle {
+    font-size: 20px;
+    margin-bottom: 0vh;
   }
-  
 
 }

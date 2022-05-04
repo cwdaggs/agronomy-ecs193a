@@ -173,7 +173,7 @@ export function EngageVictory(props) {
   var fontSize = 20
   var mobileFontSize = 6
   const mobileWidth = 1000;
-  const laptopWidth = 2000;
+  const laptopWidth = 1500;
   if(width < laptopWidth){
     fontSize = mobileFontSize*2
   }
