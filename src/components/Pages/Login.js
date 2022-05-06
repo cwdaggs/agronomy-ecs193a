@@ -5,11 +5,14 @@ import {CommentBox} from './Comments';
 const clientID = '652800520818-5rp0q395un8cc2urq17bctiij15hmqn6.apps.googleusercontent.com';
 
 function Login() {
+    var name = "";
     const [isLoggedIn, setLogIn] = useState(false);
+    const [profile, setProfile] = useState(null);
 
     const onSuccess = (res) => {
         console.log("Successfully logged in: " + res.profileObj.name);
-        console.log(res);
+        // console.log(res);
+        setProfile(res);
         setLogIn(true);
     };
 
@@ -20,7 +23,7 @@ function Login() {
     if (isLoggedIn) {
         return(
             <div>
-                <CommentBox></CommentBox>
+                <CommentBox profile={profile}></CommentBox>
             </div>
         );
     }
