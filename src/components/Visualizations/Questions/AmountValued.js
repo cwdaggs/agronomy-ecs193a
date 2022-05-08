@@ -131,7 +131,7 @@ export function AmountVictory(props) {
   const width = vw;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
 
-  var fontSize = 20
+  var fontSize = 18
   var mobileFontSize = 6
   const mobileWidth = 1000;
   const laptopWidth = 1500;
@@ -174,14 +174,25 @@ export function AmountVictory(props) {
   return (
     <>
     <div id='vis-question-label'>
-      <h3>How much do you value the following:</h3>
+      <h2>How much do you value the following:</h2>
     </div>
     <div className="inline-child">
       <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
-
+    <div id="vis-legend">
+        <div id="legend-title">
+          {titleText}
+        </div>
+        <div id="legend-values">
+          <div className='legend-circle' id="three-color-first"></div>
+          <span className='legend-value'>Very Valuable</span>
+          <div className='legend-circle' id="three-color-second"></div>
+          <span className='legend-value'>Somewhat Valuable</span>
+          <div className='legend-circle' id="three-color-third"></div>
+          <span className='legend-value'>Not Valuable</span>
+        </div>
+      </div>
     <div class='visualization-window'>
-      
       <VictoryChart
         horizontal={true}
         animate={{
@@ -192,7 +203,7 @@ export function AmountVictory(props) {
         domainPadding={{ x: margin.right/10, y: margin.top/10 }}
         padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }} 
       >
-         <VictoryLegend 
+      {/* <VictoryLegend 
               x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
               y={(width>=mobileWidth) ? (0):15}
               width={width-margin.left-margin.right}
@@ -207,7 +218,7 @@ export function AmountVictory(props) {
                       title: {fontSize: fontSize + 4, fontFamily: 'Roboto'}, 
                       data: {fontSize: fontSize, stroke: "black", strokeWidth: 1, fontFamily: 'Roboto'}}}
               data={legend_data}
-            />
+      />*/}
         <VictoryStack
           style={{
               data: { stroke: "black", strokeWidth: 0.2, fontFamily: 'Roboto'}

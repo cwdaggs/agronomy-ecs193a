@@ -158,10 +158,10 @@ export function InfoSourcesBarChart(props) {
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
 
-    var fontSize = 20
+    var fontSize = 15
     var mobileFontSize = 6
     const mobileWidth = 1000;
-    const laptopWidth = 2000;
+    const laptopWidth = 1500;
     if(width < laptopWidth){
       fontSize = mobileFontSize*2
     }
@@ -172,7 +172,7 @@ export function InfoSourcesBarChart(props) {
     return (
       <>
         <div id='vis-question-label'>
-          <h3>Who do you communicate with when seeking information about field crop production?</h3>
+          <h2>Who do you communicate with when seeking information about field crop production?</h2>
         </div>
         <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>

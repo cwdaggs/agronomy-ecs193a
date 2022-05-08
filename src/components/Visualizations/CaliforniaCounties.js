@@ -160,7 +160,10 @@ export const CropBar = (props) => {
 
   return (
     <div id='about-visualization-window'>
-      <h3 id = "cropBarTitle">Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of responses for each crop:</h3>
+      <div id = "cropBarTitle">
+        Additionally, survey participants could list their top grown or consulted crops. 
+        Below is a bar chart depicting the number of responses for each crop:
+      </div>
       <VictoryChart height={height} width={width}
         //domainPadding={45}
         domainPadding={{ x: margin.right/5.3 }}

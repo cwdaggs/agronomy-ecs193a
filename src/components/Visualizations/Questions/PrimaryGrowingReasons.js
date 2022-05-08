@@ -161,7 +161,7 @@ export function PrimaryGrowingReasons(props) {
   return (
     <>
     <div id='vis-question-label'>
-      <h3>What are the primary reasons you grow the following field crops?</h3>
+      <h2>What are the primary reasons you grow the following field crops?</h2>
     </div>
     <div className="inline-child">
       <OnlyCrops changeFunc={changeFunc} active={active} baseAll={filter.baseAll}/>
