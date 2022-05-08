@@ -367,6 +367,56 @@ body,html {
   padding: 10px 0px;
 }
 
+#legend-values {
+  display: flex;
+  justify-content: center;
+}
+
+.legend-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  margin-top: 8px;
+  border: 1px solid #000000;
+}
+
+.legend-value {
+  font-size: smaller;
+  padding: 10px;
+}
+
+#three-color-first {
+  background-color: #003F72;
+}
+
+#three-color-second {
+  background-color: #00728C;
+}
+
+#three-color-third {
+  background-color: #00A498;
+}
+
+#five-color-first {
+  background-color: #002360;
+}
+
+#five-color-second {
+  background-color: #006083;
+}
+
+#five-color-third {
+  background-color: #009B9C;
+}
+
+#five-color-fourth {
+  background-color: #02B488;
+}
+
+#five-color-fifth {
+  background-color: #7ADE7F;
+}
+
 @media screen and (max-width: 1200px) and (min-height:800px) {
   #bg {
     height: 125vh;
@@ -507,6 +557,20 @@ body,html {
     margin-bottom: -30vh;
   }
 
+  #vis-legend {
+    font-size: x-small;
+  }
+
+  .legend-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin-top: 3px;
+  }
+  
+  .legend-value {
+    padding: 5px;
+  }
 }
 
 @media screen and (max-height:800px) and (min-width: 600px) {
@@ -522,7 +586,7 @@ body,html {
   }
   
   #vis-question-label{
-    font-size: 12px;
+    font-size: 10px;
   }
 
   #visTop {
@@ -547,6 +611,17 @@ body,html {
   #cropBarTitle {
     font-size: 20px;
     margin-bottom: 0vh;
+  }
+
+  #vis-legend {
+    font-size: small;
+  }
+
+  .legend-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin-top: 9px;
   }
 
 }

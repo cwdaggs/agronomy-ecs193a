@@ -131,14 +131,25 @@ export function ConcernsVictory(props) {
   return (
     <>
       <div id='vis-question-label'>
-        <h3>In regards to the production of field crops in California, rate your concern for the following:</h3>
+        <h2>In regards to the production of field crops in California, rate your concern for the following:</h2>
       </div>
       <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-
+      <div id="vis-legend">
+        <div id="legend-title">
+          {titleText}
+        </div>
+        <div id="legend-values">
+          <div className='legend-circle' id="three-color-first"></div>
+          <span className='legend-value'>Very Concerned</span>
+          <div className='legend-circle' id="three-color-second"></div>
+          <span className='legend-value'>Somewhat Concerned</span>
+          <div className='legend-circle' id="three-color-third"></div>
+          <span className='legend-value'>Not Concerned</span>
+        </div>
+      </div>
       <div class='visualization-window'>
-      
         <VictoryChart
           horizontal={true}
           animate={{
@@ -149,7 +160,7 @@ export function ConcernsVictory(props) {
           domainPadding={{ x: margin.right/10, y: margin.top/10 }}
           padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
-          <VictoryLegend 
+        {/*<VictoryLegend 
                 x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
                 y={(width>=mobileWidth) ? (0):15}
                 width={width-margin.left-margin.right}
@@ -164,7 +175,7 @@ export function ConcernsVictory(props) {
                         title: {fontSize: fontSize + 4, fontFamily: 'Roboto'}, 
                         data: {fontSize: fontSize, stroke: "black", strokeWidth: 1}}}
                 data={legend_data}
-              />
+        />*/}
           <VictoryStack
             style={{
                 data: { stroke: "black", strokeWidth: 1}, fontFamily: 'Roboto'

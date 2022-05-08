@@ -187,12 +187,28 @@ export function EngageVictory(props) {
 
     <>
       <div id='vis-question-label'>
-        <h3>How often do you engage with the UCCE in the following ways?</h3>
+        <h2>How often do you engage with the UCCE in the following ways?</h2>
       </div>
       <div className="inline-child">
             <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-
+      <div id="vis-legend">
+        <div id="legend-title">
+          {titleText}
+        </div>
+        <div id="legend-values">
+          <div className='legend-circle' id="five-color-first"></div>
+          <span className='legend-value'>1-3/week</span>
+          <div className='legend-circle' id="five-color-second"></div>
+          <span className='legend-value'>1-2/month</span>
+          <div className='legend-circle' id="five-color-third"></div>
+          <span className='legend-value'>3-6/year</span>
+          <div className='legend-circle' id="five-color-fourth"></div>
+          <span className='legend-value'>1-2/year</span>
+          <div className='legend-circle' id="five-color-fifth"></div>
+          <span className='legend-value'>Never</span>
+        </div>
+      </div>
       <div class='visualization-window'>
         <VictoryChart
           horizontal={true}
@@ -204,7 +220,7 @@ export function EngageVictory(props) {
           domainPadding={{ x: margin.right/10, y: margin.top/10 }}
           padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
-          <VictoryLegend 
+        {/*<VictoryLegend 
                 x={(width>=mobileWidth) ? (width/2 - margin.right): width/4}
                 y={(width>=mobileWidth) ? (0):15}
                 title={titleText}
@@ -219,7 +235,7 @@ export function EngageVictory(props) {
                         title: {fontSize: fontSize + 4, fontFamily: 'Roboto'}, 
                         data: {fontSize: fontSize, stroke: "black", strokeWidth: 1, fontFamily: 'Roboto'}}}
                 data={legend_data}
-              />
+        />*/}
           <VictoryStack
             style={{
                 data: { stroke: "black", strokeWidth: 0.2, fontFamily: 'Roboto'}
