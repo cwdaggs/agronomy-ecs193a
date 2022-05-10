@@ -2,6 +2,7 @@ import "survey-react/modern.min.css";
 import React from "react";
 import { Survey, StylesManager, Model } from "survey-react";
 import Logout from './Logout.js';
+import emailjs, { init } from "@emailjs/browser";
 
 
 StylesManager.applyTheme("modern");
@@ -21,19 +22,28 @@ const surveyJson = {
   };
 
 
-export const CommentBox = () => {
+export const CommentBox = (profile) => {
     
+    init("bbHpEmI6Hk-yZSrJy");
     const survey = new Model(surveyJson);
 
     survey
     .onComplete
     .add(function (sender) {
         var surveyData = sender.data;
-        // send this comment to email
-        console.log(surveyData["Suggestions Box"]);
-        document
-            .querySelector('#comments')
-            .textContent = "Result JSON:\n" + JSON.stringify(sender.data, null, 3);
+        var templateParams = {
+            from_name: profile.profile.profileObj.name,
+            from_email: profile.profile.profileObj.email,
+            message: surveyData["Suggestions Box"]
+        };
+
+        // send comment to email
+        emailjs.send("service_lyg6l6f", "template_ljmf23h", templateParams)
+            .then(function(response) {
+                console.log('Comment Sent Successfully!', response.status, response.text);
+            }, function(error) {
+                console.log('Failed to send comment', error);
+            });
     });
 
 
