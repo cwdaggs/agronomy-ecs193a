@@ -17,7 +17,7 @@ function getActiveTab(visName, location){
           </TabVisualizations>)
 }
 
-export const Visualizations = (props) => {
+export const Visualizations = () => {
     
     const types = [
         "Acres Managed", //Q2
@@ -41,7 +41,14 @@ export const Visualizations = (props) => {
     var preLocation = useLocation().pathname.split("/")
     var location ="";
     if (path !== "/results") {
-      location = preLocation[2].replace("%20", " ");
+      if(preLocation[2] != "compare"){
+        location = preLocation[2].replace("%20", " ");
+      }else{
+        if(path !== "/results/compare"){
+          location = preLocation[3].replace("%20", " ");
+        }
+      }
+      
     }
 
       return(

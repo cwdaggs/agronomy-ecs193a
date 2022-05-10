@@ -25,11 +25,6 @@ import { InternetSourcesBarChart, InternetSourcesBarChartCompare } from './compo
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
 
 export default function App() {
-  var [dual_display, checkDualDisplay] = useState(false);
-
-  function changeDual(){
-    checkDualDisplay(!dual_display);
-  }
 
   function getActiveTab(isActive, pageName){
     return (isActive 
@@ -88,7 +83,7 @@ export default function App() {
                 <Button>Compare</Button>
               </NavLink>
             </div>
-              {<Visualizations dual={dual_display}/>}
+              {<Visualizations/>}
           </div>
         }>
           <Route index element={<VisualizationLandingPage/>}/>
@@ -135,7 +130,7 @@ export default function App() {
                 <Button>Single Visualization</Button>
               </NavLink>
             </div>
-              {<Visualizations dual={dual_display}/>}
+              {<Visualizations/>}
           </div>
         }>
           <Route index element={<VisualizationLandingPage/>}/>
