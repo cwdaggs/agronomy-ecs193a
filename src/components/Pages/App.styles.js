@@ -94,6 +94,17 @@ export const Title = styled.h1`
     font-weight:600;
 `;
 
+export const ProfileTitle = styled.h1`
+    margin:0;
+    padding:0;
+    font-size:60px;
+    font-weight:600;
+    width: 100%;
+    padding: 5px;
+    background: linear-gradient(to right,#ffffff, #c1bfbf);
+    border-radius: 10px;
+`;
+
 export const SubTitle = styled.h1`
     margin:0;
     padding:0;
