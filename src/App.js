@@ -49,25 +49,25 @@ export default function App() {
     <div id="outerContainer" class='font-metropolis'>
       <div id="heading">
         {/*<img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>*/}
-        <NavLink to ="/">
+        <NavLink to ="/" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Home")}
         </NavLink>
-        <NavLink to ="/results">
+        <NavLink to ="/results" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Explore Results")}
         </NavLink>
-        <NavLink to ="/about">
+        <NavLink to ="/about" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "About")}
         </NavLink>
-        <NavLink to ="/team">
+        <NavLink to ="/team" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Team")}
         </NavLink>
-        <NavLink to ="/survey">
+        <NavLink to ="/survey" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Survey")}
         </NavLink>
-        <NavLink to ="/feedback">
+        <NavLink to ="/feedback" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
         </NavLink>
-        <a href="https://ucanr.edu/" target="_blank">
+        <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
           <Tab>
             UCCE
           </Tab>
