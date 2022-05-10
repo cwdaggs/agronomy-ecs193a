@@ -40,8 +40,8 @@ const Dropbtn = styled.div`
     border-radius: 25px;
   }
 
-  @media (max-width: 375px) {
-    padding: 3px 5px;
+  @media (max-width: 420px) {
+    padding: 5px 8px;
     font-size: 6px;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
