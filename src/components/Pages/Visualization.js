@@ -43,7 +43,7 @@ export const Visualizations = (props) => {
     if (path !== "/results") {
       location = preLocation[2].replace("%20", " ");
     }
-    if(!props.dual || (path === "/results")){
+
       return(
         <div className='inline-parent'>
           <div>
@@ -58,7 +58,7 @@ export const Visualizations = (props) => {
                 onClick={() => {setKey(key+1); setActive(type)}}
                 
                 active={active === type}
-                to={`/results/${type}`}>
+                to={`${type}`}>
                   <div className='vis-buttons-child'>
                   {getActiveTab(type, location)}
                   </div>
@@ -70,39 +70,4 @@ export const Visualizations = (props) => {
           </div>
         </div>
       );
-    }else{
-      return(
-         <div className='inline-parent'>
-          <div>
-            
-            <div id='vis-buttons-label'>
-                Survey Questions
-            </div>        
-            <nav className='vis-buttons-parent'>
-              {types.map(type => (
-                <NavLink
-                key={type}
-                onClick={() => {setKey(key+1); setActive(type)}}
-                
-                active={active === type}
-                to={`/results/${type}`}>
-                  <div className='vis-buttons-child'>
-                  {getActiveTab(type, location)}
-                  </div>
-                </NavLink>
-              ))}
-              
-            </nav>
-          </div>
-          <div className='dual-display'>
-            <div id='dual-display-child'>
-              <Outlet/>
-            </div>
-            <div id='dual-display-child'>
-              <Outlet/>
-            </div>
-          </div>
-        </div>
-      )
-    }
 }

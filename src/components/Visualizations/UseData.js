@@ -423,6 +423,78 @@ export function parseURL(baseURL, path, vocationArray) {
   return {vocation: vocation, cropOrRegion: cropOrRegion, baseAll: baseAll};
 }
 
+export function parseCropURLCompare(baseURL, path){
+  var pathname = path;
+  var crop1 = "All";
+  var crop2 = "All";
+  var baseAll = true;
+
+  if(baseURL !== pathname){
+    pathname = pathname.replace(baseURL, "");
+    const filters = pathname.split("/");
+    filters.shift();
+
+    if (filters[0] !== "Select%20Crop") {
+      crop1 = filters[0].replaceAll("%20", " ");
+      baseAll = false;
+    }
+
+    if (filters[1] !== "Compare%20Crop") {
+      crop2 = filters[1].replaceAll("%20", " ");
+      baseAll = false;
+    }
+  }
+
+  return {crop1:crop1, crop2:crop2, baseAll: baseAll};
+}
+
+export function parseURLCompare(baseURL, path, vocationArray) {
+  var pathname = path;
+  var vocation = vocationArray[0];
+  var cropOrRegion = "All";
+  var vocation2 = vocationArray[0];
+  var cropOrRegion2 = "All";
+  var baseAll = true;
+
+  if (baseURL !== pathname) {
+    pathname = pathname.replace(baseURL, "");
+    const filters = pathname.split("/");
+    filters.shift();
+    // console.log(filters);
+    if (filters[0] !== "Select%20Vocation") {
+      vocation = filters[0];
+      baseAll = false;
+    }
+    
+    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+      cropOrRegion = "All";
+    } else if (filters[1] === "Select%20Crop"){
+      cropOrRegion = filters[2].replaceAll("%20", " ");
+      baseAll = false;
+    } else {
+      cropOrRegion = filters[1].replaceAll("%20", " ");
+      baseAll = false;
+    }
+
+    if (filters[3] !== "Compare%20Vocation") {
+      vocation2 = filters[3];
+      baseAll = false;
+    }
+    
+    if (filters[4] === "Compare%20Crop" && filters[5] === "Compare%20Region") {
+      cropOrRegion2 = "All";
+    } else if (filters[4] === "Compare%20Crop"){
+      cropOrRegion2 = filters[5].replaceAll("%20", " ");
+      baseAll = false;
+    } else {
+      cropOrRegion2 = filters[4].replaceAll("%20", " ");
+      baseAll = false;
+    }
+  } 
+  // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
+  return {vocation: vocation, cropOrRegion: cropOrRegion, vocation2:vocation2, cropOrRegion2:cropOrRegion2, baseAll: baseAll};
+}
+
 export function useData(url) {
   
   const csvUrl = url;

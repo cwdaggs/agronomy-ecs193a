@@ -1,9 +1,9 @@
 import {VictoryLegend, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation } from '../UseData';
+import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation, parseURLCompare } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState } from "react";
 import "typeface-abeezee";
-import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
+import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
@@ -31,171 +31,137 @@ if(width < mobileWidth){
   fontSize = mobileFontSize;
 }
 
-export const PrioritySatisfaction = (props) => {
-    const [vis,setVis]=useState(<p id="vis-question-label">Click and drag on an area of points for more information.</p>);
 
-    const vocationArray = ["All", "Growers", "Consultants"];
+function GetChart(props){
 
-    const baseURL = "/results/Priority%20Satisfaction";
-    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-    const [activeVocation, setActiveVocation] = useState(filters.vocation);
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [vis,setVis]=useState(<p id="vis-question-label">Click and drag on an area of points for more information.</p>);
+  
+  var domain = d3.extent(props.data, function(d) { return d.Priority; })
+  var range = d3.extent(props.data, function(d) { return d.Satisfaction; })
+  var domainPadding = 0.1
 
-    if (!props.dataset) {
-      return <pre>Loading...</pre>;
-    }
-
-
-    function vocationFunction(newValue){
-      setActiveVocation(newValue);
-    }
-
-    function regionOrCropFunction(newValue) {
-      setActiveRegionOrCrop(newValue);
-    }  
-
-
-
-    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
-    var data = averageSatisfaction(data_filtered)
-
-    var domain = d3.extent(data, function(d) { return d.Priority; })
-    var range = d3.extent(data, function(d) { return d.Satisfaction; })
-    var domainPadding = 0.1
-
-    var trendData = trendLineSatisfactions(data)
-    var selectedData = data
-
-    function makeVis(data){
-      setVis(
-        ( 
-          <div>
-           <h5><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
-            <VictoryChart 
-              x={50}
-              animate={{
-                duration: 500,               
-              }}
-              height={height} 
-              width={width}
-
-              padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
+  var trendData = trendLineSatisfactions(props.data)
+  var selectedData = props.data
+  
+  function makeVis(data){
+    setVis(
+      ( 
+        <div>
+         <h5><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
+          <VictoryChart 
+            x={50}
+            animate={{
+              duration: 500,               
+            }}
+            height={height} 
+            width={width}
+            domainPadding={{ x: margin.right/5, y: margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
+            
+          >
+          <VictoryLegend 
+            x={(width>=mobileWidth)?width/5.4+ margin.left:0}
+            title="Engagement Frequency"
+            centerTitle
+            orientation="horizontal"
+            itemsPerRow={3}
+            gutter={30}
+            style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
+                    // border: { stroke: "black" }, 
+                    title: {fontSize: fontSize + 4, fontFamily: 'Roboto'  }, 
+                    data: {fontSize: fontSize, fontFamily: 'Roboto', stroke: "black", strokeWidth: 1}}}
+            data={[
+              { name: "Sufficient", symbol: { fill: "green", type:"square"} },
+              { name: "Surplus", symbol: { fill: "green", fillOpacity:0.5, type:"square" } },
+              { name: "Deficient", symbol: { fill: "tomato", fillOpacity:0.7, type:"square" } }
               
-            >
-            <VictoryLegend 
-              x={(width>=mobileWidth)?width/5.4+ margin.left:0}
-              title="Engagement Frequency"
-              centerTitle
-              orientation="horizontal"
-              itemsPerRow={3}
-              gutter={30}
-              style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
-                      // border: { stroke: "black" }, 
-                      title: {fontSize: fontSize + 4, fontFamily: 'Roboto'  }, 
-                      data: {fontSize: fontSize, fontFamily: 'Roboto', stroke: "black", strokeWidth: 1}}}
-              data={[
-                { name: "Sufficient", symbol: { fill: "green", type:"square"} },
-                { name: "Surplus", symbol: { fill: "green", fillOpacity:0.5, type:"square" } },
-                { name: "Deficient", symbol: { fill: "tomato", fillOpacity:0.7, type:"square" } }
-                
-              ]}
-            />
-            <VictoryBar horizontal
-              alignment='start'
-              labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
-              labelComponent={
-                  <VictoryTooltip 
-                  orientation={"bottom"}
-                  pointerOrientation={"top"}
-                    style={{
-                      fontSize:fontSize-3,
-                      strokeWidth:1,
-                      fontFamily: 'Roboto'
-                    }}
-                    flyoutHeight={40}
-                    flyoutWidth={345}    
-                  />
-              }
-              style={{ 
-                data: { 
-                  fill: "#c43a31",
-                  stroke: "#756f6a",
-                  fillOpacity: 0.7,
-                  strokeWidth: 0.5
-                } 
-              }}
-              data={data}
-            />
-            <VictoryBar horizontal
-              alignment='start'
-              labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nPriority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
-              labelComponent={
-                  <VictoryTooltip 
-                  orientation={"bottom"}
-                  pointerOrientation={"top"}
-                    style={{
-                      fontSize:fontSize-3,
-                      strokeWidth: 1,
-                      fontFamily: 'Roboto'
-                    }}
-                    flyoutHeight={100}
-                    flyoutWidth={400}    
-                  />
-              }
-              style={{ 
-                data: { 
-                  fill: "green",
-                  stroke: "#756f6a",
-                  fillOpacity: 0.7,
-                  strokeWidth: 0.5 
-                } 
-              }}
-              data={data}
-              y={(d)=>d.z}
-            />
-            <VictoryAxis dependentAxis
-              label="Ranking"
-              tickFormat={(tick) => `${tick}`}
-              style={{
-                axis: {stroke: "#756f6a"},
-                ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
-                axisLabel: {fontSize: fontSize, fontFamily: 'Roboto'}
-              }}
-            />
-            <VictoryAxis
-              style={{
-                axis: {stroke: "#756f6a"},
-                ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'}
-              }}
-            />
-          </VictoryChart>
-        </div>
-        )
+            ]}
+          />
+          <VictoryBar horizontal
+            alignment='start'
+            labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                orientation={"bottom"}
+                pointerOrientation={"top"}
+                  style={{
+                    fontSize:fontSize-3,
+                    strokeWidth:1,
+                    fontFamily: 'Roboto'
+                  }}
+                  flyoutHeight={40}
+                  flyoutWidth={345}    
+                />
+            }
+            style={{ 
+              data: { 
+                fill: "#c43a31",
+                stroke: "#756f6a",
+                fillOpacity: 0.7,
+                strokeWidth: 0.5
+              } 
+            }}
+            data={data}
+          />
+          <VictoryBar horizontal
+            alignment='start'
+            labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nPriority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                orientation={"bottom"}
+                pointerOrientation={"top"}
+                  style={{
+                    fontSize:fontSize-3,
+                    strokeWidth: 1,
+                    fontFamily: 'Roboto'
+                  }}
+                  flyoutHeight={100}
+                  flyoutWidth={400}    
+                />
+            }
+            style={{ 
+              data: { 
+                fill: "green",
+                stroke: "#756f6a",
+                fillOpacity: 0.7,
+                strokeWidth: 0.5 
+              } 
+            }}
+            data={data}
+            y={(d)=>d.z}
+          />
+          <VictoryAxis dependentAxis
+            label="Ranking"
+            tickFormat={(tick) => `${tick}`}
+            style={{
+              axis: {stroke: "#756f6a"},
+              ticks: {stroke: "grey", size: 5},
+              tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
+              axisLabel: {fontSize: fontSize, fontFamily: 'Roboto'}
+            }}
+          />
+          <VictoryAxis
+            style={{
+              axis: {stroke: "#756f6a"},
+              ticks: {stroke: "grey", size: 5},
+              tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'}
+            }}
+          />
+        </VictoryChart>
+      </div>
       )
-    }
+    )
+  }
 
-    function handleSelection(points, bounds, props){
-      selectedData = (barData(props.selectedData[0].data))
-      makeVis(selectedData)
-      
-    }
+  function handleSelection(points, bounds, props){
+    selectedData = (barData(props.selectedData[0].data))
+    makeVis(selectedData)
+    
+  }
 
-    function handleSelectionCleared(props){}  
-
-
-    return (
-
-      <>
-        <div id='vis-question-label'>
-          <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). </h2>
-        </div>
-        <div className="inline-child">
-            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-        </div>
-
-        <div class='visualization-window'>
+  function handleSelectionCleared(props){}  
+  return(
+      <div class='visualization-window'>
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer
@@ -245,7 +211,7 @@ export const PrioritySatisfaction = (props) => {
                     fontFamily: 'Roboto'
                   }}
                 size={(width>=mobileWidth) ? fontSize/2 : fontSize/5}
-                data={data}
+                data={props.data}
                 labels={({datum}) => datum.Topic.split('_').join(' ') + "\nSatisfaction Avg: " + String(datum.Satisfaction).substring(0, 4) + "\nPriority Avg: " + String(datum.Priority).substring(0,4)}
                 labelComponent={
                     <VictoryTooltip 
@@ -355,6 +321,108 @@ export const PrioritySatisfaction = (props) => {
           </VictoryChart>
           {vis}
       </div>
+  )
+}
+
+
+export const PrioritySatisfaction = (props) => {
+
+    const vocationArray = ["All", "Growers", "Consultants"];
+
+    const baseURL = "/results/Priority%20Satisfaction";
+    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+    const [activeVocation, setActiveVocation] = useState(filters.vocation);
+    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+
+    if (!props.dataset) {
+      return <pre>Loading...</pre>;
+    }
+
+
+    function vocationFunction(newValue){
+      setActiveVocation(newValue);
+    }
+
+    function regionOrCropFunction(newValue) {
+      setActiveRegionOrCrop(newValue);
+    }  
+
+
+
+    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+    var data = averageSatisfaction(data_filtered)
+
+
+
+
+    return (
+
+      <>
+        <div id='vis-question-label'>
+          <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). </h2>
+        </div>
+        <div className="inline-child">
+            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        </div>
+
+        <GetChart data={data}/>
 
     </>
     )};
+
+    export function PrioritySatisfactionCompare(props){
+
+      const vocationArray = ["All", "Growers", "Consultants"];
+  
+      const baseURL = "/results/compare/Priority%20Satisfaction";
+      const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
+      const [activeVocation, setActiveVocation] = useState(filters.vocation);
+      const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+
+      const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
+      const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  
+      if (!props.dataset) {
+        return <pre>Loading...</pre>;
+      }
+  
+  
+      function vocationFunction(newValue){
+        setActiveVocation(newValue);
+      }
+  
+      function regionOrCropFunction(newValue) {
+        setActiveRegionOrCrop(newValue);
+      }  
+  
+      function vocationFunction2(newValue){
+        setActiveVocation2(newValue);
+      }
+  
+      function regionOrCropFunction2(newValue) {
+        setActiveRegionOrCrop2(newValue);
+      }  
+  
+      var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+      var data = averageSatisfaction(data_filtered)
+  
+      var data_filtered2 = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop2), activeVocation2);
+      var data2 = averageSatisfaction(data_filtered2)
+  
+  
+      return (
+  
+        <>
+          <div id='vis-question-label'>
+            <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). </h2>
+          </div>
+          <div className="inline-child">
+          <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          </div>
+          <div className='dual-display'>
+            <GetChart data={data}/>
+            <GetChart data={data2}/>
+          </div>
+  
+      </>
+      )};

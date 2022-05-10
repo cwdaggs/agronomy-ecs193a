@@ -1,6 +1,8 @@
 export function VisualizationLandingPage(props) {
 
   return (
+    <>
+    <div id="visLandingPageBG"></div>
     <div id="visLandingPage">
         <h1 id="visLandingHeading">Welcome!</h1>
         {<p id="visLandingBody">- By exploring these results, you can discover how grower's and consultant's preferences and decisions
@@ -9,5 +11,6 @@ export function VisualizationLandingPage(props) {
         {<p id="visLandingBodyExtended">Click a question to learn more about California's farmers!</p>}
         
       </div>
+    </>
     );
 }
