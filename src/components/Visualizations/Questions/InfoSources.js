@@ -222,8 +222,8 @@ export function InfoSourcesBarChart(props) {
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
-                axisLabel: {fontSize: fontSize*2, padding: 350, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: fontSize + 2, padding: 0, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*2, padding: 270, fontFamily: 'Roboto'},
                 fontFamily: 'Roboto'
               }}
             tickLabelComponent={       
