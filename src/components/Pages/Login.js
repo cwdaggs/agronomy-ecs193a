@@ -39,7 +39,8 @@ function Login() {
                             buttonText="Login"
                             onSuccess={onSuccess}
                             onFailure={onFailure}
-                            cookiePolicy={'http://localhost:3000'}
+                            //cookiePolicy={'http://localhost:3000'}
+                            cookiePolicy={'single_host_origin'}
                             style={{ marginTop: '100px', alignSelf: 'center' }}
                             isSignedIn={true}
                         />
