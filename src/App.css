@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,800;0,900;1,400&display=swap');
 /* #outerContainer {
   color: black;
   display: flex;
@@ -39,6 +40,10 @@
   text-align: center;
 }
 
+#surveybackground {
+  background-color: #EFEFF4FF;
+}
+
 #menu {
   background-color: #13639e;
 }
@@ -69,14 +74,20 @@
   text-align: left;
   font-family: 'Montserrat', sans-serif;
   font-size: x-large;
-  padding-left: 10vw;
-  padding-right: 10vw;
-  padding-bottom: 10vh;
+  padding: 5px 3vw 5px;
+  /* padding-left: 10vw; */
+  /* padding-right: 10vw; */
+  /* padding-bottom: 10vh; */
+  margin-bottom: 10vh;
+  border-radius: 20px;
+  background: rgba(0, 38, 58, 0.3);
+  color: white;
 }
 
 #home-button{
   text-align: center;
   color: #022851;
+  
 }
 
 .flex-parent {
@@ -88,11 +99,6 @@
 
 .font-metropolis{
   font-family: 'Metropolis';
-}
-
-.font-newsreader{
-  font-family: 'Newsreader';
-  font-size: 22px;
 }
 
 .font-roboto{
@@ -192,13 +198,6 @@
   margin-left: auto;
   margin-right: auto;
   /* Center child horizontally*/
-}
-
-#aboutpage {
-  background-image: url(./images/pexels-fwstudio-172277.jpg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
 }
 
 .visLandingPage{
@@ -371,34 +370,6 @@ body,html {
   color:white;
   padding-top:5%;
   padding-left:25%;
-}
-
-#team-profiles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content:space-evenly;
-  /* background-color: white; */
-  padding: 3%;
-}
-
-.profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;  
-  background: linear-gradient(to right,#ffffff, #c1bfbf);
-  border-radius: 15px;
-  margin-bottom: 5%;
-}
-
-.profile-img {
-  border-radius: 10px 10px 0px 0px;
-  width: 33vh;
-  height: 33vh;
-}
-
-.profile-name {
-  font-family: 'Roboto', sans-serif;
-  padding: 10px 0px;
 }
 
 #legend-values {
