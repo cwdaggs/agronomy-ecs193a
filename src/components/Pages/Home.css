@@ -1,0 +1,105 @@
+#bg {
+    background-image: url(../../images/bg.jpeg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#home-container{
+    display: flex;
+    font-weight: 200;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-left: 25vw;
+    padding-right: 25vw;
+    height:100vh;
+}
+  
+#home-sub-title{
+    font-family: 'Montserrat', sans-serif;
+    font-size: x-large;
+    color: rgb(0,0,0);
+}
+  
+#home-info{
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    font-size: x-large;
+    padding: 5px 3vw 5px;
+    /* padding-left: 10vw; */
+    /* padding-right: 10vw; */
+    /* padding-bottom: 10vh; */
+    margin-bottom: 10vh;
+    border-radius: 20px;
+    background: rgba(0, 38, 58, 0.3);
+    color: white;
+}
+  
+#home-button{
+    text-align: center;
+    color: #022851;
+}
+
+@media screen and (max-width: 1200px) and (min-height:800px) {
+    #bg {
+      height: 125vh;
+    }
+
+    #home-container{
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 100vh;
+    }
+      
+    #home-sub-title{
+        font-size: large;
+    }
+      
+    #home-info{
+        font-size: large;
+        padding-left: 10vw;
+        padding-right: 10vw;
+        padding-bottom: 10vh;
+    }
+}
+
+@media screen and (max-width: 600px) and (max-height: 1000px)  {
+    #bg {
+      height: 120vh;
+    }
+
+    #home-container{
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 100vh;
+    }
+      
+    #home-sub-title{
+        font-size: small;
+    }
+      
+    #home-info{
+        font-size: small;
+        padding-left: 10vw;
+        padding-right: 10vw;
+        padding-bottom: 5vh;
+    }
+}
+
+@media screen and (max-height:800px) and (min-width: 600px) {
+    #home-container{
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 100vh;
+    }
+    
+    #home-sub-title{
+        font-size: medium;
+    }
+      
+    #home-info{
+        font-size: medium;
+        padding-bottom: 10vh;
+    }
+}

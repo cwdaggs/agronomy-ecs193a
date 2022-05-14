@@ -53,43 +53,6 @@
   opacity: 0.7;
 }
 
-#home-container{
-  display: flex;
-  font-weight: 200;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  padding-left: 25vw;
-  padding-right: 25vw;
-  height:100vh;
-}
-
-#home-sub-title{
-  font-family: 'Montserrat', sans-serif;
-  font-size: x-large;
-  color: rgb(0,0,0);
-}
-
-#home-info{
-  text-align: left;
-  font-family: 'Montserrat', sans-serif;
-  font-size: x-large;
-  padding: 5px 3vw 5px;
-  /* padding-left: 10vw; */
-  /* padding-right: 10vw; */
-  /* padding-bottom: 10vh; */
-  margin-bottom: 10vh;
-  border-radius: 20px;
-  background: rgba(0, 38, 58, 0.3);
-  color: white;
-}
-
-#home-button{
-  text-align: center;
-  color: #022851;
-  
-}
-
 .flex-parent {
   display: flex;
 }
@@ -358,14 +321,6 @@ body,html {
   height: 100%;
 }
 
-#bg {
-  /*background-image: url(./images/farming-background.jfif);*/
-  background-image: url(./images/bg.jpeg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-}
-
 .gfg {
   color:white;
   padding-top:5%;
@@ -423,29 +378,8 @@ body,html {
 }
 
 @media screen and (max-width: 1200px) and (min-height:800px) {
-  #bg {
-    height: 125vh;
-  }
   #logo{
     display: none;
-  }
-
-  #home-container{
-    padding-left: 10%;
-    padding-right: 10%;
-    height: 100vh;
-  }
-
-  
-  #home-sub-title{
-    font-size: large;
-  }
-  
-  #home-info{
-    font-size: large;
-    padding-left: 10vw;
-    padding-right: 10vw;
-    padding-bottom: 10vh;
   }
 
   .visualization-window {
@@ -492,29 +426,8 @@ body,html {
 }
 
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
-
-  #bg {
-    height: 120vh;
-  }
   #logo{
     display: none;
-  }
-
-  #home-container{
-    padding-left: 10%;
-    padding-right: 10%;
-    height: 100vh;
-  }
-  
-  #home-sub-title{
-    font-size: small;
-  }
-  
-  #home-info{
-    font-size: small;
-    padding-left: 10vw;
-    padding-right: 10vw;
-    padding-bottom: 5vh;
   }
 
   #vis-buttons-label {
@@ -579,17 +492,10 @@ body,html {
 }
 
 @media screen and (max-height:800px) and (min-width: 600px) {
-
   #logo{
     display: none;
   }
 
-  #home-container{
-    padding-left: 10%;
-    padding-right: 10%;
-    height: 100vh;
-  }
-  
   #vis-question-label{
     font-size: 10px;
   }
@@ -597,15 +503,6 @@ body,html {
   #visTop {
     font-size: small;
     font-style: italic;
-  }
-
-  #home-sub-title{
-    font-size: medium;
-  }
-  
-  #home-info{
-    font-size: medium;
-    padding-bottom: 10vh;
   }
   
   .map-image{

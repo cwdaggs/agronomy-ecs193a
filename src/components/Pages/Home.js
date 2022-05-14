@@ -1,6 +1,7 @@
 import {TabHome} from '../Visualizations/StyledDivs'
 import {NavLink} from "react-router-dom";
 import React, {useState} from 'react';
+import './Home.css';
 
 export const Home = () => {
 
