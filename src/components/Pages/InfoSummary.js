@@ -1,11 +1,10 @@
 import * as C from './App.styles';
 import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
 import {RegionMapChart} from '../Visualizations/RegionMap'
-import "@fontsource/newsreader";
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import singleWheat from '../../images/one_wheat.jpg'
 import sky from '../../images/sky.jpg'
-
+import './InfoSummary.css';
 
 export const InfoSummary = (props) => {
 
