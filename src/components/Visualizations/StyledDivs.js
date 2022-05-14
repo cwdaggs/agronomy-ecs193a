@@ -126,6 +126,7 @@ const TabHome = styled.button`
   background: white;
   border: 0;
   outline: 0;
+  border-radius: 10px;
   &:hover {
     background-color: #f1f1f1;
   }
