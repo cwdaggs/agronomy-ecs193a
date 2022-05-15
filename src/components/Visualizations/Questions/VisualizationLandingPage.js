@@ -1,3 +1,4 @@
+import "./VisualizationLandingPage.css"
 export function VisualizationLandingPage(props) {
 
   return (
