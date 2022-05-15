@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { GoogleLogin } from 'react-google-login';
 import {CommentBox} from './Comments';
+import "./LoginAndOut.css";
 
 const clientID = '652800520818-5rp0q395un8cc2urq17bctiij15hmqn6.apps.googleusercontent.com';
 
