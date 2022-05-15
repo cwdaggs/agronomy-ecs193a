@@ -16,7 +16,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/1-Jessie-Kanter-UCCE.jpg" alt="Jessie Kanter" className="profile-img"/>
               <div className='profile-name'>
-                <span>Jessie Kanter - </span>
+                <span>Jessie Kanter </span>
                 {/* <ul>
                   <li>Assistant Specialist</li>
                   <li><a href='https://ucanr.edu/About/DirectorySearch/?facultyid=45966' className="hover-link" target="_blank">UCCE</a></li>
@@ -29,7 +29,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/2-Nick-Clark-UCCE.jpg" alt="Nick Clark" className="profile-img"/>
               <div className='profile-name'>
-                <span>Nick Clark - </span>
+                <span>Nick Clark </span>
                 <p>Assistant CE Advisor</p>
                 <a href='https://ucanr.edu/sites/Bees_and_Pollination/Contact_Us/?facultyid=26947' className="hover-link" target="_blank">UCCE</a>
               </div>
@@ -37,7 +37,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/3-Mark-Lundy-Davis.jpg" alt="Mark Lundy" className="profile-img"/>
               <div className='profile-name'>
-                <span>Mark Lundy - </span>
+                <span>Mark Lundy </span>
                 <p>Assistant Professor of Extension</p>
                 <a href='https://www.plantsciences.ucdavis.edu/people/mark-lundy' className="hover-link" target="_blank">UC Davis</a>
               </div>
@@ -45,7 +45,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/4-Vikram-Koundinya-Davis.jpg" alt="Vikram Koundinya" className="profile-img"/>
               <div className='profile-name'>
-                <span>Vikram Koundinya - </span>
+                <span>Vikram Koundinya </span>
                 <p>Associate Professor of CE</p>
                 <a href='https://humanecology.ucdavis.edu/people/vikram-koundinya' className="hover-link" target="_blank">UC Davis</a>
               </div>
@@ -53,7 +53,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/5-Michelle-Leinfelder-Miles-UCCE.jpg" alt="Michelle Leinfelder-Miles" className="profile-img"/>
               <div className='profile-name'>
-                <span>Michelle Leinfelder-Miles - </span>
+                <span>Michelle Leinfelder-Miles </span>
                 <p>Farm Advisor</p>
                 <a href='https://ucanr.edu/?facultyid=20507' className="hover-link" target="_blank">UCCE</a>
               </div>
@@ -61,7 +61,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/6-Rachael-Long-UCCE.jpg" alt="Rachael Long" className="profile-img"/>
               <div className='profile-name'>
-                <span>Rachael Long - </span>
+                <span>Rachael Long </span>
                 <p>Farm Advisor for Field Crops</p>
                 <a href='https://ucanr.edu/?facultyid=1355' className="hover-link" target="_blank">UCCE</a>
               </div>
@@ -69,7 +69,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/7-Sarah-Light-UCCE.jpg" alt="Sarah Light" className="profile-img"/>
               <div className='profile-name'>
-                <span>Sarah Light - </span>
+                <span>Sarah Light </span>
                 <p>Agronomy Farm Advisor</p>
                 <a href='https://cesutter.ucanr.edu/http___cesutterucanredu/?facultyid=36230' className="hover-link" target="_blank">UCCE</a>
               </div>
@@ -77,7 +77,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/8-Whitney-Brim-DeForest-UCCE.jpg" alt="Whitney Brim-DeForest" className="profile-img"/>
               <div className='profile-name'>
-                <span>Whitney Brim-DeForest - </span>
+                <span>Whitney Brim-DeForest </span>
                 <p>County Director, CE Advisor</p>
                 <a href='https://ucanr.edu/?facultyid=33566' className="hover-link" target="_blank">UCCE</a>
               </div>
@@ -85,7 +85,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/9-Bruce-Linquist-Davis.jpg" alt="Bruce Linquist" className="profile-img"/>
               <div className='profile-name'>
-                <span>Bruce Linquist - </span>
+                <span>Bruce Linquist </span>
                 <p>Professor of Extension</p>
                 <a href='https://www.plantsciences.ucdavis.edu/people/bruce-linquist' className="hover-link" target="_blank">UC Davis</a>
               </div>
@@ -93,7 +93,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/10-Dan-Putnam-Davis.jpg" alt="Dan Putnam" className="profile-img"/>
               <div className='profile-name'>
-                <span>Dan Putnam - </span>
+                <span>Dan Putnam </span>
                 <p>Professor of Extension</p>
                 <a href='https://www.plantsciences.ucdavis.edu/people/daniel-putnam' className="hover-link" target="_blank">UC Davis</a>
               </div>
@@ -101,7 +101,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/11-Robert-B.-Hutmacher-Davis.jpg" alt="Robert B. Hutmacher" className="profile-img"/>
               <div className='profile-name'>
-                <span>Robert B. Hutmacher - </span>
+                <span>Robert B. Hutmacher </span>
                 <p>Professor of Extension and Director</p>
                 <a href='https://www.plantsciences.ucdavis.edu/people/robert-hutmacher' className="hover-link" target="_blank">UC Davis</a>
               </div>
@@ -109,7 +109,7 @@ export const AboutSummary = () => {
             <div className='profile'>
               <img src="./assets/12-Cameron-Pittelkow-Davis.jpg" alt="Cameron Pittelkow" className="profile-img"/>
               <div className='profile-name'>
-                <span>Cameron Pittelkow - </span>
+                <span>Cameron Pittelkow </span>
                 <p>Associate Professor</p>
                 <a href='https://www.plantsciences.ucdavis.edu/people/cameron-pittelkow' className="hover-link" target="_blank">UC Davis</a>
               </div>
