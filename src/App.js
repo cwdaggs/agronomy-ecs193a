@@ -60,9 +60,9 @@ export default function App() {
         <NavLink to ="/team" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Team")}
         </NavLink>
-        <NavLink to ="/survey" className={"hover-link"}>
+        {/* <NavLink to ="/survey" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Survey")}
-        </NavLink>
+        </NavLink> */}
         <NavLink to ="/feedback" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
         </NavLink>
@@ -124,8 +124,9 @@ export default function App() {
 
         <Route path="about" element={<InfoSummary dataset={dataset}/>}/>
         <Route path="team" element={<AboutSummary/>}/>
-        <Route path="survey" element={<MiniSurvey/>}/>
+        {/* <Route path="survey" element={<MiniSurvey/>}/> */}
         <Route path="feedback" element={<Login/>}/>
+        <Route path = "*" element={<Home/>}/>
       </Routes>
     </div>
   )
