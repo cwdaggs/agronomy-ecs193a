@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,800;0,900;1,400&display=swap');
+
 /* #outerContainer {
   color: black;
   display: flex;
@@ -11,7 +12,6 @@
   position: relative;
 } */
 
-
 #heading {
   background-color: #00000017;
   display: flex;
@@ -20,13 +20,6 @@
   position: fixed;
   width:100%;
   z-index: 5;
-}
-
-#logo {
-  height: 20px;
-  padding: 15px;
-  position: fixed;
-  display:none;
 }
 
 #visTop {
@@ -40,17 +33,13 @@
   text-align: center;
 }
 
-#surveybackground {
-  background-color: #EFEFF4FF;
-}
-
-#menu {
-  background-color: #13639e;
-}
-
 #compare-box{
   padding-bottom: 1vh;
   opacity: 0.7;
+}
+
+#surveybackground {
+  background-color: #EFEFF4FF;
 }
 
 .flex-parent {
@@ -74,29 +63,11 @@
   stroke:rgb(0,0,0)
 }
 
-.vis-title{
-  font-family: 'Metropolis';
-  font-weight: 800;
-  font-size: 24px;
-}
-
-.title-info{
-  align-items: flex-end;
-}
-
 .visualization-window {
   font-family: 'Metropolis';
   font-size: 24px;
   height: 80%;
   width: 70%;
-  /* outline: solid 1px black; */
-  margin: auto;
-  /* Center child horizontally*/
-}
-
-.visualization-window-compare {
-  font-family: 'Metropolis';
-  font-size: 24px;
   /* outline: solid 1px black; */
   margin: auto;
   /* Center child horizontally*/
@@ -130,45 +101,6 @@
   margin-left: auto;
   margin-right: auto;
   /* Center child horizontally*/
-}
-
-.visLandingPage{
-  position: relative; 
-  height: 120vh;
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-image: url(./images/wheat_field2_opacity70.png);
-  background-size: cover;
-}
-
-#visLandingHeading{
-  text-align: center;
-  color: black;
-  font-size: 8vh;
-  margin: 0;
-  padding-top: 10%;
-
-}
-
-#visLandingBody{
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
-  color: black;
-  margin: 15%;
-  margin-top: 5%;
-  margin-bottom: 0;
-  font-weight: 900;
-  font-size: 3vh;
-
-}
-
-#visLandingBodyExtended{
-  font-family: 'Roboto', sans-serif;
-  color: black;
-  font-weight: 900;
-  font-size: 2vh;
-  text-align: center;
-
 }
 
 #infoSection0{
@@ -319,10 +251,6 @@ body,html {
 }
 
 @media screen and (max-width: 1200px) and (min-height:800px) {
-  #logo{
-    display: none;
-  }
-
   .visualization-window {
     font-family: 'Metropolis';
     font-size: 12px;
@@ -356,10 +284,6 @@ body,html {
 }
 
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
-  #logo{
-    display: none;
-  }
-
   #vis-question-label{
     font-size: 8px;
   }
@@ -412,10 +336,6 @@ body,html {
 }
 
 @media screen and (max-height:800px) and (min-width: 600px) {
-  #logo{
-    display: none;
-  }
-
   #vis-question-label{
     font-size: 10px;
   }
