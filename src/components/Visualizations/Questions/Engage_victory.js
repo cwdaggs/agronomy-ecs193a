@@ -5,6 +5,7 @@ import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import {useState} from 'react';
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
+import "./Legends.css";
 
 export function calculateEngageEach(data, filter, answer){
     var total = 0

@@ -6,6 +6,7 @@ import React, { useState} from "react";
 import { VocationAndRegion } from "../Menus/VocationAndRegion.js";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
+import "./Legends.css";
     
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
