@@ -103,33 +103,10 @@
   /* Center child horizontally*/
 }
 
-#infoSection0{
-  margin-top: 50px;
-}
-
 #cropBarTitle{
   text-align: center;
   font-size: 30px;
   margin-bottom: -10vh;
-}
-
-#login{
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#loginButton{
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, 0%);
-}
-
-#logoutButton{
-  position: fixed;
-  left: 6%;
-  /* top: 29.25%; */
 }
 
 a.hover-link {
@@ -155,17 +132,6 @@ a.hover-link:hover::before {
   transform: scaleX(1);
 }
 
-@media screen and (max-width: 1000px){
-  #logoutButton{
-    position: fixed;
-    left: 2.5%;
-  }
-}
-
-/* #menuitem {
-  background-color: blanchedalmond;
-  color:#FFBF00
-} */
 .info-charts{
   display: flex;
   justify-content: center;
