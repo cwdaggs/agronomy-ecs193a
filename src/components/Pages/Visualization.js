@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {TabVisualizations} from '../Visualizations/StyledDivs';
-import {Tab} from "../../Button"
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { rgb } from "d3";
-
+import "./Visualization.css";
 
 function getActiveTab(visName, location){
   return (location === visName
@@ -48,7 +46,7 @@ export const Visualizations = (props) => {
         <div className='inline-parent'>
           <div>
 
-            <div id='vis-buttons-label'>
+            <div className='vis-buttons-label'>
                 Survey Questions
             </div>        
             <nav className='vis-buttons-parent'>
@@ -75,7 +73,7 @@ export const Visualizations = (props) => {
          <div className='inline-parent'>
           <div>
             
-            <div id='vis-buttons-label'>
+            <div className='vis-buttons-label'>
                 Survey Questions
             </div>        
             <nav className='vis-buttons-parent'>
@@ -95,10 +93,10 @@ export const Visualizations = (props) => {
             </nav>
           </div>
           <div className='dual-display'>
-            <div id='dual-display-child'>
+            <div className='dual-display-child'>
               <Outlet/>
             </div>
-            <div id='dual-display-child'>
+            <div className='dual-display-child'>
               <Outlet/>
             </div>
           </div>

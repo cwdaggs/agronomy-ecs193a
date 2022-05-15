@@ -1,0 +1,57 @@
+.dual-display{
+    display: flex;
+}
+  
+.dual-display-child{
+    flex: 1;
+}
+
+.vis-buttons-parent {
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    background-color: #f2f5f8;
+}
+  
+.vis-buttons-child {
+   flex:1;
+}
+  
+.vis-buttons-label {
+    padding:10px;
+    text-align: center;
+    font-size: 20px;
+    background-color: #f2f5f8;
+}
+
+.inline-parent {
+    border-top: 1px solid black;
+    text-align: center;
+    height: 80vh;
+}
+
+@media screen and (max-width: 1200px) and (min-height:800px) {
+    .vis-buttons-label {
+        font-size: 12px;
+    }
+
+    .inline-parent {
+        border-top: 1px solid black;
+        text-align: center;
+        height: auto;
+        width:auto;
+    }
+}
+
+@media screen and (max-width: 600px) and (max-height: 1000px)  {
+    .vis-buttons-label {
+        font-size: 8px;
+    }
+
+    .inline-parent {
+        border-top: 1px solid black;
+        text-align: center;
+        height: auto;
+        width:auto;
+    }
+}
