@@ -13,3 +13,4 @@ npm install react-router-dom@6
 npm install @react-spring/parallax
 npm i react-google-login
 npm install @emailjs/browser --save
+npm i -s react-ga

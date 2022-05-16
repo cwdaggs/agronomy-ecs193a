@@ -23,8 +23,10 @@ import { AmountVictory } from './components/Visualizations/Questions/AmountValue
 import { PrioritySatisfaction } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart } from './components/Visualizations/Questions/InternetSources';
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
+import ReactGA from 'react-ga';
 
 export default function App() {
+  ReactGA.initialize("UA-226538502-1");
   var [dual_display, checkDualDisplay] = useState(false);
 
   function changeDual(){
