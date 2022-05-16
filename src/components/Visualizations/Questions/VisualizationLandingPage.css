@@ -1,0 +1,35 @@
+.visLandingPage{
+    position: relative; 
+    height: 120vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-image: url(../../../images/wheat_field2_opacity70.png);
+    background-size: cover;
+}
+  
+#visLandingHeading{
+    text-align: center;
+    color: black;
+    font-size: 8vh;
+    margin: 0;
+    padding-top: 10%;
+}
+  
+#visLandingBody{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    color: black;
+    margin: 15%;
+    margin-top: 5%;
+    margin-bottom: 0;
+    font-weight: 900;
+    font-size: 3vh;
+}
+  
+#visLandingBodyExtended{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    font-weight: 900;
+    font-size: 2vh;
+    text-align: center;
+}

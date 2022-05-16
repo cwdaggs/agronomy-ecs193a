@@ -91,6 +91,7 @@ var colors =
   sources[5] = "UCCE Magazine Articles";
   sources[6] = "Personal Contact";
   sources[7] = "In-Person Meetings";
+  sources[8] = "Books/Manuals"
   sources[14] = "2-3 Day Destination Meetings"
 
 
@@ -224,7 +225,7 @@ export function InternetSourcesBarChart(props) {
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
                 tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
-                axisLabel: {fontSize: fontSize*2, padding: 350, fontFamily: 'Roboto'}
+                axisLabel: {fontSize: fontSize*2, padding: 270, fontFamily: 'Roboto'}
               }}
             tickLabelComponent={       
               <VictoryLabel    

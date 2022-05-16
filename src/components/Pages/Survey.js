@@ -111,7 +111,7 @@ export const MiniSurvey = () => {
 
     //get the results back and do math with them or whatever, output to pdf somehow
     return (
-        <div>
+        <div id="surveybackground">
         <Survey model={survey} />
         <br></br>
         <br></br>

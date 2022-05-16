@@ -46,28 +46,27 @@ export default function App() {
   const dataset = useData('./data/Filtered_Crop_Data.csv');
 
   return (
-    <div id="outerContainer" class='font-metropolis'>
+    <div class='font-metropolis'>
       <div id="heading">
-        {/*<img src='https://safeparty.ucdavis.edu/sites/default/files/inline-images/ucdavis_logo_gold_0.png' id="logo"/>*/}
-        <NavLink to ="/">
+        <NavLink to ="/" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Home")}
         </NavLink>
-        <NavLink to ="/results">
+        <NavLink to ="/results" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Explore Results")}
         </NavLink>
-        <NavLink to ="/about">
+        <NavLink to ="/about" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "About")}
         </NavLink>
-        <NavLink to ="/team">
+        <NavLink to ="/team" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Team")}
         </NavLink>
-        <NavLink to ="/survey">
+        {/* <NavLink to ="/survey" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Survey")}
-        </NavLink>
-        <NavLink to ="/feedback">
+        </NavLink> */}
+        <NavLink to ="/feedback" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
         </NavLink>
-        <a href="https://ucanr.edu/" target="_blank">
+        <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
           <Tab>
             UCCE
           </Tab>
@@ -81,8 +80,7 @@ export default function App() {
         <Route path="results/" element={
           <div>
             <div id="visTop">
-              Click Select Topic to view responses for each question. The responses can also be sorted by vocation and crop/region. 
-              Full details of survey scope and representation here.
+              Select a topic to view responses for the respective question. Responses can then be sorted by vocation and crop/region. 
             </div>
             <div id="compare-box">
               <Checkbox label={"Compare"} checked={false} onChange={changeDual}/>
@@ -126,8 +124,9 @@ export default function App() {
 
         <Route path="about" element={<InfoSummary dataset={dataset}/>}/>
         <Route path="team" element={<AboutSummary/>}/>
-        <Route path="survey" element={<MiniSurvey/>}/>
+        {/* <Route path="survey" element={<MiniSurvey/>}/> */}
         <Route path="feedback" element={<Login/>}/>
+        <Route path = "*" element={<Home/>}/>
       </Routes>
     </div>
   )

@@ -75,7 +75,8 @@ export function CropPercentages(props) {
                                 bottom: margin.bottom,
                                 top: margin.top
                             }}
-                            style={{ data: { stroke: "black", strokeWidth: 1}}}
+                            style={{ data: { stroke: "black", strokeWidth: 1},
+                                    labels: {fontSize: 45, fontFamily: 'Roboto'}}}
                             colorScale={colors}
                             data={data}
                             // radius={({ datum, active }) => (active ? 800 : 650)}
@@ -115,16 +116,16 @@ export function CropPercentages(props) {
                             //       }
                             //   }]}
                             labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
-                            labelComponent={
-                            <VictoryTooltip 
-                                style={{
-                                    fontSize:45,
-                                    fontFamily: 'Roboto'
-                                }}
-                                flyoutHeight={50}
-                                flyoutWidth={100}      
-                            />
-                        }
+                            // labelComponent={
+                            // <VictoryTooltip 
+                            //     style={{
+                            //         fontSize:45,
+                            //         fontFamily: 'Roboto'
+                            //     }}
+                            //     flyoutHeight={50}
+                            //     flyoutWidth={100}      
+                            // />
+                        // }
                         />
                     </div>
 

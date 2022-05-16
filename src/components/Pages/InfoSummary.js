@@ -1,11 +1,10 @@
 import * as C from './App.styles';
 import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
 import {RegionMapChart} from '../Visualizations/RegionMap'
-import "@fontsource/newsreader";
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import singleWheat from '../../images/one_wheat.jpg'
 import sky from '../../images/sky.jpg'
-
+import './InfoSummary.css';
 
 export const InfoSummary = (props) => {
 
@@ -27,7 +26,7 @@ export const InfoSummary = (props) => {
                     Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who 
                     solve problems in agriculture, the environment, and human and community well-being. They work to foster a 
                     connection between the university and the public by delivering science-based information. In 
-                    California, <a href='https://ucanr.edu/' target="_blank">UC Cooperative Extension</a> is facing reductions 
+                    California, <a href='https://ucanr.edu/' className="hover-link" target="_blank">UC Cooperative Extension</a> is facing reductions 
                     in personnel, meaning current advisors are stretched thin and need to prioritize their efforts. At the same 
                     time, the landscape of California agriculture is rapidly changing and farmers are encountering new challenges 
                     such as regulations on labor and inputs.
@@ -63,7 +62,7 @@ export const InfoSummary = (props) => {
                   </C.Desc>
                   <C.Desc className='font-roboto'>
                     A peer-reviewed research paper summarizing the survey results has been published. See the 
-                    open-access <a href='https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/agj2.20897' target="_blank">full 
+                    open-access <a href='https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/agj2.20897' className="hover-link" target="_blank">full 
                     article</a> in Agronomy Journal for further details on the 
                     methodology, interpretation of results, and conclusions for California agriculture.
                   </C.Desc>

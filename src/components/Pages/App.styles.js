@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const Area = styled.div`
     margin:auto;
-    max-width:980px;
+    max-width:80vw;
     @media (max-width:1024px) {
         padding:0px 45px;
     }
@@ -92,6 +92,15 @@ export const Title = styled.h1`
     padding:0;
     font-size:60px;
     font-weight:600;
+`;
+
+export const ProfileTitle = styled.h1`
+    margin:0;
+    padding:0;
+    font-size:60px;
+    font-weight:600;
+    width: 100%;
+    padding: 5px;
 `;
 
 export const SubTitle = styled.h1`

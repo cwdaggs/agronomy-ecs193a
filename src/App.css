@@ -1,15 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-/* #outerContainer {
-  color: black;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  height:80%;
-  width:100%;
-  position: relative;
-} */
-
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,800;0,900;1,400&display=swap');
 
 #heading {
   background-color: #00000017;
@@ -19,13 +10,6 @@
   position: fixed;
   width:100%;
   z-index: 5;
-}
-
-#logo {
-  height: 20px;
-  padding: 15px;
-  position: fixed;
-  display:none;
 }
 
 #visTop {
@@ -39,44 +23,13 @@
   text-align: center;
 }
 
-#menu {
-  background-color: #13639e;
-}
-
 #compare-box{
   padding-bottom: 1vh;
   opacity: 0.7;
 }
 
-#home-container{
-  display: flex;
-  font-weight: 200;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  padding-left: 25vw;
-  padding-right: 25vw;
-  height:100vh;
-}
-
-#home-sub-title{
-  font-family: 'Montserrat', sans-serif;
-  font-size: x-large;
-  color: rgb(0,0,0);
-}
-
-#home-info{
-  text-align: left;
-  font-family: 'Montserrat', sans-serif;
-  font-size: x-large;
-  padding-left: 10vw;
-  padding-right: 10vw;
-  padding-bottom: 10vh;
-}
-
-#home-button{
-  text-align: center;
-  color: #022851;
+#surveybackground {
+  background-color: #EFEFF4FF;
 }
 
 .flex-parent {
@@ -90,29 +43,8 @@
   font-family: 'Metropolis';
 }
 
-.font-newsreader{
-  font-family: 'Newsreader';
-  font-size: 22px;
-}
-
 .font-roboto{
   font-family: 'Roboto', sans-serif;
-}
-
-.rect-home{
-  fill:rgb(246, 245, 243);
-  stroke-width:1;
-  stroke:rgb(0,0,0)
-}
-
-.vis-title{
-  font-family: 'Metropolis';
-  font-weight: 800;
-  font-size: 24px;
-}
-
-.title-info{
-  align-items: flex-end;
 }
 
 .visualization-window {
@@ -120,69 +52,18 @@
   font-size: 24px;
   height: 80%;
   width: 70%;
-  /* outline: solid 1px black; */
   margin: auto;
-  /* Center child horizontally*/
 }
 
-.visualization-window-compare {
-  font-family: 'Metropolis';
-  font-size: 24px;
-  /* outline: solid 1px black; */
-  margin: auto;
-  /* Center child horizontally*/
-}
-
-.vis-buttons-parent {
-  display: flex;
-  justify-content: center;
-  font-size: large;
-  background-color: #f2f5f8;
-}
-
-.vis-buttons-child {
- flex:1;
-}
-
-#vis-buttons-label {
-  padding:10px;
-  text-align: center;
-  font-size: 20px;
-  background-color: #f2f5f8;
-}
-
-.dual-display{
-  display: flex;
-}
-
-#dual-display-child{
-  flex:1;
-}
-
-.inline-parent {
-  border-top: 1px solid black;
-  text-align: center;
-  height: 80vh;
-}
 .inline-child {
   display: inline-block;
-  padding: 1rem 1rem;
+  padding-bottom: 10px;
   vertical-align: middle;
 }
 
 .pie-chart {
   padding-top: 10%;
 }
-
-/* footer {
-  text-align: center;
-  height: 60px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: #022851;
-  color: white;
-} */
 
 #about-visualization-window {
   font-family: 'Metropolis';
@@ -191,271 +72,42 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  /* Center child horizontally*/
 }
 
-#aboutpage {
-  background-image: url(./images/farming-background.jfif);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+a.hover-link {
+  position: relative;
+  /* color: #000; */
+  text-decoration: none;
 }
 
-#visLandingPage{
-  background-image: url(./images/wheat_field2.jpg);
-  height: 120vh;
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-size: cover;
+a.hover-link::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-#visLandingHeading{
-  text-align: center;
-  color: black;
-  font-size: 8vh;
-  margin: 0;
-  padding-top: 10%;
-
-}
-
-#visLandingBody{
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
-  color: black;
-  margin: 15%;
-  margin-top: 5%;
-  margin-bottom: 0;
-  font-weight: 900;
-  font-size: 3vh;
-
-}
-
-#visLandingBodyExtended{
-  font-family: 'Roboto', sans-serif;
-  color: black;
-  font-weight: 900;
-  font-size: 2vh;
-  text-align: center;
-
-}
-
-#infoSection0{
-  margin-top: 50px;
-}
-
-#infoSection1{
-
-  height: 100vh;
-  position: fixed;
-  top: 75%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#infoSection2{
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  vertical-align: middle;
-}
-
-#infoSection3{
-
-  height: 100vh;
-  width: 80vw;
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#cropBarTitle{
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: -10vh;
-}
-
-#login{
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#loginButton{
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, 0%);
-}
-
-#logoutButton{
-  position: fixed;
-  left: 6%;
-  /* top: 29.25%; */
-}
-
-@media screen and (max-width: 1000px){
-  #logoutButton{
-    position: fixed;
-    left: 2.5%;
-  }
-}
-
-/* #menuitem {
-  background-color: blanchedalmond;
-  color:#FFBF00
-} */
-.info-charts{
-  display: flex;
-  justify-content: center;
-  width:100vw;
-  padding-bottom: 10%;
-}
-
-.info-row {
-  display: flex;
-  width: 50%;
-}
-
-.info-map {
-  width: 50%;
-}
-
-.info-pie {
-  width: 50%;
-}
-
-.info-legend {
-  width: 50%;
+a.hover-link:hover::before {
+  transform: scaleX(1);
 }
 
 body,html {
   height: 100%;
 }
 
-#bg {
-  /*background-image: url(./images/farming-background.jfif);*/
-  background-image: url(./images/bg.jpeg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-}
-
-.gfg {
-  color:white;
-  padding-top:5%;
-  padding-left:25%;
-}
-
-#team-profiles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content:space-evenly;
-  background-color: white;
-  padding: 3%;
-}
-
-.profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.profile-name {
-  font-family: 'Roboto', sans-serif;
-  padding: 10px 0px;
-}
-
-#legend-values {
-  display: flex;
-  justify-content: center;
-}
-
-.legend-circle {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  margin-top: 8px;
-  border: 1px solid #000000;
-}
-
-.legend-value {
-  font-size: smaller;
-  padding: 10px;
-}
-
-#three-color-first {
-  background-color: #003F72;
-}
-
-#three-color-second {
-  background-color: #00728C;
-}
-
-#three-color-third {
-  background-color: #00A498;
-}
-
-#five-color-first {
-  background-color: #002360;
-}
-
-#five-color-second {
-  background-color: #006083;
-}
-
-#five-color-third {
-  background-color: #009B9C;
-}
-
-#five-color-fourth {
-  background-color: #02B488;
-}
-
-#five-color-fifth {
-  background-color: #7ADE7F;
-}
-
 @media screen and (max-width: 1200px) and (min-height:800px) {
-  #bg {
-    height: 125vh;
-  }
-  #logo{
-    display: none;
-  }
-
-  #home-container{
-    padding-left: 10%;
-    padding-right: 10%;
-    height: 100vh;
-  }
-
-  
-  #home-sub-title{
-    font-size: large;
-  }
-  
-  #home-info{
-    font-size: large;
-    padding-left: 10vw;
-    padding-right: 10vw;
-    padding-bottom: 10vh;
-  }
-
   .visualization-window {
     font-family: 'Metropolis';
     font-size: 12px;
     height: 80%;
     width: 70%;
-    /* outline: solid 1px black; */
     margin: auto;
-    /* Center child horizontally*/
-  }
-  
-
-  #vis-buttons-label {
-    font-size: 12px;
   }
 
   #vis-question-label{
@@ -467,55 +119,14 @@ body,html {
     font-style: italic;
   }
 
-  .inline-parent {
-    border-top: 1px solid black;
-    text-align: center;
-    height: auto;
-    width:auto;
-  }
   .inline-child {
     display: inline-block;
     padding: 1rem 1rem;
     vertical-align: middle;
   }
-
-  #cropBarTitle {
-    font-size: 20px;
-    margin-bottom: -20vh;
-  }
-
 }
 
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
-
-  #bg {
-    height: 120vh;
-  }
-  #logo{
-    display: none;
-  }
-
-  #home-container{
-    padding-left: 10%;
-    padding-right: 10%;
-    height: 100vh;
-  }
-  
-  #home-sub-title{
-    font-size: small;
-  }
-  
-  #home-info{
-    font-size: small;
-    padding-left: 10vw;
-    padding-right: 10vw;
-    padding-bottom: 5vh;
-  }
-
-  #vis-buttons-label {
-    font-size: 8px;
-  }
-
   #vis-question-label{
     font-size: 8px;
   }
@@ -525,9 +136,7 @@ body,html {
     font-size: 24px;
     height: 60%;
     width: 70%;
-    /* outline: solid 1px black; */
     margin: auto;
-    /* Center child horizontally*/
   }
 
   #visTop {
@@ -535,56 +144,14 @@ body,html {
     font-style: italic;
   }
 
-  .inline-parent {
-    border-top: 1px solid black;
-    text-align: center;
-    height: auto;
-    width:auto;
-  }
   .inline-child {
     display: inline-block;
     padding: 1rem 1rem;
     vertical-align: middle;
   }
-
-  .map-image {
-    height: 30%;
-    margin-top: 130%;
-  }
-
-  #cropBarTitle {
-    font-size: 15px;
-    margin-bottom: -30vh;
-  }
-
-  #vis-legend {
-    font-size: x-small;
-  }
-
-  .legend-circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 10px;
-    margin-top: 3px;
-  }
-  
-  .legend-value {
-    padding: 5px;
-  }
 }
 
 @media screen and (max-height:800px) and (min-width: 600px) {
-
-  #logo{
-    display: none;
-  }
-
-  #home-container{
-    padding-left: 10%;
-    padding-right: 10%;
-    height: 100vh;
-  }
-  
   #vis-question-label{
     font-size: 10px;
   }
@@ -593,35 +160,4 @@ body,html {
     font-size: small;
     font-style: italic;
   }
-
-  #home-sub-title{
-    font-size: medium;
-  }
-  
-  #home-info{
-    font-size: medium;
-    padding-bottom: 10vh;
-  }
-  
-  .map-image{
-    margin-top: 10%;
-    height: 80%;
-  }
-
-  #cropBarTitle {
-    font-size: 20px;
-    margin-bottom: 0vh;
-  }
-
-  #vis-legend {
-    font-size: small;
-  }
-
-  .legend-circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 10px;
-    margin-top: 9px;
-  }
-
 }
