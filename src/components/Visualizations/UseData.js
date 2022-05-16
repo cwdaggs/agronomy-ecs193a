@@ -440,22 +440,35 @@ export function parseURL(baseURL, path, vocationArray) {
 }
 
 export function parseCropURLCompare(baseURL, path){
+
   var pathname = path;
   var crop1 = "All";
   var crop2 = "All";
   var baseAll = true;
-
+  const cropChoices = [
+    "All", 
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
   if(baseURL !== pathname){
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
     filters.shift();
 
-    if (filters[0] !== "Select%20Crop") {
+    if (filters[0] !== "Select%20Crop" && cropChoices.includes(filters[0])) {
       crop1 = filters[0].replaceAll("%20", " ");
       baseAll = false;
     }
 
-    if (filters[1] !== "Compare%20Crop") {
+    if (filters[1] !== "Compare%20Crop" && cropChoices.includes(filters[1])) {
       crop2 = filters[1].replaceAll("%20", " ");
       baseAll = false;
     }
@@ -472,37 +485,53 @@ export function parseURLCompare(baseURL, path, vocationArray) {
   var cropOrRegion2 = "All";
   var baseAll = true;
 
+  const cropChoices = [
+    "All", 
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+
+  const regionChoices = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
     filters.shift();
     // console.log(filters);
-    if (filters[0] !== "Select%20Vocation") {
+    if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
       vocation = filters[0];
       baseAll = false;
     }
     
     if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
       cropOrRegion = "All";
-    } else if (filters[1] === "Select%20Crop"){
+    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
       cropOrRegion = filters[2].replaceAll("%20", " ");
       baseAll = false;
-    } else {
+    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
       cropOrRegion = filters[1].replaceAll("%20", " ");
       baseAll = false;
     }
 
-    if (filters[3] !== "Compare%20Vocation") {
+    if (filters[3] !== "Compare%20Vocation" && vocationArray.includes(filters[3])) {
       vocation2 = filters[3];
       baseAll = false;
     }
     
     if (filters[4] === "Compare%20Crop" && filters[5] === "Compare%20Region") {
       cropOrRegion2 = "All";
-    } else if (filters[4] === "Compare%20Crop"){
+    } else if (filters[4] === "Compare%20Crop"  && vocationArray.includes(filters[5])){
       cropOrRegion2 = filters[5].replaceAll("%20", " ");
       baseAll = false;
-    } else {
+    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[4])){
       cropOrRegion2 = filters[4].replaceAll("%20", " ");
       baseAll = false;
     }

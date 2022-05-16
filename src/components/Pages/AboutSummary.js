@@ -120,7 +120,7 @@ export const AboutSummary = () => {
               <img src="./assets/Austin-Kosnikowski.jpg" alt="Austin Kosnikowski" className="profile-img"/>
               <div className='profile-name'>
                 <span>Austin Kosnikowski</span>
-                <p className='profile-description'>Computer Science Student</p>
+                <p className='profile-description'>CS Student</p>
                 <a href='https://www.linkedin.com/in/austin-kosnikowski-769206236/' className="hover-link" target="_blank">LinkedIn</a>
               </div>
             </div>
@@ -128,7 +128,7 @@ export const AboutSummary = () => {
               <img src="./assets/Cameron-Daggs.jpg" alt="Cameron Daggs" className="profile-img"/>
               <div className='profile-name'>
                 <span>Cameron Daggs</span>
-                <p className='profile-description'>Computer Science and Engineering Student</p>
+                <p className='profile-description'>CSE Student</p>
                 <a href='https://www.linkedin.com/in/cameron-daggs-45a2a6163/' className="hover-link" target="_blank">LinkedIn</a>
               </div>
             </div>
@@ -144,7 +144,7 @@ export const AboutSummary = () => {
               <img src="./assets/Darin-Lee.jpg" alt="Darin Lee" className="profile-img"/>
               <div className='profile-name'>
                 <span>Darin Lee</span>
-                <p className='profile-description'>Computer Science and Engineering Student</p>
+                <p className='profile-description'>CSE Student</p>
                 <a href='https://www.linkedin.com/in/darin-lee-3486031b1/' className="hover-link" target="_blank">LinkedIn</a>
               </div>
             </div>
