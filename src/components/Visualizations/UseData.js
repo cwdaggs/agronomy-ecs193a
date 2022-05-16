@@ -399,22 +399,38 @@ export function parseURL(baseURL, path, vocationArray) {
   var vocation = vocationArray[0];
   var cropOrRegion = "All";
   var baseAll = true;
+  const cropChoices = [
+    "All", 
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
+
+  const regionChoices = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
     filters.shift();
     // console.log(filters);
-    if (filters[0] !== "Select%20Vocation") {
+    if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
       vocation = filters[0];
       baseAll = false;
     }
     
     if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
       cropOrRegion = "All";
-    } else if (filters[1] === "Select%20Crop"){
+    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
       cropOrRegion = filters[2].replaceAll("%20", " ");
       baseAll = false;
-    } else {
+    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
       cropOrRegion = filters[1].replaceAll("%20", " ");
       baseAll = false;
     }

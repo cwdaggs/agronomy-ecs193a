@@ -67,11 +67,24 @@ function parseURL(baseURL, path) {
   var pathname = path;
   var crop = "All";
   var baseAll = true;
+  const cropChoices = [
+    "All", 
+    "Alfalfa", 
+    "Barley", 
+    "Corn", 
+    "Corn Silage", 
+    "Cotton", 
+    "Dry Beans", 
+    "Rice", 
+    "Small Grain Silage", 
+    "Sunflower", 
+    "Wheat"
+  ];
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
     filters.shift();
-    if (filters[0] !== "Select%20Crop") {
+    if (filters[0] !== "Select%20Crop" && cropChoices.includes(filters[0])) {
       crop = filters[0];
       baseAll = false;
     }
