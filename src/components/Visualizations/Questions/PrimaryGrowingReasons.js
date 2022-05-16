@@ -1,6 +1,6 @@
-import {filterByCropOrRegion, filterByVocation} from "../UseData.js";
+import {filterByCropOrRegion, filterByVocation, parseCropURLCompare, parseURLCompare} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
-import {OnlyCrops} from "../Menus/OnlyCrops.js"
+import {OnlyCrops, OnlyCropsCompare} from "../Menus/OnlyCrops.js"
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -92,6 +92,58 @@ function parseURL(baseURL, path) {
   return {crop: crop, baseAll: baseAll};
 }
   
+
+function GetChart(props){
+  return(
+    <div class='visualization-window'>
+          <div class='flex-parent'>
+            <div class='flex-child'>
+                <VictoryLegend      
+                  x={150}
+                  y={0}     
+                    colorScale={props.colorScale}
+                    gutter={20}
+                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: props.fontSize}, 
+                            title:  {fontFamily: 'Roboto', fontSize: props.fontSize},
+                            data:   {stroke: "black", strokeWidth: 1}}}
+                    title={String(props.titleText + " (n=" + props.n + ")")}
+                    centerTitle
+                    data={props.legend_data}
+                />
+                </div>
+                <div class='flex-child'>
+                <VictoryPie
+                    animate={{
+                      duration: 500,               
+                    }}
+                    width={props.width}
+                height={props.height}
+                padding={{
+                      left: props.margin.left,
+                        right: props.margin.right,
+                        bottom: props.margin.bottom,
+                        top: props.margin.top
+                    }}
+                    style={{ data: { stroke: "black", strokeWidth: 1}}}
+                    colorScale={props.colorScale}
+                    data={props.data_by_reason}
+                    labels={({ datum }) => `${datum.y}`}
+                    labelComponent={<VictoryTooltip 
+                        style={{
+                          fontSize:35,
+                          fontFamily: 'ABeeZee'
+                        }}
+                        flyoutHeight={40}
+                        flyoutWidth={80}     
+                    />}
+                />
+            </div>
+        </div>
+      </div>
+    )
+}
+
+
 export function PrimaryGrowingReasons(props) {
     
   const baseURL = "/results/Growing%20Reasons";
@@ -149,24 +201,15 @@ export function PrimaryGrowingReasons(props) {
 
     var colorScale = 
     [
-      "#002360",
-     
+      "#002360", 
       "#003F72",
-   
       "#006083",
-  
       "#008694",
-   
-      "#00A498",
-    
+      "#00A498", 
       "#02B488",
-  
       "#29C37A",
-    
-      "#52D176",
-    
+      "#52D176", 
       "#7ADE7F",
-  
       "#A9E9A3",
       "#C3EFB8",
       "#D8F4CC"
@@ -180,51 +223,98 @@ export function PrimaryGrowingReasons(props) {
       <OnlyCrops changeFunc={changeFunc} active={active} baseAll={filter.baseAll}/>
     </div>
 
-      <div class='visualization-window'>
-          <div class='flex-parent'>
-            <div class='flex-child'>
-                <VictoryLegend      
-                  x={150}
-                  y={0}     
-                    colorScale={colorScale}
-                    gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
-                            title:  {fontFamily: 'Roboto', fontSize: fontSize},
-                            data:   {stroke: "black", strokeWidth: 1}}}
-                    title={String(titleText + " (n=" + n + ")")}
-                    centerTitle
-                    data={legend_data}
-                />
-                </div>
-                <div class='flex-child'>
-                <VictoryPie
-                    animate={{
-                      duration: 500,               
-                    }}
-                    width={width}
-                height={height}
-                padding={{
-                      left: margin.left,
-                        right: margin.right,
-                        bottom: margin.bottom,
-                        top: margin.top
-                    }}
-                    style={{ data: { stroke: "black", strokeWidth: 1}}}
-                    colorScale={colorScale}
-                    data={data_by_reason}
-                    labels={({ datum }) => `${datum.y}`}
-                    labelComponent={<VictoryTooltip 
-                        style={{
-                          fontSize:35,
-                          fontFamily: 'ABeeZee'
-                        }}
-                        flyoutHeight={40}
-                        flyoutWidth={80}     
-                    />}
-                />
-            </div>
-        </div>
-      </div>
+    <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
+    </>  
+  );
+}
+
+export function PrimaryGrowingReasonsCompare(props) {
+    
+  const baseURL = "/results/compare/Growing%20Reasons";
+  // console.log(useLocation().pathname);
+  const filter = parseCropURLCompare(baseURL, useLocation().pathname, ["All"]);
+  console.log(filter)
+  const [active, setActive] = useState(filter.crop1);
+  const [active2, setActive2] = useState(filter.crop2);
+  // console.log(active);
+
+  function changeFunc(newValue){
+    setActive(newValue);
+  }
+
+  function changeFunc2(newValue){
+    setActive2(newValue);
+  }
+
+  if (!props.dataset) {
+      return <pre>Loading...</pre>;
+  }
+
+  var titleText = "Reasons for Growing " + active;
+  if (active === "All") {
+    titleText += " Crops"
+  }
+
+  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
+  var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
+  var legend_data = []
+  var n = 0
+
+  var titleText2 = "Reasons for Growing " + active2;
+  if (active2 === "All") {
+    titleText2 += " Crops"
+  }
+
+  var data_filtered2 = filterByVocation(filterByCropOrRegion(props.dataset, active2), "Growers")
+  var data_by_reason2 = calculateAllPrimaryGrowingReasons(data_filtered2, active2)
+  var legend_data2 = []
+  var n2 = 0
+
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const height = vh;
+  const width = vw;
+  const mobileWidth = 1000;
+  var fontSize = 12;
+  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+
+  for (var i = 0; i < data_by_reason.length; i++) {
+      legend_data.push({name: data_by_reason[i].x})
+      n += data_by_reason[i].y
+  }
+
+  for (var i = 0; i < data_by_reason2.length; i++) {
+    legend_data2.push({name: data_by_reason2[i].x})
+    n2 += data_by_reason2[i].y
+  }
+
+    var colorScale = 
+    [
+      "#002360", 
+      "#003F72",
+      "#006083",
+      "#008694",
+      "#00A498", 
+      "#02B488",
+      "#29C37A",
+      "#52D176", 
+      "#7ADE7F",
+      "#A9E9A3",
+      "#C3EFB8",
+      "#D8F4CC"
+    ]
+  return (
+    <>
+    <div id='vis-question-label'>
+      <h2>What are the primary reasons you grow the following field crops?</h2>
+    </div>
+    <div className="inline-child">
+      <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} active={active} active2={active2} baseAll={filter.baseAll}/>
+    </div>
+    <div className="dual-display">
+      <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
+      <GetChart titleText={titleText2} mobileWidth={mobileWidth} width={width} height={height} n={n2} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason2} colorScale={colorScale} legend_data={legend_data2}/>
+    </div>
     </>  
   );
 }
