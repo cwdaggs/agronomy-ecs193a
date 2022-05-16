@@ -48,7 +48,7 @@ export const CommentBox = (profile) => {
 
 
     return (
-        <div>
+        <div className="offgray-background">
         <Survey model={survey} />
         <Logout />
         <br></br>
