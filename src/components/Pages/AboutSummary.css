@@ -7,14 +7,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content:space-evenly;
-    padding: 3%;
-}
-
-.dev-profiles {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:space-evenly;
-    /* background-color: white; */
+    width:100%;
     padding: 3%;
 }
   
@@ -35,6 +28,12 @@
 .profile-name {
     font-weight: 800;
     padding: 10px 10px;
+}
+
+.profile-description{
+    inline-size: 150px;
+    overflow-wrap: break-word;
+    hyphens: manual;
 }
 
 li, a, p {
