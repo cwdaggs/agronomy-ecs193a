@@ -119,21 +119,47 @@ const Tab = styled.button`
 `;
 
 const TabHome = styled.button`
-  cursor: pointer;
-  font-size: 25px;
-  font-family: ABeeZee, serif; 
-  opacity: 0.7;
-  background: white;
-  border: 0;
-  outline: 0;
-  border-radius: 10px;
-  &:hover {
-    background-color: #f1f1f1;
-  }
-  ${({active}) => 
+padding: 16px 42px;
+box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+line-height: 1.25;
+cursor: pointer;
+font-family: Public Sans, sans-serif;
+background: #A6B78C;
+text-decoration: none;
+color: white;
+font-size: 16px;
+letter-spacing: .08em;
+text-transform: uppercase;
+position: relative;
+transition: background-color .6s ease;
+overflow: hidden;
+&:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 50%;
+  top: var(--mouse-y);
+  left: var(--mouse-x);
+  transform-style: flat;
+  transform: translate3d(-50%,-50%,0);
+  background: rgba(white,.1);
+  border-radius: 100%;
+  transition: width .3s ease, height .3s ease;
+}
+
+&:focus,
+&:hover {
+    background: #FC6E51;
+}
+
+${({active}) => 
   active && `
-  border-bottom: 2px solid black;
-  opacity: 1;
+  &:after {
+    width: 300px;
+    height: 300px;
+  }
   `}
 `;
 

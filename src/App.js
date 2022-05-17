@@ -23,8 +23,10 @@ import { AmountVictory, AmountVictoryCompare } from './components/Visualizations
 import { PrioritySatisfaction, PrioritySatisfactionCompare } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart, InternetSourcesBarChartCompare } from './components/Visualizations/Questions/InternetSources';
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
+import ReactGA from 'react-ga';
 
 export default function App() {
+  ReactGA.initialize("UA-226538502-1");
 
   function getActiveTab(isActive, pageName){
     return (isActive 

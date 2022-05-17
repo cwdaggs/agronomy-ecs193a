@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div`
     min-height:90vh;
     padding-top: 50px;
-    margin-bottom: 60px;
 `;
 
 export const Area = styled.div`
@@ -101,6 +100,10 @@ export const ProfileTitle = styled.h1`
     font-weight:600;
     width: 100%;
     padding: 5px;
+
+    @media (max-width: 400px) {
+        font-size: 40px;
+    }
 `;
 
 export const SubTitle = styled.h1`
