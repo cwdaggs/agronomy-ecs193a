@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {InfoSummary} from './components/Pages/InfoSummary'
-import {AboutSummary} from './components/Pages/AboutSummary'
-import {Visualizations} from './components/Pages/Visualization'
-import {Home} from './components/Pages/Home'
 import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 
 const rootElement = document.getElementById('root');
