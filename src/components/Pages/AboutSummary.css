@@ -31,7 +31,8 @@
 }
 
 .profile-description{
-    inline-size: 150px;
+    inline-size: 50%;
+    width:30vh;
     overflow-wrap: break-word;
     hyphens: manual;
 }

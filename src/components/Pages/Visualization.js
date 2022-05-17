@@ -15,7 +15,7 @@ function getActiveTab(visName, location){
           </TabVisualizations>)
 }
 
-export const Visualizations = (props) => {
+export const Visualizations = () => {
     
     const types = [
         "Acres Managed", //Q2
@@ -39,9 +39,16 @@ export const Visualizations = (props) => {
     var preLocation = useLocation().pathname.split("/")
     var location ="";
     if (path !== "/results") {
-      location = preLocation[2].replace("%20", " ");
+      if(preLocation[2] != "compare"){
+        location = preLocation[2].replace("%20", " ");
+      }else{
+        if(path !== "/results/compare"){
+          location = preLocation[3].replace("%20", " ");
+        }
+      }
+      
     }
-    if(!props.dual || (path === "/results")){
+
       return(
         <div className='inline-parent'>
           <div>
@@ -56,7 +63,7 @@ export const Visualizations = (props) => {
                 onClick={() => {setKey(key+1); setActive(type)}}
                 
                 active={active === type}
-                to={`/results/${type}`}>
+                to={`${type}`}>
                   <div className='vis-buttons-child'>
                   {getActiveTab(type, location)}
                   </div>
@@ -68,39 +75,4 @@ export const Visualizations = (props) => {
           </div>
         </div>
       );
-    }else{
-      return(
-         <div className='inline-parent'>
-          <div>
-            
-            <div className='vis-buttons-label'>
-                Survey Questions
-            </div>        
-            <nav className='vis-buttons-parent'>
-              {types.map(type => (
-                <NavLink
-                key={type}
-                onClick={() => {setKey(key+1); setActive(type)}}
-                
-                active={active === type}
-                to={`/results/${type}`}>
-                  <div className='vis-buttons-child'>
-                  {getActiveTab(type, location)}
-                  </div>
-                </NavLink>
-              ))}
-              
-            </nav>
-          </div>
-          <div className='dual-display'>
-            <div className='dual-display-child'>
-              <Outlet/>
-            </div>
-            <div className='dual-display-child'>
-              <Outlet/>
-            </div>
-          </div>
-        </div>
-      )
-    }
 }

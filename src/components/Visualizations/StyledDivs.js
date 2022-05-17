@@ -15,19 +15,19 @@ const StyledLi = styled.li`
 `;
 
 const Dropbtn = styled.div`
-  background-color: #333;
+  background-color: white;
   display: inline-block;
-  color: white;
+  color: #00263A;
   text-align: center;
-  padding: 14px 16px;
+  padding: 10px 16px;
   text-decoration: none;
   border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  border-left: 5px solid white;
+  border-bottom: 1px solid gray;
+  border-left: 3px solid #f1f1f1;
   border-right: 5px solid white;
-  border-radius: 25px;
+  border-radius: 0px;
   &:hover {
-    background-color: green;
+    background-color: #f1f1f1;
   }
 
   @media (max-width: 1200px) {
