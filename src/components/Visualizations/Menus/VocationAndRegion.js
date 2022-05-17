@@ -222,7 +222,7 @@ export function VocationAndRegion(props) {
       <>
             <StyledUl>
             <div className="flex-parent">
-                <div className="flex-child">
+                <div className="flex-child-1">
                 <DropDownLi>
                     <Dropbtn>
                         {activeName + " "}
@@ -302,7 +302,7 @@ export function VocationAndRegion(props) {
                     </DropDownContent>
                 </DropDownLi>
                 </div>
-                <div className="flex-child">                        
+                <div className="flex-child-2">                        
                 <DropDownLi>
                     <Dropbtn>
                         {activeName2 + " "}

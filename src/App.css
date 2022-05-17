@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,800;0,900;1,400&display=swap');
 
 #heading {
-  background-color: #00000017;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -100,10 +100,6 @@ a.hover-link::before {
 
 a.hover-link:hover::before {
   transform: scaleX(1);
-}
-
-body,html {
-  height: 100%;
 }
 
 @media screen and (max-width: 1200px) and (min-height:800px) {

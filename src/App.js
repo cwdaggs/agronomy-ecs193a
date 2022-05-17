@@ -29,11 +29,11 @@ export default function App() {
   function getActiveTab(isActive, pageName){
     return (isActive 
             ? 
-            <Tab style={{opacity: 1}}>
+            <Tab style={{opacity: 1, backgroundColor: '#f1f1f1', borderBottom: '2px solid black'}}>
               {pageName}
             </Tab> 
             : 
-            <Tab style={{opacity: 0.7}}>
+            <Tab style={{opacity: 0.7, backgroundColor: '#ffffff', borderBottom: '0px solid black'}}>
               {pageName}
             </Tab>)
   }
@@ -73,7 +73,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="results/" element={
-          <div>
+          <div className='vis-page'>
             <div id="visTop">
               Select a topic to view responses for the respective question. Responses can then be sorted by vocation and crop/region. Hovering over a data element will provide more detailed information.
             </div>
@@ -120,9 +120,9 @@ export default function App() {
         </Route>
 
         <Route path="results/compare/" element={
-          <div>
+          <div className='vis-page'>
             <div id="visTop">
-              Select a topic to view responses for each question. The responses can also be sorted by vocation and crop/region. Hovering over a data element will provide more detailed information.
+              Select a topic to view responses for the respective question. Responses can then be sorted by vocation and crop/region. Hovering over a data element will provide more detailed information.
             </div>
             <div id="compare-box">
               <NavLink to="/results">
