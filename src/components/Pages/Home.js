@@ -30,7 +30,7 @@ export const Home = () => {
                 </div>   
                 <div id="home-button">
                     <NavLink to ="/results">
-                        <TabHome>Learn More!</TabHome>
+                        <TabHome >Learn More!</TabHome>
                     </NavLink>   
                 </div>
             </div>    
