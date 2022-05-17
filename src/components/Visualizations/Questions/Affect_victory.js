@@ -351,12 +351,9 @@ export function AffectVictoryCompare(props) {
   var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
-  var questionText = "How often do the following priorities affect your management decisions for field crop production?";
   var titleText = "Frequency of Effect on Management Decisions";
-  var titleText2 = "Frequency of Effect on Management Decisions";
   if (activeVocation === "Consultants") {
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
-    questionText = "How often do the following priorities affect your recommendations for field crop production?";
     titleText = "Frequency of Effect on Recommendations";
   }
 
@@ -374,6 +371,11 @@ export function AffectVictoryCompare(props) {
   var data_filtered2 = filterByCropOrRegion(props.dataset, activeRegionOrCrop2)
 
   var data_by_affect2 = calculateGrowerAffectTotalsForEachElement(data_filtered2);
+  var titleText2 = "Frequency of Effect on Management Decisions";
+  if (activeVocation2 === "Consultants") {
+    data_by_affect2 = calculateConsultantAffectTotalsForEachElement(data_filtered2);
+    titleText2 = "Frequency of Effect on Recommendations";
+  }
 
   if (crops.includes(activeRegionOrCrop2)) {
     titleText2 += " for " + activeRegionOrCrop2;
@@ -420,7 +422,7 @@ export function AffectVictoryCompare(props) {
   return (
     <>
     <div id='vis-question-label'>
-       <h2>{questionText}</h2>
+       <h2>How often do the following priorities affect your management decisions/recommendations for field crop production?</h2>
     </div>
     <div className="inline-child">
       <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>

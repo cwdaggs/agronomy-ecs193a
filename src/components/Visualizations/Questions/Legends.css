@@ -48,24 +48,7 @@
     background-color: #7ADE7F;
 }
 
-@media screen and (max-width: 600px) and (max-height: 1000px)  {
-    .legend-circle {
-        width: 10px;
-        height: 10px;
-        border-radius: 10px;
-        margin-top: 3px;
-    }
-      
-    .legend-value {
-        padding: 5px;
-    }
-
-    #vis-legend {
-        font-size: x-small;
-    }
-}
-
-@media screen and (max-height:800px) and (min-width: 600px) {
+@media (max-width: 1000px) {
     .legend-circle {
         width: 10px;
         height: 10px;
@@ -75,5 +58,22 @@
     
     #vis-legend {
         font-size: small;
+    }
+}
+
+@media (max-width: 500px) {
+    .legend-circle {
+        width: 8px;
+        height: 8px;
+        border-radius: 8px;
+        margin-top: 3px;
+    }
+      
+    .legend-value {
+        padding: 5px;
+    }
+
+    #vis-legend {
+        font-size: xx-small;
     }
 }

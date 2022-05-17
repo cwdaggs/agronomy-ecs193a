@@ -124,13 +124,8 @@ export const SubTitle = styled.h1`
         font-size:20px;
     }
     
-    @media (max-width: 545px) {
-        font-size:15px;
-    
-    }
-    
     @media (max-width: 400px){
-        font-size:10px;
+        font-size:15px;
     }
 `;
 
@@ -152,13 +147,8 @@ export const Desc = styled.p`
         font-size:12px;
     }
     
-    @media (max-width: 545px) {
-        font-size:8px;
-    
-    }
-    
     @media (max-width: 400px){
-        font-size:5px;
+        font-size:10px;
     }
 `;
 

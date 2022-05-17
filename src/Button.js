@@ -79,11 +79,19 @@ const Tab = styled.button`
   }
 
   @media (max-width: 545px) {
-    padding: 10px 10px;
+    padding: 10px 15px;
   }
 
-  @media (max-width: 400px){
-    padding: 7px;
+  @media (max-width: 400px) {
+    padding: 10px;
+  }
+
+  @media (max-width: 350px) {
+    padding: 8px;
+  }
+
+  @media (max-width: 300px) {
+    padding: 8px;
     font-size: 8px;
   }
 `;
