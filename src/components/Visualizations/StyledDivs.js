@@ -179,7 +179,14 @@ const TabVisualizations = styled.button`
   }
 
   @media (max-width: 400px){
-    padding: 5px 1px;
+    font-size: 5px;
+  }
+
+  @media (max-width: 350px) {
+    padding: 1px;
+  }
+
+  @media (max-width: 300px) {
     font-size: 4px;
   }
 `;

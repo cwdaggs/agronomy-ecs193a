@@ -300,6 +300,7 @@ export function ConcernsVictoryCompare(props) {
   const dataset2 = transformData(data_sorted2);
 
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
