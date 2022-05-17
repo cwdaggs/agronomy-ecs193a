@@ -18,6 +18,61 @@ var colors =
 "#00A4A8",
 ]
 
+function GetChart(props){
+    return(
+        <div class="pie-chart">
+            <div class='parent flex-parent'>
+                <div class='child flex-child'>
+                    <VictoryLegend
+                        colorScale={props.colors}
+                        x={150}
+                        y={0}  
+                        gutter={20}
+                        style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: props.fontSize}, 
+                            title:  {fontFamily: 'Roboto', fontSize: props.fontSize},
+                            data:   {stroke: "black", strokeWidth: 1}}
+                        }
+                        title="Crop Categories"
+                        centerTitle
+                        data={props.legend_data}
+                    />
+                    </div>
+                    <div class='child flex-child'>   
+                        
+                        <VictoryPie
+                            animate={{
+                                duration: 500,               
+                            }}
+                            
+                            width={props.width}
+                            height={props.height}
+                            padding={{
+                                left: props.margin.left,
+                                right: props.margin.right,
+                                bottom: props.margin.bottom,
+                                top: props.margin.top
+                            }}
+                            style={{ data: { stroke: "black", strokeWidth: 1}}}
+                            colorScale={props.colors}
+                            data={props.data}
+                            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+                            labelComponent={
+                            <VictoryTooltip 
+                                style={{
+                                    fontSize:45,
+                                    fontFamily: 'Roboto'
+                                }}
+                                flyoutHeight={50}
+                                flyoutWidth={100}      
+                            />
+                        }
+                        />
+                    </div>
+                </div>
+            </div>
+    )
+}
+
 export function CropPercentages(props) {
 
     if (!props.dataset) {
@@ -40,98 +95,13 @@ export function CropPercentages(props) {
 
     return (
         <>
-        <div id='vis-question-label'>
-            <h2>Of the total acres, what percentage of the crops grown are in each of the following categories?</h2>
-        </div>
-        <div  class='visualization-window'>
-            <div class="pie-chart">
-                <div class='parent flex-parent'>
-                    <div class='child flex-child'>
-                        <VictoryLegend
-                            colorScale={colors}
-                            x={150}
-                            y={0}  
-                            gutter={20}
-                            style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize}, 
-                                    title:  {fontFamily: 'Roboto', fontSize: fontSize},
-                                    data:   {stroke: "black", strokeWidth: 1}}}
-                            title="Crop Categories"
-                            centerTitle
-                            data={legend_data}
-                    />
-                    </div>
-                    <div class='child flex-child'>   
-                        
-                        <VictoryPie
-                            animate={{
-                                duration: 500,               
-                            }}
-                            
-                            width={width}
-                            height={height}
-                            padding={{
-                                left: margin.left,
-                                right: margin.right,
-                                bottom: margin.bottom,
-                                top: margin.top
-                            }}
-                            style={{ data: { stroke: "black", strokeWidth: 1},
-                                    labels: {fontSize: 45, fontFamily: 'Roboto'}}}
-                            colorScale={colors}
-                            data={data}
-                            // radius={({ datum, active }) => (active ? 800 : 650)}
-                            // labels={() => null}
-                            //the onclick is for if we want pie slice to be bigger
-                            //problem is we dont know how radius is calculated
-                            // events={[{
-                            //     target: "data",
-                            //     eventHandlers: {
-                            //         onClick: () => {
-                            //             return [
-                            //               {
-                            //                 eventKey: "all",
-                            //                 mutation: () => ({ active: false })
-                            //               },
-                            //               {
-                            //                 mutation: () => ({ active: true })
-                            //               }
-                            //             ];
-                            //           },
-                            //         onMouseOver: () => {
-                            //           return [{
-                            //             mutation: (props) => {
-                            //               return {
-                            //                 style: Object.assign({}, props.style, {})
-                            //               };
-                            //             }
-                            //           }];
-                            //         },
-                            //         onMouseOut: () => {
-                            //           return [{
-                            //             mutation: () => {
-                            //               return null;
-                            //             }
-                            //           }];
-                            //         }
-                            //       }
-                            //   }]}
-                            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
-                            // labelComponent={
-                            // <VictoryTooltip 
-                            //     style={{
-                            //         fontSize:45,
-                            //         fontFamily: 'Roboto'
-                            //     }}
-                            //     flyoutHeight={50}
-                            //     flyoutWidth={100}      
-                            // />
-                        // }
-                        />
-                    </div>
-
-                </div>
+            <div id='vis-question-label'>
+                <h2>Of the total acres, what percentage of the crops grown are in each of the following categories?</h2>
             </div>
-        </div>
+            <div  class='visualization-window'>
+                <GetChart data={data} legend_data={legend_data} width={width} height={height} margin={margin} fontSize={fontSize} colors={colors}/>
+            </div>
         </>
     );
 }
+

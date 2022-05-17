@@ -4,17 +4,42 @@ import "typeface-abeezee";
 import "@fontsource/metropolis";
 
 const Button = styled.button`
-  background-color: black;
-  color: white;
-  font-size: 20px;
-  padding: 10px 60px;
+  background-color: white;
+  color: black;
+  font-size: 15px;
+  padding: 8px 30px;
   border-radius: 5px;
-  margin: 10px 0px;
   cursor: pointer;
   box-shadow: 0px 2px 2px lightgray;
+  
   &:disabled{
-    color: grey;
+    color: white;
     opacity: 0.7;
+  }
+    @media (max-width: 1350px) {
+    padding: 6px 25px;
+    font-size: 15px;
+    font-weight: 800;
+  }
+  @media (max-width: 1000px) {
+    padding: 15px 30px;
+    font: 12px Metropolis, sans-serif;
+    font-weight: 800;
+  }
+
+  @media (max-width: 730px) {
+    padding: 10px 20px;
+    font: 10px Metropolis, sans-serif;
+    font-weight: 800;
+  }
+
+  @media (max-width: 545px) {
+    padding: 10px 10px;
+  }
+
+  @media (max-width: 400px){
+    padding: 7px;
+    font-size: 8px;
   }
 `;
 
@@ -140,4 +165,4 @@ function TabGroup(props){
     );
 }
 
-export {TabGroup, ToggleGroup, Checkbox, Tab}
+export {TabGroup, ToggleGroup, Checkbox, Tab, Button}

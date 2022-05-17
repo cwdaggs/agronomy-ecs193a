@@ -9,6 +9,7 @@ export function VisualizationLandingPage(props) {
         <br></br> <br></br> <br></br> <br></br> </p>}
         {<p id="visLandingBodyExtended">Click a question to learn more about California's farmers!</p>}
         
-      </div>
+    </div>
+    
     );
 }

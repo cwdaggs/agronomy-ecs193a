@@ -24,11 +24,27 @@
     background-color: #f2f5f8;
 }
 
+.vis-page {
+    background-color: #ffffff;
+}
+
 .inline-parent {
     border-top: 1px solid black;
     text-align: center;
     height: 80vh;
 }
+
+.flex-child-1 {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .flex-child-2 {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
 
 @media screen and (max-width: 1200px) and (min-height:800px) {
     .vis-buttons-label {
@@ -54,4 +70,16 @@
         height: auto;
         width:auto;
     }
+
+    .dual-display{
+        display: block;
+    }
+
+    .flex-child-1 {
+        justify-content: left;
+      }
+    
+      .flex-child-2 {
+        justify-content: right;
+      }
 }
