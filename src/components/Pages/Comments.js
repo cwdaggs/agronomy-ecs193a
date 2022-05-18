@@ -24,6 +24,8 @@ const surveyJson = {
 
 export const CommentBox = (profile) => {
     
+    var Filter = require('bad-words'),
+        filter = new Filter();
     init("bbHpEmI6Hk-yZSrJy");
     const survey = new Model(surveyJson);
 
@@ -34,16 +36,19 @@ export const CommentBox = (profile) => {
         var templateParams = {
             from_name: profile.profile.profileObj.name,
             from_email: profile.profile.profileObj.email,
-            message: surveyData["Suggestions Box"]
+            message: filter.clean(surveyData["Suggestions Box"])
         };
 
+        console.log(surveyData["Suggestions Box"]);
+        console.log(templateParams.message);
+
         // send comment to email
-        emailjs.send("service_lyg6l6f", "template_ljmf23h", templateParams)
-            .then(function(response) {
-                console.log('Comment Sent Successfully!', response.status, response.text);
-            }, function(error) {
-                console.log('Failed to send comment', error);
-            });
+        // emailjs.send("service_lyg6l6f", "template_ljmf23h", templateParams)
+        //     .then(function(response) {
+        //         console.log('Comment Sent Successfully!', response.status, response.text);
+        //     }, function(error) {
+        //         console.log('Failed to send comment', error);
+        //     });
     });
 
 

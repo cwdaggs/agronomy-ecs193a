@@ -14,3 +14,4 @@ npm install @react-spring/parallax
 npm i react-google-login
 npm install @emailjs/browser --save
 npm i -s react-ga
+npm install bad-words --save

@@ -18,6 +18,7 @@ function Login() {
     };
 
     const onFailure = (err) => {
+        console.log(err);
         console.log("Failed to log in: " + err);
     };
 
@@ -40,8 +41,9 @@ function Login() {
                             buttonText="Login"
                             onSuccess={onSuccess}
                             onFailure={onFailure}
-                            cookiePolicy={'https://www.uccesurveyresults.com'}
+                            //cookiePolicy={'https://www.uccesurveyresults.com'}
                             //cookiePolicy={'single_host_origin'}
+                            cookiePolicy={'http://localhost:3000'}
                             style={{ marginTop: '100px', alignSelf: 'center' }}
                             isSignedIn={true}
                         />
