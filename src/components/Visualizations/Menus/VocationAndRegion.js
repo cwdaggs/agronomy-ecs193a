@@ -193,12 +193,11 @@ export function VocationAndRegion(props) {
         stateVocation = props.activeVocation.replace("%20", " ");
         stateVocation2 = props.activeVocation2.replace("%20", " ");
 
-        stateVocation = "Select Vocation";
-        stateCrop = "Select Crop";
         stateRegion = "Select Region";
-        stateVocation2 = "Compare Vocation";
-        stateCrop2 = "Compare Crop";
         stateRegion2 = "Compare Region";
+
+        stateCrop = "SelectCrop";
+        stateCrop2 = "Compare Crop";
 
         if (types.includes(props.activeCrop)) {
             stateCrop = props.activeCrop;
@@ -265,7 +264,7 @@ export function VocationAndRegion(props) {
                                 <Link style={{ textDecoration: 'none' }} 
                                         to={location + "/" + activeName + "/" + type + "/" + activeRegionName + "/" + activeName2 + "/" + activeCropName2 + "/" + activeRegionName2}
                                         onClick={() => {props.cropFunction(type);
-                                            setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim()); 
+                                            setActiveCropName(type.replace(/([A-Z])/g, '$1').trim()); 
                                             }}
                                 >
                                     <SubA 
@@ -343,7 +342,7 @@ export function VocationAndRegion(props) {
                                 <Link style={{ textDecoration: 'none' }} 
                                         to={location + "/" + activeName + "/" + activeCropName + "/" + activeRegionName + "/" + activeName2 + "/" + type + "/" + activeRegionName2}
                                         onClick={() => {props.cropFunction2(type);
-                                            setActiveCropName2(type.replace(/([A-Z])/g, ' $1').trim()); 
+                                            setActiveCropName2(type.replace(/([A-Z])/g, '$1').trim()); 
                                             }}
                                 >
                                     <SubA 
