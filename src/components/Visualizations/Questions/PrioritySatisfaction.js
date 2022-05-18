@@ -1,5 +1,5 @@
 import {VictoryLegend, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation, parseURLCompare } from '../UseData';
+import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation, parseURLCompare, filterByRegion, filterByCrop } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState } from "react";
 import "typeface-abeezee";
@@ -61,7 +61,7 @@ function GetChart(props){
           >
           <VictoryLegend 
             x={(width>=mobileWidth)?width/5.4+ margin.left:0}
-            title="Engagement Frequency"
+            title="Satisfaction of Information Availability"
             centerTitle
             orientation="horizontal"
             itemsPerRow={3}
@@ -71,9 +71,9 @@ function GetChart(props){
                     title: {fontSize: fontSize + 4, fontFamily: 'Roboto'  }, 
                     data: {fontSize: fontSize, fontFamily: 'Roboto', stroke: "black", strokeWidth: 1}}}
             data={[
-              { name: "Sufficient", symbol: { fill: "green", type:"square"} },
-              { name: "Surplus", symbol: { fill: "green", fillOpacity:0.5, type:"square" } },
-              { name: "Deficient", symbol: { fill: "tomato", fillOpacity:0.7, type:"square" } }
+              { name: "Meeting Information Demand", symbol: { fill: "green", type:"square"} },
+              { name: "Exceeding Information Demand", symbol: { fill: "green", fillOpacity:0.5, type:"square" } },
+              { name: "Not Meeting Information Demand", symbol: { fill: "tomato", fillOpacity:0.7, type:"square" } }
               
             ]}
           />
@@ -190,9 +190,9 @@ function GetChart(props){
                        title: {fontSize: fontSize, fontFamily: 'Roboto' }, 
                        labels: {fontSize: fontSize, fontFamily: 'Roboto'}}}
               data={[
-                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a"} },
-                { name: "Average", symbol: { fill: "red", type:"square" } },
-                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" } }
+                { name: "Topic of Interest", symbol: { fill: "tomato", stroke: "#756f6a"} },
+                { name: "Average Priority/Satisfaction overall", symbol: { fill: "red", type:"square" } },
+                
               ]}
             />
             <VictoryScatter
@@ -332,27 +332,28 @@ export const PrioritySatisfaction = (props) => {
     const baseURL = "/results/Priority%20Satisfaction";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+    const [activeRegion, setActiveRegion] = useState(filters.region);
+    const [activeCrop, setActiveCrop] = useState(filters.crop)
+  
+
+    function vocationFunction(newValue){
+      setActiveVocation(newValue);
+    }
+  
+    function regionFunction(newValue) {
+      setActiveRegion(newValue);
+    }
+  
+    function cropFunction(newValue) {
+      setActiveCrop(newValue)
+    }
 
     if (!props.dataset) {
       return <pre>Loading...</pre>;
     }
 
-
-    function vocationFunction(newValue){
-      setActiveVocation(newValue);
-    }
-
-    function regionOrCropFunction(newValue) {
-      setActiveRegionOrCrop(newValue);
-    }  
-
-
-
-    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+    var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
     var data = averageSatisfaction(data_filtered)
-
-
 
 
     return (
@@ -362,7 +363,7 @@ export const PrioritySatisfaction = (props) => {
           <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). </h2>
         </div>
         <div className="inline-child">
-            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
 
         <GetChart data={data}/>

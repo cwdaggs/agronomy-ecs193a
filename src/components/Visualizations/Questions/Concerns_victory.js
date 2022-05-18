@@ -164,7 +164,23 @@ export function ConcernsVictory(props) {
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
   var data_sorted = sort_by_very(data_by_concern);
   const dataset = transformData(data_sorted);
+
+  var titleText = "Amount of Concern ";
+
+  if (crops.includes(activeCrop)) {
+    titleText += " for " + activeCrop;
+  }
+
+  if(activeVocation !== "All"){
+    titleText += " " + activeVocation;
+  }
+
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
+  }
+
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
@@ -200,7 +216,7 @@ export function ConcernsVictory(props) {
     fontSize = mobileFontSize;
   }
   const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]
-
+  
   return (
     <>
       <div id='vis-question-label'>

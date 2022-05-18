@@ -111,7 +111,7 @@ export function VocationAndRegion(props) {
                                 <Link style={{ textDecoration: 'none' }} 
                                         to={location + "/" + activeName + "/" + type + "/" + activeRegionName}
                                         onClick={() => {props.cropFunction(type);
-                                            setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim()); 
+                                            setActiveCropName(type.replace(/([A-Z])/g, '$1').trim()); 
                                             }}
                                 >
                                     <SubA 
