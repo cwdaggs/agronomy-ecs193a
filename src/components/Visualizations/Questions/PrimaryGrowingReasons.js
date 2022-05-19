@@ -40,6 +40,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
     var modified_data = []
     const myMap = new Map()
     for (var farmer in data) {
+      console.log(data[farmer]);
       const reasons = String(data[farmer][filter]).split(',')
       for (var reason in reasons) {
         var key = reasons[reason]
@@ -150,6 +151,9 @@ export function PrimaryGrowingReasons(props) {
   // console.log(useLocation().pathname);
   const filter = parseURL(baseURL, useLocation().pathname);
   const [active, setActive] = useState(filter.crop);
+  // CREATE NEW REGION STATE AND BUTTON
+  // const [activeRegion, setActiveRegion] = useState(filter.region);
+  const region = "NSJV";
   // console.log(active);
 
   function changeFunc(newValue){
@@ -165,7 +169,7 @@ export function PrimaryGrowingReasons(props) {
     titleText += " Crops"
   }
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
+  var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), region), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
   var legend_data = []
   var n = 0
@@ -180,8 +184,8 @@ export function PrimaryGrowingReasons(props) {
 
   for (var i = 0; i < data_by_reason.length; i++) {
       legend_data.push({name: data_by_reason[i].x})
-      n += data_by_reason[i].y
   }
+  n = data_filtered.length;
 
   // const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
   //const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
@@ -280,13 +284,13 @@ export function PrimaryGrowingReasonsCompare(props) {
 
   for (var i = 0; i < data_by_reason.length; i++) {
       legend_data.push({name: data_by_reason[i].x})
-      n += data_by_reason[i].y
   }
+  n = data_filtered.length;
 
   for (var i = 0; i < data_by_reason2.length; i++) {
     legend_data2.push({name: data_by_reason2[i].x})
-    n2 += data_by_reason2[i].y
   }
+  n2 = data_filtered2.length;
 
     var colorScale = 
     [
