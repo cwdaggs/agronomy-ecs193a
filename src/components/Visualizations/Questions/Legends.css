@@ -75,6 +75,12 @@
         margin-top: 3px;
     }
       
+    .legend-square {
+        width: 10px;
+        height: 10px;
+
+    }
+
     .legend-value {
         padding: 5px;
     }
@@ -90,6 +96,12 @@
         height: 10px;
         border-radius: 10px;
         margin-top: 9px;
+    }
+
+    .legend-square {
+        width: 10px;
+        height: 10px;
+
     }
     
     #vis-legend {

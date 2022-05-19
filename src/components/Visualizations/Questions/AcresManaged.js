@@ -78,6 +78,13 @@ function calculateSizeOfDataSet(data){
 }
 
 function GetChart(props){
+  
+  var toolTipFontSize = 30;
+
+  if(props.compare){
+    toolTipFontSize = props.fontSize * 3;
+  }
+
   return(
     <>
     <div class='visualization-window'>
@@ -110,11 +117,11 @@ function GetChart(props){
             labelComponent={
               <VictoryTooltip 
                 style={{
-                  fontSize:30,
+                  fontSize: toolTipFontSize,
                   fontFamily: 'Roboto'
                 }}
-                flyoutHeight={45}
-                flyoutWidth={60}    
+                flyoutHeight={toolTipFontSize + 15}
+                flyoutWidth={toolTipFontSize * 2}    
               />
           }
           />
@@ -279,10 +286,10 @@ export function AcresManagedBarChartCompare(props) {
         </div>
       <div className='dual-display'>
         <div id='dual-display-child'>
-          <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1}/>
+          <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1} compare={true}/>
         </div>
         <div id='dual-display-child'>
-          <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2}/>
+          <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2} compare={true}/>
         </div>
       </div>    
     </>

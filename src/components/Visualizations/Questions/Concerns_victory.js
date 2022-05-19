@@ -36,9 +36,15 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
+
+var toolTipFontSize=props.fontSize;
+if(props.compare){
+  toolTipFontSize = props.fontSize * 3;
+}
+
   return(
     <div className='dual-display-child'>
-    <div id="vis-legend">
+      <div id="vis-legend">
         <div id="legend-title">
           {props.titleText}
         </div>
@@ -76,10 +82,10 @@ function GetChart(props){
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:props.fontSize, fontFamily: 'Roboto'
+                        fontSize:toolTipFontSize, fontFamily: 'Roboto'
                       }}
-                      flyoutHeight={25}
-                      flyoutWidth={40}    
+                      flyoutHeight={toolTipFontSize + 10}
+                      flyoutWidth={toolTipFontSize*2}    
                     />
                 }/>;
             })}
@@ -365,8 +371,8 @@ export function ConcernsVictoryCompare(props) {
       </div>
       <div className='dual-display'>
 
-          <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
-          <GetChart titleText={titleText2} dataset={dataset2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
+          <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+          <GetChart titleText={titleText2} dataset={dataset2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
 
       </div>
     </>

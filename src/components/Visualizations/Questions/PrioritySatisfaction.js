@@ -26,13 +26,19 @@ const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 
 
 const mobileWidth = 1000;
 var fontSize = 20
-var mobileFontSize = 10
+var mobileFontSize = 5
 if(width < mobileWidth){
   fontSize = mobileFontSize;
 }
 
 
 function GetChart(props){
+
+  var toolTipFontSize = fontSize;
+
+  if(props.compare){
+    toolTipFontSize = fontSize * 1.5;
+  }
 
   const [vis,setVis]=useState(<p id="vis-question-label">Click and drag on an area of points for more information.</p>);
   
@@ -47,14 +53,16 @@ function GetChart(props){
     setVis(
       ( 
         <div>
-         <h5><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
-          <div id="legend-values">
-            <div className='legend-square' id="square-color-first"></div>
-            <span className='legend-value'>Meeting Information Demand</span>
-            <div className='legend-square' id="square-color-second"></div>
-            <span className='legend-value'>Exceeding Information Demand</span>
-            <div className='legend-square' id="square-color-third"></div>
-            <span className='legend-value'>Not Meeting Information Demand</span>
+          <p id="vis-question-label"><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</p>
+          <div id="vis-legend">
+            <div id="legend-values">
+              <div className='legend-square' id="square-color-first"></div>
+              <span className='legend-value'>Meeting Information Demand</span>
+              <div className='legend-square' id="square-color-second"></div>
+              <span className='legend-value'>Exceeding Information Demand</span>
+              <div className='legend-square' id="square-color-third"></div>
+              <span className='legend-value'>Not Meeting Information Demand</span>
+            </div>
           </div>
           
           <VictoryChart 
@@ -76,12 +84,12 @@ function GetChart(props){
                 orientation={"bottom"}
                 pointerOrientation={"top"}
                   style={{
-                    fontSize:fontSize-3,
+                    fontSize:toolTipFontSize,
                     strokeWidth:1,
                     fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={40}
-                  flyoutWidth={345}    
+                  flyoutHeight={toolTipFontSize*6}
+                  flyoutWidth={toolTipFontSize*25}      
                 />
             }
             style={{ 
@@ -102,12 +110,12 @@ function GetChart(props){
                 orientation={"bottom"}
                 pointerOrientation={"top"}
                   style={{
-                    fontSize:fontSize-3,
+                    fontSize:toolTipFontSize,
                     strokeWidth: 1,
                     fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={100}
-                  flyoutWidth={400}    
+                  flyoutHeight={toolTipFontSize*6}
+                  flyoutWidth={toolTipFontSize*25}    
                 />
             }
             style={{ 
@@ -153,7 +161,7 @@ function GetChart(props){
   function handleSelectionCleared(props){}  
   return(
       <div class='visualization-window'>
-        {props.title}
+        <div id="vis-question-label">{props.title}</div>
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer
@@ -173,7 +181,7 @@ function GetChart(props){
             >
             <VictoryLegend 
               x={(width>=mobileWidth) ? width*.1 :0}
-              y={(width>=mobileWidth) ? height*.1 :0}
+              y={(width>=mobileWidth) ? height*.1 :40}
               title="Legend"
               centerTitle
               orientation="vertical"
@@ -208,12 +216,12 @@ function GetChart(props){
                 labelComponent={
                     <VictoryTooltip 
                         style={{
-                          fontSize:fontSize-5,
+                          fontSize:toolTipFontSize,
                           strokeWidth:0.1,
                           fontFamily: 'Roboto'
                         }}
-                        flyoutHeight={60}
-                        flyoutWidth={270}    
+                        flyoutHeight={toolTipFontSize*4}
+                        flyoutWidth={toolTipFontSize*20}    
                     />
                     
                 }
@@ -496,8 +504,8 @@ export const PrioritySatisfaction = (props) => {
           <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
           </div>
           <div className='dual-display'>
-            <GetChart data={data} title={titleText}/>
-            <GetChart data={data2} title={titleText2}/>
+            <GetChart data={data} title={titleText} compare={true}/>
+            <GetChart data={data2} title={titleText2} compare={true}/>
           </div>
   
       </>
