@@ -229,7 +229,7 @@ export function ConcernsVictory(props) {
         <h2>In regards to the production of field crops in California, rate your concern for the following:</h2>
       </div>
       <div className="inline-child">
-      <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
     </>
