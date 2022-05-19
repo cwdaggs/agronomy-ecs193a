@@ -164,13 +164,18 @@ export function AcresManagedBarChart(props) {
     
     var labelText = "Acres";
     if (activeVocation === "Growers") {
-      labelText = "Acres Managed by " + activeRegion + " " + activeCrop + " Growers";
+      labelText = "Acres Managed";
     } else if (activeVocation === "Consultants") {
-      labelText = "Acres Consulted by " + activeRegion + " " + activeCrop + " Consultants";
-    } else {
-      if (activeCrop !== "All") {
-        labelText = activeRegion + " " + activeCrop + " " + labelText;
-      }
+      labelText = "Acres Consulted";
+    }
+    if(activeRegion !== "All" || activeCrop !== "All"){
+      labelText += " for "
+    }
+    if(activeRegion !== "All"){
+      labelText += activeRegion + " "
+    }
+    if(activeCrop !== "All"){
+      labelText += activeCrop
     }
     
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -248,24 +253,34 @@ export function AcresManagedBarChartCompare(props) {
   
   var labelText = "Acres";
   if (activeVocation === "Growers") {
-    labelText = "Acres Managed by " + activeRegion + " " + activeCrop + " Growers";
+    labelText = "Acres Managed";
   } else if (activeVocation === "Consultants") {
-    labelText = "Acres Consulted by " + activeRegion + " " + activeCrop + " Consultants";
-  } else {
-    if (activeCrop !== "All") {
-      labelText = activeRegion + " " + activeCrop + " " + labelText;
-    }
+    labelText = "Acres Consulted";
+  }
+  if(activeRegion !== "All" || activeCrop !== "All"){
+    labelText += " for "
+  }
+  if(activeRegion !== "All"){
+    labelText += activeRegion + " "
+  }
+  if(activeCrop !== "All"){
+    labelText += activeCrop
   }
 
   var labelText2 = "Acres";
   if (activeVocation2 === "Growers") {
-    labelText2 = "Acres Managed by " + activeRegion2 + " " + activeCrop2 + " Growers";
+    labelText2 = "Acres Managed";
   } else if (activeVocation2 === "Consultants") {
-    labelText2 = "Acres Consulted by " + activeRegion2 + " " + activeCrop2 + " Consultants";
-  } else {
-    if (activeCrop2 !== "All") {
-      labelText2 = activeRegion2 + " " + activeCrop2 + " " + labelText2;
-    }
+    labelText2 = "Acres Consulted";
+  }
+  if(activeRegion2 !== "All" || activeCrop2 !== "All"){
+    labelText2 += " for "
+  }
+  if(activeRegion2 !== "All"){
+    labelText2 += activeRegion2 + " "
+  }
+  if(activeCrop2 !== "All"){
+    labelText2 += activeCrop2
   }
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
