@@ -147,7 +147,7 @@ export default function App() {
           <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<PriorityConcernsCompare dataset={dataset}/>}/>
           </Route>
           <Route path="Growing%20Reasons" element={<PrimaryGrowingReasonsCompare dataset={dataset}/>}>
-            <Route path=":crop/:crop2" element={<PrimaryGrowingReasonsCompare dataset={dataset}/>}/>
+            <Route path=":crop/:crop2/:region/:region2" element={<PrimaryGrowingReasonsCompare dataset={dataset}/>}/>
           </Route>
           <Route path="Priority%20Effect" element={<AffectVictoryCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<AffectVictoryCompare dataset={dataset}/>}/>

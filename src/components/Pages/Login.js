@@ -12,7 +12,6 @@ function Login() {
 
     const onSuccess = (res) => {
         console.log("Successfully logged in: " + res.profileObj.name);
-        // console.log(res);
         setProfile(res);
         setLogIn(true);
     };

@@ -419,7 +419,6 @@ export function parseURL(baseURL, path, vocationArray) {
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
     filters.shift();
-    // console.log(filters);
     if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
       vocation = filters[0];
       baseAll = false;
@@ -444,6 +443,8 @@ export function parseCropURLCompare(baseURL, path){
   var pathname = path;
   var crop1 = "All";
   var crop2 = "All";
+  var region1 = "All";
+  var region2 = "All";
   var baseAll = true;
   const cropChoices = [
     "All", 
@@ -458,8 +459,11 @@ export function parseCropURLCompare(baseURL, path){
     "Sunflower", 
     "Wheat"
   ];
+  const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
   if(baseURL !== pathname){
     pathname = pathname.replace(baseURL, "");
+    pathname = pathname.replaceAll("%20", " ");
     const filters = pathname.split("/");
     filters.shift();
 
@@ -472,9 +476,19 @@ export function parseCropURLCompare(baseURL, path){
       crop2 = filters[1].replaceAll("%20", " ");
       baseAll = false;
     }
+
+    if (filters[2] !== "Select%20Region" && regionTypes.includes(filters[2])) {
+      region1 = filters[2];
+      baseAll = false;
+    }
+
+    if (filters[3] !== "Select%20Region" && regionTypes.includes(filters[3])) {
+      region2 = filters[3];
+      baseAll = false;
+    }
   }
 
-  return {crop1:crop1, crop2:crop2, baseAll: baseAll};
+  return {crop1:crop1, crop2:crop2, region1:region1, region2:region2, baseAll: baseAll};
 }
 
 export function parseURLCompare(baseURL, path, vocationArray) {
@@ -505,7 +519,6 @@ export function parseURLCompare(baseURL, path, vocationArray) {
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
     filters.shift();
-    // console.log(filters);
     if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
       vocation = filters[0];
       baseAll = false;
