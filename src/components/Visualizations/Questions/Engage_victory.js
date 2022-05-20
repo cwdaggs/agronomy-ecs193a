@@ -342,10 +342,10 @@ export function EngageVictoryCompare(props) {
 
   var data_filtered2 = filterByVocation(data2, activeVocation2)
   var data_by_engage2 = calculateEngageTotalsForEachElement(data_filtered2)
-  var data_sorted2 = sort_by_freq(data_by_engage2)
-  const dataset_final2 = transformData(data_sorted2)
+  // var data_sorted2 = sort_by_freq(data_by_engage2)
+  const dataset_final2 = transformData(data_by_engage2)
 
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  titleText2 += " (n = " + calculateAverageResponses(data_by_engage2) + ")";
 
 
   var titleText = "UCCE Engagement Frequency";
@@ -368,10 +368,10 @@ export function EngageVictoryCompare(props) {
 
   var data_filtered = filterByVocation(data, activeVocation)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
-  var data_sorted = sort_by_freq(data_by_engage)
-  const dataset_final = transformData(data_sorted)
+  // var data_sorted = sort_by_freq(data_by_engage)
+  const dataset_final = transformData(data_by_engage)
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText += " (n = " + calculateAverageResponses(data_by_engage) + ")";
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)

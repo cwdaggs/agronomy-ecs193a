@@ -31,7 +31,7 @@ export const AboutSummary = () => {
                 <p style={{fontWeight:"800"}}>Nick Clark </p>
                 <p className='profile-description'>Assistant CE Advisor</p>
                 <p>UCCE</p>
-                <p><a href='https://ucanr.edu/sites/Bees_and_Pollination/Contact_Us/?facultyid=26947' className="hover-link" target="_blank">Learn more about Nick!</a></p>
+                <p><a href='https://cekings.ucanr.edu/Agriculture/Agronomic_Cropping_Systems_Nutrient_Management/' className="hover-link" target="_blank">Learn more about Nick!</a></p>
               </div>
             </div>
             <div className='profile'>

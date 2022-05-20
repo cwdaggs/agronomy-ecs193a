@@ -26,17 +26,24 @@ export const InfoSummary = (props) => {
                     Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who 
                     solve problems in agriculture, the environment, and human and community well-being. They work to foster a 
                     connection between the university and the public by delivering science-based information. In 
-                    California, <a href='https://ucanr.edu/' className="hover-link" target="_blank">UC Cooperative Extension</a> is facing reductions 
-                    in personnel, meaning current advisors are stretched thin and need to prioritize their efforts. At the same 
-                    time, the landscape of California agriculture is rapidly changing and farmers are encountering new challenges 
-                    such as regulations on labor and inputs.
+                    California, <a href='https://ucanr.edu/' className="hover-link" target="_blank">UC Cooperative Extension</a>, 
+                    which is administered by the UC Agriculture and Natural Resources Division (UC ANR), is currently undertaking 
+                    an historic increase in personnel. In July of 2022, the Governor signed a budget which increased the UC ANR 
+                    budget to the pre-COVID levels of FY 2019-20 in addition to a 5% increase as well as an additional ongoing 
+                    $32 million. This resuscitation of UC Cooperative Extension will bring about meaningful collaborative 
+                    opportunities for current advisors and specialists who are stretched thin and need to prioritize their 
+                    efforts. The landscape of California agriculture is rapidly changing. Farmers are encountering new challenges 
+                    such as regulations on labor and inputs, and UC Cooperative Extension is preparing to respond by hiring 48 
+                    new extension advisors and 16 extension specialists by the end of 2023.
                   </C.Desc>
                   <C.Desc className='font-roboto'>
                     We recently conducted a statewide collaborative needs assessment to give a voice to farmers and others working 
                     in agronomic crop production. The goal was to understand their priorities, concerns, and top management 
                     challenges, helping identify critical needs for research and extension. Our online survey questions were 
                     designed to shed light on the most important issues and preferences for extension information and approaches 
-                    based on input from growers, consultants, and allied industry for agronomic crops across the state.
+                    based on input from growers, consultants, and allied industry for agronomic crops across the state. Incoming 
+                    extension advisors and specialists with responsibilities for research and education about agronomic crops can 
+                    utilize the information in this survey to best serve their new clientele.
                   </C.Desc>
                   <C.Desc className='font-roboto'>
                     Through this interactive website, our goal is to share the findings with survey participants, collaborating

@@ -328,9 +328,9 @@ export function AmountVictoryCompare(props) {
 
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
-  var data_sorted = sort_by_very(data_by_value)
-  const dataset_final = transformData(data_sorted)
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  // var data_sorted = sort_by_very(data_by_value)
+  const dataset_final = transformData(data_by_value)
+  titleText += " (n = " + calculateAverageResponses(data_by_value) + ")";
 
 
   var titleText2 = "Level of Value";
@@ -345,9 +345,9 @@ export function AmountVictoryCompare(props) {
 
   var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2)
   var data_by_value2 = calculateValueTotalsForEachElement(data_filtered2)
-  var data_sorted2 = sort_by_very(data_by_value2)
-  const dataset_final2 = transformData(data_sorted2)
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  // var data_sorted2 = sort_by_very(data_by_value2)
+  const dataset_final2 = transformData(data_by_value2)
+  titleText2 += " (n = " + calculateAverageResponses(data_by_value2) + ")";
 
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)

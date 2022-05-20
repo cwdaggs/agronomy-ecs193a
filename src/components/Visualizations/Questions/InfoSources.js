@@ -6,7 +6,7 @@ import "typeface-abeezee";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
-export function calculateInformationSources(data){
+export function calculateInformationSources(data, sorted){
   var sources = [
     "Industry",
     "Other Growers",
@@ -96,7 +96,9 @@ export function calculateInformationSources(data){
   for(var k=0; k<totals.length; k++){
     modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
   }
-  modified_data.sort(function(a,b){return a.y - b.y;});
+  if (sorted) {
+    modified_data.sort(function(a,b){return a.y - b.y;});
+  }
   for(var l=0; l<modified_data.length; l++){
     modified_data[l].fill = colors[l];
   }
@@ -123,6 +125,67 @@ function GetChart(props){
             <VictoryBar horizontal
               data={props.info_data}
               sortKey = "y"
+              style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
+              labels={({datum}) => datum.y}
+              labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:props.fontSize, fontFamily: 'Roboto'
+                  }}
+                  flyoutHeight={25}
+                  flyoutWidth={40}    
+                />
+            }
+            />
+            <VictoryAxis dependentAxis
+              label = {props.labelText + "(n = " + props.filtered_data.length + ")"}
+              style={{
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: props.fontSize*2, padding: 50, fontFamily: 'Roboto'},
+                fontFamily: 'Roboto'
+              }}
+            />
+            <VictoryAxis
+              label = {"Information Sources"}
+              style={{
+                axis: {stroke: "#756f6a"},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'},
+                fontFamily: 'Roboto'
+              }}
+            tickLabelComponent={       
+              <VictoryLabel    
+                textAnchor="end"
+              />   
+            }
+            />
+          </VictoryChart>
+        </div>  
+  )
+}
+
+function GetUnsortedChart(props){
+  return(
+        <div class='visualization-window'>
+          <VictoryChart height={props.height} width={props.width}
+            animate={{
+              duration: 500,               
+            }}
+            domainPadding={{ x: props.margin.right/10, y: props.margin.top/10 }}
+            margin={{top: props.height/8, right: props.width/8, bottom: props.height/4, left: props.width/4 }}
+            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}  
+            containerComponent={
+              <VictoryZoomContainer
+                zoomDimension="x"
+              />
+            }
+          >
+
+            <VictoryBar horizontal
+              data={props.info_data}
               style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
               labels={({datum}) => datum.y}
               labelComponent={
@@ -209,7 +272,7 @@ export function InfoSourcesBarChart(props) {
       data = props.dataset;
     }
     var filtered_data = filterByVocation(data, activeVocation);
-    var info_data = calculateInformationSources(filtered_data);
+    var info_data = calculateInformationSources(filtered_data, true);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw*0.5;
@@ -349,7 +412,7 @@ export function InfoSourcesBarChartCompare(props) {
       data = props.dataset;
     }
     var filtered_data = filterByVocation(data, activeVocation);
-    var info_data = calculateInformationSources(filtered_data);
+    var info_data = calculateInformationSources(filtered_data, false);
 
     var labelText2 = "Information Sources for"
     
@@ -378,7 +441,7 @@ export function InfoSourcesBarChartCompare(props) {
       data2 = props.dataset;
     }
     var filtered_data2 = filterByVocation(data2, activeVocation2);
-    var info_data2 = calculateInformationSources(filtered_data2);
+    var info_data2 = calculateInformationSources(filtered_data2, false);
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -406,8 +469,8 @@ export function InfoSourcesBarChartCompare(props) {
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
         <div className='dual-display'>
-          <GetChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
-          <GetChart labelText={labelText2} info_data={info_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
+          <GetUnsortedChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
+          <GetUnsortedChart labelText={labelText2} info_data={info_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
         </div>
       </>
     );

@@ -373,12 +373,9 @@ export function AffectVictoryCompare(props) {
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
-
-  var questionText = "How often do the following priorities affect your management decisions for field crop production?";
   var titleText = "Frequency of Effect on Management Decisions";
   if (activeVocation === "Consultants") {
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
-    questionText = "How often do the following priorities affect your recommendations for field crop production?";
     titleText = "Frequency of Effect on Recommendations";
   }
 
@@ -392,21 +389,18 @@ export function AffectVictoryCompare(props) {
     titleText += " in the " + activeRegion + " Region";
   }
 
-  var data_sorted = sort_by_freq(data_by_affect)
-  const dataset_final = transformData(data_sorted)
+  // var data_sorted = sort_by_freq(data_by_affect)
+  const dataset_final = transformData(data_by_affect)
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText += " (n = " + calculateAverageResponses(data_by_affect) + ")";
   
 
   var data_filtered2 = filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2);
 
   var data_by_affect2 = calculateGrowerAffectTotalsForEachElement(data_filtered2);
-
-  var questionText2 = "How often do the following priorities affect your management decisions for field crop production?";
   var titleText2 = "Frequency of Effect on Management Decisions";
   if (activeVocation2 === "Consultants") {
     data_by_affect2 = calculateConsultantAffectTotalsForEachElement(data_filtered2);
-    questionText2 = "How often do the following priorities affect your recommendations for field crop production?";
     titleText2 = "Frequency of Effect on Recommendations";
   }
 
@@ -414,16 +408,16 @@ export function AffectVictoryCompare(props) {
     titleText2 += " for " + activeCrop2;
   }
   if (activeVocation !== "All") {
-    titleText += " " + activeVocation;
+    titleText2 += " " + activeVocation2;
   }
   if (activeRegion2 !== "All") {
     titleText2 += " in the " + activeRegion2 + " Region";
   }
 
-  var data_sorted2 = sort_by_freq(data_by_affect2)
-  const dataset_final2 = transformData(data_sorted2)
+  // var data_sorted2 = sort_by_freq(data_by_affect2)
+  const dataset_final2 = transformData(data_by_affect2)
 
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  titleText2 += " (n = " + calculateAverageResponses(data_by_affect2) + ")";
   
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -460,7 +454,7 @@ export function AffectVictoryCompare(props) {
   return (
     <>
     <div id='vis-question-label'>
-       <h2>{questionText}</h2>
+       <h2>How often do the following priorities affect your management decisions/recommendations for field crop production?</h2>
     </div>
     <div className="inline-child">
     <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>

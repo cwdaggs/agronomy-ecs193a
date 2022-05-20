@@ -6,7 +6,7 @@ import "typeface-abeezee";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
-function getInternetSources(data){
+function getInternetSources(data, sorted){
   var sources = [
     "Internet (websites)",
     "Blogs",
@@ -98,7 +98,9 @@ var colors =
   for(var l=0; l<totals.length; l++){
     modified_data.push({x: sources[l], y: totals[l]});
   }
-  modified_data.sort(function(a,b){return a.y - b.y;});
+  if (sorted) {
+    modified_data.sort(function(a,b){return a.y - b.y;});
+  }
   for(var l=0; l<modified_data.length; l++){
     modified_data[l].fill = colors[l];
   }
@@ -127,6 +129,67 @@ function GetChart(props){
             <VictoryBar horizontal
               data={props.graph_data}
               sortKey = "y"
+              style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
+              labels={({datum}) => datum.y}
+              labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:props.fontSize, fontFamily: 'Roboto'
+                  }}
+                  flyoutHeight={25}
+                  flyoutWidth={40}    
+                />
+            }
+            />
+            <VictoryAxis dependentAxis
+              label = {props.labelText + "(n = " + props.filtered_data.length + ")"}
+              style={{
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: props.fontSize*2, padding: 50, fontFamily: 'Roboto'}
+              }}
+            />
+            <VictoryAxis
+              label = {"Online Sources"}
+              style={{
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'}
+              }}
+            tickLabelComponent={       
+              <VictoryLabel    
+                textAnchor="end"
+              />   
+            }
+            />
+          </VictoryChart>
+        </div>
+  )
+}
+
+function GetUnsortedChart(props){
+
+  return(
+      <div class='visualization-window'>
+          
+          <VictoryChart height={props.height} width={props.width}
+            domainPadding={{ x: (props.width>=props.mobileWidth) ? props.margin.right/10 : 0, y:props.margin.top/10 }}
+            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}   
+            animate={{duration: 800}}
+            containerComponent={
+              <VictoryZoomContainer
+                zoomDimension="x"
+              />
+            }
+          >
+            {/* <VictoryLabel 
+            x={width/2 - 300} 
+            y={80}
+            style ={{fontSize:fontSize +10}}/> */}
+            <VictoryBar horizontal
+              data={props.graph_data}
               style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
               labels={({datum}) => datum.y}
               labelComponent={
@@ -233,7 +296,7 @@ export function InternetSourcesBarChart(props) {
       labelText = "UCCE Engagement Frequency for " + activeVocation + " (crop and region do not apply)" 
     }
     var filtered_data = filterByVocation(data, activeVocation);
-    var graph_data = getInternetSources(filtered_data);
+    var graph_data = getInternetSources(filtered_data, true);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw*0.5;
@@ -345,7 +408,7 @@ export function InternetSourcesBarChartCompare(props) {
       labelText = "UCCE Engagement Frequency for " + activeVocation + " (crop and region do not apply)" 
     }
     var filtered_data = filterByVocation(data, activeVocation);
-    var graph_data = getInternetSources(filtered_data);
+    var graph_data = getInternetSources(filtered_data, false);
 
     
     var labelText2 = "Internet Sources for"
@@ -376,7 +439,7 @@ export function InternetSourcesBarChartCompare(props) {
       labelText2 = "UCCE Engagement Frequency for " + activeVocation2 + " (crop and region do not apply)" 
     }
     var filtered_data2 = filterByVocation(data2, activeVocation2);
-    var graph_data2 = getInternetSources(filtered_data2);
+    var graph_data2 = getInternetSources(filtered_data2, false);
 
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -406,8 +469,8 @@ export function InternetSourcesBarChartCompare(props) {
         </div>
         
         <div className='dual-display'>
-          <GetChart labelText={labelText} graph_data={graph_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
-          <GetChart labelText={labelText2} graph_data={graph_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
+          <GetUnsortedChart labelText={labelText} graph_data={graph_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
+          <GetUnsortedChart labelText={labelText2} graph_data={graph_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
         </div>
       </>
       );

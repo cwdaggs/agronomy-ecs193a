@@ -315,16 +315,16 @@ export function ConcernsVictoryCompare(props) {
 
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
-  var data_sorted = sort_by_very(data_by_concern);
-  const dataset = transformData(data_sorted);
+  // var data_sorted = sort_by_very(data_by_concern);
+  const dataset = transformData(data_by_concern);
 
   var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
   var data_by_concern2 = calculateConcernTotalsForEachElement(data_filtered2);
-  var data_sorted2 = sort_by_very(data_by_concern2);
-  const dataset2 = transformData(data_sorted2);
+  // var data_sorted2 = sort_by_very(data_by_concern2);
+  const dataset2 = transformData(data_by_concern2);
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  titleText += " (n = " + calculateAverageResponses(data_by_concern) + ")";
+  titleText2 += " (n = " + calculateAverageResponses(data_by_concern2) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
