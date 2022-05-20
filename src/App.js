@@ -99,7 +99,7 @@ export default function App() {
             <Route path=":vocation/:crop/:region" element={<PriorityConcerns dataset={dataset}/>}/>
           </Route>
           <Route path="Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}>
-            <Route path=":crop" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
+            <Route path=":crop/:region" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
           </Route>
           <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<AffectVictory dataset={dataset}/>}/>

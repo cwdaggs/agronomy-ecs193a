@@ -40,7 +40,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
     var modified_data = []
     const myMap = new Map()
     for (var farmer in data) {
-      console.log(data[farmer]);
+      //console.log(data[farmer]);
       const reasons = String(data[farmer][filter]).split(',')
       for (var reason in reasons) {
         var key = reasons[reason]
@@ -67,6 +67,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
 function parseURL(baseURL, path) {
   var pathname = path;
   var crop = "All";
+  var region = "All";
   var baseAll = true;
   const cropChoices = [
     "All", 
@@ -81,6 +82,11 @@ function parseURL(baseURL, path) {
     "Sunflower", 
     "Wheat"
   ];
+
+  console.log(pathname);
+
+  const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
     const filters = pathname.split("/");
@@ -89,8 +95,13 @@ function parseURL(baseURL, path) {
       crop = filters[0];
       baseAll = false;
     }
-  } 
-  return {crop: crop, baseAll: baseAll};
+    if (filters[1] !== "Select%20Region" && regionTypes.includes(filters[1])) {
+      region = filters[1];
+      baseAll = false;
+    }
+  }
+  //console.log(crop, region);
+  return {crop: crop, region: region, baseAll: baseAll};
 }
   
 
@@ -148,16 +159,17 @@ function GetChart(props){
 export function PrimaryGrowingReasons(props) {
     
   const baseURL = "/results/Growing%20Reasons";
-  // console.log(useLocation().pathname);
   const filter = parseURL(baseURL, useLocation().pathname);
+
   const [active, setActive] = useState(filter.crop);
-  // CREATE NEW REGION STATE AND BUTTON
-  // const [activeRegion, setActiveRegion] = useState(filter.region);
-  const region = "NSJV";
-  // console.log(active);
+  const [activeRegion, setActiveRegion] = useState(filter.region);
 
   function changeFunc(newValue){
     setActive(newValue);
+  }
+
+  function changeRegionFunc(newValue){
+    setActiveRegion(newValue);
   }
 
   if (!props.dataset) {
@@ -169,7 +181,7 @@ export function PrimaryGrowingReasons(props) {
     titleText += " Crops"
   }
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), region), "Growers")
+  var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
   var legend_data = []
   var n = 0
@@ -224,7 +236,7 @@ export function PrimaryGrowingReasons(props) {
       <h2>What are the primary reasons you grow the following field crops?</h2>
     </div>
     <div className="inline-child">
-      <OnlyCrops changeFunc={changeFunc} active={active} baseAll={filter.baseAll}/>
+      <OnlyCrops changeFunc={changeFunc} changeRegionFunc={changeRegionFunc} active={active} activeRegion={activeRegion} baseAll={filter.baseAll}/>
     </div>
 
     <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
@@ -235,9 +247,7 @@ export function PrimaryGrowingReasons(props) {
 export function PrimaryGrowingReasonsCompare(props) {
     
   const baseURL = "/results/compare/Growing%20Reasons";
-  // console.log(useLocation().pathname);
   const filter = parseCropURLCompare(baseURL, useLocation().pathname, ["All"]);
-  console.log(filter)
   const [active, setActive] = useState(filter.crop1);
   const [active2, setActive2] = useState(filter.crop2);
   // console.log(active);

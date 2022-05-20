@@ -30,16 +30,28 @@ function DetermineIcon(type) {
 }
 
 export function OnlyCrops(props) {
+  console.log(props);
   var stateString = "";
+  var stateRegion = "";
+
   if (props.baseAll) {
     stateString = "Select Crop";
+    stateRegion = "Select Region";
   } else {
     stateString = props.active;
+    stateRegion = props.activeRegion;
   }
+
+  
+  // if (types.includes(props.activeRegionOrCrop)) {
+  //   stateRegion = "Select Region";
+  // }
+
   const [activeName, setActiveName] = useState(stateString);
+  const [activeRegionName, setActiveRegionName] = useState(stateRegion);
   const preLocation = useLocation().pathname.split("/");
   var location = "/" + preLocation[1] + "/" + preLocation[2];
-  // console.log(location);
+  //console.log(location);
 
   const types = [
     "All", 
@@ -54,6 +66,12 @@ export function OnlyCrops(props) {
     "Sunflower", 
     "Wheat"
   ];
+
+  const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
+  
+
+
   return (
     <div className="inline-child">
       <div className="flex-parent">
@@ -67,7 +85,7 @@ export function OnlyCrops(props) {
             {" "}
             {types.map(type => (
               <Link style={{ textDecoration: 'none' }} 
-                    to={location + "/" + type}
+                    to={location + "/" + type + "/" + activeRegionName}
                     onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
               >
                 <SubA 
@@ -81,6 +99,32 @@ export function OnlyCrops(props) {
             ))}
           </DropDownContent>
           </DropDownLi>
+
+          <DropDownLi>
+                    <Dropbtn>
+                        {activeRegionName + " "}
+                        {<IoMdArrowDropdown/>}
+                    </Dropbtn>
+                    <DropDownContent>
+                    {" "}
+                    {regionTypes.map(type => (
+                        <Link style={{ textDecoration: 'none' }} 
+                                to={location + "/" + activeName + "/" + type}
+                                onClick={() =>  {props.changeRegionFunc(type);
+                                    setActiveRegionName(type); 
+                                    }}
+                        >
+                            <SubA 
+                                key={type}
+                                active={props.activeRegionOrCrop === type}
+                            >
+                                {" " + type}  
+                            </SubA>
+                        </Link>
+                        ))}
+                    </DropDownContent>
+                </DropDownLi>
+
         </StyledUl>
       </div>
       </div>     
