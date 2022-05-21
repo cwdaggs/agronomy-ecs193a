@@ -417,19 +417,20 @@ export function parseURL(baseURL, path, vocationArray) {
 
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
+    pathname = pathname.replaceAll("%20", " ");
     const filters = pathname.split("/");
     filters.shift();
-    if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
+    if (filters[0] !== "Select Vocation" && vocationArray.includes(filters[0])) {
       vocation = filters[0];
       baseAll = false;
     }
     
-    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+    if (filters[1] === "Select Crop" && filters[2] === "Select Region") {
       cropOrRegion = "All";
-    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
+    } else if (filters[1] === "Select Crop" && regionChoices.includes(filters[2])){
       cropOrRegion = filters[2].replaceAll("%20", " ");
       baseAll = false;
-    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
+    } else if (filters[2] === "Select Region" && cropChoices.includes(filters[1])){
       cropOrRegion = filters[1].replaceAll("%20", " ");
       baseAll = false;
     }
@@ -467,22 +468,22 @@ export function parseCropURLCompare(baseURL, path){
     const filters = pathname.split("/");
     filters.shift();
 
-    if (filters[0] !== "Select%20Crop" && cropChoices.includes(filters[0])) {
+    if (filters[0] !== "Select Crop" && cropChoices.includes(filters[0])) {
       crop1 = filters[0].replaceAll("%20", " ");
       baseAll = false;
     }
 
-    if (filters[1] !== "Compare%20Crop" && cropChoices.includes(filters[1])) {
+    if (filters[1] !== "Compare Crop" && cropChoices.includes(filters[1])) {
       crop2 = filters[1].replaceAll("%20", " ");
       baseAll = false;
     }
 
-    if (filters[2] !== "Select%20Region" && regionTypes.includes(filters[2])) {
+    if (filters[2] !== "Select Region" && regionTypes.includes(filters[2])) {
       region1 = filters[2];
       baseAll = false;
     }
 
-    if (filters[3] !== "Select%20Region" && regionTypes.includes(filters[3])) {
+    if (filters[3] !== "Select Region" && regionTypes.includes(filters[3])) {
       region2 = filters[3];
       baseAll = false;
     }
@@ -517,34 +518,35 @@ export function parseURLCompare(baseURL, path, vocationArray) {
 
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
+    pathname = pathname.replaceAll("%20", " ");
     const filters = pathname.split("/");
     filters.shift();
-    if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
+    if (filters[0] !== "Select Vocation" && vocationArray.includes(filters[0])) {
       vocation = filters[0];
       baseAll = false;
     }
     
-    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+    if (filters[1] === "Select Crop" && filters[2] === "Select Region") {
       cropOrRegion = "All";
-    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
+    } else if (filters[1] === "Select Crop" && regionChoices.includes(filters[2])){
       cropOrRegion = filters[2].replaceAll("%20", " ");
       baseAll = false;
-    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
+    } else if (filters[2] === "Select Region" && cropChoices.includes(filters[1])){
       cropOrRegion = filters[1].replaceAll("%20", " ");
       baseAll = false;
     }
 
-    if (filters[3] !== "Compare%20Vocation" && vocationArray.includes(filters[3])) {
+    if (filters[3] !== "Compare Vocation" && vocationArray.includes(filters[3])) {
       vocation2 = filters[3];
       baseAll = false;
     }
     
-    if (filters[4] === "Compare%20Crop" && filters[5] === "Compare%20Region") {
+    if (filters[4] === "Compare Crop" && filters[5] === "Compare Region") {
       cropOrRegion2 = "All";
-    } else if (filters[4] === "Compare%20Crop"  && vocationArray.includes(filters[5])){
+    } else if (filters[4] === "Compare Crop"  && vocationArray.includes(filters[5])){
       cropOrRegion2 = filters[5].replaceAll("%20", " ");
       baseAll = false;
-    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[4])){
+    } else if (filters[2] === "Select Region" && cropChoices.includes(filters[4])){
       cropOrRegion2 = filters[4].replaceAll("%20", " ");
       baseAll = false;
     }
