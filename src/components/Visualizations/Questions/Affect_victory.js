@@ -237,7 +237,6 @@ export function AffectVictory(props) {
     "Sunflower", 
     "Wheat"
   ];
-
   
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
@@ -252,16 +251,12 @@ export function AffectVictory(props) {
     titleText = "Frequency of Effect on Recommendations";
   }
 
-  if (crops.includes(activeCrop)) {
+  if (activeCrop !== "All") {
     titleText += " for " + activeCrop;
-  }
-  if (activeVocation !== "All") {
-    titleText += " " + activeVocation;
   }
   if (activeRegion !== "All") {
     titleText += " in the " + activeRegion + " Region";
   }
-
 
   var data_sorted = sort_by_freq(data_by_affect)
   const dataset_final = transformData(data_sorted)
@@ -379,11 +374,8 @@ export function AffectVictoryCompare(props) {
     titleText = "Frequency of Effect on Recommendations";
   }
 
-  if (crops.includes(activeCrop)) {
+  if (activeCrop !== "All") {
     titleText += " for " + activeCrop;
-  }
-  if (activeVocation !== "All") {
-    titleText += " " + activeVocation;
   }
   if (activeRegion !== "All") {
     titleText += " in the " + activeRegion + " Region";
@@ -404,11 +396,8 @@ export function AffectVictoryCompare(props) {
     titleText2 = "Frequency of Effect on Recommendations";
   }
 
-  if (crops.includes(activeCrop2)) {
+  if (activeCrop2 !== "All") {
     titleText2 += " for " + activeCrop2;
-  }
-  if (activeVocation !== "All") {
-    titleText2 += " " + activeVocation2;
   }
   if (activeRegion2 !== "All") {
     titleText2 += " in the " + activeRegion2 + " Region";

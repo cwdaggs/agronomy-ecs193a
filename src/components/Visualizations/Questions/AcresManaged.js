@@ -168,14 +168,11 @@ export function AcresManagedBarChart(props) {
     } else if (activeVocation === "Consultants") {
       labelText = "Acres Consulted";
     }
-    if(activeRegion !== "All" || activeCrop !== "All"){
-      labelText += " for "
-    }
     if(activeRegion !== "All"){
-      labelText += activeRegion + " "
+      labelText = activeRegion + " " + labelText;
     }
     if(activeCrop !== "All"){
-      labelText += activeCrop
+      labelText += " for " + activeCrop;
     }
     
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -257,14 +254,11 @@ export function AcresManagedBarChartCompare(props) {
   } else if (activeVocation === "Consultants") {
     labelText = "Acres Consulted";
   }
-  if(activeRegion !== "All" || activeCrop !== "All"){
-    labelText += " for "
-  }
   if(activeRegion !== "All"){
-    labelText += activeRegion + " "
+    labelText = activeRegion + " " + labelText;
   }
   if(activeCrop !== "All"){
-    labelText += activeCrop
+    labelText += " for " + activeCrop;
   }
 
   var labelText2 = "Acres";
@@ -273,14 +267,11 @@ export function AcresManagedBarChartCompare(props) {
   } else if (activeVocation2 === "Consultants") {
     labelText2 = "Acres Consulted";
   }
-  if(activeRegion2 !== "All" || activeCrop2 !== "All"){
-    labelText2 += " for "
-  }
   if(activeRegion2 !== "All"){
-    labelText2 += activeRegion2 + " "
+    labelText2 += activeRegion2 + " " + labelText2;
   }
   if(activeCrop2 !== "All"){
-    labelText2 += activeCrop2
+    labelText2 += " for " + activeCrop2;
   }
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)

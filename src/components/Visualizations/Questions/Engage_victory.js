@@ -200,23 +200,26 @@ export function EngageVictory(props) {
   ];
 
   var titleText = "UCCE Engagement Frequency";
-  if (crops.includes(activeCrop)) {
-    titleText += " for " + activeRegion + " " + activeCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeCrop)) {
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
+    } else {
       titleText += " " + activeVocation;
     }
   }
-
-  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-
-  if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-    data = props.dataset;
-
-    titleText = "UCCE Engagement Frequency for " + activeVocation + " (crop and region do not apply)" 
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var data_filtered = filterByVocation(data, activeVocation)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_freq(data_by_engage)
@@ -323,23 +326,26 @@ export function EngageVictoryCompare(props) {
   ];
 
   var titleText2 = "UCCE Engagement Frequency";
-  if (crops.includes(activeCrop2)) {
-    titleText2 += " for " + activeRegion2 + " " + activeCrop2;
+  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+    titleText2 += " for";
+  }
+  if (activeCrop2 !== "All") {
+    if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
+      titleText2 += " " + activeCrop2;
+    }
   }
   if (activeVocation2 !== "All") {
-    if (crops.includes(activeCrop2)) {
+    if (activeVocation2 === "Other") {
+      titleText2 += " " + "Other Vocations";
+    } else {
       titleText2 += " " + activeVocation2;
     }
   }
-
-  var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
-
-  if ((activeVocation2 === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeCrop2)) {
-    data2 = props.dataset;
-
-    titleText2 = "UCCE Engagement Frequency for " + activeVocation2 + " (crop and region do not apply)" 
+  if (activeRegion2 !== "All") {
+    titleText2 += " in the " + activeRegion2 + " Region";
   }
 
+  var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
   var data_filtered2 = filterByVocation(data2, activeVocation2)
   var data_by_engage2 = calculateEngageTotalsForEachElement(data_filtered2)
   // var data_sorted2 = sort_by_freq(data_by_engage2)
@@ -347,25 +353,27 @@ export function EngageVictoryCompare(props) {
 
   titleText2 += " (n = " + calculateAverageResponses(data_by_engage2) + ")";
 
-
   var titleText = "UCCE Engagement Frequency";
-  if (crops.includes(activeCrop)) {
-    titleText += " for " + activeRegion + " " + activeCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeCrop)) {
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
+    } else {
       titleText += " " + activeVocation;
     }
   }
-
-  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-
-  if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-    data = props.dataset;
-
-    titleText = "UCCE Engagement Frequency for " + activeVocation + " (crop and region do not apply)" 
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var data_filtered = filterByVocation(data, activeVocation)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   // var data_sorted = sort_by_freq(data_by_engage)
@@ -401,7 +409,6 @@ export function EngageVictoryCompare(props) {
     "#C3EFB8",
     "#D8F4CC"
   ]
-
 
   const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
 

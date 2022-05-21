@@ -189,13 +189,17 @@ export function AmountVictory(props) {
   ];
 
   var titleText = "Level of Value";
-  if (crops.includes(activeCrop)) {
-    titleText += " for " + activeRegion + " " + activeCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    titleText += " " + activeCrop;
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeCrop)) {
-      titleText += " " + activeVocation;
-    }
+    titleText += " " + activeVocation;
+  }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
@@ -317,13 +321,17 @@ export function AmountVictoryCompare(props) {
   ];
 
   var titleText = "Level of Value";
-  if (crops.includes(activeCrop)) {
-    titleText += " for " + activeRegion + " " + activeCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    titleText += " " + activeCrop;
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeCrop)) {
-      titleText += " " + activeVocation;
-    }
+    titleText += " " + activeVocation;
+  }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
@@ -334,13 +342,17 @@ export function AmountVictoryCompare(props) {
 
 
   var titleText2 = "Level of Value";
-  if (crops.includes(activeCrop2)) {
-    titleText2 += " for " + activeRegion2 + " " + activeCrop2;
+  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+    titleText2 += " for";
+  }
+  if (activeCrop2 !== "All") {
+    titleText2 += " " + activeCrop2;
   }
   if (activeVocation2 !== "All") {
-    if (crops.includes(activeCrop2)) {
-      titleText2 += " " + activeVocation2;
-    }
+    titleText2 += " " + activeVocation2;
+  }
+  if (activeRegion2 !== "All") {
+    titleText2 += " in the " + activeRegion2 + " Region";
   }
 
   var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2)

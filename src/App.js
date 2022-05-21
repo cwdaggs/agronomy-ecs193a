@@ -77,7 +77,8 @@ export default function App() {
         <Route path="results/" element={
           <div className='vis-page'>
             <div id="visTop">
-              Select a topic to view responses for the respective question. Responses can then be sorted by vocation and crop/region. Hovering over a data element will provide more detailed information.
+              Select a topic to view responses for the respective question. Responses can then be sorted by vocation, crop, and 
+              region. Hovering over a data element will provide more detailed information.
             </div>
             <div id="compare-box">
               <NavLink to="/results/compare">
@@ -124,7 +125,8 @@ export default function App() {
         <Route path="results/compare/" element={
           <div className='vis-page'>
             <div id="visTop">
-              Select a topic to view responses for the respective question. Responses can then be sorted by vocation and crop/region. Hovering over a data element will provide more detailed information.
+              Select a topic to view responses for the respective question. Responses can then be sorted by vocation, crop, and 
+              region. Hovering over a data element will provide more detailed information.
             </div>
             <div id="compare-box">
               <NavLink to="/results">

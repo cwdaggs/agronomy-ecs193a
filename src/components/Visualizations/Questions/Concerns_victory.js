@@ -133,7 +133,7 @@ export function ConcernsVictory(props) {
     "Wheat"
   ];
 
-  const vocationArray = ["All", "Growers", "Consultants"];
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   const baseURL = "/results/Production%20Concerns";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -157,33 +157,29 @@ export function ConcernsVictory(props) {
   }
 
   var titleText = "Level of Concern";
-  if (crops.includes(activeCrop)) {
-    titleText += " for " + activeRegion + " " + activeCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeCrop)) {
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
+    } else {
       titleText += " " + activeVocation;
     }
+  }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
   var data_sorted = sort_by_very(data_by_concern);
   const dataset = transformData(data_sorted);
-
-  var titleText = "Amount of Concern ";
-
-  if (crops.includes(activeCrop)) {
-    titleText += " for " + activeCrop;
-  }
-
-  if(activeVocation !== "All"){
-    titleText += " " + activeVocation;
-  }
-
-  if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
-  }
 
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
 
@@ -251,7 +247,7 @@ export function ConcernsVictoryCompare(props) {
     "Wheat"
   ];
 
-  const vocationArray = ["All", "Growers", "Consultants"];
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   const baseURL = "/results/compare/Production%20Concerns";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
 
@@ -292,23 +288,43 @@ export function ConcernsVictoryCompare(props) {
   }
 
   var titleText = "Level of Concern";
-  if (crops.includes(activeCrop)) {
-    titleText += " for " + activeRegion + " " + activeCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeCrop)) {
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
+    } else {
       titleText += " " + activeVocation;
     }
   }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
+  }
 
   var titleText2 = "Level of Concern";
-  if (crops.includes(activeCrop2)) {
-    titleText2 += " for " + activeRegion2 + " " + activeCrop2;
+  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+    titleText2 += " for";
+  }
+  if (activeCrop2 !== "All") {
+    if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
+      titleText2 += " " + activeCrop2;
+    }
   }
   if (activeVocation2 !== "All") {
-    if (crops.includes(activeCrop2)) {
+    if (activeVocation2 === "Other") {
+      titleText2 += " " + "Other Vocations";
+    } else {
       titleText2 += " " + activeVocation2;
     }
+  }
+  if (activeRegion2 !== "All") {
+    titleText2 += " in the " + activeRegion2 + " Region";
   }
 
   var data2 = props.dataset

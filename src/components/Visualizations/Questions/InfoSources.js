@@ -138,7 +138,7 @@ function GetChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + "(n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -199,7 +199,7 @@ function GetUnsortedChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + "(n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -230,7 +230,7 @@ function GetUnsortedChart(props){
 
 export function InfoSourcesBarChart(props) {
 
-    const vocationArray = ["All", "Consultants", "Growers"];
+    const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
     const baseURL = "/results/Information%20Sources";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
@@ -268,9 +268,6 @@ export function InfoSourcesBarChart(props) {
     ];
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      data = props.dataset;
-    }
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data, true);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -290,33 +287,25 @@ export function InfoSourcesBarChart(props) {
       fontSize = mobileFontSize;
     }
 
-    var labelText = "Information Sources for"
-    
-    if(activeRegion !== "All"){
-      labelText += " " + activeRegion + " ";
+    var labelText = "Information Sources"
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      labelText += " for";
     }
-
-    if(activeCrop !== "All"){
-      labelText += " " + activeCrop + " ";
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        labelText += " " + activeCrop;
+      }
     }
-
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      labelText += activeVocation;
-    } else {
-      if (activeVocation !== "All") {
+    if (activeVocation !== "All") {
+      if (activeVocation === "Other") {
+        labelText += " " + "Other Vocations";
+      } else {
         labelText += " " + activeVocation;
       }
     }
-    
-    if(labelText === "Information Sources for"){
-      labelText += " All "
+    if (activeRegion !== "All") {
+      labelText += " in the " + activeRegion + " Region";
     }
-
-
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      data = props.dataset;
-    }
-
 
     return (
       <>
@@ -385,61 +374,51 @@ export function InfoSourcesBarChartCompare(props) {
       "Wheat"
     ];
 
-    var labelText = "Information Sources for"
-    
-    if(activeRegion !== "All"){
-      labelText += " " + activeRegion + " ";
+    var labelText = "Information Sources"
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      labelText += " for";
     }
-
-    if(activeCrop !== "All"){
-      labelText += " " + activeCrop + " ";
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        labelText += " " + activeCrop;
+      }
     }
-
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      labelText += activeVocation;
-    } else {
-      if (activeVocation !== "All") {
+    if (activeVocation !== "All") {
+      if (activeVocation === "Other") {
+        labelText += " " + "Other Vocations";
+      } else {
         labelText += " " + activeVocation;
       }
     }
-    
-    if(labelText === "Information Sources for"){
-      labelText += " All "
+    if (activeRegion !== "All") {
+      labelText += " in the " + activeRegion + " Region";
     }
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      data = props.dataset;
-    }
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data, false);
 
-    var labelText2 = "Information Sources for"
-    
-    if(activeRegion2 !== "All"){
-      labelText2 += " " + activeRegion2 + " ";
+    var labelText2 = "Information Sources"
+    if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+      labelText2 += " for";
     }
-
-    if(activeCrop2 !== "All"){
-      labelText2 += " " + activeCrop2 + " ";
+    if (activeCrop2 !== "All") {
+      if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
+        labelText2 += " " + activeCrop2;
+      }
     }
-
-    if ((activeVocation2 === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeCrop2)) {
-      labelText2 += activeVocation2;
-    } else {
-      if (activeVocation !== "All") {
+    if (activeVocation2 !== "All") {
+      if (activeVocation2 === "Other") {
+        labelText2 += " " + "Other Vocations";
+      } else {
         labelText2 += " " + activeVocation2;
       }
     }
-    
-    if(labelText2 === "Information Sources for"){
-      labelText2 += " All "
+    if (activeRegion2 !== "All") {
+      labelText2 += " in the " + activeRegion2 + " Region";
     }
 
     var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
-    if ((activeVocation === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeCrop2)) {
-      data2 = props.dataset;
-    }
     var filtered_data2 = filterByVocation(data2, activeVocation2);
     var info_data2 = calculateInformationSources(filtered_data2, false);
 

@@ -142,7 +142,7 @@ function GetChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + "(n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -203,7 +203,7 @@ function GetUnsortedChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + "(n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -268,33 +268,27 @@ export function InternetSourcesBarChart(props) {
       "Wheat"
     ];
 
-    var labelText = "Internet Sources for"
-    
-    if(activeRegion !== "All"){
-      labelText += " " + activeRegion + " ";
+    var labelText = "Internet Sources"
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      labelText += " for";
     }
-
-    if(activeCrop !== "All"){
-      labelText += " " + activeCrop + " ";
-    }
-
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      labelText += activeVocation;
-    } else {
-      if (activeVocation !== "All") {
-        labelText += " " + activeVocation + " ";
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        labelText += " " + activeCrop;
       }
     }
-    
-    if(labelText === "Information Sources for"){
-      labelText += " All "
+    if (activeVocation !== "All") {
+      if (activeVocation === "Other") {
+        labelText += " " + "Other Vocations";
+      } else {
+        labelText += " " + activeVocation;
+      }
+    }
+    if (activeRegion !== "All") {
+      labelText += " in the " + activeRegion + " Region";
     }
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      data = props.dataset;
-      labelText = "UCCE Engagement Frequency for " + activeVocation + " (crop and region do not apply)" 
-    }
     var filtered_data = filterByVocation(data, activeVocation);
     var graph_data = getInternetSources(filtered_data, true);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -380,67 +374,53 @@ export function InternetSourcesBarChartCompare(props) {
       "Wheat"
     ];
 
-    var labelText = "Internet Sources for"
-    
-    if(activeRegion !== "All"){
-      labelText += " " + activeRegion + " ";
+    var labelText = "Internet Sources";
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      labelText += " for";
     }
-
-    if(activeCrop !== "All"){
-      labelText += " " + activeCrop + " ";
-    }
-
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      labelText += activeVocation;
-    } else {
-      if (activeVocation !== "All") {
-        labelText += " " + activeVocation + " ";
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        labelText += " " + activeCrop;
       }
     }
-    
-    if(labelText === "Information Sources for"){
-      labelText += " All "
+    if (activeVocation !== "All") {
+      if (activeVocation === "Other") {
+        labelText += " " + "Other Vocations";
+      } else {
+        labelText += " " + activeVocation;
+      }
+    }
+    if (activeRegion !== "All") {
+      labelText += " in the " + activeRegion + " Region";
     }
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeCrop)) {
-      data = props.dataset;
-      labelText = "UCCE Engagement Frequency for " + activeVocation + " (crop and region do not apply)" 
-    }
     var filtered_data = filterByVocation(data, activeVocation);
     var graph_data = getInternetSources(filtered_data, false);
-
     
-    var labelText2 = "Internet Sources for"
-    
-    if(activeRegion2 !== "All"){
-      labelText2 += " " + activeRegion2 + " ";
+    var labelText2 = "Internet Sources"
+    if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+      labelText2 += " for";
     }
-
-    if(activeCrop2 !== "All"){
-      labelText2 += " " + activeCrop2 + " ";
-    }
-
-    if ((activeVocation2 === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeCrop2)) {
-      labelText2 += activeVocation2;
-    } else {
-      if (activeVocation2 !== "All") {
-        labelText2 += " " + activeVocation2 + " ";
+    if (activeCrop2 !== "All") {
+      if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
+        labelText2 += " " + activeCrop2;
       }
     }
-    
-    if(labelText2 === "Information Sources for"){
-      labelText2 += " All "
+    if (activeVocation2 !== "All") {
+      if (activeVocation2 === "Other") {
+        labelText2 += " " + "Other Vocations";
+      } else {
+        labelText2 += " " + activeVocation2;
+      }
+    }
+    if (activeRegion2 !== "All") {
+      labelText2 += " in the " + activeRegion2 + " Region";
     }
 
     var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
-    if ((activeVocation2 === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeCrop2)) {
-      data2 = props.dataset;
-      labelText2 = "UCCE Engagement Frequency for " + activeVocation2 + " (crop and region do not apply)" 
-    }
     var filtered_data2 = filterByVocation(data2, activeVocation2);
     var graph_data2 = getInternetSources(filtered_data2, false);
-
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
