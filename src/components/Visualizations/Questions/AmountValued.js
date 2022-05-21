@@ -130,6 +130,11 @@ function transformData(dataset) {
       return memo + curr[i].Total;
     }, 0);
   });
+  for (var i = 0; i < totals.length; i++) {
+    if (totals[i] === 0) {
+      totals[i] = 1;
+    }
+  }
   return dataset.map((data) => {
     return data.map((datum, i) => {
       return { x: datum.Value, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Value };
