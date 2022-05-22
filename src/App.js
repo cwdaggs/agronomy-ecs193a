@@ -65,7 +65,7 @@ export default function App() {
         </NavLink>
         <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
           <Tab>
-            UCCE
+            About UCCE
           </Tab>
         </a>
       </div>
