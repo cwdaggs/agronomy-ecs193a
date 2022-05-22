@@ -344,15 +344,16 @@ export function PriorityConcernsCompare(props) {
     <div id='vis-question-label'>
       <h2>What are the highest priority management challenges/concerns?</h2>
     </div>
-    <div className="inline-child">
-    <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-    </div>
-    <div  class='visualization-window'>
-      <div className="dual-display">
-      <GetChart titleText={titleText} width={width} height={height} fontSize={fontSize} margin={margin} colorScale={colorScale} data_by_reason={data_by_reason} legend_data={legend_data} n={n}/>
-      <GetChart titleText={titleText2} width={width} height={height} fontSize={fontSize} margin={margin} colorScale={colorScale} data_by_reason={data_by_reason2} legend_data={legend_data2} n={n2}/>
+
+      <div className='dual-display'>
+          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <div id="vis-a">
+            <GetChart titleText={titleText} width={width} height={height} fontSize={fontSize} margin={margin} colorScale={colorScale} data_by_reason={data_by_reason} legend_data={legend_data} n={n}/>
+          </div>
+          <div id="vis-b">
+            <GetChart titleText={titleText2} width={width} height={height} fontSize={fontSize} margin={margin} colorScale={colorScale} data_by_reason={data_by_reason2} legend_data={legend_data2} n={n2}/>
+          </div>
       </div>
-    </div>
     </>
   );
 }

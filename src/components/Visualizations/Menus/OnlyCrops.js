@@ -162,11 +162,9 @@ export function OnlyCrops(props) {
     const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
 
     return (
-      <div className="inline-child">
+      <>
         
-          <StyledUl>
-          <div className="flex-parent">
-            <div className="flex-child">
+        <div className="flex-child-1" id="button-a">
             <DropDownLi>
             <Dropbtn>
               {activeName + " "}
@@ -215,7 +213,7 @@ export function OnlyCrops(props) {
                     </DropDownContent>
                 </DropDownLi>
             </div>
-            <div className="flex-child">
+            <div className="flex-child-2" id="button-b"> 
             <DropDownLi>
             <Dropbtn>
               {activeName2 + " "}
@@ -264,9 +262,7 @@ export function OnlyCrops(props) {
                     </DropDownContent>
                 </DropDownLi>
             </div>
-          </div>
-          </StyledUl>
-        </div>  
+        </>  
       )
     }
   

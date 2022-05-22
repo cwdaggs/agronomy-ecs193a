@@ -37,7 +37,7 @@ function GetChart(props){
   var toolTipFontSize = fontSize;
 
   if(props.compare){
-    toolTipFontSize = fontSize * 1.5;
+    toolTipFontSize = fontSize + 1.5;
   }
 
   const [vis,setVis]=useState(<p id="vis-question-label">Click and drag on an area of points for more information.</p>);
@@ -500,13 +500,15 @@ export const PrioritySatisfaction = (props) => {
           <div id='vis-question-label'>
             <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
           </div>
-          <div className="inline-child">
-          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-          </div>
+
           <div className='dual-display'>
-            <GetChart data={data} title={titleText} compare={true}/>
-            <GetChart data={data2} title={titleText2} compare={true}/>
-          </div>
-  
+            <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+            <div id="vis-a">
+              <GetChart data={data} title={titleText} compare={true}/>
+            </div>
+            <div id="vis-b">
+              <GetChart data={data2} title={titleText2} compare={true}/>
+            </div>
+          </div>   
       </>
       )};

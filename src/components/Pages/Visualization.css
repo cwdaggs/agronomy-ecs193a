@@ -1,10 +1,12 @@
 .dual-display{
     display: flex;
+    flex-direction: column;
 }
-  
-.dual-display-child{
-    flex: 1;
-}
+
+#button-a { order: 1; padding: 20px;}
+#vis-a { order: 2; }
+#button-b { order: 3; padding: 20px;}
+#vis-b { order:  4; }
 
 .vis-buttons-parent {
     display: flex;
@@ -70,16 +72,4 @@
         height: auto;
         width:auto;
     }
-
-    .dual-display{
-        display: block;
-    }
-
-    .flex-child-1 {
-        justify-content: left;
-      }
-    
-      .flex-child-2 {
-        justify-content: right;
-      }
 }

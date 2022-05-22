@@ -44,7 +44,7 @@ function GetChart(props){
 
 var toolTipFontSize=props.fontSize;
 if(props.compare){
-  toolTipFontSize = props.fontSize * 3;
+  toolTipFontSize = props.fontSize + 3;
 }
 
   return(
@@ -387,14 +387,15 @@ export function ConcernsVictoryCompare(props) {
       <div id='vis-question-label'>
         <h2>In regards to the production of field crops in California, rate your concern for the following:</h2>
       </div>
-      <div className="inline-child">
-        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-      </div>
+
       <div className='dual-display'>
-
-          <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
-          <GetChart titleText={titleText2} dataset={dataset2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
-
+          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <div id="vis-a">
+            <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+          </div>
+          <div id="vis-b">
+            <GetChart titleText={titleText2} dataset={dataset2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+          </div>
       </div>
     </>
   );
