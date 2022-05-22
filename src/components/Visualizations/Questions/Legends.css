@@ -48,6 +48,25 @@
     background-color: #7ADE7F;
 }
 
+.legend-square {
+    width: 15px;
+    height: 15px;
+    margin-top: 8px;
+    border: 1px solid #000000;
+}
+
+#square-color-first {
+    background-color: rgba(0,128,0, 1);
+}
+  
+#square-color-second {
+    background-color: rgba(0,128,0, 0.5);
+}
+  
+#square-color-third {
+    background-color: rgba(255, 99, 71, 0.7);
+}
+
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
     .legend-circle {
         width: 10px;
@@ -56,6 +75,12 @@
         margin-top: 3px;
     }
       
+    .legend-square {
+        width: 10px;
+        height: 10px;
+
+    }
+
     .legend-value {
         padding: 5px;
     }
@@ -71,6 +96,12 @@
         height: 10px;
         border-radius: 10px;
         margin-top: 9px;
+    }
+
+    .legend-square {
+        width: 10px;
+        height: 10px;
+
     }
     
     #vis-legend {

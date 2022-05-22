@@ -1,5 +1,5 @@
 import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryZoomContainer } from 'victory';
-import {filterByCropOrRegion, parseURLCompare, parseURL, sort_by_freq} from '../UseData.js'
+import {filterByCropOrRegion, parseURLCompare, parseURL, sort_by_freq, filterByCrop, filterByRegion} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
@@ -94,6 +94,11 @@ function transformData(dataset) {
       return memo + curr[i].Total;
     }, 0);
   });
+  for (var i = 0; i < totals.length; i++) {
+    if (totals[i] === 0) {
+      totals[i] = 1;
+    }
+  }
   return dataset.map((data) => {
     return data.map((datum, i) => {
       return { x: datum.Affect, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Affect };
@@ -206,15 +211,20 @@ export function AffectVictory(props) {
   const baseURL = "/results/Priority%20Effect";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
-  }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
 
   if (!props.dataset) {
       return <pre>Loading...</pre>;
@@ -232,12 +242,13 @@ export function AffectVictory(props) {
     "Sunflower", 
     "Wheat"
   ];
-
   
-  var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
+  var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
+
   var questionText = "How often do the following priorities affect your management decisions for field crop production?";
+
   var titleText = "Frequency of Effect on Management Decisions";
   if (activeVocation === "Consultants") {
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
@@ -245,10 +256,11 @@ export function AffectVictory(props) {
     titleText = "Frequency of Effect on Recommendations";
   }
 
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for " + activeRegionOrCrop;
-  } else if (activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
+  if (activeCrop !== "All") {
+    titleText += " for " + activeCrop;
+  }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
   var data_sorted = sort_by_freq(data_by_affect)
@@ -293,7 +305,7 @@ export function AffectVictory(props) {
        <h2>{questionText}</h2>
     </div>
     <div className="inline-child">
-      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+    <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
     <>
       <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}></GetChart>
@@ -308,26 +320,36 @@ export function AffectVictoryCompare(props) {
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
   const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
-  const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
-  }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
 
   function vocationFunction2(newValue){
     setActiveVocation2(newValue);
   }
 
-  function regionOrCropFunction2(newValue) {
-    setActiveRegionOrCrop2(newValue);
-  }
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
+  }  
+
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue);
+  }  
 
   if (!props.dataset) {
       return <pre>Loading...</pre>;
@@ -348,43 +370,49 @@ export function AffectVictoryCompare(props) {
 
   
 
-  var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
+  var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
-  var questionText = "How often do the following priorities affect your management decisions for field crop production?";
   var titleText = "Frequency of Effect on Management Decisions";
-  var titleText2 = "Frequency of Effect on Management Decisions";
   if (activeVocation === "Consultants") {
     data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
-    questionText = "How often do the following priorities affect your recommendations for field crop production?";
     titleText = "Frequency of Effect on Recommendations";
   }
 
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for " + activeRegionOrCrop;
-  } else if (activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
+  if (activeCrop !== "All") {
+    titleText += " for " + activeCrop;
+  }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
-  var data_sorted = sort_by_freq(data_by_affect)
-  const dataset_final = transformData(data_sorted)
+  // var data_sorted = sort_by_freq(data_by_affect)
+  const dataset_final = transformData(data_by_affect)
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText += " (n = " + calculateAverageResponses(data_by_affect) + ")";
+  
 
-  var data_filtered2 = filterByCropOrRegion(props.dataset, activeRegionOrCrop2)
+  var data_filtered2 = filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2);
 
   var data_by_affect2 = calculateGrowerAffectTotalsForEachElement(data_filtered2);
-
-  if (crops.includes(activeRegionOrCrop2)) {
-    titleText2 += " for " + activeRegionOrCrop2;
-  } else if (activeRegionOrCrop2 !== "All") {
-    titleText2 += " in the " + activeRegionOrCrop2 + " Region";
+  var titleText2 = "Frequency of Effect on Management Decisions";
+  if (activeVocation2 === "Consultants") {
+    data_by_affect2 = calculateConsultantAffectTotalsForEachElement(data_filtered2);
+    titleText2 = "Frequency of Effect on Recommendations";
   }
 
-  var data_sorted2 = sort_by_freq(data_by_affect2)
-  const dataset_final2 = transformData(data_sorted2)
+  if (activeCrop2 !== "All") {
+    titleText2 += " for " + activeCrop2;
+  }
+  if (activeRegion2 !== "All") {
+    titleText2 += " in the " + activeRegion2 + " Region";
+  }
 
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  // var data_sorted2 = sort_by_freq(data_by_affect2)
+  const dataset_final2 = transformData(data_by_affect2)
+
+  titleText2 += " (n = " + calculateAverageResponses(data_by_affect2) + ")";
+  
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -420,14 +448,14 @@ export function AffectVictoryCompare(props) {
   return (
     <>
     <div id='vis-question-label'>
-       <h2>{questionText}</h2>
+       <h2>How often do the following priorities affect your management decisions/recommendations for field crop production?</h2>
     </div>
     <div className="inline-child">
-      <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+    <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
     <div className='dual-display'>
-      <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
-      <GetChart titleText={titleText2} dataset_final={dataset_final2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
+      <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+      <GetChart titleText={titleText2} dataset_final={dataset_final2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
     </div>
     </>
   );

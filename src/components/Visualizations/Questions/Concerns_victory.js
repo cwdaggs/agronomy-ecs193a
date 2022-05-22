@@ -1,6 +1,6 @@
 
 import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion, filterByVocation} from '../UseData.js'
+import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion, filterByVocation, filterByRegion, filterByCrop} from '../UseData.js'
 import "typeface-abeezee";
 import React, { useState} from "react";
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
@@ -15,6 +15,11 @@ function transformData(dataset) {
       return memo + curr[i].Total;
     }, 0);
   });
+  for (var i = 0; i < totals.length; i++) {
+    if (totals[i] === 0) {
+      totals[i] = 1;
+    }
+  }
   return dataset.map((data) => {
     return data.map((datum, i) => {
       return { x: String(datum.Concern), y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Concern };
@@ -36,9 +41,15 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
+
+var toolTipFontSize=props.fontSize;
+if(props.compare){
+  toolTipFontSize = props.fontSize * 3;
+}
+
   return(
     <div className='dual-display-child'>
-    <div id="vis-legend">
+      <div id="vis-legend">
         <div id="legend-title">
           {props.titleText}
         </div>
@@ -76,10 +87,10 @@ function GetChart(props){
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:props.fontSize, fontFamily: 'Roboto'
+                        fontSize:toolTipFontSize, fontFamily: 'Roboto'
                       }}
-                      flyoutHeight={25}
-                      flyoutWidth={40}    
+                      flyoutHeight={toolTipFontSize + 10}
+                      flyoutWidth={toolTipFontSize*2}    
                     />
                 }/>;
             })}
@@ -127,18 +138,23 @@ export function ConcernsVictory(props) {
     "Wheat"
   ];
 
-  const vocationArray = ["All", "Growers", "Consultants"];
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   const baseURL = "/results/Production%20Concerns";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
   }  
 
   if ((!props.dataset)) {
@@ -146,25 +162,32 @@ export function ConcernsVictory(props) {
   }
 
   var titleText = "Level of Concern";
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for " + activeRegionOrCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
   }
-  if (activeVocation !== "All") {
-    if (crops.includes(activeRegionOrCrop)) {
-      titleText += " " + activeVocation;
-    } else {
-      titleText += " for " + activeVocation;
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
     }
   }
-  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
+  if (activeVocation !== "All") {
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
+    } else {
+      titleText += " " + activeVocation;
+    }
+  }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+  var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
   var data_sorted = sort_by_very(data_by_concern);
   const dataset = transformData(data_sorted);
+
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
@@ -200,14 +223,14 @@ export function ConcernsVictory(props) {
     fontSize = mobileFontSize;
   }
   const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]
-
+  
   return (
     <>
       <div id='vis-question-label'>
         <h2>In regards to the production of field crops in California, rate your concern for the following:</h2>
       </div>
       <div className="inline-child">
-          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
     </>
@@ -229,78 +252,100 @@ export function ConcernsVictoryCompare(props) {
     "Wheat"
   ];
 
-  const vocationArray = ["All", "Growers", "Consultants"];
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   const baseURL = "/results/compare/Production%20Concerns";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
+
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
+
   const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
-  const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
   }  
 
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }
+  
   function vocationFunction2(newValue){
     setActiveVocation2(newValue);
   }
 
-  function regionOrCropFunction2(newValue) {
-    setActiveRegionOrCrop2(newValue);
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
+  }  
+
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue);
   }  
 
   if ((!props.dataset)) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText2 = "Level of Concern";
-  if (crops.includes(activeRegionOrCrop2)) {
-    titleText2 += " for " + activeRegionOrCrop2;
-  }
-  if (activeVocation2 !== "All") {
-    if (crops.includes(activeRegionOrCrop2)) {
-      titleText2 += " " + activeVocation2;
-    } else {
-      titleText2 += " for " + activeVocation2;
-    }
-  }
-  if (!crops.includes(activeRegionOrCrop2) && activeRegionOrCrop2 !== "All") {
-    titleText2 += " in the " + activeRegionOrCrop2 + " Region";
-  }
-
   var titleText = "Level of Concern";
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for " + activeRegionOrCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeRegionOrCrop)) {
-      titleText += " " + activeVocation;
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
     } else {
-      titleText += " for " + activeVocation;
+      titleText += " " + activeVocation;
     }
   }
-  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
+  }
+
+  var titleText2 = "Level of Concern";
+  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+    titleText2 += " for";
+  }
+  if (activeCrop2 !== "All") {
+    if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
+      titleText2 += " " + activeCrop2;
+    }
+  }
+  if (activeVocation2 !== "All") {
+    if (activeVocation2 === "Other") {
+      titleText2 += " " + "Other Vocations";
+    } else {
+      titleText2 += " " + activeVocation2;
+    }
+  }
+  if (activeRegion2 !== "All") {
+    titleText2 += " in the " + activeRegion2 + " Region";
   }
 
   var data2 = props.dataset
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+  var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
-  var data_sorted = sort_by_very(data_by_concern);
-  const dataset = transformData(data_sorted);
+  // var data_sorted = sort_by_very(data_by_concern);
+  const dataset = transformData(data_by_concern);
 
-  var data_filtered2 = filterByVocation(filterByCropOrRegion(data2, activeRegionOrCrop2), activeVocation2);
+  var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
   var data_by_concern2 = calculateConcernTotalsForEachElement(data_filtered2);
-  var data_sorted2 = sort_by_very(data_by_concern2);
-  const dataset2 = transformData(data_sorted2);
+  // var data_sorted2 = sort_by_very(data_by_concern2);
+  const dataset2 = transformData(data_by_concern2);
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  titleText += " (n = " + calculateAverageResponses(data_by_concern) + ")";
+  titleText2 += " (n = " + calculateAverageResponses(data_by_concern2) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
@@ -343,12 +388,12 @@ export function ConcernsVictoryCompare(props) {
         <h2>In regards to the production of field crops in California, rate your concern for the following:</h2>
       </div>
       <div className="inline-child">
-      <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <div className='dual-display'>
 
-          <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
-          <GetChart titleText={titleText2} dataset={dataset2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}/>
+          <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+          <GetChart titleText={titleText2} dataset={dataset2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
 
       </div>
     </>

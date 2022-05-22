@@ -1,4 +1,4 @@
-import {filterByCropOrRegion, parseURLCompare, parseURL} from "../UseData.js";
+import {filterByCropOrRegion, parseURLCompare, parseURL, filterByRegion, filterByCrop} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import "typeface-abeezee";
 import {useState} from 'react';
@@ -137,30 +137,41 @@ export function PriorityConcerns(props) {
     const baseURL = "/results/Priority%20Concerns";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
-
+    const [activeRegion, setActiveRegion] = useState(filters.region);
+    const [activeCrop, setActiveCrop] = useState(filters.crop);
+  
     function vocationFunction(newValue){
       setActiveVocation(newValue);
     }
-
-    function regionOrCropFunction(newValue) {
-      setActiveRegionOrCrop(newValue);
-    }
+  
+    function regionFunction(newValue) {
+      setActiveRegion(newValue);
+    }  
+  
+    function cropFunction(newValue) {
+      setActiveCrop(newValue);
+    }  
 
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
 
     var titleText = "Concerns for ";
-    if (activeRegionOrCrop !== "All") {
-      titleText += activeRegionOrCrop + " ";
+    if (activeRegion !== "All") {
+      titleText += activeRegion + " ";
     }
+
+    if (activeCrop !== "All") {
+      titleText += activeCrop + " ";
+    }
+
     titleText += activeVocation;
 
-    var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
+    var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
-    var filter = activeRegionOrCrop
-    if (regionTypes.includes(activeRegionOrCrop)){
+    var filter = activeRegion
+
+    if (regionTypes.includes(activeRegion)){
       filter = "All";
     }
     var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation)
@@ -201,7 +212,7 @@ export function PriorityConcerns(props) {
         <h2>What are the highest priority management challenges/concerns?</h2>
       </div>
       <div className="inline-child">
-        <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <div  class='visualization-window'>
         <GetChart titleText={titleText} width={width} height={height} fontSize={fontSize} margin={margin} colorScale={colorScale} data_by_reason={data_by_reason} legend_data={legend_data} n={n}/>
@@ -217,46 +228,56 @@ export function PriorityConcernsCompare(props) {
   const baseURL = "/results/compare/Priority%20Concerns";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
   const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
-  const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
-  }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
 
   function vocationFunction2(newValue){
     setActiveVocation2(newValue);
   }
 
-  function regionOrCropFunction2(newValue) {
-    setActiveRegionOrCrop2(newValue);
-  }
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
+  }  
+
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue);
+  }  
 
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
   var titleText = "Concerns for ";
-  if (activeRegionOrCrop !== "All") {
-    titleText += activeRegionOrCrop + " ";
+  if (activeRegion !== "All") {
+    titleText += activeRegion + " ";
   }
+
+  if (activeCrop !== "All") {
+    titleText += activeCrop + " ";
+  }
+
   titleText += activeVocation;
 
-  var titleText2 = "Concerns for ";
-  if (activeRegionOrCrop2 !== "All") {
-    titleText2 += activeRegionOrCrop2 + " ";
-  }
-  titleText2 += activeVocation2;
+  var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
-  var data_filtered = filterByCropOrRegion(props.dataset, activeRegionOrCrop)
+  var filter = activeRegion
 
-  var filter = activeRegionOrCrop
-  if (regionTypes.includes(activeRegionOrCrop)){
+  if (regionTypes.includes(activeRegion)){
     filter = "All";
   }
   var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation)
@@ -264,16 +285,31 @@ export function PriorityConcernsCompare(props) {
   var legend_data = []
   var n = 0
 
-  var data_filtered2 = filterByCropOrRegion(props.dataset, activeRegionOrCrop2)
 
-  var filter2 = activeRegionOrCrop2
-  if (regionTypes.includes(activeRegionOrCrop2)){
+
+  var titleText2 = "Concerns for ";
+  if (activeRegion2 !== "All") {
+    titleText2 += activeRegion2 + " ";
+  }
+
+  if (activeCrop2 !== "All") {
+    titleText2 += activeCrop2 + " ";
+  }
+
+  titleText2 += activeVocation2;
+
+  var data_filtered2 = filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2);
+
+  var filter2 = activeRegion2
+
+  if (regionTypes.includes(activeRegion2)){
     filter2 = "All";
   }
   var data_by_reason2 = calculateAllPriorityConcerns(data_filtered2, filter2, activeVocation2)
 
   var legend_data2 = []
   var n2 = 0
+
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -285,13 +321,11 @@ export function PriorityConcernsCompare(props) {
   for (var i = 0; i < data_by_reason.length; i++) {
       legend_data.push({name: data_by_reason[i].x})
       n += data_by_reason[i].y
-  }
-
+  }  
   for (var i = 0; i < data_by_reason2.length; i++) {
     legend_data2.push({name: data_by_reason2[i].x})
     n2 += data_by_reason2[i].y
-}
-
+  }  
   var colorScale = 
   [
     "#002360",    
@@ -313,7 +347,7 @@ export function PriorityConcernsCompare(props) {
       <h2>What are the highest priority management challenges/concerns?</h2>
     </div>
     <div className="inline-child">
-    <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+    <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
     <div  class='visualization-window'>
       <div className="dual-display">

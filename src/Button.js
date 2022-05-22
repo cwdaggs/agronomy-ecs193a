@@ -82,9 +82,13 @@ const Tab = styled.button`
     padding: 10px 10px;
   }
 
-  @media (max-width: 400px){
+  @media (max-width: 400px) {
     padding: 7px;
     font-size: 8px;
+  }
+
+  @media (max-width: 300px) {
+    padding: 6px;
   }
 `;
 

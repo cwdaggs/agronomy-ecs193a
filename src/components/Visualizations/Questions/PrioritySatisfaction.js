@@ -1,5 +1,5 @@
 import {VictoryLegend, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation, parseURLCompare } from '../UseData';
+import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation, parseURLCompare, filterByRegion, filterByCrop } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState } from "react";
 import "typeface-abeezee";
@@ -26,13 +26,19 @@ const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 
 
 const mobileWidth = 1000;
 var fontSize = 20
-var mobileFontSize = 10
+var mobileFontSize = 5
 if(width < mobileWidth){
   fontSize = mobileFontSize;
 }
 
 
 function GetChart(props){
+
+  var toolTipFontSize = fontSize;
+
+  if(props.compare){
+    toolTipFontSize = fontSize * 1.5;
+  }
 
   const [vis,setVis]=useState(<p id="vis-question-label">Click and drag on an area of points for more information.</p>);
   
@@ -47,7 +53,18 @@ function GetChart(props){
     setVis(
       ( 
         <div>
-         <h5><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</h5>
+          <p id="vis-question-label"><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</p>
+          <div id="vis-legend">
+            <div id="legend-values">
+              <div className='legend-square' id="square-color-first"></div>
+              <span className='legend-value'>Meeting Information Demand</span>
+              <div className='legend-square' id="square-color-second"></div>
+              <span className='legend-value'>Exceeding Information Demand</span>
+              <div className='legend-square' id="square-color-third"></div>
+              <span className='legend-value'>Not Meeting Information Demand</span>
+            </div>
+          </div>
+          
           <VictoryChart 
             x={50}
             animate={{
@@ -59,24 +76,6 @@ function GetChart(props){
             padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
             
           >
-          <VictoryLegend 
-            x={(width>=mobileWidth)?width/5.4+ margin.left:0}
-            title="Engagement Frequency"
-            centerTitle
-            orientation="horizontal"
-            itemsPerRow={3}
-            gutter={30}
-            style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: fontSize}, 
-                    // border: { stroke: "black" }, 
-                    title: {fontSize: fontSize + 4, fontFamily: 'Roboto'  }, 
-                    data: {fontSize: fontSize, fontFamily: 'Roboto', stroke: "black", strokeWidth: 1}}}
-            data={[
-              { name: "Sufficient", symbol: { fill: "green", type:"square"} },
-              { name: "Surplus", symbol: { fill: "green", fillOpacity:0.5, type:"square" } },
-              { name: "Deficient", symbol: { fill: "tomato", fillOpacity:0.7, type:"square" } }
-              
-            ]}
-          />
           <VictoryBar horizontal
             alignment='start'
             labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
@@ -85,12 +84,12 @@ function GetChart(props){
                 orientation={"bottom"}
                 pointerOrientation={"top"}
                   style={{
-                    fontSize:fontSize-3,
+                    fontSize:toolTipFontSize,
                     strokeWidth:1,
                     fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={40}
-                  flyoutWidth={345}    
+                  flyoutHeight={toolTipFontSize*6}
+                  flyoutWidth={toolTipFontSize*25}      
                 />
             }
             style={{ 
@@ -111,12 +110,12 @@ function GetChart(props){
                 orientation={"bottom"}
                 pointerOrientation={"top"}
                   style={{
-                    fontSize:fontSize-3,
+                    fontSize:toolTipFontSize,
                     strokeWidth: 1,
                     fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={100}
-                  flyoutWidth={400}    
+                  flyoutHeight={toolTipFontSize*6}
+                  flyoutWidth={toolTipFontSize*25}    
                 />
             }
             style={{ 
@@ -162,6 +161,7 @@ function GetChart(props){
   function handleSelectionCleared(props){}  
   return(
       <div class='visualization-window'>
+        <div id="vis-question-label">{props.title}</div>
             <VictoryChart 
                 containerComponent=
                   {<VictorySelectionContainer
@@ -181,7 +181,7 @@ function GetChart(props){
             >
             <VictoryLegend 
               x={(width>=mobileWidth) ? width*.1 :0}
-              y={(width>=mobileWidth) ? height*.1 :0}
+              y={(width>=mobileWidth) ? height*.1 :40}
               title="Legend"
               centerTitle
               orientation="vertical"
@@ -190,9 +190,9 @@ function GetChart(props){
                        title: {fontSize: fontSize, fontFamily: 'Roboto' }, 
                        labels: {fontSize: fontSize, fontFamily: 'Roboto'}}}
               data={[
-                { name: "Topic", symbol: { fill: "tomato", stroke: "#756f6a"} },
-                { name: "Average", symbol: { fill: "red", type:"square" } },
-                { name: "Trend Line", symbol: { fill: "#756f6a", type:"square" } }
+                { name: "Topic of Interest", symbol: { fill: "tomato", stroke: "#756f6a"} },
+                { name: "Average Priority/Satisfaction overall", symbol: { fill: "red", type:"square" } },
+                
               ]}
             />
             <VictoryScatter
@@ -216,12 +216,12 @@ function GetChart(props){
                 labelComponent={
                     <VictoryTooltip 
                         style={{
-                          fontSize:fontSize-5,
+                          fontSize:toolTipFontSize,
                           strokeWidth:0.1,
                           fontFamily: 'Roboto'
                         }}
-                        flyoutHeight={60}
-                        flyoutWidth={270}    
+                        flyoutHeight={toolTipFontSize*4}
+                        flyoutWidth={toolTipFontSize*20}    
                     />
                     
                 }
@@ -275,6 +275,7 @@ function GetChart(props){
               x={(d) => d.x}
               y={(d) => d.y}
             />
+             {/*
             <VictoryLine
                 
                 style={{ 
@@ -318,6 +319,7 @@ function GetChart(props){
                 y={(d) => d.y}
                 data={trendData[0]}
             />
+              */}
           </VictoryChart>
           {vis}
       </div>
@@ -329,43 +331,72 @@ export const PrioritySatisfaction = (props) => {
 
     const vocationArray = ["All", "Growers", "Consultants"];
 
+    const crops = [
+      "Alfalfa", 
+      "Barley", 
+      "Corn", 
+      "Corn Silage", 
+      "Cotton", 
+      "Dry Beans", 
+      "Rice", 
+      "Small Grain Silage", 
+      "Sunflower", 
+      "Wheat"
+    ];
+
     const baseURL = "/results/Priority%20Satisfaction";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+    const [activeRegion, setActiveRegion] = useState(filters.region);
+    const [activeCrop, setActiveCrop] = useState(filters.crop)
+  
+
+    function vocationFunction(newValue){
+      setActiveVocation(newValue);
+    }
+  
+    function regionFunction(newValue) {
+      setActiveRegion(newValue);
+    }
+  
+    function cropFunction(newValue) {
+      setActiveCrop(newValue)
+    }
 
     if (!props.dataset) {
       return <pre>Loading...</pre>;
     }
 
-
-    function vocationFunction(newValue){
-      setActiveVocation(newValue);
-    }
-
-    function regionOrCropFunction(newValue) {
-      setActiveRegionOrCrop(newValue);
-    }  
-
-
-
-    var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+    var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
     var data = averageSatisfaction(data_filtered)
 
+    var titleText = "Priority Vs Satisfaction of Information Availability";
 
+    if (crops.includes(activeCrop)) {
+      titleText += " for " + activeCrop;
+    }
 
+    if(activeVocation !== "All"){
+      titleText += " " + activeVocation;
+    }
+
+    if (activeRegion !== "All") {
+      titleText += " in the " + activeRegion + " Region";
+    }
+
+    titleText += " (n = " + data_filtered.length + ")";
 
     return (
 
       <>
         <div id='vis-question-label'>
-          <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). </h2>
+          <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
         </div>
         <div className="inline-child">
-            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
 
-        <GetChart data={data}/>
+        <GetChart data={data} title={titleText}/>
 
     </>
     )};
@@ -374,54 +405,107 @@ export const PrioritySatisfaction = (props) => {
 
       const vocationArray = ["All", "Growers", "Consultants"];
   
+      const crops = [
+        "Alfalfa", 
+        "Barley", 
+        "Corn", 
+        "Corn Silage", 
+        "Cotton", 
+        "Dry Beans", 
+        "Rice", 
+        "Small Grain Silage", 
+        "Sunflower", 
+        "Wheat"
+      ];
+
       const baseURL = "/results/compare/Priority%20Satisfaction";
       const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
       const [activeVocation, setActiveVocation] = useState(filters.vocation);
-      const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+      const [activeRegion, setActiveRegion] = useState(filters.region);
+      const [activeCrop, setActiveCrop] = useState(filters.crop)
 
       const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
-      const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+      const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+      const [activeCrop2, setActiveCrop2] = useState(filters.crop2)
   
       if (!props.dataset) {
         return <pre>Loading...</pre>;
       }
   
-  
       function vocationFunction(newValue){
         setActiveVocation(newValue);
       }
-  
-      function regionOrCropFunction(newValue) {
-        setActiveRegionOrCrop(newValue);
+    
+      function regionFunction(newValue) {
+        setActiveRegion(newValue);
+      }
+    
+      function cropFunction(newValue) {
+        setActiveCrop(newValue)
       }  
-  
+
       function vocationFunction2(newValue){
         setActiveVocation2(newValue);
       }
+    
+      function regionFunction2(newValue) {
+        setActiveRegion2(newValue);
+      }
+    
+      function cropFunction2(newValue) {
+        setActiveCrop2(newValue)
+      }
   
-      function regionOrCropFunction2(newValue) {
-        setActiveRegionOrCrop2(newValue);
-      }  
-  
-      var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+      var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
       var data = averageSatisfaction(data_filtered)
   
-      var data_filtered2 = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop2), activeVocation2);
+      var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
       var data2 = averageSatisfaction(data_filtered2)
+      
+      var titleText = "Priority Vs Satisfaction of Information Availability";
+
+      if (crops.includes(activeCrop)) {
+        titleText += " for " + activeCrop;
+      }
   
+      if(activeVocation !== "All"){
+        titleText += " " + activeVocation;
+      }
+  
+      if (activeRegion !== "All") {
+        titleText += " in the " + activeRegion + " Region";
+      }
+  
+      titleText2 += " (n = " + data_filtered.length + ")";
+
+      var titleText2 = "Priority Vs Satisfaction of Information Availability";
+
+      if (crops.includes(activeCrop2)) {
+        titleText2 += " for " + activeCrop2;
+      }
+  
+      if(activeVocation2 !== "All"){
+        titleText2 += " " + activeVocation2;
+      }
+  
+      if (activeRegion2 !== "All") {
+        titleText2 += " in the " + activeRegion2 + " Region";
+      }
+  
+      titleText2 += " (n = " + data_filtered.length + ")";
   
       return (
   
         <>
           <div id='vis-question-label'>
-            <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3). </h2>
+            <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
           </div>
           <div className="inline-child">
-          <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
           </div>
           <div className='dual-display'>
-            <GetChart data={data}/>
-            <GetChart data={data2}/>
+            <GetChart data={data} title={titleText} compare={true}/>
+            <GetChart data={data2} title={titleText2} compare={true}/>
           </div>
   
       </>

@@ -1,12 +1,12 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryZoomContainer} from 'victory';
-import {filterByCropOrRegion, filterByVocation, parseURLCompare} from '../UseData.js';
+import {filterByCrop, filterByCropOrRegion, filterByRegion, filterByVocation, parseURLCompare} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
-function getInternetSources(data){
+function getInternetSources(data, sorted){
   var sources = [
     "Internet (websites)",
     "Blogs",
@@ -98,7 +98,9 @@ var colors =
   for(var l=0; l<totals.length; l++){
     modified_data.push({x: sources[l], y: totals[l]});
   }
-  modified_data.sort(function(a,b){return a.y - b.y;});
+  if (sorted) {
+    modified_data.sort(function(a,b){return a.y - b.y;});
+  }
   for(var l=0; l<modified_data.length; l++){
     modified_data[l].fill = colors[l];
   }
@@ -140,7 +142,68 @@ function GetChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + "(n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
+              style={{
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: props.fontSize*2, padding: 50, fontFamily: 'Roboto'}
+              }}
+            />
+            <VictoryAxis
+              label = {"Online Sources"}
+              style={{
+                axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'}
+              }}
+            tickLabelComponent={       
+              <VictoryLabel    
+                textAnchor="end"
+              />   
+            }
+            />
+          </VictoryChart>
+        </div>
+  )
+}
+
+function GetUnsortedChart(props){
+
+  return(
+      <div class='visualization-window'>
+          
+          <VictoryChart height={props.height} width={props.width}
+            domainPadding={{ x: (props.width>=props.mobileWidth) ? props.margin.right/10 : 0, y:props.margin.top/10 }}
+            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}   
+            animate={{duration: 800}}
+            containerComponent={
+              <VictoryZoomContainer
+                zoomDimension="x"
+              />
+            }
+          >
+            {/* <VictoryLabel 
+            x={width/2 - 300} 
+            y={80}
+            style ={{fontSize:fontSize +10}}/> */}
+            <VictoryBar horizontal
+              data={props.graph_data}
+              style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
+              labels={({datum}) => datum.y}
+              labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize:props.fontSize, fontFamily: 'Roboto'
+                  }}
+                  flyoutHeight={25}
+                  flyoutWidth={40}    
+                />
+            }
+            />
+            <VictoryAxis dependentAxis
+              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -172,16 +235,21 @@ export function InternetSourcesBarChart(props) {
 
   const baseURL = "/results/Internet%20Sources";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
-  }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
     
     if (!props.dataset) {
         return <pre>Loading...</pre>;
@@ -200,22 +268,29 @@ export function InternetSourcesBarChart(props) {
       "Wheat"
     ];
 
-    var labelText = activeRegionOrCrop;
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
-      labelText = activeVocation;
-    } else {
-      if (activeVocation !== "All") {
+    var labelText = "Internet Sources"
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      labelText += " for";
+    }
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        labelText += " " + activeCrop;
+      }
+    }
+    if (activeVocation !== "All") {
+      if (activeVocation === "Other") {
+        labelText += " " + "Other Vocations";
+      } else {
         labelText += " " + activeVocation;
       }
     }
-    labelText += " Responses ";
-
-    var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
-      data = props.dataset;
+    if (activeRegion !== "All") {
+      labelText += " in the " + activeRegion + " Region";
     }
+
+    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
     var filtered_data = filterByVocation(data, activeVocation);
-    var graph_data = getInternetSources(filtered_data);
+    var graph_data = getInternetSources(filtered_data, true);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw*0.5;
@@ -239,7 +314,7 @@ export function InternetSourcesBarChart(props) {
           <h2>Where do you most often look for field crop production information on the internet?</h2>
         </div>
         <div className="inline-child">
-          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
         <GetChart labelText={labelText} graph_data={graph_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
       </>
@@ -251,28 +326,37 @@ export function InternetSourcesBarChartCompare(props) {
 
   const baseURL = "/results/compare/Internet%20Sources";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
-  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
 
-  const [activeVocation2, setActiveVocation2] = useState(filters.vocation2.replace("%20", " "));
-  const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
+
+  const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
-  }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
 
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
   function vocationFunction2(newValue){
     setActiveVocation2(newValue);
   }
 
-  function regionOrCropFunction2(newValue) {
-    setActiveRegionOrCrop2(newValue);
-  }
-    
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
+  }  
+
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue);
+  }  
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
@@ -290,41 +374,53 @@ export function InternetSourcesBarChartCompare(props) {
       "Wheat"
     ];
 
-    var labelText = activeRegionOrCrop;
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
-      labelText = activeVocation;
-    } else {
-      if (activeVocation !== "All") {
+    var labelText = "Internet Sources";
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      labelText += " for";
+    }
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        labelText += " " + activeCrop;
+      }
+    }
+    if (activeVocation !== "All") {
+      if (activeVocation === "Other") {
+        labelText += " " + "Other Vocations";
+      } else {
         labelText += " " + activeVocation;
       }
     }
-    labelText += " Responses ";
-
-    var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
-    if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
-      data = props.dataset;
+    if (activeRegion !== "All") {
+      labelText += " in the " + activeRegion + " Region";
     }
-    var filtered_data = filterByVocation(data, activeVocation);
-    var graph_data = getInternetSources(filtered_data);
 
+    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+    var filtered_data = filterByVocation(data, activeVocation);
+    var graph_data = getInternetSources(filtered_data, false);
     
-    var labelText2 = activeRegionOrCrop2;
-    if ((activeVocation2 === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeRegionOrCrop2)) {
-      labelText2 = activeVocation2;
-    } else {
-      if (activeVocation2 !== "All") {
+    var labelText2 = "Internet Sources"
+    if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+      labelText2 += " for";
+    }
+    if (activeCrop2 !== "All") {
+      if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
+        labelText2 += " " + activeCrop2;
+      }
+    }
+    if (activeVocation2 !== "All") {
+      if (activeVocation2 === "Other") {
+        labelText2 += " " + "Other Vocations";
+      } else {
         labelText2 += " " + activeVocation2;
       }
     }
-    labelText2 += " Responses ";
-
-    var data2 = filterByCropOrRegion(props.dataset, activeRegionOrCrop2);
-    if ((activeVocation2 === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeRegionOrCrop2)) {
-      data2 = props.dataset;
+    if (activeRegion2 !== "All") {
+      labelText2 += " in the " + activeRegion2 + " Region";
     }
-    var filtered_data2 = filterByVocation(data2, activeVocation2);
-    var graph_data2 = getInternetSources(filtered_data2);
 
+    var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
+    var filtered_data2 = filterByVocation(data2, activeVocation2);
+    var graph_data2 = getInternetSources(filtered_data2, false);
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -349,12 +445,12 @@ export function InternetSourcesBarChartCompare(props) {
           <h2>Where do you most often look for field crop production information on the internet?</h2>
         </div>
         <div className="inline-child">
-        <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
         
         <div className='dual-display'>
-          <GetChart labelText={labelText} graph_data={graph_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
-          <GetChart labelText={labelText2} graph_data={graph_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
+          <GetUnsortedChart labelText={labelText} graph_data={graph_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
+          <GetUnsortedChart labelText={labelText2} graph_data={graph_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
         </div>
       </>
       );
