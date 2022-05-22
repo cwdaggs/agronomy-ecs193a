@@ -62,8 +62,7 @@ function GetChart(props){
                                     fontSize:45,
                                     fontFamily: 'Roboto'
                                 }}
-                                flyoutHeight={50}
-                                flyoutWidth={100}      
+                                constrainToVisibleArea={'true'}   
                             />
                         }
                         />

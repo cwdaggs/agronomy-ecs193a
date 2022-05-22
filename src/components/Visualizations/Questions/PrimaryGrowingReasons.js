@@ -130,11 +130,10 @@ function GetChart(props){
                     labels={({ datum }) => `${datum.x}: ${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
-                          fontSize:35,
-                          fontFamily: 'ABeeZee'
+                          fontSize:45,
+                          fontFamily: 'Roboto'
                         }}
-                        flyoutHeight={40}
-                        flyoutWidth={480}     
+                        constrainToVisibleArea={'true'}    
                     />}
                 />
             </div>
