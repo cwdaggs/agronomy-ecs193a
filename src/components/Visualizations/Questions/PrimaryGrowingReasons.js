@@ -173,10 +173,16 @@ export function PrimaryGrowingReasons(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Reasons for Growing " + active;
+  var titleText = "Why Grow";
+  if (activeRegion !== "All") {
+    titleText += " " + activeRegion;
+  }
   if (active === "All") {
     titleText += " Crops"
+  } else {
+    titleText +=  " " + active;
   }
+  titleText += "?";
 
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
@@ -270,20 +276,32 @@ export function PrimaryGrowingReasonsCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Reasons for Growing " + active;
+  var titleText = "Why Grow";
+  if (activeRegion1 !== "All") {
+    titleText += " " + activeRegion1;
+  }
   if (active === "All") {
     titleText += " Crops"
+  } else {
+    titleText +=  " " + active;
   }
+  titleText += "?";
 
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion1), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
   var legend_data = []
   var n = 0
 
-  var titleText2 = "Reasons for Growing " + active2;
+  var titleText2 = "Why Grow";
+  if (activeRegion2 !== "All") {
+    titleText2 += " " + activeRegion2;
+  }
   if (active2 === "All") {
     titleText2 += " Crops"
+  } else {
+    titleText2 +=  " " + active2;
   }
+  titleText2 += "?";
 
   var data_filtered2 = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active2), activeRegion2), "Growers")
   var data_by_reason2 = calculateAllPrimaryGrowingReasons(data_filtered2, active2)
