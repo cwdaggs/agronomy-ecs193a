@@ -1,6 +1,5 @@
 import {filterByCropOrRegion, parseURLCompare, parseURL, filterByRegion, filterByCrop} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
-import "typeface-abeezee";
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import { useLocation } from 'react-router-dom';
@@ -62,14 +61,13 @@ function GetChart(props){
               style={{ data: { stroke: "black", strokeWidth: 1}}}
               colorScale={props.colorScale}
               data={props.data_by_reason}
-              labels={({ datum }) => `${datum.y}`}
+              labels={({ datum }) => `${datum.x}: ${datum.y}`}
               labelComponent={<VictoryTooltip 
                   style={{
                     fontSize:45,
                     fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={50}
-                  flyoutWidth={100}    
+                  constrainToVisibleArea={'true'} 
               />}
           />
           </div>
