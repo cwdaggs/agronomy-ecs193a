@@ -127,14 +127,14 @@ function GetChart(props){
                     style={{ data: { stroke: "black", strokeWidth: 1}}}
                     colorScale={props.colorScale}
                     data={props.data_by_reason}
-                    labels={({ datum }) => `${datum.y}`}
+                    labels={({ datum }) => `${datum.x}: ${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
                           fontSize:35,
                           fontFamily: 'ABeeZee'
                         }}
                         flyoutHeight={40}
-                        flyoutWidth={80}     
+                        flyoutWidth={480}     
                     />}
                 />
             </div>

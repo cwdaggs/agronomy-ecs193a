@@ -55,7 +55,7 @@ function GetChart(props){
                             style={{ data: { stroke: "black", strokeWidth: 1}}}
                             colorScale={props.colors}
                             data={props.data}
-                            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+                            labels={({ datum }) => `${datum.x}: ${datum.y.toFixed() + "%"}`}
                             labelComponent={
                             <VictoryTooltip 
                                 style={{
