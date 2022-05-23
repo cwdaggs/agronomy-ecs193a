@@ -43,7 +43,7 @@ export default function App() {
   const dataset = useData('./data/Filtered_Crop_Data.csv');
 
   return (
-    <div class='font-metropolis'>
+    <div>
       <div id="heading">
         <NavLink to ="/" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Home")}
