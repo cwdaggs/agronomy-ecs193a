@@ -268,7 +268,7 @@ export function AcresManagedBarChartCompare(props) {
     labelText2 = "Acres Consulted";
   }
   if(activeRegion2 !== "All"){
-    labelText2 += activeRegion2 + " " + labelText2;
+    labelText2 = activeRegion2 + " " + labelText2;
   }
   if(activeCrop2 !== "All"){
     labelText2 += " for " + activeCrop2;

@@ -329,7 +329,7 @@ function GetChart(props){
 
 export const PrioritySatisfaction = (props) => {
 
-    const vocationArray = ["All", "Growers", "Consultants"];
+    const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
     const crops = [
       "Alfalfa", 
@@ -372,12 +372,22 @@ export const PrioritySatisfaction = (props) => {
 
     var titleText = "Priority Vs Satisfaction of Information Availability";
 
-    if (crops.includes(activeCrop)) {
-      titleText += " for " + activeCrop;
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      titleText += " for";
+    }
+
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        titleText += " " + activeCrop;
+      }
     }
 
     if(activeVocation !== "All"){
-      titleText += " " + activeVocation;
+      if (activeVocation === "Other") {
+        titleText += " " + "Other Vocations";
+      } else {
+        titleText += " " + activeVocation;
+      }
     }
 
     if (activeRegion !== "All") {
@@ -403,7 +413,7 @@ export const PrioritySatisfaction = (props) => {
 
     export function PrioritySatisfactionCompare(props){
 
-      const vocationArray = ["All", "Growers", "Consultants"];
+      const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   
       const crops = [
         "Alfalfa", 
@@ -464,12 +474,22 @@ export const PrioritySatisfaction = (props) => {
       
       var titleText = "Priority Vs Satisfaction of Information Availability";
 
-      if (crops.includes(activeCrop)) {
-        titleText += " for " + activeCrop;
+      if (activeCrop !== "All" || activeVocation !== "All") {
+        titleText += " for";
+      }
+  
+      if (activeCrop !== "All") {
+        if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+          titleText += " " + activeCrop;
+        }
       }
   
       if(activeVocation !== "All"){
-        titleText += " " + activeVocation;
+        if (activeVocation === "Other") {
+          titleText += " " + "Other Vocations";
+        } else {
+          titleText += " " + activeVocation;
+        }
       }
   
       if (activeRegion !== "All") {
@@ -480,12 +500,22 @@ export const PrioritySatisfaction = (props) => {
 
       var titleText2 = "Priority Vs Satisfaction of Information Availability";
 
-      if (crops.includes(activeCrop2)) {
-        titleText2 += " for " + activeCrop2;
+      if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+        titleText2 += " for";
+      }
+  
+      if (activeCrop2 !== "All") {
+        if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
+          titleText2 += " " + activeCrop2;
+        }
       }
   
       if(activeVocation2 !== "All"){
-        titleText2 += " " + activeVocation2;
+        if (activeVocation2 === "Other") {
+          titleText2 += " " + "Other Vocations";
+        } else {
+          titleText2 += " " + activeVocation2;
+        }
       }
   
       if (activeRegion2 !== "All") {

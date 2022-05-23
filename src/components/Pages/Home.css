@@ -60,7 +60,6 @@
         font-size: large;
         padding-left: 10vw;
         padding-right: 10vw;
-        padding-bottom: 10vh;
     }
 }
 
@@ -83,7 +82,6 @@
         font-size: small;
         padding-left: 10vw;
         padding-right: 10vw;
-        padding-bottom: 5vh;
     }
 }
 
@@ -100,6 +98,5 @@
       
     #home-info{
         font-size: medium;
-        padding-bottom: 10vh;
     }
 }

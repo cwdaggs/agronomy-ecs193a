@@ -154,7 +154,7 @@ export function PriorityConcerns(props) {
         return <pre>Loading...</pre>;
     }
 
-    var titleText = "Concerns for ";
+    var titleText = "For ";
     if (activeRegion !== "All") {
       titleText += activeRegion + " ";
     }
@@ -260,7 +260,7 @@ export function PriorityConcernsCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Concerns for ";
+  var titleText = "For ";
   if (activeRegion !== "All") {
     titleText += activeRegion + " ";
   }
@@ -285,7 +285,7 @@ export function PriorityConcernsCompare(props) {
 
 
 
-  var titleText2 = "Concerns for ";
+  var titleText2 = "For ";
   if (activeRegion2 !== "All") {
     titleText2 += activeRegion2 + " ";
   }
