@@ -42,10 +42,7 @@ function calculateAverageResponses(dataset) {
 
 function GetChart(props){
 
-var toolTipFontSize=props.fontSize;
-if(props.compare){
-  toolTipFontSize = props.fontSize + 3;
-}
+  var fontSize = props.fontSize
 
   return(
     <div className='dual-display-child'>
@@ -87,10 +84,10 @@ if(props.compare){
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:toolTipFontSize, fontFamily: 'Roboto'
+                        fontSize:fontSize, fontFamily: 'Roboto'
                       }}
-                      flyoutHeight={toolTipFontSize + 10}
-                      flyoutWidth={toolTipFontSize*2}    
+                      flyoutHeight={fontSize + 10}
+                      flyoutWidth={fontSize*2}    
                     />
                 }/>;
             })}
@@ -100,7 +97,7 @@ if(props.compare){
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
               }}
           />
           <VictoryAxis
@@ -108,12 +105,14 @@ if(props.compare){
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
                 // axisLabel: {fontSize: 30, padding: 380}
               }}
             tickLabelComponent={       
               <VictoryLabel    
-                  textAnchor="end"
+                  textAnchor="start"
+                  style={{fill: "white", fontSize: fontSize}}
+                  dx={fontSize}
               />   
             }
           />
@@ -213,7 +212,7 @@ export function ConcernsVictory(props) {
     "#D8F4CC"
   ]
   var fontSize = 18
-  var mobileFontSize = 6
+  var mobileFontSize = 12
   const mobileWidth = 1000;
   const laptopWidth = 1500;
   if(width < laptopWidth){
@@ -375,7 +374,7 @@ export function ConcernsVictoryCompare(props) {
   const mobileWidth = 1000;
   const laptopWidth = 1500;
   if(width < laptopWidth){
-    fontSize = mobileFontSize*2.5
+    fontSize = mobileFontSize*2
   }
   if(width < mobileWidth){
     fontSize = mobileFontSize;

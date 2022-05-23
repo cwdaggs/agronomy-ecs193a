@@ -27,6 +27,7 @@ export function calculateValueEach(data, filter, answer){
 }
 
 function GetChart(props){
+  var fontSize = props.fontSize
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -93,7 +94,10 @@ function GetChart(props){
               }}
             tickLabelComponent={       
               <VictoryLabel    
-                  textAnchor="end"
+                textAnchor="start"
+                style={{fill: "white", fontSize: fontSize}}
+                dx={fontSize}
+                events={{onClick: (evt) => console.log(evt)}}
               />   
             }
           />

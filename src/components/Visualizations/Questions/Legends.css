@@ -67,6 +67,10 @@
     background-color: rgba(255, 99, 71, 0.7);
 }
 
+#square-color-fourth {
+    background-color: rgb(255, 0, 0);
+}
+
 @media (max-width: 1000px) {
     .legend-circle {
         width: 10px;
