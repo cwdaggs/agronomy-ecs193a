@@ -1,35 +1,46 @@
 .visLandingPage{
     position: relative; 
-    height: 120vh;
+    height: 85vh;
     background-repeat: no-repeat;
     background-attachment: fixed; 
-    background-image: url(../../../images/wheat_field2_opacity70.png);
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ), url(../../../images/pexels-johann-piber-751096.jpg);
     background-size: cover;
+    font-family: 'Public Sans', sans-serif;
 }
   
 #visLandingHeading{
     text-align: center;
-    color: black;
-    font-size: 8vh;
+    color: white;
+    font-size: 7vh;
     margin: 0;
     padding-top: 10%;
+    font-weight: 800;
 }
   
 #visLandingBody{
-    font-family: 'Roboto', sans-serif;
     text-align: center;
-    color: black;
+    color: white;
     margin: 15%;
     margin-top: 5%;
     margin-bottom: 0;
-    font-weight: 900;
+    font-weight: 600;
     font-size: 3vh;
 }
   
 #visLandingBodyExtended{
-    font-family: 'Roboto', sans-serif;
-    color: black;
-    font-weight: 900;
-    font-size: 2vh;
+    color: white;
+    font-weight: 400;
+    font-size: 2.5vh;
+    margin-right: 15%;
+    margin-left: 15%;
     text-align: center;
+}
+
+@media screen and (max-width: 600px) and (max-height: 1000px)  {
+    .visLandingPage {
+        height: 100vh;
+    }
 }

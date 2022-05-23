@@ -1,5 +1,8 @@
 #bg {
-    background-image: url(../../images/bg.jpeg);
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2)
+      ), url(../../images/bg.jpeg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -14,23 +17,25 @@
     padding-left: 25vw;
     padding-right: 25vw;
     height:100vh;
+    font-family: 'Public Sans', sans-serif;
+    /* font-weight: 400; */
 }
   
 #home-sub-title{
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-size: x-large;
-    color: rgb(0,0,0);
+    color: white;
 }
   
 #home-info{
     text-align: left;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-size: x-large;
     padding: 5px 3vw 5px;
     /* padding-left: 10vw; */
     /* padding-right: 10vw; */
     /* padding-bottom: 10vh; */
-    margin-bottom: 10vh;
+    margin-bottom: 4vh;
     border-radius: 20px;
     background: rgba(0, 38, 58, 0.3);
     color: white;
@@ -87,13 +92,13 @@
 
 @media screen and (max-height:800px) and (min-width: 600px) {
     #home-container{
-        padding-left: 10%;
-        padding-right: 10%;
+        padding-left: 25%;
+        padding-right: 25%;
         height: 100vh;
     }
     
     #home-sub-title{
-        font-size: medium;
+        font-size: x-large;
     }
       
     #home-info{
