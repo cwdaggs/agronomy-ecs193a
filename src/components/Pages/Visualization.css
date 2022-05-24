@@ -5,9 +5,9 @@
     align-items: center;
 }
 
-#button-a { order: 1; padding: 20px;}
+#button-a { order: 1; padding-bottom: 5px;}
 #vis-a { order: 2; }
-#button-b { order: 3; padding: 20px;}
+#button-b { order: 3; padding-bottom: 5px;}
 #vis-b { order:  4; }
 
 .vis-buttons-parent {
