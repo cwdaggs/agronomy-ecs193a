@@ -120,6 +120,8 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
+  var fontSize = props.fontSize;
+
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -170,7 +172,7 @@ function GetChart(props){
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:props.fontSize, fontFamily: 'Roboto'
+                        fontSize:fontSize, fontFamily: 'Roboto'
                       }}
                       flyoutHeight={25}
                       flyoutWidth={40}    
@@ -183,7 +185,7 @@ function GetChart(props){
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
               }}
           />
           <VictoryAxis
@@ -191,13 +193,15 @@ function GetChart(props){
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
                 // axisLabel: {fontSize: 30, padding: 410}
               }}
             tickLabelComponent={       
               <VictoryLabel    
-                  textAnchor="end"
-              />   
+                textAnchor="start"
+                style={{fill: "white", fontSize: fontSize}}
+                dx={fontSize}
+              />
             }
           />
         </VictoryChart>

@@ -1,4 +1,4 @@
-import {VictoryLegend, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
+import {VictoryLegend, VictoryLabel, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
 import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation, parseURLCompare, filterByRegion, filterByCrop } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState } from "react";
@@ -77,7 +77,7 @@ function GetChart(props){
             
           >
           <VictoryBar horizontal
-            alignment='start'
+            alignment='center'
             labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
             labelComponent={
                 <VictoryTooltip 
@@ -103,7 +103,7 @@ function GetChart(props){
             data={data}
           />
           <VictoryBar horizontal
-            alignment='start'
+            alignment='center'
             labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nPriority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
             labelComponent={
                 <VictoryTooltip 
@@ -136,15 +136,24 @@ function GetChart(props){
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
               tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: fontSize, fontFamily: 'Roboto'}
+              axisLabel: {fontSize: fontSize - 4, fontFamily: 'Roboto'}
             }}
           />
           <VictoryAxis
             style={{
               axis: {stroke: "#756f6a"},
               ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'}
+              tickLabels: {fontSize: fontSize - 5, padding: 0, fontFamily: 'Roboto'}
+
             }}
+            tickLabelComponent={       
+              <VictoryLabel    
+                textAnchor="start"
+                style={{fill: "white", fontSize: fontSize}}
+                dx={fontSize}
+                events={{onClick: (evt) => console.log(evt)}}
+              />   
+            }
           />
         </VictoryChart>
       </div>
@@ -161,6 +170,17 @@ function GetChart(props){
   function handleSelectionCleared(props){}  
   return(
       <div class='visualization-window'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+          <div id="legend-values">
+            <div className='legend-circle' id="square-color-third"></div>
+            <span className='legend-value'>Topic of Interest</span>
+            <div className='legend-square' id="square-color-fourth"></div>
+            <span className='legend-value'>Not Valuable</span>
+          </div>
+        </div>
         <div id="vis-question-label">{props.title}</div>
             <VictoryChart 
                 containerComponent=
@@ -179,7 +199,7 @@ function GetChart(props){
                 padding={{ top: margin.top, bottom: margin.bottom, left:width/3.2, right: margin.right }}  
                 
             >
-            <VictoryLegend 
+            {/* <VictoryLegend 
               x={(width>=mobileWidth) ? width*.1 :0}
               y={(width>=mobileWidth) ? height*.1 :40}
               title="Legend"
@@ -194,7 +214,7 @@ function GetChart(props){
                 { name: "Average Priority/Satisfaction overall", symbol: { fill: "red", type:"square" } },
                 
               ]}
-            />
+            /> */}
             <VictoryScatter
                 x={(d) => d.Priority}
                 y={(d) => d.Satisfaction}

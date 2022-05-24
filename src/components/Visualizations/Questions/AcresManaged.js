@@ -81,10 +81,6 @@ function GetChart(props){
   
   var toolTipFontSize = 30;
 
-  if(props.compare){
-    toolTipFontSize = props.fontSize + 3;
-  }
-
   return(
     <>
     <div class='visualization-window'>
