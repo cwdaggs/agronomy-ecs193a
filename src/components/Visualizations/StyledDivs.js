@@ -23,9 +23,10 @@ const Dropbtn = styled.div`
   text-decoration: none;
   border-top: 1px solid white;
   border-bottom: 1px solid gray;
-  border-left: 3px solid #f1f1f1;
-  border-right: 5px solid white;
-  border-radius: 0px;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  margin-left: 10px;
+  margin-right: 10px;
   &:hover {
     background-color: #f1f1f1;
   }
@@ -33,21 +34,15 @@ const Dropbtn = styled.div`
   @media (max-width: 1200px) {
     padding: 5px 10px;
     font-size: 8px;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    border-left: 5px solid white;
-    border-right: 5px solid white;
-    border-radius: 25px;
+    margin-left: 6px;
+    margin-right: 6px;
   }
 
   @media (max-width: 420px) {
     padding: 5px 8px;
+    margin-left: 3px;
+    margin-right: 3px;
     font-size: 6px;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    border-left: 5px solid white;
-    border-right: 5px solid white;
-    border-radius: 25px;  
   }
 `;
 
