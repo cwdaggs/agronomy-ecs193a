@@ -44,6 +44,57 @@ export const MapChart = (props) => {
   const occupationData = occupationAmount(data);
   return (
     <div className='info-charts'>
+        <div className='info-row'>
+            <div className="info-legend">
+
+              <VictoryLegend
+                colorScale={colorScale}
+                x={150}
+                y={0}
+                gutter={25}
+                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
+                      title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+                      data:   {stroke: "black", strokeWidth: 1}}}
+                title="Responses by Vocation"
+                centerTitle
+                data={[
+                  { name: "Growers", symbol: { fill: "#0A2F51" }, labels:{fontSize: fontSize}},
+                  { name: "Consultants", symbol: { fill: "#0E4D64" }, labels:{fontSize: fontSize}},
+                  { name: "Allied Industry", symbol: { fill: "#137177" }, labels:{fontSize: fontSize}},
+                  { name: "Other", symbol: { fill: "#188977" }, labels:{fontSize: fontSize}}
+                ]}
+              
+              />
+            </div>
+            <div className='info-pie'>
+              <VictoryPie
+                animate={{
+                  duration: 500,               
+                }}
+                width={vw*.15}
+                height={vh*.15}
+                padding={{
+                  left: 0,
+                  bottom: 0,
+                  top: 0
+                }}
+                style={{ data: { stroke: "black", strokeWidth: 1}}}
+                colorScale={pieColorScale}
+                data={occupationData}
+                labels={({ datum }) => `${datum.x}: ${datum.y.toFixed() + "%"}`}
+                labelComponent={
+                    <VictoryTooltip 
+                    style={{
+                        fontSize:10,
+                        fontFamily: 'ABeeZee'
+                    }}
+                    flyoutHeight={20}
+                    flyoutWidth={100}  
+                    />
+                }
+              />
+            </div>
+        </div>
       <div className='info-row'>
         <div className='info-legend'>
           <VictoryLegend
@@ -75,58 +126,7 @@ export const MapChart = (props) => {
           <img src='./assets/county-map-2.png' className="map-image"></img>
         </div>
       </div>
-        <div className='info-row'>
-            <div className="info-legend">
-
-              <VictoryLegend
-                colorScale={colorScale}
-                x={150}
-                y={0}
-                gutter={25}
-                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
-                      title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
-                      data:   {stroke: "black", strokeWidth: 1}}}
-                title="Responses by Occupation"
-                centerTitle
-                data={[
-                  { name: "Growers", symbol: { fill: "#0A2F51" }, labels:{fontSize: fontSize}},
-                  { name: "Consultants", symbol: { fill: "#0E4D64" }, labels:{fontSize: fontSize}},
-                  { name: "Allied Industry", symbol: { fill: "#137177" }, labels:{fontSize: fontSize}},
-                  { name: "Other", symbol: { fill: "#188977" }, labels:{fontSize: fontSize}}
-                ]}
-              
-              />
-            </div>
-            <div className='info-pie'>
-              <VictoryPie
-                animate={{
-                  duration: 500,               
-                }}
-                width={vw*.15}
-                height={vh*.15}
-                padding={{
-                  left: 0,
-                  bottom: 0,
-                  top: 0
-                }}
-                style={{ data: { stroke: "black", strokeWidth: 1}}}
-                colorScale={pieColorScale}
-                data={occupationData}
-                labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
-                labelComponent={
-                    <VictoryTooltip 
-                    style={{
-                        fontSize:fontSize,
-                        fontFamily: 'ABeeZee'
-                    }}
-                    flyoutHeight={20}
-                    flyoutWidth={40}  
-                    />
-                }
-              />
-            </div>
-        </div>
-      </div>
+    </div>
   );
 };
 
