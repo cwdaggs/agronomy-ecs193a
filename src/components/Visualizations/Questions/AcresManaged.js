@@ -94,7 +94,7 @@ function GetChart(props){
             label={props.labelText}
             style={{
               tickLabels: {fontSize: props.fontSize*1.25, padding: 5, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: props.fontSize*1.5, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 20}
+              axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 20}
               }}
           />
           <VictoryAxis dependentAxis
@@ -102,7 +102,7 @@ function GetChart(props){
           style={{
             fontFamily: 'Roboto',
             tickLabels: {fontSize: props.fontSize, padding: 15, fontFamily: 'Roboto'},
-            axisLabel: {fontSize: props.fontSize*1.5, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 35}
+            axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 35}
           }}/>
           <VictoryBar
             // barRatio={0.6}
@@ -116,8 +116,7 @@ function GetChart(props){
                   fontSize: toolTipFontSize,
                   fontFamily: 'Roboto'
                 }}
-                flyoutHeight={toolTipFontSize + 15}
-                flyoutWidth={toolTipFontSize * 2}    
+                constrainToVisibleArea={'true'}    
               />
           }
           />

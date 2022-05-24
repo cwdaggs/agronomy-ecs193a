@@ -212,7 +212,7 @@ export function ConcernsVictory(props) {
     "#D8F4CC"
   ]
   var fontSize = 18
-  var mobileFontSize = 12
+  var mobileFontSize = 6
   const mobileWidth = 1000;
   const laptopWidth = 1500;
   if(width < laptopWidth){
