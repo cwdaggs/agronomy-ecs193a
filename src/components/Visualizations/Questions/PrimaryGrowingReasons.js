@@ -126,7 +126,7 @@ function GetChart(props){
                       duration: 500,               
                     }}
                     width={props.width}
-                height={props.height}
+                height={props.height/2}
                 padding={{
                       left: props.margin.left,
                         right: props.margin.right,
@@ -190,7 +190,7 @@ export function PrimaryGrowingReasons(props) {
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vh;
+  const height = vw;
   const width = vw;
   const mobileWidth = 1000;
   var fontSize = 12;
@@ -309,7 +309,7 @@ export function PrimaryGrowingReasonsCompare(props) {
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vh;
+  const height = vw;
   const width = vw;
   const mobileWidth = 1000;
   var fontSize = 12;
