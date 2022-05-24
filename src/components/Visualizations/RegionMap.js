@@ -66,32 +66,6 @@ export const RegionMapChart = (props) => {
   return (
     <div className='info-charts'>
       <div className='info-row'>
-        <div className="info-legend">
-          <VictoryLegend
-            colorScale={regionColorScale}
-            x={150}
-            gutter={25}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
-                  data:   {stroke: "black", strokeWidth: 1}}}
-            title="Regions"
-            centerTitle
-            data={[
-              { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: fontSize}},
-              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
-              { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
-              { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
-              { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: fontSize}},
-              { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: fontSize}},
-              { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: fontSize}}
-            ]}
-          />
-        </div>
-        <div className="info-map">
-          <img src='./assets/region-map-2.png' className="map-image"></img>
-        </div>
-      </div>
-      <div className='info-row'>
           <div className="info-legend">
             <VictoryLegend
               colorScale={regionColorScale}
@@ -130,19 +104,45 @@ export const RegionMapChart = (props) => {
               colorScale={regionColorScale}
               data={regionData}
               // labels={() => null}
-              labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+              labels={({ datum }) => `${datum.x}: ${datum.y.toFixed() + "%"}`}
               labelComponent={
                   <VictoryTooltip 
                   style={{
-                      fontSize:fontSize,
+                      fontSize:10,
                       fontFamily: 'ABeeZee'
                   }}
                   flyoutHeight={20}
-                  flyoutWidth={40}    
+                  flyoutWidth={100}    
                   />
               }
             />
           </div>
+      </div>
+      <div className='info-row'>
+        <div className="info-legend">
+          <VictoryLegend
+            colorScale={regionColorScale}
+            x={150}
+            gutter={25}
+            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
+                  title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+                  data:   {stroke: "black", strokeWidth: 1}}}
+            title="Regions"
+            centerTitle
+            data={[
+              { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: fontSize}},
+              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
+              { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
+              { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
+              { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: fontSize}},
+              { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: fontSize}},
+              { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: fontSize}}
+            ]}
+          />
+        </div>
+        <div className="info-map">
+          <img src='./assets/region-map-2.png' className="map-image"></img>
+        </div>
       </div>
     </div>
   );

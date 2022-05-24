@@ -82,10 +82,10 @@ export const InfoSummary = (props) => {
               </ParallaxLayer>
               <ParallaxLayer offset={1.95} speed = {0.8}> 
                 <div id = "infoSection2">
-                  <div>
-                    <C.SubTitle>Responses by Region, County, Occupation, and Crop</C.SubTitle>
+                  <div id="info-vis-title">
+                    <C.SubTitle>Responses by Vocation, County, Region, and Crop</C.SubTitle>
                       <C.Desc className='font-roboto'>
-                        The visualizations below reflect the amount of respondents given a specific county, region, occupation, or crop. 
+                        The visualizations below reflect the amount of respondents given a specific vocation, county, region, or crop. 
                       </C.Desc>
                   </div>
                     <MapChart data={props.dataset} filter={"All"}/>
