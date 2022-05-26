@@ -477,12 +477,12 @@ export const PrioritySatisfaction = (props) => {
       const [activeVocation, setActiveVocation] = useState(filters.vocation);
       const [activeRegion, setActiveRegion] = useState(filters.region);
       const [activeCrop, setActiveCrop] = useState(filters.crop)
-      const [selectedNodes, setSelectedNodes] = useState(BarData(averageSatisfaction(props.dataset)));
+      const [selectedNodes, setSelectedNodes] = useState(props.dataset ? BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, filters.crop), filters.region), filters.vocation))): []);
 
       const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
       const [activeRegion2, setActiveRegion2] = useState(filters.region2);
       const [activeCrop2, setActiveCrop2] = useState(filters.crop2)
-      const [selectedNodes2, setSelectedNodes2] = useState(BarData(averageSatisfaction(props.dataset)));
+      const [selectedNodes2, setSelectedNodes2] = useState(props.dataset ? BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, filters.crop2), filters.region2), filters.vocation2))): []);
       
   
       if (!props.dataset) {
