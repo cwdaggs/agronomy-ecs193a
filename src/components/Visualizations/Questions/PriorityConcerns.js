@@ -1,4 +1,4 @@
-import {filterByCropOrRegion, parseURLCompare, parseURL, filterByRegion, filterByCrop} from "../UseData.js";
+import {filterByCropOrRegion, parseURLCompare, parseURL, filterByRegion, filterByCrop, filterByVocation} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
@@ -204,6 +204,8 @@ export function PriorityConcerns(props) {
       "#D8F4CC"
     ]
 
+    n = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation).length;
+
     return (
       <>
       <div id='vis-question-label'>
@@ -338,6 +340,9 @@ export function PriorityConcernsCompare(props) {
     "#A9E9A3",
     "#D8F4CC"
   ]
+
+  n = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation).length;
+  n2 = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2), activeVocation2).length;
 
   return (
     <>
