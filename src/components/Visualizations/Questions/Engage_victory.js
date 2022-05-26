@@ -85,6 +85,33 @@ function calculateAverageResponses(dataset) {
 
 function GetChart(props){
   var fontSize=props.fontSize
+
+  if(props.data.length == 0){
+    return (
+
+      <div className='dual-display-child'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+          <div id="legend-values">
+            <div className='legend-circle' id="five-color-first"></div>
+            <span className='legend-value'>1-3/week</span>
+            <div className='legend-circle' id="five-color-second"></div>
+            <span className='legend-value'>1-2/month</span>
+            <div className='legend-circle' id="five-color-third"></div>
+            <span className='legend-value'>3-6/year</span>
+            <div className='legend-circle' id="five-color-fourth"></div>
+            <span className='legend-value'>1-2/year</span>
+            <div className='legend-circle' id="five-color-fifth"></div>
+            <span className='legend-value'>Never</span>
+          </div>
+        </div>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -274,7 +301,7 @@ export function EngageVictory(props) {
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-      <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+      <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText} data={data_filtered}/>
     </>
   );
 }
@@ -431,10 +458,10 @@ export function EngageVictoryCompare(props) {
       <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText} data={data_filtered}/>
         </div>
         <div id="vis-b">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
+          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2} data={data_filtered2}/>
         </div>
       </div>   
     </>
