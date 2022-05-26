@@ -105,7 +105,7 @@ export default function App() {
           <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<AffectVictory dataset={dataset}/>}/>
           </Route>
-          <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={dataset}/>}>
+          <Route path="Information%20Network" element={<InfoSourcesBarChart dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<InfoSourcesBarChart dataset={dataset}/>}/>
           </Route>
           <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}>
@@ -154,7 +154,7 @@ export default function App() {
           <Route path="Priority%20Effect" element={<AffectVictoryCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<AffectVictoryCompare dataset={dataset}/>}/>
           </Route>
-          <Route path="Information%20Sources" element={<InfoSourcesBarChartCompare dataset={dataset}/>}>
+          <Route path="Information%20Network" element={<InfoSourcesBarChartCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<InfoSourcesBarChartCompare dataset={dataset}/>}/>
           </Route>
           <Route path="UCCE%20Engagement" element={<EngageVictoryCompare dataset={dataset}/>}>

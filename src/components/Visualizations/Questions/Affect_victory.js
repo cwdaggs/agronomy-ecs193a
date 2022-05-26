@@ -200,8 +200,7 @@ function GetChart(props){
                       style={{
                         fontSize:fontSize, fontFamily: 'Roboto'
                       }}
-                      flyoutHeight={25}
-                      flyoutWidth={40}    
+                      constrainToVisibleArea={'true'}  
                     />
                 }/>;
             })}

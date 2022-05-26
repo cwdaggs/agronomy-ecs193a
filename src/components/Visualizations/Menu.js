@@ -20,7 +20,7 @@ function VisMenu(props) {
     "Priority Effect":                    (<AffectVictory dataset={props.dataset}/>),
     "Production Concerns":                (<ConcernsVictory dataset={props.dataset}/>),
     "Acres Managed":                      (<AcresManagedBarChart dataset={props.dataset}/>),
-    "Information Sources":                (<InfoSourcesBarChart dataset={props.dataset}/>),
+    "Information Network":                (<InfoSourcesBarChart dataset={props.dataset}/>),
     "Internet Sources":                   (<InternetSourcesBarChart dataset={props.dataset}/>),
     "Priority Concerns":                  (<PriorityConcerns dataset={props.dataset}/>),
     "Values":                             (<AmountVictory dataset={props.dataset}/>),

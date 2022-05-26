@@ -109,8 +109,7 @@ function GetChart(props){
                     strokeWidth:1,
                     fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={toolTipFontSize*6}
-                  flyoutWidth={toolTipFontSize*25}      
+                  constrainToVisibleArea={'true'}     
                 />
             }
             style={{ 
@@ -135,8 +134,7 @@ function GetChart(props){
                     strokeWidth: 1,
                     fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={toolTipFontSize*6}
-                  flyoutWidth={toolTipFontSize*25}    
+                  constrainToVisibleArea={'true'} 
                 />
             }
             style={{ 
@@ -261,8 +259,7 @@ function GetChart(props){
                           strokeWidth:0.1,
                           fontFamily: 'Roboto'
                         }}
-                        flyoutHeight={toolTipFontSize*4}
-                        flyoutWidth={toolTipFontSize*20}    
+                        constrainToVisibleArea={'true'}    
                     />
                     
                 }

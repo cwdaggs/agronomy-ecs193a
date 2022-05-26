@@ -139,8 +139,7 @@ function GetChart(props){
                   style={{
                     fontSize:props.fontSize, fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={25}
-                  flyoutWidth={40}    
+                  constrainToVisibleArea={'true'}  
                 />
             }
             />
@@ -209,8 +208,7 @@ function GetUnsortedChart(props){
                   style={{
                     fontSize:props.fontSize, fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={25}
-                  flyoutWidth={40}    
+                  constrainToVisibleArea={'true'}  
                 />
             }
             />
@@ -248,7 +246,7 @@ export function InfoSourcesBarChart(props) {
 
     const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
-    const baseURL = "/results/Information%20Sources";
+    const baseURL = "/results/Information%20Network";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
     const [activeRegion, setActiveRegion] = useState(filters.region);
@@ -303,7 +301,7 @@ export function InfoSourcesBarChart(props) {
       fontSize = mobileFontSize;
     }
 
-    var labelText = "Information Sources"
+    var labelText = "Information Network"
     if (activeCrop !== "All" || activeVocation !== "All") {
       labelText += " for";
     }
@@ -339,7 +337,7 @@ export function InfoSourcesBarChart(props) {
 export function InfoSourcesBarChartCompare(props) {
   const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
-  const baseURL = "/results/compare/Information%20Sources";
+  const baseURL = "/results/compare/Information%20Network";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
   const [activeRegion, setActiveRegion] = useState(filters.region);
@@ -390,7 +388,7 @@ export function InfoSourcesBarChartCompare(props) {
       "Wheat"
     ];
 
-    var labelText = "Information Sources"
+    var labelText = "Information Network"
     if (activeCrop !== "All" || activeVocation !== "All") {
       labelText += " for";
     }
