@@ -103,6 +103,7 @@ function parseURL(baseURL, path) {
   
 
 function GetChart(props){
+  var toolTipFontSize = props.fontSize * 4
   return(
     <div class='visualization-window'>
           <div class='flex-parent'>
@@ -112,8 +113,8 @@ function GetChart(props){
                   y={0}     
                     colorScale={props.colorScale}
                     gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: props.fontSize}, 
-                            title:  {fontFamily: 'Roboto', fontSize: props.fontSize},
+                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: 12}, 
+                            title:  {fontFamily: 'Roboto', fontSize: 12},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title={String(props.titleText + " (n=" + props.n + ")")}
                     centerTitle
@@ -126,8 +127,8 @@ function GetChart(props){
                       duration: 500,               
                     }}
                     width={props.width}
-                height={props.height/2}
-                padding={{
+                    height={props.height/2}
+                    padding={{
                       left: props.margin.left,
                         right: props.margin.right,
                         bottom: props.margin.bottom,
@@ -139,7 +140,7 @@ function GetChart(props){
                     labels={({ datum }) => `${datum.x}: ${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
-                          fontSize:45,
+                          fontSize: toolTipFontSize,
                           fontFamily: 'Roboto'
                         }}
                         constrainToVisibleArea={'true'}    
@@ -192,8 +193,16 @@ export function PrimaryGrowingReasons(props) {
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw;
   const width = vw;
+  var fontSize = 12
+  var mobileFontSize = 6
   const mobileWidth = 1000;
-  var fontSize = 12;
+  const laptopWidth = 1500;
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
   for (var i = 0; i < data_by_reason.length; i++) {
@@ -311,8 +320,16 @@ export function PrimaryGrowingReasonsCompare(props) {
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw;
   const width = vw;
+  var fontSize = 15
+  var mobileFontSize = 6
   const mobileWidth = 1000;
-  var fontSize = 12;
+  const laptopWidth = 1500;
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
   for (var i = 0; i < data_by_reason.length; i++) {
