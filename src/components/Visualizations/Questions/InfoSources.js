@@ -106,6 +106,13 @@ export function calculateInformationSources(data, sorted){
 }
 
 function GetChart(props){
+  if(props.filtered_data.length == 0){
+    return (
+      <div className='dual-display-child'>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
   return(
         <div class='visualization-window'>
           <VictoryChart height={props.height} width={props.width}
@@ -168,6 +175,15 @@ function GetChart(props){
 }
 
 function GetUnsortedChart(props){
+
+  if(props.filtered_data.length == 0){
+    return (
+      <div className='dual-display-child'>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
         <div class='visualization-window'>
           <VictoryChart height={props.height} width={props.width}
