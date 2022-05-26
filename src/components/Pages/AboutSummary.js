@@ -1,6 +1,6 @@
 import * as C from './App.styles';
 import './AboutSummary.css';
-import {BsLinkedin} from "react-icons/bs";
+import {BsLinkedin, BsGithub} from "react-icons/bs";
 import {IoIosArrowForward} from "react-icons/io";
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -167,6 +167,9 @@ export const AboutSummary = () => {
         </C.Body>
       </C.Area>
     </C.Container>
+    <div id="git_link">
+      <a href='https://github.com/cwdaggs/agronomy-ecs193a' className="hover-link" target="_blank"><BsGithub/> Project GitHub</a>
+    </div>
     </div>
     );
 }

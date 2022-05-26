@@ -39,6 +39,12 @@
     z-index: 2;
 }
 
+#git_link{
+    display: flex;
+    padding: 50px;
+    justify-content: center;
+}
+
 li, a, p {
   font-weight: 400;
 }

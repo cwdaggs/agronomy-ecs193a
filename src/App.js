@@ -60,9 +60,9 @@ export default function App() {
         {/* <NavLink to ="/survey" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Survey")}
         </NavLink> */}
-        <NavLink to ="/feedback" className={"hover-link"}>
+        {/*<NavLink to ="/feedback" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
-        </NavLink>
+      </NavLink>*/}
         <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
           <Tab>
             About UCCE
