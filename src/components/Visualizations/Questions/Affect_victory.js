@@ -122,6 +122,32 @@ function calculateAverageResponses(dataset) {
 function GetChart(props){
   var fontSize = props.fontSize;
 
+  if(props.data.length == 0){
+    return (
+
+      <div className='dual-display-child'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+          <div id="legend-values">
+            <div className='legend-circle' id="five-color-first"></div>
+            <span className='legend-value'>Always</span>
+            <div className='legend-circle' id="five-color-second"></div>
+            <span className='legend-value'>Often</span>
+            <div className='legend-circle' id="five-color-third"></div>
+            <span className='legend-value'>Sometimes</span>
+            <div className='legend-circle' id="five-color-fourth"></div>
+            <span className='legend-value'>Rarely</span>
+            <div className='legend-circle' id="five-color-fifth"></div>
+            <span className='legend-value'>Never</span>
+          </div>
+        </div>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -312,7 +338,7 @@ export function AffectVictory(props) {
     <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
     <>
-      <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}></GetChart>
+      <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} data={data_filtered}></GetChart>
     </>
     </>
   );
@@ -458,10 +484,10 @@ export function AffectVictoryCompare(props) {
     <div className='dual-display'>
       <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       <div id="vis-a">
-        <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+        <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true} data={data_filtered}/>
       </div>
       <div id="vis-b">
-        <GetChart titleText={titleText2} dataset_final={dataset_final2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+        <GetChart titleText={titleText2} dataset_final={dataset_final2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true} data={data_filtered2}/>
       </div>
     </div>
     </>
