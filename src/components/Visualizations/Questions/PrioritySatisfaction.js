@@ -380,7 +380,7 @@ export const PrioritySatisfaction = (props) => {
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
     const [activeRegion, setActiveRegion] = useState(filters.region);
     const [activeCrop, setActiveCrop] = useState(filters.crop)
-    const [selectedNodes, setSelectedNodes] = useState(BarData(averageSatisfaction(props.dataset)));
+    const [selectedNodes, setSelectedNodes] = useState(props.dataset ? BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, filters.crop), filters.region), filters.vocation))): []);
 
     function vocationFunction(newValue){
       setActiveVocation(newValue);
