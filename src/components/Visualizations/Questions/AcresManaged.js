@@ -80,7 +80,14 @@ function calculateSizeOfDataSet(data){
 function GetChart(props){
   
   var toolTipFontSize = 30;
+  if(props.data.length == 0){
+    return (
 
+      <>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </>
+      )
+  }
   return(
     <>
     <div class='visualization-window'>
@@ -186,10 +193,10 @@ export function AcresManagedBarChart(props) {
         <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
-        <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} vocationArray={vocationArray} filters={filters} visIndex={1}/>
+        <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} vocationArray={vocationArray} filters={filters} visIndex={1} data={data}/>
           
       </>
-      );
+    );
 }
 
 export function AcresManagedBarChartCompare(props) {
@@ -285,10 +292,10 @@ export function AcresManagedBarChartCompare(props) {
       <div className='dual-display'>
           <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
           <div id="vis-a">
-            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1} compare={true}/>
+            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1} compare={true} data={data}/>
           </div>
           <div id="vis-b">
-            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2} compare={true}/>
+            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2} compare={true} data={data2}/>
           </div>
       </div>
     </>
