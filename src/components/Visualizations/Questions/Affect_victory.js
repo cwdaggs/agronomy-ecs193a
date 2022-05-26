@@ -194,7 +194,7 @@ function GetChart(props){
               return <VictoryBar 
                 data={data} 
                 key={i} 
-                labels={({datum}) => Math.round(datum.y) + "%"}
+                labels={({datum}) => datum.x + ": " + datum.concern + " affects decisions for " +  Math.round(datum.y) + "% of respondents" }
                 labelComponent={
                     <VictoryTooltip 
                       style={{
