@@ -28,6 +28,29 @@ export function calculateValueEach(data, filter, answer){
 
 function GetChart(props){
   var fontSize = props.fontSize
+
+  if(props.data.length == 0){
+    return (
+
+      <div className='dual-display-child'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+            <div id="legend-values">
+            <div className='legend-circle' id="three-color-first"></div>
+            <span className='legend-value'>Very Valuable</span>
+            <div className='legend-circle' id="three-color-second"></div>
+            <span className='legend-value'>Somewhat Valuable</span>
+            <div className='legend-circle' id="three-color-third"></div>
+            <span className='legend-value'>Not Valuable</span>
+            </div>
+        </div>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -270,7 +293,7 @@ export function AmountVictory(props) {
     <div className="inline-child">
     <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
-    <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+    <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText} data={data_filtered}/>
     </>
   );
 }
@@ -416,10 +439,10 @@ export function AmountVictoryCompare(props) {
       <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText} data={data_filtered}/>
         </div>
         <div id="vis-b">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
+          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2} data={data_filtered2}/>
         </div>
       </div>   
     </>
