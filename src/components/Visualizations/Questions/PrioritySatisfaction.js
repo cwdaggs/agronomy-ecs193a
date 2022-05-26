@@ -49,6 +49,27 @@ function GetChart(props){
   var trendData = trendLineSatisfactions(props.data)
   var selectedData = props.data
   
+  
+  if(props.data_filtered.length == 0){
+    return (
+
+      <div className='dual-display-child'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+            <div id="legend-values">
+            <div className='legend-circle' id="square-color-third"></div>
+            <span className='legend-value'>Topic of Interest</span>
+            <div className='legend-square' id="square-color-fourth"></div>
+            <span className='legend-value'>Average Priority/Satisfaction Over All Topics</span>
+            </div>
+        </div>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   function makeVis(data){
     setVis(
       ( 
@@ -178,7 +199,7 @@ function GetChart(props){
             <div className='legend-circle' id="square-color-third"></div>
             <span className='legend-value'>Topic of Interest</span>
             <div className='legend-square' id="square-color-fourth"></div>
-            <span className='legend-value'>Not Valuable</span>
+            <span className='legend-value'>Average Priority/Satisfaction Over All Topics</span>
           </div>
         </div>
         <div id="vis-question-label">{props.title}</div>
@@ -426,7 +447,7 @@ export const PrioritySatisfaction = (props) => {
           <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
 
-        <GetChart data={data} title={titleText}/>
+        <GetChart data={data} title={titleText} data_filtered={data_filtered}/>
 
     </>
     )};
@@ -515,8 +536,7 @@ export const PrioritySatisfaction = (props) => {
       if (activeRegion !== "All") {
         titleText += " in the " + activeRegion + " Region";
       }
-  
-      titleText2 += " (n = " + data_filtered.length + ")";
+      titleText += " (n = " + data_filtered.length + ")";
 
       var titleText2 = "Priority Vs Satisfaction of Information Availability";
 
@@ -542,7 +562,7 @@ export const PrioritySatisfaction = (props) => {
         titleText2 += " in the " + activeRegion2 + " Region";
       }
   
-      titleText2 += " (n = " + data_filtered.length + ")";
+      titleText2 += " (n = " + data_filtered2.length + ")";
   
       return (
   
@@ -554,10 +574,10 @@ export const PrioritySatisfaction = (props) => {
           <div className='dual-display'>
             <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
             <div id="vis-a">
-              <GetChart data={data} title={titleText} compare={true}/>
+              <GetChart data={data} title={titleText} compare={true} data_filtered={data_filtered}/>
             </div>
             <div id="vis-b">
-              <GetChart data={data2} title={titleText2} compare={true}/>
+              <GetChart data={data2} title={titleText2} compare={true} data_filtered={data_filtered2}/>
             </div>
           </div>   
       </>
