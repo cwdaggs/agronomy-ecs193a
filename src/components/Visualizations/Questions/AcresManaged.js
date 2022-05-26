@@ -9,7 +9,7 @@ import "typeface-abeezee";
 import { filter } from 'd3';
 
 function calculateAcres(data){
-  var names = ["< 500", "< 1000", "< 1500", "< 2000", "< 2500", "2500+"]
+  var names = ["< 500", "500 - 1000", "1000 - 1500", "1500 - 2000", "2000 - 2500", "2500+"]
   // var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
   var colors = [ 
   "#003F72",
