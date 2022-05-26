@@ -1,10 +1,14 @@
 .dual-display{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-  
-.dual-display-child{
-    flex: 1;
-}
+
+#button-a { order: 1; padding-bottom: 5px;}
+#vis-a { order: 2; }
+#button-b { order: 3; padding-bottom: 5px;}
+#vis-b { order:  4; }
 
 .vis-buttons-parent {
     display: flex;
@@ -57,6 +61,12 @@
         height: auto;
         width:auto;
     }
+
+    .dual-display{
+        text-align: center;
+        height: auto;
+        width:auto;
+    }
 }
 
 @media screen and (max-width: 600px) and (max-height: 1000px)  {
@@ -72,14 +82,8 @@
     }
 
     .dual-display{
-        display: block;
+        text-align: center;
+        height: auto;
+        width:auto;
     }
-
-    .flex-child-1 {
-        justify-content: left;
-      }
-    
-      .flex-child-2 {
-        justify-content: right;
-      }
 }

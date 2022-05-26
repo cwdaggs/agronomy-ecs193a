@@ -3,6 +3,7 @@ import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDiv
 import { useLocation, Link } from "react-router-dom";
 import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
 import {IoMdArrowDropdown} from "react-icons/io";
+import { active } from "d3";
 
 function DetermineCropIcon(type) {
     if (type === "Wheat") {
@@ -42,7 +43,7 @@ export function VocationAndRegion(props) {
         "Sunflower", 
         "Wheat"
       ];
-    
+
     const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
 
     var stateVocation= "";
@@ -54,12 +55,13 @@ export function VocationAndRegion(props) {
         stateRegion = "Select Region";
     } else {
         stateVocation = props.activeVocation.replace("%20", " ");
-        if (types.includes(props.activeRegionOrCrop)) {
-            stateCrop = props.activeRegionOrCrop;
-            stateRegion = "Select Region";
-        } else {
-            stateCrop = "Select Crop";
-            stateRegion = props.activeRegionOrCrop;
+        stateCrop = "Select Crop";
+        stateRegion = "Select Region";
+        if (types.includes(props.activeCrop)) {
+            stateCrop = props.activeCrop;
+        }
+        if(regionTypes.includes(props.activeRegion)){
+            stateRegion = props.activeRegion;
         }
     }
     const [activeCropName, setActiveCropName] = useState(stateCrop);
@@ -85,7 +87,6 @@ export function VocationAndRegion(props) {
                                     to={location + "/" + type + "/" + activeCropName + "/" + activeRegionName} 
                                     onClick={() => {props.vocationFunction(type); 
                                                 setActiveName(type.replace("%20", " "));
-                                                // console.log(type.replace(/([A-Z])/g, ' $1').trim());
                                             }} 
                             >
                                 <SubA 
@@ -108,15 +109,14 @@ export function VocationAndRegion(props) {
                         {" "}
                         {types.map(type => (
                                 <Link style={{ textDecoration: 'none' }} 
-                                        to={location + "/" + activeName + "/" + type + "/Select Region"}
-                                        onClick={() => {props.regionOrCropFunction(type);
-                                            setActiveRegionName("Select Region");
-                                            setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim()); 
+                                        to={location + "/" + activeName + "/" + type + "/" + activeRegionName}
+                                        onClick={() => {props.cropFunction(type);
+                                            setActiveCropName(type.replace(/([A-Z])/g, '$1').trim()); 
                                             }}
                                 >
                                     <SubA 
                                         key={type}
-                                        active={props.activeRegionOrCrop === type}
+                                        active={props.activeCrop === type}
                                     >
                                         {DetermineCropIcon(type)}
                                         {" " + type}
@@ -135,15 +135,14 @@ export function VocationAndRegion(props) {
                     {" "}
                     {regionTypes.map(type => (
                         <Link style={{ textDecoration: 'none' }} 
-                                to={location + "/" + activeName + "/Select Crop/" + type}
-                                onClick={() =>  {props.regionOrCropFunction(type);
-                                    setActiveCropName("Select Crop"); 
+                                to={location + "/" + activeName + "/" + activeCropName + "/" + type}
+                                onClick={() =>  {props.regionFunction(type);   
                                     setActiveRegionName(type); 
                                     }}
                         >
                             <SubA 
                                 key={type}
-                                active={props.activeRegionOrCrop === type}
+                                active={props.activeRegion === type}
                             >
                                 {" " + type}  
                             </SubA>
@@ -182,6 +181,7 @@ export function VocationAndRegion(props) {
     var stateVocation2= "";
     var stateCrop2 = "";
     var stateRegion2 = "";
+
     if (props.baseAll) {
         stateVocation = "Select Vocation";
         stateCrop = "Select Crop";
@@ -193,20 +193,24 @@ export function VocationAndRegion(props) {
         stateVocation = props.activeVocation.replace("%20", " ");
         stateVocation2 = props.activeVocation2.replace("%20", " ");
 
-        if (types.includes(props.activeRegionOrCrop)) {
-            stateCrop = props.activeRegionOrCrop;
-            stateRegion = "Select Region";
-        } else {
-            stateCrop = "Select Crop";
-            stateRegion = props.activeRegionOrCrop;
+        stateRegion = "Select Region";
+        stateRegion2 = "Compare Region";
+
+        stateCrop = "SelectCrop";
+        stateCrop2 = "Compare Crop";
+
+        if (types.includes(props.activeCrop)) {
+            stateCrop = props.activeCrop;
+        }
+        if(regionTypes.includes(props.activeRegion)){
+            stateRegion = props.activeRegion;
         }
 
-        if (types.includes(props.activeRegionOrCrop2)) {
-            stateCrop2 = props.activeRegionOrCrop2;
-            stateRegion2 = "Compare Region";
-        } else {
-            stateCrop2 = "Compare Crop";
-            stateRegion2 = props.activeRegionOrCrop2;
+        if (types.includes(props.activeCrop2)) {
+            stateCrop2 = props.activeCrop2;
+        }
+        if(regionTypes.includes(props.activeRegion2)){
+            stateRegion2 = props.activeRegion2;
         }
     }
     const [activeCropName, setActiveCropName] = useState(stateCrop);
@@ -220,9 +224,7 @@ export function VocationAndRegion(props) {
 
     return (
       <>
-            <StyledUl>
-            <div className="flex-parent">
-                <div className="flex-child-1">
+            <div className="flex-child-1" id="button-a">
                 <DropDownLi>
                     <Dropbtn>
                         {activeName + " "}
@@ -258,15 +260,14 @@ export function VocationAndRegion(props) {
                         {" "}
                         {types.map(type => (
                                 <Link style={{ textDecoration: 'none' }} 
-                                        to={location + "/" + activeName + "/" + type + "/Select Region" + "/" + activeName2 + "/" + activeCropName2 + "/" + activeRegionName2}
-                                        onClick={() => {props.regionOrCropFunction(type);
-                                            setActiveRegionName("Select Region");
-                                            setActiveCropName(type.replace(/([A-Z])/g, ' $1').trim()); 
+                                        to={location + "/" + activeName + "/" + type + "/" + activeRegionName + "/" + activeName2 + "/" + activeCropName2 + "/" + activeRegionName2}
+                                        onClick={() => {props.cropFunction(type);
+                                            setActiveCropName(type.replace(/([A-Z])/g, '$1').trim()); 
                                             }}
                                 >
                                     <SubA 
                                         key={type}
-                                        active={props.activeRegionOrCrop === type}
+                                        active={props.activeCrop === type}
                                     >
                                         {DetermineCropIcon(type)}
                                         {" " + type}
@@ -285,15 +286,14 @@ export function VocationAndRegion(props) {
                     {" "}
                     {regionTypes.map(type => (
                         <Link style={{ textDecoration: 'none' }} 
-                                to={location + "/" + activeName + "/Select Crop/" + type + "/" + activeName2 + "/" + activeCropName2 + "/" + activeRegionName2}
-                                onClick={() =>  {props.regionOrCropFunction(type);
-                                    setActiveCropName("Select Crop"); 
+                                to={location + "/" + activeName + "/" + activeCropName + "/" + type + "/" + activeName2 + "/" + activeCropName2 + "/" + activeRegionName2}
+                                onClick={() =>  {props.regionFunction(type);
                                     setActiveRegionName(type); 
                                     }}
                         >
                             <SubA 
                                 key={type}
-                                active={props.activeRegionOrCrop === type}
+                                active={props.activeRegion === type}
                             >
                                 {" " + type}  
                             </SubA>
@@ -302,7 +302,7 @@ export function VocationAndRegion(props) {
                     </DropDownContent>
                 </DropDownLi>
                 </div>
-                <div className="flex-child-2">                        
+                <div className="flex-child-2" id="button-b">                        
                 <DropDownLi>
                     <Dropbtn>
                         {activeName2 + " "}
@@ -338,15 +338,14 @@ export function VocationAndRegion(props) {
                         {" "}
                         {types.map(type => (
                                 <Link style={{ textDecoration: 'none' }} 
-                                        to={location + "/" + activeName + "/" + activeCropName + "/" + activeRegionName + "/" + activeName2 + "/" + type + "/Compare Region"}
-                                        onClick={() => {props.regionOrCropFunction2(type);
-                                            setActiveRegionName2("Compare Region");
-                                            setActiveCropName2(type.replace(/([A-Z])/g, ' $1').trim()); 
+                                        to={location + "/" + activeName + "/" + activeCropName + "/" + activeRegionName + "/" + activeName2 + "/" + type + "/" + activeRegionName2}
+                                        onClick={() => {props.cropFunction2(type);
+                                            setActiveCropName2(type.replace(/([A-Z])/g, '$1').trim()); 
                                             }}
                                 >
                                     <SubA 
                                         key={type}
-                                        active={props.activeRegionOrCrop2 === type}
+                                        active={props.activeCrop2 === type}
                                     >
                                         {DetermineCropIcon(type)}
                                         {" " + type}
@@ -365,15 +364,14 @@ export function VocationAndRegion(props) {
                     {" "}
                     {regionTypes.map(type => (
                         <Link style={{ textDecoration: 'none' }} 
-                                to={location + "/" + activeName + "/Select Crop/" + activeRegionName + "/" + activeName2 + "/Compare Crop/" + type}
-                                onClick={() =>  {props.regionOrCropFunction2(type);
-                                    setActiveCropName2("Compare Crop"); 
+                                to={location + "/" + activeName + "/" + activeCropName + "/" + activeRegionName + "/" + activeName2 + "/" + activeCropName2 + "/" + type}
+                                onClick={() =>  {props.regionFunction2(type);
                                     setActiveRegionName2(type); 
                                     }}
                         >
                             <SubA 
                                 key={type}
-                                active={props.activeRegionOrCrop2 === type}
+                                active={props.activeRegion2 === type}
                             >
                                 {" " + type}  
                             </SubA>
@@ -382,8 +380,6 @@ export function VocationAndRegion(props) {
                     </DropDownContent>
                 </DropDownLi>
                 </div>
-            </div>
-            </StyledUl>
          
       </>  
     )

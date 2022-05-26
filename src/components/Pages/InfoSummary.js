@@ -10,11 +10,11 @@ export const InfoSummary = (props) => {
 
   return (
     <div>
-      <Parallax pages={3.5}>
+      <Parallax pages={4}>
         <C.Container>
           <C.Area>          
             <C.Body>
-              <ParallaxLayer factor={1.5} style={{
+              <ParallaxLayer factor={2} style={{
                 backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
@@ -26,17 +26,24 @@ export const InfoSummary = (props) => {
                     Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who 
                     solve problems in agriculture, the environment, and human and community well-being. They work to foster a 
                     connection between the university and the public by delivering science-based information. In 
-                    California, <a href='https://ucanr.edu/' className="hover-link" target="_blank">UC Cooperative Extension</a> is facing reductions 
-                    in personnel, meaning current advisors are stretched thin and need to prioritize their efforts. At the same 
-                    time, the landscape of California agriculture is rapidly changing and farmers are encountering new challenges 
-                    such as regulations on labor and inputs.
+                    California, <a href='https://ucanr.edu/' className="hover-link" target="_blank">UC Cooperative Extension</a>, 
+                    which is administered by the UC Agriculture and Natural Resources Division (UC ANR), is currently undertaking 
+                    an historic increase in personnel. In July of 2022, the Governor signed a budget which increased the UC ANR 
+                    budget to the pre-COVID levels of FY 2019-20 in addition to a 5% increase as well as an additional ongoing 
+                    $32 million. This resuscitation of UC Cooperative Extension will bring about meaningful collaborative 
+                    opportunities for current advisors and specialists who are stretched thin and need to prioritize their 
+                    efforts. The landscape of California agriculture is rapidly changing. Farmers are encountering new challenges 
+                    such as regulations on labor and inputs, and UC Cooperative Extension is preparing to respond by hiring 48 
+                    new extension advisors and 16 extension specialists by the end of 2023.
                   </C.Desc>
                   <C.Desc className='font-roboto'>
                     We recently conducted a statewide collaborative needs assessment to give a voice to farmers and others working 
                     in agronomic crop production. The goal was to understand their priorities, concerns, and top management 
                     challenges, helping identify critical needs for research and extension. Our online survey questions were 
                     designed to shed light on the most important issues and preferences for extension information and approaches 
-                    based on input from growers, consultants, and allied industry for agronomic crops across the state.
+                    based on input from growers, consultants, and allied industry for agronomic crops across the state. Incoming 
+                    extension advisors and specialists with responsibilities for research and education about agronomic crops can 
+                    utilize the information in this survey to best serve their new clientele.
                   </C.Desc>
                   <C.Desc className='font-roboto'>
                     Through this interactive website, our goal is to share the findings with survey participants, collaborating
@@ -68,24 +75,24 @@ export const InfoSummary = (props) => {
                   </C.Desc>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer factor={2} offset={1.5} style={{
+              <ParallaxLayer factor={2} offset={2} style={{
                 backgroundImage: `url(${singleWheat})`,
                 backgroundSize: 'cover'
               }}> 
               </ParallaxLayer>
-              <ParallaxLayer offset={1.95} speed = {0.8}> 
+              <ParallaxLayer offset={2} speed = {0.8}> 
                 <div id = "infoSection2">
-                  <div>
-                    <C.SubTitle>Responses by Region, County, Occupation, and Crop</C.SubTitle>
+                  <div id="info-vis-title">
+                    <C.SubTitle>Responses by Vocation, County, Region, and Crop</C.SubTitle>
                       <C.Desc className='font-roboto'>
-                        The visualizations below reflect the amount of respondents given a specific county, region, occupation, or crop. 
+                        The visualizations below reflect the amount of respondents given a specific vocation, county, region, or crop. 
                       </C.Desc>
                   </div>
                     <MapChart data={props.dataset} filter={"All"}/>
                     <RegionMapChart data={props.dataset} filter={"All"}/>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer offset={2.95} speed = {0.8}>  
+              <ParallaxLayer offset={3} speed = {0.8}>  
                 <div id = "infoSection3">
                   <CropBar data={props.dataset}/>
                 </div>

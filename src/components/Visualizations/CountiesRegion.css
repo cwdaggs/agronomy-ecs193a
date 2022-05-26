@@ -1,5 +1,6 @@
 .info-charts{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     width:100vw;
     padding-bottom: 10%;
@@ -23,38 +24,60 @@
 }
 
 #cropBarTitle{
-    text-align: center;
-    font-size: 30px;
-    margin-bottom: 0vh;
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
 }
 
-@media screen and (max-width: 1200px) and (min-height:800px) {
+@media (max-width: 1350px) {
     #cropBarTitle {
-        font-size: 20px;
+        font-size: 18px;
+        margin-bottom: -10vh;
+    }
+}
+
+@media (max-width: 1000px) {
+    #cropBarTitle {
+        font-size: 14px;
         margin-bottom: -20vh;
     }
 }
 
-@media screen and (max-width: 600px) and (max-height: 1000px)  {
+@media (max-width: 730px) {
     #cropBarTitle {
-        font-size: 15px;
+        font-size: 12px;
+        margin-bottom: -20vh;
+    }
+}
+
+@media (max-width: 550px) {
+    .info-row {
+        width: 80%;
+    }
+
+    .map-image {
+        margin-top: 30%;
+        margin-left: 20%;
+        height: 60%;
+    }
+}
+
+@media (max-width: 400px){
+    #cropBarTitle {
+        font-size: 10px;
         margin-bottom: -30vh;
     }
 
     .map-image {
-        height: 30%;
-        margin-top: 130%;
+        margin-top: 50%;
+        margin-left: 20%;
+        height: 50%;
     }
 }
 
-@media screen and (max-height:800px) and (min-width: 600px) {
-    #cropBarTitle {
-        font-size: 20px;
-        margin-bottom: 0vh;
-    }
-
-    .map-image{
-        margin-top: 10%;
-        height: 80%;
+@media (max-width: 300px) {
+    .map-image {
+        margin-top: 80%;
+        margin-left: 20%;
+        height: 40%;
     }
 }

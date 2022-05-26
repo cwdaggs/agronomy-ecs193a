@@ -23,9 +23,10 @@ const Dropbtn = styled.div`
   text-decoration: none;
   border-top: 1px solid white;
   border-bottom: 1px solid gray;
-  border-left: 3px solid #f1f1f1;
-  border-right: 5px solid white;
-  border-radius: 0px;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  margin-left: 10px;
+  margin-right: 10px;
   &:hover {
     background-color: #f1f1f1;
   }
@@ -33,21 +34,15 @@ const Dropbtn = styled.div`
   @media (max-width: 1200px) {
     padding: 5px 10px;
     font-size: 8px;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    border-left: 5px solid white;
-    border-right: 5px solid white;
-    border-radius: 25px;
+    margin-left: 6px;
+    margin-right: 6px;
   }
 
   @media (max-width: 420px) {
     padding: 5px 8px;
+    margin-left: 3px;
+    margin-right: 3px;
     font-size: 6px;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    border-left: 5px solid white;
-    border-right: 5px solid white;
-    border-radius: 25px;  
   }
 `;
 
@@ -103,7 +98,7 @@ const Tab = styled.button`
   padding: 35px 60px;
   cursor: pointer;
   font-size: 25px;
-  font-family: Metropolis,sans-serif; 
+  font-family: Public Sans,sans-serif; 
   opacity: 0.7;
   background: white;
   border: 0;
@@ -128,11 +123,10 @@ background: #A6B78C;
 text-decoration: none;
 color: white;
 font-size: 16px;
-letter-spacing: .08em;
-text-transform: uppercase;
 position: relative;
 transition: background-color .6s ease;
 overflow: hidden;
+border-radius: 10px;
 &:after {
   content: "";
   position: absolute;
@@ -151,7 +145,7 @@ overflow: hidden;
 
 &:focus,
 &:hover {
-    background: #FC6E51;
+    background: #3399FF;
 }
 
 ${({active}) => 
@@ -166,9 +160,9 @@ ${({active}) =>
 const TabVisualizations = styled.button`
   padding: 5% ;
   cursor: pointer;
-  font-family: Metropolis,sans-serif; 
+  font-family: Public Sans,sans-serif; 
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px;
   text-align: center; 
   opacity: 0.7;
   background: white;
@@ -187,25 +181,25 @@ const TabVisualizations = styled.button`
   `}
   @media (max-width: 1350px) {
     padding: 8px;
-    font-size: 14px;
+    font-size: 11.5px;
   }
   @media (max-width: 1000px) {
     padding: 6px;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   @media (max-width: 800px) {
     padding: 4px;
-    font-size: 10px;
+    font-size: 9px;
   }
 
   @media (max-width: 650px) {
     padding: 2px;
-    font-size: 6px;
+    font-size: 5.5px;
   }
 
   @media (max-width: 400px){
-    font-size: 5px;
+    font-size: 4.5px;
   }
 
   @media (max-width: 350px) {

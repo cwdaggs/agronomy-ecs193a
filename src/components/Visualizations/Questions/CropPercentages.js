@@ -45,7 +45,7 @@ function GetChart(props){
                             }}
                             
                             width={props.width}
-                            height={props.height}
+                            height={props.height/2}
                             padding={{
                                 left: props.margin.left,
                                 right: props.margin.right,
@@ -55,15 +55,14 @@ function GetChart(props){
                             style={{ data: { stroke: "black", strokeWidth: 1}}}
                             colorScale={props.colors}
                             data={props.data}
-                            labels={({ datum }) => `${datum.y.toFixed() + "%"}`}
+                            labels={({ datum }) => `${datum.x}: ${datum.y.toFixed() + "%"}`}
                             labelComponent={
                             <VictoryTooltip 
                                 style={{
                                     fontSize:45,
                                     fontFamily: 'Roboto'
                                 }}
-                                flyoutHeight={50}
-                                flyoutWidth={100}      
+                                constrainToVisibleArea={'true'}   
                             />
                         }
                         />
@@ -84,7 +83,7 @@ export function CropPercentages(props) {
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh;
+    const height = vw;
     const width = vw;
     const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 

@@ -1,5 +1,5 @@
 import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {filterByCropOrRegion, filterByVocation, parseURLCompare, sort_by_freq} from '../UseData.js'
+import {filterByCrop, filterByCropOrRegion, filterByRegion, filterByVocation, parseURLCompare, sort_by_freq} from '../UseData.js'
 import "typeface-abeezee";
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import {useState} from 'react';
@@ -58,6 +58,11 @@ function transformData(dataset) {
       return memo + curr[i].Total;
     }, 0);
   });
+  for (var i = 0; i < totals.length; i++) {
+    if (totals[i] === 0) {
+      totals[i] = 1;
+    }
+  }
   return dataset.map((data) => {
     return data.map((datum, i) => {
       return { x: datum.Engage, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Engage };
@@ -79,6 +84,7 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
+  var fontSize=props.fontSize
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -149,7 +155,10 @@ function GetChart(props){
               }}
             tickLabelComponent={       
               <VictoryLabel    
-                  textAnchor="end"
+                textAnchor="start"
+                style={{fill: "white", fontSize: fontSize}}
+                dx={fontSize}
+                events={{onClick: (evt) => console.log(evt)}}
               />   
             }
           />
@@ -165,15 +174,21 @@ export function EngageVictory(props) {
 
   const baseURL = "/results/UCCE%20Engagement";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
   }  
 
   if (!props.dataset) {
@@ -194,33 +209,26 @@ export function EngageVictory(props) {
   ];
 
   var titleText = "UCCE Engagement Frequency";
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for ";
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
     if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-      titleText += activeRegionOrCrop;
+      titleText += " " + activeCrop;
     }
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeRegionOrCrop)) {
-      titleText += " " + activeVocation;
-      if (activeVocation === "Other") {
-        titleText += " Vocations";
-      }
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
     } else {
-      titleText += " for " + activeVocation;
-      if (activeVocation === "Other") {
-        titleText += " Vocations";
-      }
+      titleText += " " + activeVocation;
     }
   }
-  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
-  var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
-  if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
-    data = props.dataset;
-  }
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var data_filtered = filterByVocation(data, activeVocation)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_freq(data_by_engage)
@@ -264,7 +272,7 @@ export function EngageVictory(props) {
         <h2>How often do you engage with the UCCE in the following ways?</h2>
       </div>
       <div className="inline-child">
-            <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
     </>
@@ -277,26 +285,36 @@ export function EngageVictoryCompare(props) {
 
   const baseURL = "/results/compare/UCCE%20Engagement";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
-  const [activeVocation, setActiveVocation] = useState(filters.vocation.replace("%20", " "));
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
-  const [activeVocation2, setActiveVocation2] = useState(filters.vocation2.replace("%20", " "));
-  const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
   }  
 
   function vocationFunction2(newValue){
     setActiveVocation2(newValue);
   }
 
-  function regionOrCropFunction2(newValue) {
-    setActiveRegionOrCrop2(newValue);
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
+  }  
+
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue);
   }  
 
   if (!props.dataset) {
@@ -316,77 +334,61 @@ export function EngageVictoryCompare(props) {
     "Wheat"
   ];
 
-  var titleText = "UCCE Engagement Frequency";
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for ";
-    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-      titleText += activeRegionOrCrop;
-    }
-  }
-  if (activeVocation !== "All") {
-    if (crops.includes(activeRegionOrCrop)) {
-      titleText += " " + activeVocation;
-      if (activeVocation === "Other") {
-        titleText += " Vocations";
-      }
-    } else {
-      titleText += " for " + activeVocation;
-      if (activeVocation === "Other") {
-        titleText += " Vocations";
-      }
-    }
-  }
-  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
-  }
-
-  var data = filterByCropOrRegion(props.dataset, activeRegionOrCrop);
-  if ((activeVocation === "Allied Industry" || activeVocation === "Other") && crops.includes(activeRegionOrCrop)) {
-    data = props.dataset;
-  }
-  var data_filtered = filterByVocation(data, activeVocation)
-  var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
-  var data_sorted = sort_by_freq(data_by_engage)
-  const dataset_final = transformData(data_sorted)
-
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
-
-
   var titleText2 = "UCCE Engagement Frequency";
-  if (crops.includes(activeRegionOrCrop2)) {
-    titleText2 += " for ";
+  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+    titleText2 += " for";
+  }
+  if (activeCrop2 !== "All") {
     if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-      titleText2 += activeRegionOrCrop2;
+      titleText2 += " " + activeCrop2;
     }
   }
   if (activeVocation2 !== "All") {
-    if (crops.includes(activeRegionOrCrop2)) {
-      titleText2 += " " + activeVocation2;
-      if (activeVocation2 === "Other") {
-        titleText2 += " Vocations";
-      }
+    if (activeVocation2 === "Other") {
+      titleText2 += " " + "Other Vocations";
     } else {
-      titleText2 += " for " + activeVocation2;
-      if (activeVocation2 === "Other") {
-        titleText2 += " Vocations";
-      }
+      titleText2 += " " + activeVocation2;
     }
   }
-  if (!crops.includes(activeRegionOrCrop2) && activeRegionOrCrop2 !== "All") {
-    titleText2 += " in the " + activeRegionOrCrop2 + " Region";
+  if (activeRegion2 !== "All") {
+    titleText2 += " in the " + activeRegion2 + " Region";
   }
 
-  var data2 = filterByCropOrRegion(props.dataset, activeRegionOrCrop2);
-  if ((activeVocation2 === "Allied Industry" || activeVocation2 === "Other") && crops.includes(activeRegionOrCrop2)) {
-    data2 = props.dataset;
-  }
+  var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
   var data_filtered2 = filterByVocation(data2, activeVocation2)
   var data_by_engage2 = calculateEngageTotalsForEachElement(data_filtered2)
-  var data_sorted2 = sort_by_freq(data_by_engage2)
-  const dataset_final2 = transformData(data_sorted2)
+  // var data_sorted2 = sort_by_freq(data_by_engage2)
+  const dataset_final2 = transformData(data_by_engage2)
 
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  titleText2 += " (n = " + calculateAverageResponses(data_by_engage2) + ")";
 
+  var titleText = "UCCE Engagement Frequency";
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
+  }
+  if (activeVocation !== "All") {
+    if (activeVocation === "Other") {
+      titleText += " " + "Other Vocations";
+    } else {
+      titleText += " " + activeVocation;
+    }
+  }
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
+  }
+
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+  var data_filtered = filterByVocation(data, activeVocation)
+  var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
+  // var data_sorted = sort_by_freq(data_by_engage)
+  const dataset_final = transformData(data_by_engage)
+
+  titleText += " (n = " + calculateAverageResponses(data_by_engage) + ")";
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -417,7 +419,6 @@ export function EngageVictoryCompare(props) {
     "#D8F4CC"
   ]
 
-
   const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
 
   return (
@@ -426,13 +427,16 @@ export function EngageVictoryCompare(props) {
       <div id='vis-question-label'>
         <h2>How often do you engage with the UCCE in the following ways?</h2>
       </div>
-      <div className="inline-child">
-        <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-      </div>
+
       <div className='dual-display'>
-        <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
-        <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
-      </div>
+        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <div id="vis-a">
+          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+        </div>
+        <div id="vis-b">
+          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
+        </div>
+      </div>   
     </>
   );
 }

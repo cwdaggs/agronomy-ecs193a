@@ -43,7 +43,7 @@ export default function App() {
   const dataset = useData('./data/Filtered_Crop_Data.csv');
 
   return (
-    <div class='font-metropolis'>
+    <div>
       <div id="heading">
         <NavLink to ="/" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Home")}
@@ -65,7 +65,7 @@ export default function App() {
         </NavLink>
         <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
           <Tab>
-            UCCE
+            About UCCE
           </Tab>
         </a>
       </div>
@@ -77,7 +77,8 @@ export default function App() {
         <Route path="results/" element={
           <div className='vis-page'>
             <div id="visTop">
-              Select a topic to view responses for the respective question. Responses can then be sorted by vocation and crop/region. Hovering over a data element will provide more detailed information.
+              Select a topic to view responses for the respective question. Responses can then be sorted by vocation, crop, and 
+              region. Hovering over a data element will provide more detailed information.
             </div>
             <div id="compare-box">
               <NavLink to="/results/compare">
@@ -99,7 +100,7 @@ export default function App() {
             <Route path=":vocation/:crop/:region" element={<PriorityConcerns dataset={dataset}/>}/>
           </Route>
           <Route path="Growing%20Reasons" element={<PrimaryGrowingReasons dataset={dataset}/>}>
-            <Route path=":crop" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
+            <Route path=":crop/:region" element={<PrimaryGrowingReasons dataset={dataset}/>}/>
           </Route>
           <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<AffectVictory dataset={dataset}/>}/>
@@ -124,7 +125,8 @@ export default function App() {
         <Route path="results/compare/" element={
           <div className='vis-page'>
             <div id="visTop">
-              Select a topic to view responses for the respective question. Responses can then be sorted by vocation and crop/region. Hovering over a data element will provide more detailed information.
+              Select a topic to view responses for the respective question. Responses can then be sorted by vocation, crop, and 
+              region. Hovering over a data element will provide more detailed information.
             </div>
             <div id="compare-box">
               <NavLink to="/results">
@@ -147,7 +149,7 @@ export default function App() {
           <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<PriorityConcernsCompare dataset={dataset}/>}/>
           </Route>
           <Route path="Growing%20Reasons" element={<PrimaryGrowingReasonsCompare dataset={dataset}/>}>
-            <Route path=":crop/:crop2" element={<PrimaryGrowingReasonsCompare dataset={dataset}/>}/>
+            <Route path=":crop/:crop2/:region/:region2" element={<PrimaryGrowingReasonsCompare dataset={dataset}/>}/>
           </Route>
           <Route path="Priority%20Effect" element={<AffectVictoryCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<AffectVictoryCompare dataset={dataset}/>}/>

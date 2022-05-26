@@ -9,7 +9,6 @@ StylesManager.applyTheme("modern");
 
 const surveyJson = {
     "title": "Comments and Suggestions",
-    "description": "Work in progress, feedback will not be sent until completion",
     "elements": [
     {
         name: "Suggestions Box",
@@ -24,6 +23,8 @@ const surveyJson = {
 
 export const CommentBox = (profile) => {
     
+    var Filter = require('bad-words'),
+        filter = new Filter();
     init("bbHpEmI6Hk-yZSrJy");
     const survey = new Model(surveyJson);
 
@@ -34,7 +35,7 @@ export const CommentBox = (profile) => {
         var templateParams = {
             from_name: profile.profile.profileObj.name,
             from_email: profile.profile.profileObj.email,
-            message: surveyData["Suggestions Box"]
+            message: filter.clean(surveyData["Suggestions Box"])
         };
 
         // send comment to email

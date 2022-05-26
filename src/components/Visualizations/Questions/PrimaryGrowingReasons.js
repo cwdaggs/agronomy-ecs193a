@@ -66,6 +66,7 @@ export function calculateAllPrimaryGrowingReasons(data, filter) {
 function parseURL(baseURL, path) {
   var pathname = path;
   var crop = "All";
+  var region = "All";
   var baseAll = true;
   const cropChoices = [
     "All", 
@@ -80,20 +81,29 @@ function parseURL(baseURL, path) {
     "Sunflower", 
     "Wheat"
   ];
+
+  const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
   if (baseURL !== pathname) {
     pathname = pathname.replace(baseURL, "");
+    pathname = pathname.replaceAll("%20", " ");
     const filters = pathname.split("/");
     filters.shift();
     if (filters[0] !== "Select%20Crop" && cropChoices.includes(filters[0])) {
       crop = filters[0];
       baseAll = false;
     }
-  } 
-  return {crop: crop, baseAll: baseAll};
+    if (filters[1] !== "Select%20Region" && regionTypes.includes(filters[1])) {
+      region = filters[1];
+      baseAll = false;
+    }
+  }
+  return {crop: crop, region: region, baseAll: baseAll};
 }
   
 
 function GetChart(props){
+  var toolTipFontSize = props.fontSize * 4
   return(
     <div class='visualization-window'>
           <div class='flex-parent'>
@@ -103,8 +113,8 @@ function GetChart(props){
                   y={0}     
                     colorScale={props.colorScale}
                     gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: props.fontSize}, 
-                            title:  {fontFamily: 'Roboto', fontSize: props.fontSize},
+                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: 12}, 
+                            title:  {fontFamily: 'Roboto', fontSize: 12},
                             data:   {stroke: "black", strokeWidth: 1}}}
                     title={String(props.titleText + " (n=" + props.n + ")")}
                     centerTitle
@@ -117,8 +127,8 @@ function GetChart(props){
                       duration: 500,               
                     }}
                     width={props.width}
-                height={props.height}
-                padding={{
+                    height={props.height/2}
+                    padding={{
                       left: props.margin.left,
                         right: props.margin.right,
                         bottom: props.margin.bottom,
@@ -127,14 +137,13 @@ function GetChart(props){
                     style={{ data: { stroke: "black", strokeWidth: 1}}}
                     colorScale={props.colorScale}
                     data={props.data_by_reason}
-                    labels={({ datum }) => `${datum.y}`}
+                    labels={({ datum }) => `${datum.x}: ${datum.y}`}
                     labelComponent={<VictoryTooltip 
                         style={{
-                          fontSize:35,
-                          fontFamily: 'ABeeZee'
+                          fontSize: toolTipFontSize,
+                          fontFamily: 'Roboto'
                         }}
-                        flyoutHeight={40}
-                        flyoutWidth={80}     
+                        constrainToVisibleArea={'true'}    
                     />}
                 />
             </div>
@@ -147,41 +156,59 @@ function GetChart(props){
 export function PrimaryGrowingReasons(props) {
     
   const baseURL = "/results/Growing%20Reasons";
-  // console.log(useLocation().pathname);
   const filter = parseURL(baseURL, useLocation().pathname);
+
   const [active, setActive] = useState(filter.crop);
-  // console.log(active);
+  const [activeRegion, setActiveRegion] = useState(filter.region);
 
   function changeFunc(newValue){
     setActive(newValue);
+  }
+
+  function changeRegionFunc(newValue){
+    setActiveRegion(newValue);
   }
 
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Reasons for Growing " + active;
+  var titleText = "Why Grow";
+  if (activeRegion !== "All") {
+    titleText += " " + activeRegion;
+  }
   if (active === "All") {
     titleText += " Crops"
+  } else {
+    titleText +=  " " + active;
   }
+  titleText += "?";
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
+  var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
   var legend_data = []
-  var n = 0
+  //var n = 0
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vh;
+  const height = vw;
   const width = vw;
+  var fontSize = 12
+  var mobileFontSize = 6
   const mobileWidth = 1000;
-  var fontSize = 12;
+  const laptopWidth = 1500;
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
   for (var i = 0; i < data_by_reason.length; i++) {
       legend_data.push({name: data_by_reason[i].x})
-      n += data_by_reason[i].y
   }
+  var n = data_filtered.length;
 
   // const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
   //const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
@@ -220,7 +247,7 @@ export function PrimaryGrowingReasons(props) {
       <h2>What are the primary reasons you grow the following field crops?</h2>
     </div>
     <div className="inline-child">
-      <OnlyCrops changeFunc={changeFunc} active={active} baseAll={filter.baseAll}/>
+      <OnlyCrops changeFunc={changeFunc} changeRegionFunc={changeRegionFunc} active={active} activeRegion={activeRegion} baseAll={filter.baseAll}/>
     </div>
 
     <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
@@ -231,12 +258,11 @@ export function PrimaryGrowingReasons(props) {
 export function PrimaryGrowingReasonsCompare(props) {
     
   const baseURL = "/results/compare/Growing%20Reasons";
-  // console.log(useLocation().pathname);
   const filter = parseCropURLCompare(baseURL, useLocation().pathname, ["All"]);
-  console.log(filter)
   const [active, setActive] = useState(filter.crop1);
   const [active2, setActive2] = useState(filter.crop2);
-  // console.log(active);
+  const [activeRegion1, setActiveRegion1] = useState(filter.region1);
+  const [activeRegion2, setActiveRegion2] = useState(filter.region2);
 
   function changeFunc(newValue){
     setActive(newValue);
@@ -246,47 +272,75 @@ export function PrimaryGrowingReasonsCompare(props) {
     setActive2(newValue);
   }
 
+  function changeRegion1Func(newValue){
+    setActiveRegion1(newValue);
+  }
+
+  function changeRegion2Func(newValue){
+    setActiveRegion2(newValue);
+  }
+
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Reasons for Growing " + active;
+  var titleText = "Why Grow";
+  if (activeRegion1 !== "All") {
+    titleText += " " + activeRegion1;
+  }
   if (active === "All") {
     titleText += " Crops"
+  } else {
+    titleText +=  " " + active;
   }
+  titleText += "?";
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, active), "Growers")
+  var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion1), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
   var legend_data = []
   var n = 0
 
-  var titleText2 = "Reasons for Growing " + active2;
+  var titleText2 = "Why Grow";
+  if (activeRegion2 !== "All") {
+    titleText2 += " " + activeRegion2;
+  }
   if (active2 === "All") {
     titleText2 += " Crops"
+  } else {
+    titleText2 +=  " " + active2;
   }
+  titleText2 += "?";
 
-  var data_filtered2 = filterByVocation(filterByCropOrRegion(props.dataset, active2), "Growers")
+  var data_filtered2 = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active2), activeRegion2), "Growers")
   var data_by_reason2 = calculateAllPrimaryGrowingReasons(data_filtered2, active2)
   var legend_data2 = []
   var n2 = 0
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vh;
+  const height = vw;
   const width = vw;
+  var fontSize = 15
+  var mobileFontSize = 6
   const mobileWidth = 1000;
-  var fontSize = 12;
+  const laptopWidth = 1500;
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
   for (var i = 0; i < data_by_reason.length; i++) {
       legend_data.push({name: data_by_reason[i].x})
-      n += data_by_reason[i].y
   }
+  n = data_filtered.length;
 
   for (var i = 0; i < data_by_reason2.length; i++) {
     legend_data2.push({name: data_by_reason2[i].x})
-    n2 += data_by_reason2[i].y
   }
+  n2 = data_filtered2.length;
 
     var colorScale = 
     [
@@ -308,13 +362,16 @@ export function PrimaryGrowingReasonsCompare(props) {
     <div id='vis-question-label'>
       <h2>What are the primary reasons you grow the following field crops?</h2>
     </div>
-    <div className="inline-child">
-      <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} active={active} active2={active2} baseAll={filter.baseAll}/>
-    </div>
-    <div className="dual-display">
-      <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
-      <GetChart titleText={titleText2} mobileWidth={mobileWidth} width={width} height={height} n={n2} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason2} colorScale={colorScale} legend_data={legend_data2}/>
-    </div>
+    
+      <div className='dual-display'>
+          <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} changeRegion1Func={changeRegion1Func} changeRegion2Func={changeRegion2Func} active={active} active2={active2} activeRegion1={activeRegion1} activeRegion2={activeRegion2} baseAll={filter.baseAll}/>
+          <div id="vis-a">
+            <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
+          </div>
+          <div id="vis-b">
+            <GetChart titleText={titleText2} mobileWidth={mobileWidth} width={width} height={height} n={n2} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason2} colorScale={colorScale} legend_data={legend_data2}/>
+          </div>
+      </div>
     </>  
   );
 }

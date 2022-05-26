@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,800;0,900;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap');
 
 #heading {
   background-color: #ffffff;
@@ -61,13 +61,13 @@
 
 .inline-child {
   display: inline-block;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   vertical-align: middle;
   width:90vw;
 }
 
 .pie-chart {
-  padding-top: 10%;
+  padding-top: 5%;
 }
 
 #about-visualization-window {
@@ -122,7 +122,6 @@ a.hover-link:hover::before {
 
   .inline-child {
     display: inline-block;
-    padding: 1rem 1rem;
     vertical-align: middle;
   }
 }
@@ -147,7 +146,6 @@ a.hover-link:hover::before {
 
   .inline-child {
     display: inline-block;
-    padding: 1rem 1rem;
     vertical-align: middle;
   }
 }

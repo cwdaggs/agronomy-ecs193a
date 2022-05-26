@@ -7,25 +7,18 @@ export const Home = () => {
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vh*0.9;
-    const width = vw;
-
 
     return(
         <div id="bg">
-            
             <div id="home-container">
-                {/*<div id="main-title">
-                    <h2>Welcome!</h2>
-                </div>*/}
                 <div id="home-sub-title">
-                    <h2>Critical Needs for UCCE Research and Extension</h2>
+                    <h2>Critical Needs for Agronomic Crop Production in California</h2>
                 </div>   
                 <div id="home-info">
                     
-                        Agronomic crop production in California faces many challenges. This website displays the results of a 
-                        survey involving hundreds of growers, consultants, and allied industry members across the state to 
-                        identify needs and set priorities.
+                    Agronomic crop production in California faces many challenges. This interactive website showcases the results 
+                    of a 2020 survey involving hundreds of growers, consultants, and other allied agricultural industry members across the 
+                    state to identify needs and set priorities for UC research and extension activities.
                     
                 </div>   
                 <div id="home-button">
@@ -34,7 +27,6 @@ export const Home = () => {
                     </NavLink>   
                 </div>
             </div>    
-
         </div>
     );
 }

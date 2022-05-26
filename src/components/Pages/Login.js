@@ -12,12 +12,12 @@ function Login() {
 
     const onSuccess = (res) => {
         console.log("Successfully logged in: " + res.profileObj.name);
-        // console.log(res);
         setProfile(res);
         setLogIn(true);
     };
 
     const onFailure = (err) => {
+        console.log(err);
         console.log("Failed to log in: " + err);
     };
 
@@ -42,6 +42,7 @@ function Login() {
                             onFailure={onFailure}
                             cookiePolicy={'https://www.uccesurveyresults.com'}
                             //cookiePolicy={'single_host_origin'}
+                            //cookiePolicy={'http://localhost:3000'}
                             style={{ marginTop: '100px', alignSelf: 'center' }}
                             isSignedIn={true}
                         />

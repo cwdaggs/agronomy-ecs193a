@@ -31,15 +31,20 @@ function DetermineIcon(type) {
 
 export function OnlyCrops(props) {
   var stateString = "";
+  var stateRegion = "";
+
   if (props.baseAll) {
     stateString = "Select Crop";
+    stateRegion = "Select Region";
   } else {
     stateString = props.active;
+    stateRegion = props.activeRegion;
   }
+
   const [activeName, setActiveName] = useState(stateString);
+  const [activeRegionName, setActiveRegionName] = useState(stateRegion);
   const preLocation = useLocation().pathname.split("/");
   var location = "/" + preLocation[1] + "/" + preLocation[2];
-  // console.log(location);
 
   const types = [
     "All", 
@@ -54,6 +59,9 @@ export function OnlyCrops(props) {
     "Sunflower", 
     "Wheat"
   ];
+
+  const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
   return (
     <div className="inline-child">
       <div className="flex-parent">
@@ -67,7 +75,7 @@ export function OnlyCrops(props) {
             {" "}
             {types.map(type => (
               <Link style={{ textDecoration: 'none' }} 
-                    to={location + "/" + type}
+                    to={location + "/" + type + "/" + activeRegionName}
                     onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
               >
                 <SubA 
@@ -81,6 +89,32 @@ export function OnlyCrops(props) {
             ))}
           </DropDownContent>
           </DropDownLi>
+
+          <DropDownLi>
+                    <Dropbtn>
+                        {activeRegionName + " "}
+                        {<IoMdArrowDropdown/>}
+                    </Dropbtn>
+                    <DropDownContent>
+                    {" "}
+                    {regionTypes.map(type => (
+                        <Link style={{ textDecoration: 'none' }} 
+                                to={location + "/" + activeName + "/" + type}
+                                onClick={() =>  {props.changeRegionFunc(type);
+                                    setActiveRegionName(type); 
+                                    }}
+                        >
+                            <SubA 
+                                key={type}
+                                active={props.activeRegionOrCrop === type}
+                            >
+                                {" " + type}  
+                            </SubA>
+                        </Link>
+                        ))}
+                    </DropDownContent>
+                </DropDownLi>
+
         </StyledUl>
       </div>
       </div>     
@@ -90,18 +124,26 @@ export function OnlyCrops(props) {
   export function OnlyCropsCompare(props) {
     var stateString = "";
     var stateString2 = "";
+    var stateRegion = "";
+    var stateRegion2 = "";
+
     if (props.baseAll) {
       stateString = "Select Crop";
       stateString2 = "Compare Crop";
+      stateRegion = "Select Region";
+      stateRegion2 = "Compare Region";
     } else {
       stateString = props.active;
       stateString2 = props.active2;
+      stateRegion = props.activeRegion1;
+      stateRegion2 = props.activeRegion2;
     }
     const [activeName, setActiveName] = useState(stateString);
     const [activeName2, setActiveName2] = useState(stateString2);
+    const [activeRegionName, setActiveRegionName] = useState(stateRegion);
+    const [activeRegionName2, setActiveRegionName2] = useState(stateRegion2);
     const preLocation = useLocation().pathname.split("/");
     var location = "/" + preLocation[1] + "/" + preLocation[2] + "/" + preLocation[3];
-    console.log(location);
   
     const types = [
       "All", 
@@ -116,12 +158,13 @@ export function OnlyCrops(props) {
       "Sunflower", 
       "Wheat"
     ];
+
+    const regionTypes = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
+
     return (
-      <div className="inline-child">
+      <>
         
-          <StyledUl>
-          <div className="flex-parent">
-            <div className="flex-child">
+        <div className="flex-child-1" id="button-a">
             <DropDownLi>
             <Dropbtn>
               {activeName + " "}
@@ -131,7 +174,7 @@ export function OnlyCrops(props) {
               {" "}
               {types.map(type => (
                 <Link style={{ textDecoration: 'none' }} 
-                      to={location + "/" + type + "/" + activeName2}
+                      to={location + "/" + type + "/" + activeName2 + "/" + activeRegionName + "/" + activeRegionName2}
                       onClick={() => {props.changeFunc(type); setActiveName(type.replace(/([A-Z])/g, ' $1').trim())}}
                 >
                   <SubA 
@@ -145,8 +188,32 @@ export function OnlyCrops(props) {
               ))}
             </DropDownContent>
             </DropDownLi>
+            <DropDownLi>
+                    <Dropbtn>
+                        {activeRegionName + " "}
+                        {<IoMdArrowDropdown/>}
+                    </Dropbtn>
+                    <DropDownContent>
+                    {" "}
+                    {regionTypes.map(type => (
+                        <Link style={{ textDecoration: 'none' }} 
+                                to={location + "/" + activeName + "/" + activeName2 + "/" + type + "/" + activeRegionName2}
+                                onClick={() =>  {props.changeRegion1Func(type);
+                                    setActiveRegionName(type); 
+                                    }}
+                        >
+                            <SubA 
+                                key={type}
+                                active={props.activeRegionOrCrop === type}
+                            >
+                                {" " + type}  
+                            </SubA>
+                        </Link>
+                        ))}
+                    </DropDownContent>
+                </DropDownLi>
             </div>
-            <div className="flex-child">
+            <div className="flex-child-2" id="button-b"> 
             <DropDownLi>
             <Dropbtn>
               {activeName2 + " "}
@@ -156,7 +223,7 @@ export function OnlyCrops(props) {
               {" "}
               {types.map(type => (
                 <Link style={{ textDecoration: 'none' }} 
-                      to={location + "/" + activeName + "/" + type}
+                      to={location + "/" + activeName + "/" + type + "/" + activeRegionName + "/" + activeRegionName2}
                       onClick={() => {props.changeFunc2(type); setActiveName2(type.replace(/([A-Z])/g, ' $1').trim())}}
                 >
                   <SubA 
@@ -170,10 +237,32 @@ export function OnlyCrops(props) {
               ))}
             </DropDownContent>
             </DropDownLi>
+            <DropDownLi>
+                    <Dropbtn>
+                        {activeRegionName2 + " "}
+                        {<IoMdArrowDropdown/>}
+                    </Dropbtn>
+                    <DropDownContent>
+                    {" "}
+                    {regionTypes.map(type => (
+                        <Link style={{ textDecoration: 'none' }} 
+                                to={location + "/" + activeName + "/" + activeName2 + "/" + activeRegionName + "/" + type}
+                                onClick={() =>  {props.changeRegion2Func(type);
+                                    setActiveRegionName2(type); 
+                                    }}
+                        >
+                            <SubA 
+                                key={type}
+                                active={props.activeRegionOrCrop === type}
+                            >
+                                {" " + type}  
+                            </SubA>
+                        </Link>
+                        ))}
+                    </DropDownContent>
+                </DropDownLi>
             </div>
-          </div>
-          </StyledUl>
-        </div>  
+        </>  
       )
     }
   

@@ -1,5 +1,5 @@
 import {VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCropOrRegion, filterByVocation} from '../UseData.js';
+import {filterByCropOrRegion, filterByVocation, filterByCrop, filterByRegion} from '../UseData.js';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import {useState} from "react";
 import { useLocation } from 'react-router-dom';
@@ -78,6 +78,9 @@ function calculateSizeOfDataSet(data){
 }
 
 function GetChart(props){
+  
+  var toolTipFontSize = 30;
+
   return(
     <>
     <div class='visualization-window'>
@@ -91,7 +94,7 @@ function GetChart(props){
             label={props.labelText}
             style={{
               tickLabels: {fontSize: props.fontSize*1.25, padding: 5, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: props.fontSize*1.5, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 20}
+              axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 20}
               }}
           />
           <VictoryAxis dependentAxis
@@ -99,7 +102,7 @@ function GetChart(props){
           style={{
             fontFamily: 'Roboto',
             tickLabels: {fontSize: props.fontSize, padding: 15, fontFamily: 'Roboto'},
-            axisLabel: {fontSize: props.fontSize*1.5, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 35}
+            axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 35}
           }}/>
           <VictoryBar
             // barRatio={0.6}
@@ -110,11 +113,10 @@ function GetChart(props){
             labelComponent={
               <VictoryTooltip 
                 style={{
-                  fontSize:30,
+                  fontSize: toolTipFontSize,
                   fontFamily: 'Roboto'
                 }}
-                flyoutHeight={45}
-                flyoutWidth={60}    
+                constrainToVisibleArea={'true'}    
               />
           }
           />
@@ -128,34 +130,44 @@ export function AcresManagedBarChart(props) {
     const vocationArray = ["All", "Growers", "Consultants"];
     const baseURL = "/results/Acres%20Managed";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
-    const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+    const [activeRegion, setActiveRegion] = useState(filters.region);
+    const [activeCrop, setActiveCrop] = useState(filters.crop)
+  
 
     function vocationFunction(newValue){
       setActiveVocation(newValue);
     }
-
-    function regionOrCropFunction(newValue) {
-      setActiveRegionOrCrop(newValue);
+  
+    function regionFunction(newValue) {
+      setActiveRegion(newValue);
     }
+  
+    function cropFunction(newValue) {
+      setActiveCrop(newValue)
+    }
+
 
     if (!props.dataset) {
-        return <pre>Loading...</pre>;
+      return <pre>Loading...</pre>;
     }
-    var data = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+    var data = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
     var acre_data = calculateAcres(data);
     var dataLength = calculateSizeOfDataSet(acre_data)
     var lengthString = String("Number of Farms (n = " + dataLength + ")");
     
     var labelText = "Acres";
     if (activeVocation === "Growers") {
-      labelText = "Acres Managed by " + activeRegionOrCrop + " Growers";
+      labelText = "Acres Managed";
     } else if (activeVocation === "Consultants") {
-      labelText = "Acres Consulted by " + activeRegionOrCrop + " Consultants";
-    } else {
-      if (activeRegionOrCrop !== "All") {
-        labelText = activeRegionOrCrop + " " + labelText;
-      }
+      labelText = "Acres Consulted";
+    }
+    if(activeRegion !== "All"){
+      labelText = activeRegion + " " + labelText;
+    }
+    if(activeCrop !== "All"){
+      labelText += " for " + activeCrop;
     }
     
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -172,7 +184,7 @@ export function AcresManagedBarChart(props) {
             <h2>How many acres do you manage/consult annually?</h2>
         </div>
         <div className="inline-child">
-          <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
         <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} vocationArray={vocationArray} filters={filters} visIndex={1}/>
           
@@ -185,59 +197,76 @@ export function AcresManagedBarChartCompare(props) {
   const baseURL = "/results/compare/Acres%20Managed";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop)
+
   const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
-  const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2)
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue)
   }
 
   function vocationFunction2(newValue){
     setActiveVocation2(newValue);
   }
 
-  function regionOrCropFunction2(newValue) {
-    setActiveRegionOrCrop2(newValue);
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
   }
-  console.log(filters)
+
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue)
+  }
+
+
+  //console.log(filters)
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
-  var data = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation);
+  var data = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var acre_data = calculateAcres(data);
   var dataLength = calculateSizeOfDataSet(acre_data)
   var lengthString = String("Number of Farms (n = " + dataLength + ")");
 
-  var data2 = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop2), activeVocation2);
+  var data2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
   var acre_data2 = calculateAcres(data2);
   var dataLength2 = calculateSizeOfDataSet(acre_data2)
   var lengthString2 = String("Number of Farms (n = " + dataLength2 + ")");
   
   var labelText = "Acres";
   if (activeVocation === "Growers") {
-    labelText = "Acres Managed by " + activeRegionOrCrop + " Growers";
+    labelText = "Acres Managed";
   } else if (activeVocation === "Consultants") {
-    labelText = "Acres Consulted by " + activeRegionOrCrop + " Consultants";
-  } else {
-    if (activeRegionOrCrop !== "All") {
-      labelText = activeRegionOrCrop + " " + labelText;
-    }
+    labelText = "Acres Consulted";
+  }
+  if(activeRegion !== "All"){
+    labelText = activeRegion + " " + labelText;
+  }
+  if(activeCrop !== "All"){
+    labelText += " for " + activeCrop;
   }
 
   var labelText2 = "Acres";
   if (activeVocation2 === "Growers") {
-    labelText2 = "Acres Managed by " + activeRegionOrCrop2 + " Growers";
+    labelText2 = "Acres Managed";
   } else if (activeVocation2 === "Consultants") {
-    labelText2 = "Acres Consulted by " + activeRegionOrCrop2 + " Consultants";
-  } else {
-    if (activeRegionOrCrop2 !== "All") {
-      labelText2 = activeRegionOrCrop2 + " " + labelText2;
-    }
+    labelText2 = "Acres Consulted";
+  }
+  if(activeRegion2 !== "All"){
+    labelText2 = activeRegion2 + " " + labelText2;
+  }
+  if(activeCrop2 !== "All"){
+    labelText2 += " for " + activeCrop2;
   }
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -253,17 +282,15 @@ export function AcresManagedBarChartCompare(props) {
       <div id='vis-question-label'>
           <h2>How many acres do you manage/consult annually?</h2>
       </div>
-      <div className="inline-child">
-          <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-        </div>
       <div className='dual-display'>
-        <div id='dual-display-child'>
-          <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1}/>
-        </div>
-        <div id='dual-display-child'>
-          <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2}/>
-        </div>
-      </div>    
+          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+          <div id="vis-a">
+            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1} compare={true}/>
+          </div>
+          <div id="vis-b">
+            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2} compare={true}/>
+          </div>
+      </div>
     </>
   );
 }

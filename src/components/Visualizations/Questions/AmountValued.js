@@ -1,5 +1,5 @@
 import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, filterByCropOrRegion, filterByVocation, parseURLCompare} from '../UseData.js'
+import {sort_by_very, filterByCropOrRegion, filterByVocation, parseURLCompare, filterByCrop, filterByRegion} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import "typeface-abeezee";
@@ -27,6 +27,7 @@ export function calculateValueEach(data, filter, answer){
 }
 
 function GetChart(props){
+  var fontSize = props.fontSize
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -93,7 +94,10 @@ function GetChart(props){
               }}
             tickLabelComponent={       
               <VictoryLabel    
-                  textAnchor="end"
+                textAnchor="start"
+                style={{fill: "white", fontSize: fontSize}}
+                dx={fontSize}
+                events={{onClick: (evt) => console.log(evt)}}
               />   
             }
           />
@@ -130,6 +134,11 @@ function transformData(dataset) {
       return memo + curr[i].Total;
     }, 0);
   });
+  for (var i = 0; i < totals.length; i++) {
+    if (totals[i] === 0) {
+      totals[i] = 1;
+    }
+  }
   return dataset.map((data) => {
     return data.map((datum, i) => {
       return { x: datum.Value, y: (datum.Total / totals[i]) * 100, concern: datum.Level_Of_Value };
@@ -156,15 +165,20 @@ export function AmountVictory(props) {
   const baseURL = "/results/Value%20Assessment";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
-  }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
 
   if (!props.dataset) {
       return <pre>Loading...</pre>;
@@ -184,21 +198,20 @@ export function AmountVictory(props) {
   ];
 
   var titleText = "Level of Value";
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for " + activeRegionOrCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    titleText += " " + activeCrop;
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeRegionOrCrop)) {
-      titleText += " " + activeVocation;
-    } else {
-      titleText += " for " + activeVocation;
-    }
+    titleText += " " + activeVocation;
   }
-  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation)
+  var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
@@ -255,7 +268,7 @@ export function AmountVictory(props) {
       <h2>How much do you value the following:</h2>
     </div>
     <div className="inline-child">
-      <VocationAndRegion vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+    <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
     <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
     </>
@@ -268,26 +281,36 @@ export function AmountVictoryCompare(props) {
   const baseURL = "/results/compare/Value%20Assessment";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegionOrCrop, setActiveRegionOrCrop] = useState(filters.cropOrRegion);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
 
   const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
-  const [activeRegionOrCrop2, setActiveRegionOrCrop2] = useState(filters.cropOrRegion2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2);
 
   function vocationFunction(newValue){
     setActiveVocation(newValue);
   }
 
-  function regionOrCropFunction(newValue) {
-    setActiveRegionOrCrop(newValue);
-  }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
 
   function vocationFunction2(newValue){
     setActiveVocation2(newValue);
   }
 
-  function regionOrCropFunction2(newValue) {
-    setActiveRegionOrCrop2(newValue);
-  }
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
+  }  
+
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue);
+  }  
 
   if (!props.dataset) {
       return <pre>Loading...</pre>;
@@ -307,47 +330,45 @@ export function AmountVictoryCompare(props) {
   ];
 
   var titleText = "Level of Value";
-  if (crops.includes(activeRegionOrCrop)) {
-    titleText += " for " + activeRegionOrCrop;
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    titleText += " " + activeCrop;
   }
   if (activeVocation !== "All") {
-    if (crops.includes(activeRegionOrCrop)) {
-      titleText += " " + activeVocation;
-    } else {
-      titleText += " for " + activeVocation;
-    }
+    titleText += " " + activeVocation;
   }
-  if (!crops.includes(activeRegionOrCrop) && activeRegionOrCrop !== "All") {
-    titleText += " in the " + activeRegionOrCrop + " Region";
+  if (activeRegion !== "All") {
+    titleText += " in the " + activeRegion + " Region";
   }
 
-  var data_filtered = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop), activeVocation)
+  var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
-  var data_sorted = sort_by_very(data_by_value)
-  const dataset_final = transformData(data_sorted)
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  // var data_sorted = sort_by_very(data_by_value)
+  const dataset_final = transformData(data_by_value)
+  titleText += " (n = " + calculateAverageResponses(data_by_value) + ")";
 
 
   var titleText2 = "Level of Value";
-  if (crops.includes(activeRegionOrCrop2)) {
-    titleText2 += " for " + activeRegionOrCrop2;
+  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
+    titleText2 += " for";
+  }
+  if (activeCrop2 !== "All") {
+    titleText2 += " " + activeCrop2;
   }
   if (activeVocation2 !== "All") {
-    if (crops.includes(activeRegionOrCrop2)) {
-      titleText2 += " " + activeVocation2;
-    } else {
-      titleText2 += " for " + activeVocation2;
-    }
+    titleText2 += " " + activeVocation2;
   }
-  if (!crops.includes(activeRegionOrCrop2) && activeRegionOrCrop2 !== "All") {
-    titleText2 += " in the " + activeRegionOrCrop2 + " Region";
+  if (activeRegion2 !== "All") {
+    titleText2 += " in the " + activeRegion2 + " Region";
   }
 
-  var data_filtered2 = filterByVocation(filterByCropOrRegion(props.dataset, activeRegionOrCrop2), activeVocation2)
+  var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2)
   var data_by_value2 = calculateValueTotalsForEachElement(data_filtered2)
-  var data_sorted2 = sort_by_very(data_by_value2)
-  const dataset_final2 = transformData(data_sorted2)
-  titleText2 += " (n = " + calculateAverageResponses(data_sorted2) + ")";
+  // var data_sorted2 = sort_by_very(data_by_value2)
+  const dataset_final2 = transformData(data_by_value2)
+  titleText2 += " (n = " + calculateAverageResponses(data_by_value2) + ")";
 
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -391,13 +412,16 @@ export function AmountVictoryCompare(props) {
       <div id='vis-question-label'>
         <h2>How much do you value the following:</h2>
       </div>
-      <div className="inline-child">
-      <VocationAndRegionCompare vocationFunction={vocationFunction} regionOrCropFunction={regionOrCropFunction} activeVocation={activeVocation} activeRegionOrCrop={activeRegionOrCrop} vocationFunction2={vocationFunction2} regionOrCropFunction2={regionOrCropFunction2} activeVocation2={activeVocation2} activeRegionOrCrop2={activeRegionOrCrop2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-      </div>
+
       <div className='dual-display'>
-        <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
-        <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
-      </div>
+        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <div id="vis-a">
+          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+        </div>
+        <div id="vis-b">
+          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
+        </div>
+      </div>   
     </>
   );
 }
