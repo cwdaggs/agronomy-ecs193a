@@ -7,7 +7,7 @@ import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAn
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
-function barData(dataset, topic){
+function BarData(dataset, topic){
   var values = []
 
   for(var i = 0; i < dataset.length; i++){
@@ -32,22 +32,19 @@ if(width < mobileWidth){
 }
 
 
-function GetChart(props){
+function GetChart(props, setSelection){
 
   var toolTipFontSize = fontSize;
 
   if(props.compare){
     toolTipFontSize = fontSize + 1.5;
   }
-
-  const [vis,setVis]=useState(<p id="vis-question-label">Click and drag on an area of points for more information.</p>);
   
   var domain = d3.extent(props.data, function(d) { return d.Priority; })
   var range = d3.extent(props.data, function(d) { return d.Satisfaction; })
   var domainPadding = 0.1
 
   var trendData = trendLineSatisfactions(props.data)
-  var selectedData = props.data
   
   
   if(props.data_filtered.length == 0){
@@ -70,123 +67,17 @@ function GetChart(props){
       )
   }
 
-  function makeVis(data){
-    setVis(
-      ( 
-        <div>
-          <p id="vis-question-label"><br></br><br></br><br></br>Selected Node's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:</p>
-          <div id="vis-legend">
-            <div id="legend-values">
-              <div className='legend-square' id="square-color-first"></div>
-              <span className='legend-value'>Meeting Information Demand</span>
-              <div className='legend-square' id="square-color-second"></div>
-              <span className='legend-value'>Exceeding Information Demand</span>
-              <div className='legend-square' id="square-color-third"></div>
-              <span className='legend-value'>Not Meeting Information Demand</span>
-            </div>
-          </div>
-          
-          <VictoryChart 
-            x={50}
-            animate={{
-              duration: 500,               
-            }}
-            height={height} 
-            width={width}
-            domainPadding={{ x: margin.right/5, y: margin.top/10 }}
-            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
-            
-          >
-          <VictoryBar horizontal
-            alignment='center'
-            labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
-            labelComponent={
-                <VictoryTooltip 
-                orientation={"bottom"}
-                pointerOrientation={"top"}
-                  style={{
-                    fontSize:toolTipFontSize,
-                    strokeWidth:1,
-                    fontFamily: 'Roboto'
-                  }}
-                  constrainToVisibleArea={'true'}     
-                />
-            }
-            style={{ 
-              data: { 
-                fill: "#c43a31",
-                stroke: "#756f6a",
-                fillOpacity: 0.7,
-                strokeWidth: 0.5
-              } 
-            }}
-            data={data}
-          />
-          <VictoryBar horizontal
-            alignment='center'
-            labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nPriority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
-            labelComponent={
-                <VictoryTooltip 
-                orientation={"bottom"}
-                pointerOrientation={"top"}
-                  style={{
-                    fontSize:toolTipFontSize,
-                    strokeWidth: 1,
-                    fontFamily: 'Roboto'
-                  }}
-                  constrainToVisibleArea={'true'} 
-                />
-            }
-            style={{ 
-              data: { 
-                fill: "green",
-                stroke: "#756f6a",
-                fillOpacity: 0.7,
-                strokeWidth: 0.5 
-              } 
-            }}
-            data={data}
-            y={(d)=>d.z}
-          />
-          <VictoryAxis dependentAxis
-            label="Ranking"
-            tickFormat={(tick) => `${tick}`}
-            style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: fontSize - 4, fontFamily: 'Roboto'}
-            }}
-          />
-          <VictoryAxis
-            style={{
-              axis: {stroke: "#756f6a"},
-              ticks: {stroke: "grey", size: 5},
-              tickLabels: {fontSize: fontSize - 5, padding: 0, fontFamily: 'Roboto'}
-
-            }}
-            tickLabelComponent={       
-              <VictoryLabel    
-                textAnchor="start"
-                style={{fill: "white", fontSize: fontSize}}
-                dx={fontSize}
-                events={{onClick: (evt) => console.log(evt)}}
-              />   
-            }
-          />
-        </VictoryChart>
-      </div>
-      )
-    )
+  function selectNodes(nodes){
+    props.setSelection(nodes)
   }
 
   function handleSelection(points, bounds, props){
-    selectedData = (barData(props.selectedData[0].data))
-    makeVis(selectedData)
-    
+    selectNodes(BarData(props.selectedData[0].data))
   }
 
-  function handleSelectionCleared(props){}  
+  function handleSelectionCleared(){
+    selectNodes(BarData(props.data))
+  }  
   return(
       <div class='visualization-window'>
         <div id="vis-legend">
@@ -359,8 +250,110 @@ function GetChart(props){
             />
               */}
           </VictoryChart>
-          {vis}
+          <div>
+          <p id="vis-question-label"><br></br><br></br><br></br>Selected Topic's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:<br></br>(Click and Drag in the Scatter Plot to Select Specific Topics)</p>
+          <div id="vis-legend">
+            <div id="legend-values">
+              <div className='legend-square' id="square-color-first"></div>
+              <span className='legend-value'>Meeting Information Demand</span>
+              <div className='legend-square' id="square-color-second"></div>
+              <span className='legend-value'>Exceeding Information Demand</span>
+              <div className='legend-square' id="square-color-third"></div>
+              <span className='legend-value'>Not Meeting Information Demand</span>
+            </div>
+          </div>
+          
+          <VictoryChart 
+            x={50}
+            animate={{
+              duration: 500,               
+            }}
+            height={height} 
+            width={width}
+            domainPadding={{ x: margin.right/5, y: margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
+            
+          >
+          <VictoryBar horizontal
+            alignment='center'
+            labels={({datum}) => "Priority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                orientation={"bottom"}
+                pointerOrientation={"top"}
+                  style={{
+                    fontSize:toolTipFontSize,
+                    strokeWidth:1,
+                    fontFamily: 'Roboto'
+                  }}
+                  constrainToVisibleArea={'true'}     
+                />
+            }
+            style={{ 
+              data: { 
+                fill: "#c43a31",
+                stroke: "#756f6a",
+                fillOpacity: 0.7,
+                strokeWidth: 0.5
+              } 
+            }}
+            data={props.selectedNodes}
+          />
+          <VictoryBar horizontal
+            alignment='center'
+            labels={({datum}) => "Satisfaction of " + datum.x.split('_').join(" ") + "\n" + datum.z.toFixed(2) + "\nPriority of " + datum.x.split('_').join(" ") + "\n" + datum.y.toFixed(2)}
+            labelComponent={
+                <VictoryTooltip 
+                orientation={"bottom"}
+                pointerOrientation={"top"}
+                  style={{
+                    fontSize:toolTipFontSize,
+                    strokeWidth: 1,
+                    fontFamily: 'Roboto'
+                  }}
+                  constrainToVisibleArea={'true'} 
+                />
+            }
+            style={{ 
+              data: { 
+                fill: "green",
+                stroke: "#756f6a",
+                fillOpacity: 0.7,
+                strokeWidth: 0.5 
+              } 
+            }}
+            data={props.selectedNodes}
+            y={(d)=>d.z}
+          />
+          <VictoryAxis dependentAxis
+            label="Ranking"
+            tickFormat={(tick) => `${tick}`}
+            style={{
+              axis: {stroke: "#756f6a"},
+              ticks: {stroke: "grey", size: 5},
+              tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
+              axisLabel: {fontSize: fontSize - 4, fontFamily: 'Roboto'}
+            }}
+          />
+          <VictoryAxis
+            style={{
+              axis: {stroke: "#756f6a"},
+              ticks: {stroke: "grey", size: 5},
+              tickLabels: {fontSize: fontSize - 5, padding: 0, fontFamily: 'Roboto'}
+
+            }}
+            tickLabelComponent={       
+              <VictoryLabel    
+                textAnchor="start"
+                style={{fill: "white", fontSize: fontSize}}
+                dx={fontSize}
+                events={{onClick: (evt) => console.log(evt)}}
+              />   
+            }
+          />
+        </VictoryChart>
       </div>
+    </div>
   )
 }
 
@@ -387,18 +380,25 @@ export const PrioritySatisfaction = (props) => {
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
     const [activeRegion, setActiveRegion] = useState(filters.region);
     const [activeCrop, setActiveCrop] = useState(filters.crop)
-  
+    const [selectedNodes, setSelectedNodes] = useState(BarData(averageSatisfaction(props.dataset)));
 
     function vocationFunction(newValue){
       setActiveVocation(newValue);
+      setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), newValue))))
     }
   
     function regionFunction(newValue) {
       setActiveRegion(newValue);
+      setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), newValue), activeVocation))))
     }
   
     function cropFunction(newValue) {
       setActiveCrop(newValue)
+      setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, newValue), activeRegion), activeVocation))))
+    }
+
+    function setSelection(newValue){
+      setSelectedNodes(newValue)
     }
 
     if (!props.dataset) {
@@ -450,7 +450,7 @@ export const PrioritySatisfaction = (props) => {
           <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
 
-        <GetChart data={data} title={titleText} data_filtered={data_filtered}/>
+        <GetChart data={data} title={titleText} data_filtered={data_filtered} selectedNodes={selectedNodes} setSelection={setSelection}/>
 
     </>
     )};
@@ -477,38 +477,55 @@ export const PrioritySatisfaction = (props) => {
       const [activeVocation, setActiveVocation] = useState(filters.vocation);
       const [activeRegion, setActiveRegion] = useState(filters.region);
       const [activeCrop, setActiveCrop] = useState(filters.crop)
+      const [selectedNodes, setSelectedNodes] = useState(BarData(averageSatisfaction(props.dataset)));
 
       const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
       const [activeRegion2, setActiveRegion2] = useState(filters.region2);
       const [activeCrop2, setActiveCrop2] = useState(filters.crop2)
+      const [selectedNodes2, setSelectedNodes2] = useState(BarData(averageSatisfaction(props.dataset)));
+      
   
       if (!props.dataset) {
         return <pre>Loading...</pre>;
       }
-  
+
       function vocationFunction(newValue){
         setActiveVocation(newValue);
+        setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), newValue))))
       }
     
       function regionFunction(newValue) {
         setActiveRegion(newValue);
+        setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), newValue), activeVocation))))
       }
     
       function cropFunction(newValue) {
         setActiveCrop(newValue)
-      }  
+        setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, newValue), activeRegion), activeVocation))))
+      }
+  
+      function setSelection(newValue){
+        setSelectedNodes(newValue)
+      }
 
-      function vocationFunction2(newValue){
-        setActiveVocation2(newValue);
-      }
-    
-      function regionFunction2(newValue) {
-        setActiveRegion2(newValue);
-      }
-    
-      function cropFunction2(newValue) {
-        setActiveCrop2(newValue)
-      }
+    function vocationFunction2(newValue){
+      setActiveVocation2(newValue);
+      setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), newValue))))
+    }
+  
+    function regionFunction2(newValue) {
+      setActiveRegion2(newValue);
+      setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), newValue), activeVocation2))))
+    }
+  
+    function cropFunction2(newValue) {
+      setActiveCrop2(newValue)
+      setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, newValue), activeRegion2), activeVocation2))))
+    }
+
+    function setSelection2(newValue){
+      setSelectedNodes2(newValue)
+    }
   
       var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
       var data = averageSatisfaction(data_filtered)
@@ -584,10 +601,10 @@ export const PrioritySatisfaction = (props) => {
           <div className='dual-display'>
             <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
             <div id="vis-a">
-              <GetChart data={data} title={titleText} compare={true} data_filtered={data_filtered}/>
+            <GetChart data={data} title={titleText} data_filtered={data_filtered} selectedNodes={selectedNodes} setSelection={setSelection}/>
             </div>
             <div id="vis-b">
-              <GetChart data={data2} title={titleText2} compare={true} data_filtered={data_filtered2}/>
+              <GetChart data={data2} title={titleText2} compare={true} data_filtered={data_filtered2} selectedNodes={selectedNodes2} setSelection={setSelection2}/>
             </div>
           </div>   
       </>
