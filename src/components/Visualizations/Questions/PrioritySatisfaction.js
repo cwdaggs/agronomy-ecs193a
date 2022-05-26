@@ -215,7 +215,7 @@ function GetChart(props){
                 height={height} 
                 width={width}
                 domainPadding={{ x: margin.right/10, y: margin.top/10 }}
-                padding={{ top: margin.top, bottom: margin.bottom, left:width/3.2, right: margin.right }}  
+                padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
                 
             >
             {/* <VictoryLegend 
@@ -440,6 +440,12 @@ export const PrioritySatisfaction = (props) => {
         <div id='vis-question-label'>
           <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
         </div>
+        <div id='priority-satisfaction-infos-label'>
+          <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
+            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in Warner et al.
+            2016 based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
+             or above what respondents felt should be UCCE's priorities for field crop production.</p>
+        </div>
         <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
@@ -566,6 +572,13 @@ export const PrioritySatisfaction = (props) => {
         <>
           <div id='vis-question-label'>
             <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
+          </div>
+
+          <div id='priority-satisfaction-infos-label'>
+          <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
+            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in Warner et al.
+            2016 based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
+             or above what respondents felt should be UCCE's priorities for field crop production.</p>
           </div>
 
           <div className='dual-display'>
