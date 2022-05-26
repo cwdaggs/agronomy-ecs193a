@@ -116,7 +116,7 @@ function GetChart(props){
             data={props.acre_data}
             alignment="middle"
             style={{ data:  { fill: ({datum}) => datum.fill}}}
-            labels={({datum}) => datum.y}
+            labels={({ datum }) => `${datum.y + " Respondents"}`}
             labelComponent={
               <VictoryTooltip 
                 style={{

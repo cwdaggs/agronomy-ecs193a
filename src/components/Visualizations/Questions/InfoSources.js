@@ -133,7 +133,7 @@ function GetChart(props){
               data={props.info_data}
               sortKey = "y"
               style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
-              labels={({datum}) => datum.y}
+              labels={({datum}) => datum.y + " Respondents"}
               labelComponent={
                 <VictoryTooltip 
                   style={{
@@ -154,7 +154,7 @@ function GetChart(props){
               }}
             />
             <VictoryAxis
-              label = {"Information Sources"}
+              label = {"Information Network Sources"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
@@ -223,7 +223,7 @@ function GetUnsortedChart(props){
               }}
             />
             <VictoryAxis
-              label = {"Information Sources"}
+              label = {"Information Network Sources"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},

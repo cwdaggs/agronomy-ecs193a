@@ -138,7 +138,7 @@ function GetChart(props){
               data={props.graph_data}
               sortKey = "y"
               style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
-              labels={({datum}) => datum.y}
+              labels={({datum}) => datum.y + " Respondents"}
               labelComponent={
                 <VictoryTooltip 
                   style={{
