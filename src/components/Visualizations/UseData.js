@@ -496,20 +496,45 @@ export function parseURL(baseURL, path, vocationArray) {
       baseAll = false;
     }
     
-    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+    if (filters[1] === "Select%20Crop") {
       crop = "All";
-      region = "All"
-    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
-      region = filters[2].replaceAll("%20", " ");
-      baseAll = false;
-    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
-    } else{
-      region = filters[2].replaceAll("%20", " ");
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
+    }else{
+      if (cropChoices.includes(filters[1])){
+        crop = filters[1].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        crop = "All";
+      }
     }
+
+    if (filters[2] === "Select%20Region") {
+      region = "All";
+    }else{
+      if (regionChoices.includes(filters[2])){
+        region = filters[2].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        region = "All";
+      }
+    }
+
+    
+
+    // if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+    //   crop = "All";
+    //   region = "All"
+    // } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
+    //   region = filters[2].replaceAll("%20", " ");
+    //   baseAll = false;
+    // } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
+    //   crop = filters[1].replaceAll("%20", " ");
+    //   baseAll = false;
+    // } else{
+    //   region = filters[2].replaceAll("%20", " ");
+    //   crop = filters[1].replaceAll("%20", " ");
+    //   baseAll = false;
+    // }
+
   } 
   // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
   return {vocation: vocation, crop: crop, region: region, baseAll: baseAll};
@@ -666,41 +691,85 @@ export function parseURLCompare(baseURL, path, vocationArray) {
       vocation = filters[0];
       baseAll = false;
     }
-    
-    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+
+    if (filters[1] === "Select%20Crop") {
       crop = "All";
-      region = "All"
-    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
-      region = filters[2].replaceAll("%20", " ");
-      baseAll = false;
-    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
-    } else{
-      region = filters[2].replaceAll("%20", " ");
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
+    }else{
+      if (cropChoices.includes(filters[1])){
+        crop = filters[1].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        crop = "All";
+      }
     }
 
-    if (filters[3] !== "Compare Vocation" && vocationArray.includes(filters[3])) {
-      vocation2 = filters[3];
-      baseAll = false;
+    if (filters[2] === "Select%20Region") {
+      region = "All";
+    }else{
+      if (regionChoices.includes(filters[2])){
+        region = filters[2].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        region = "All";
+      }
+    }
+
+    if (filters[4] === "Select%20Crop") {
+      crop2 = "All";
+    }else{
+      if (cropChoices.includes(filters[4])){
+        crop2 = filters[4].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        crop2 = "All";
+      }
+    }
+
+    if (filters[5] === "Select%20Region") {
+      region2 = "All";
+    }else{
+      if (regionChoices.includes(filters[5])){
+        region2 = filters[5].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        region2 = "All";
+      }
     }
     
-    if (filters[4] === "Compare%20Crop" && filters[5] === "Compare%20Region") {
-      crop2 = "All";
-      region2 = "All"
-    } else if (filters[4] === "Compare%20Crop" && regionChoices.includes(filters[5])){
-      region2 = filters[5].replaceAll("%20", " ");
-      baseAll = false;
-    } else if (filters[5] === "Compare%20Region" && cropChoices.includes(filters[4])){
-      crop2 = filters[4].replaceAll("%20", " ");
-      baseAll = false;
-    } else{
-      region2 = filters[5].replaceAll("%20", " ");
-      crop2 = filters[4].replaceAll("%20", " ");
-      baseAll = false;
-    }
+    // if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+    //   crop = "All";
+    //   region = "All"
+    // } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
+    //   region = filters[2].replaceAll("%20", " ");
+    //   baseAll = false;
+    // } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
+    //   crop = filters[1].replaceAll("%20", " ");
+    //   baseAll = false;
+    // } else{
+    //   region = filters[2].replaceAll("%20", " ");
+    //   crop = filters[1].replaceAll("%20", " ");
+    //   baseAll = false;
+    // }
+
+    // if (filters[3] !== "Compare Vocation" && vocationArray.includes(filters[3])) {
+    //   vocation2 = filters[3];
+    //   baseAll = false;
+    // }
+    
+    // if (filters[4] === "Compare%20Crop" && filters[5] === "Compare%20Region") {
+    //   crop2 = "All";
+    //   region2 = "All"
+    // } else if (filters[4] === "Compare%20Crop" && regionChoices.includes(filters[5])){
+    //   region2 = filters[5].replaceAll("%20", " ");
+    //   baseAll = false;
+    // } else if (filters[5] === "Compare%20Region" && cropChoices.includes(filters[4])){
+    //   crop2 = filters[4].replaceAll("%20", " ");
+    //   baseAll = false;
+    // } else{
+    //   region2 = filters[5].replaceAll("%20", " ");
+    //   crop2 = filters[4].replaceAll("%20", " ");
+    //   baseAll = false;
+    // }
   } 
   // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
   return {vocation: vocation, crop: crop, region: region, vocation2:vocation2, crop2:crop2, region2:region2, baseAll: baseAll};
