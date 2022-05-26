@@ -10,11 +10,11 @@ export const InfoSummary = (props) => {
 
   return (
     <div>
-      <Parallax pages={3.5}>
+      <Parallax pages={4}>
         <C.Container>
           <C.Area>          
             <C.Body>
-              <ParallaxLayer factor={1.5} style={{
+              <ParallaxLayer factor={2} style={{
                 backgroundImage: `url(${sky})`,
                 backgroundSize: 'cover'
               }}>
@@ -75,12 +75,12 @@ export const InfoSummary = (props) => {
                   </C.Desc>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer factor={2} offset={1.5} style={{
+              <ParallaxLayer factor={2} offset={2} style={{
                 backgroundImage: `url(${singleWheat})`,
                 backgroundSize: 'cover'
               }}> 
               </ParallaxLayer>
-              <ParallaxLayer offset={1.95} speed = {0.8}> 
+              <ParallaxLayer offset={2} speed = {0.8}> 
                 <div id = "infoSection2">
                   <div id="info-vis-title">
                     <C.SubTitle>Responses by Vocation, County, Region, and Crop</C.SubTitle>
@@ -92,7 +92,7 @@ export const InfoSummary = (props) => {
                     <RegionMapChart data={props.dataset} filter={"All"}/>
                 </div>
               </ParallaxLayer>
-              <ParallaxLayer offset={2.95} speed = {0.8}>  
+              <ParallaxLayer offset={3} speed = {0.8}>  
                 <div id = "infoSection3">
                   <CropBar data={props.dataset}/>
                 </div>
