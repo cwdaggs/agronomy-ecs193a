@@ -109,6 +109,14 @@ var colors =
 
 function GetChart(props){
 
+  if(props.filtered_data.length == 0){
+    return (
+      <div className='dual-display-child'>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
       <div class='visualization-window'>
           
@@ -170,7 +178,13 @@ function GetChart(props){
 }
 
 function GetUnsortedChart(props){
-
+  if(props.filtered_data.length == 0){
+    return (
+      <div className='dual-display-child'>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
   return(
       <div class='visualization-window'>
           
