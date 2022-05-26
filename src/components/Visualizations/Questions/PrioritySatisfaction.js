@@ -78,8 +78,10 @@ function GetChart(props, setSelection){
   function handleSelectionCleared(){
     selectNodes(BarData(props.data))
   }  
+
   return(
       <div class='visualization-window'>
+          
         <div id="vis-legend">
           <div id="legend-title">
             {props.titleText}
@@ -107,7 +109,6 @@ function GetChart(props, setSelection){
                 width={width}
                 domainPadding={{ x: margin.right/10, y: margin.top/10 }}
                 padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
-                
             >
             {/* <VictoryLegend 
               x={(width>=mobileWidth) ? width*.1 :0}
@@ -159,6 +160,43 @@ function GetChart(props, setSelection){
                 onMouseLeave={(props) => props.style.data.stroke = "#756f6a"}
 
                 />
+
+              <VictoryScatter
+                x={(d) => d.y}
+                y={(d) => d.x}
+                style={{ 
+                    data: {
+                      fill: "#000000",
+                      stroke: "#756f6a",
+                      strokeWidth: 1
+                    },
+                    axis: {stroke: "#756f6a"},
+                    ticks: {stroke: "grey", size: fontSize},
+                    tickLabels: {fontSize: fontSize, padding: 5}, 
+                    fontFamily: 'Roboto'
+                  }}
+                size={(width>=mobileWidth) ? fontSize/2 : fontSize/5}
+                data= {[
+                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.max(domain[1], range[1]), z: "I: Priority Higher than Satisfaction" },
+                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.max(domain[1], range[1]), z: "II: Priority Proportional to Satisfaction" },
+                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.min(domain[0], range[0]), z: "III: Lower Priority Topics" },
+                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.min(domain[0], range[0]), z: "IV: Higher Satisfaction Than Priority" }
+                ]}
+                labels={({datum}) => datum.z}
+                labelComponent={
+                  <VictoryLabel
+                    textAnchor="start"
+                    style={[
+                      { fill: "black", fontSize: 20, fontFamily: "Roboto" },
+                    ]}   
+                  />            
+                }
+                
+                onMouseEnter={(props) => props.style.data.stroke = "black"}
+                onMouseLeave={(props) => props.style.data.stroke = "#756f6a"}
+
+                />
+                
                 <VictoryAxis dependentAxis
                     label="Satisfaction"
                     tickFormat={(tick) => `${tick}`}
