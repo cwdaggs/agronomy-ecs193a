@@ -714,6 +714,15 @@ export function parseURLCompare(baseURL, path, vocationArray) {
       }
     }
 
+
+    if (filters[3] !== "Compare Vocation" && vocationArray.includes(filters[3])) {
+      vocation2 = filters[3];
+      baseAll = false;
+    }else{
+      vocation2 = vocationArray[0];
+    }
+
+
     if (filters[4] === "Select%20Crop") {
       crop2 = "All";
     }else{
