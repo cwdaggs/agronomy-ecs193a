@@ -297,7 +297,15 @@ export function InternetSourcesBarChart(props) {
       }
     }
     if (activeRegion !== "All") {
-      labelText += " in the " + activeRegion + " Region";
+      if (activeRegion === "NSJV") {
+        labelText += " in the North San Joaquin Valley Region";
+      }
+      else if (activeRegion === "SSJV") {
+        labelText += " in the South San Joaquin Valley Region";
+      }
+      else {
+        labelText += " in the " + activeRegion + " Region";
+      }
     }
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
@@ -309,7 +317,7 @@ export function InternetSourcesBarChart(props) {
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
     
-    var fontSize = 18
+    var fontSize = 15
     var mobileFontSize = 6
     const mobileWidth = 1000;
     const laptopWidth = 1500;
@@ -403,7 +411,15 @@ export function InternetSourcesBarChartCompare(props) {
       }
     }
     if (activeRegion !== "All") {
-      labelText += " in the " + activeRegion + " Region";
+      if (activeRegion === "NSJV") {
+        labelText += " in the North San Joaquin Valley Region";
+      }
+      else if (activeRegion === "SSJV") {
+        labelText += " in the South San Joaquin Valley Region";
+      }
+      else {
+        labelText += " in the " + activeRegion + " Region";
+      }
     }
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
@@ -427,7 +443,15 @@ export function InternetSourcesBarChartCompare(props) {
       }
     }
     if (activeRegion2 !== "All") {
-      labelText2 += " in the " + activeRegion2 + " Region";
+      if (activeRegion2 === "NSJV") {
+        labelText2 += " in the North San Joaquin Valley Region";
+      }
+      else if (activeRegion2 === "SSJV") {
+        labelText2 += " in the South San Joaquin Valley Region";
+      }
+      else {
+        labelText2 += " in the " + activeRegion2 + " Region";
+      }
     }
 
     var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
@@ -440,7 +464,7 @@ export function InternetSourcesBarChartCompare(props) {
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
     
-    var fontSize = 18
+    var fontSize = 15
     var mobileFontSize = 6
     const mobileWidth = 1000;
     const laptopWidth = 1500;

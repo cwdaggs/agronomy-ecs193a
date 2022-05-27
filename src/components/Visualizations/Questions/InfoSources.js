@@ -318,7 +318,15 @@ export function InfoSourcesBarChart(props) {
       }
     }
     if (activeRegion !== "All") {
-      labelText += " in the " + activeRegion + " Region";
+      if (activeRegion === "NSJV") {
+        labelText += " in the North San Joaquin Valley Region";
+      }
+      else if (activeRegion === "SSJV") {
+        labelText += " in the South San Joaquin Valley Region";
+      }
+      else {
+        labelText += " in the " + activeRegion + " Region";
+      }
     }
 
     return (
@@ -405,14 +413,22 @@ export function InfoSourcesBarChartCompare(props) {
       }
     }
     if (activeRegion !== "All") {
-      labelText += " in the " + activeRegion + " Region";
+      if (activeRegion === "NSJV") {
+        labelText += " in the North San Joaquin Valley Region";
+      }
+      else if (activeRegion === "SSJV") {
+        labelText += " in the South San Joaquin Valley Region";
+      }
+      else {
+        labelText += " in the " + activeRegion + " Region";
+      }
     }
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data, false);
 
-    var labelText2 = "Information Sources"
+    var labelText2 = "Information Network"
     if (activeCrop2 !== "All" || activeVocation2 !== "All") {
       labelText2 += " for";
     }
@@ -429,7 +445,15 @@ export function InfoSourcesBarChartCompare(props) {
       }
     }
     if (activeRegion2 !== "All") {
-      labelText2 += " in the " + activeRegion2 + " Region";
+      if (activeRegion2 === "NSJV") {
+        labelText2 += " in the North San Joaquin Valley Region";
+      }
+      else if (activeRegion2 === "SSJV") {
+        labelText2 += " in the South San Joaquin Valley Region";
+      }
+      else {
+        labelText2 += " in the " + activeRegion2 + " Region";
+      }
     }
 
     var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);

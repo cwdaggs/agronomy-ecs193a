@@ -171,7 +171,15 @@ export function AcresManagedBarChart(props) {
       labelText = "Acres Consulted";
     }
     if(activeRegion !== "All"){
-      labelText = activeRegion + " " + labelText;
+      if (activeRegion === "NSJV") {
+        labelText = "North San Joaquin Valley " + labelText;
+      }
+      else if (activeRegion === "SSJV") {
+        labelText = "South San Joaquin Valley " + labelText;
+      }
+      else {
+        labelText = activeRegion + " " + labelText;
+      }
     }
     if(activeCrop !== "All"){
       labelText += " for " + activeCrop;
@@ -257,7 +265,15 @@ export function AcresManagedBarChartCompare(props) {
     labelText = "Acres Consulted";
   }
   if(activeRegion !== "All"){
-    labelText = activeRegion + " " + labelText;
+    if (activeRegion === "NSJV") {
+      labelText = "North San Joaquin Valley " + labelText;
+    }
+    else if (activeRegion === "SSJV") {
+      labelText = "South San Joaquin Valley " + labelText;
+    }
+    else {
+      labelText = activeRegion + " " + labelText;
+    }
   }
   if(activeCrop !== "All"){
     labelText += " for " + activeCrop;
@@ -270,7 +286,15 @@ export function AcresManagedBarChartCompare(props) {
     labelText2 = "Acres Consulted";
   }
   if(activeRegion2 !== "All"){
-    labelText2 = activeRegion2 + " " + labelText2;
+    if (activeRegion2 === "NSJV") {
+      labelText2 = "North San Joaquin Valley " + labelText2;
+    }
+    else if (activeRegion2 === "SSJV") {
+      labelText2 = "South San Joaquin Valley " + labelText2;
+    }
+    else {
+      labelText2 = activeRegion2 + " " + labelText2;
+    }
   }
   if(activeCrop2 !== "All"){
     labelText2 += " for " + activeCrop2;

@@ -289,7 +289,15 @@ export function AffectVictory(props) {
     titleText += " for " + activeCrop;
   }
   if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
+    if (activeRegion === "NSJV") {
+      titleText += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion === "SSJV") {
+      titleText += " in the South San Joaquin Valley Region";
+    }
+    else {
+      titleText += " in the " + activeRegion + " Region";
+    }
   }
 
   var data_sorted = sort_by_freq(data_by_affect)
@@ -412,7 +420,15 @@ export function AffectVictoryCompare(props) {
     titleText += " for " + activeCrop;
   }
   if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
+    if (activeRegion === "NSJV") {
+      titleText += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion === "SSJV") {
+      titleText += " in the South San Joaquin Valley Region";
+    }
+    else {
+      titleText += " in the " + activeRegion + " Region";
+    }
   }
 
   // var data_sorted = sort_by_freq(data_by_affect)
@@ -434,7 +450,15 @@ export function AffectVictoryCompare(props) {
     titleText2 += " for " + activeCrop2;
   }
   if (activeRegion2 !== "All") {
-    titleText2 += " in the " + activeRegion2 + " Region";
+    if (activeRegion2 === "NSJV") {
+      titleText2 += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion2 === "SSJV") {
+      titleText2 += " in the South San Joaquin Valley Region";
+    }
+    else {
+      titleText2 += " in the " + activeRegion2 + " Region";
+    }
   }
 
   // var data_sorted2 = sort_by_freq(data_by_affect2)

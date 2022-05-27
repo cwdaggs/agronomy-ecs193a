@@ -173,16 +173,26 @@ export function PrimaryGrowingReasons(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Why Grow";
+  var titleText = "";
   if (activeRegion !== "All") {
-    titleText += " " + activeRegion;
+    if (activeRegion === "NSJV") {
+      titleText += " North San Joaquin Valley";
+    }
+    else if (activeRegion === "SSJV") {
+      titleText += " South San Joaquin Valley";
+    }
+    else {
+      titleText += " " + activeRegion;
+    }
   }
   if (active === "All") {
+    if (activeRegion === "All") {
+      titleText += "All";
+    }
     titleText += " Crops"
   } else {
     titleText +=  " " + active;
   }
-  titleText += "?";
 
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
@@ -284,32 +294,52 @@ export function PrimaryGrowingReasonsCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Why Grow";
+  var titleText = "";
   if (activeRegion1 !== "All") {
-    titleText += " " + activeRegion1;
+    if (activeRegion1 === "NSJV") {
+      titleText += " North San Joaquin Valley";
+    }
+    else if (activeRegion1 === "SSJV") {
+      titleText += " South San Joaquin Valley";
+    }
+    else {
+      titleText += " " + activeRegion1;
+    }
   }
   if (active === "All") {
+    if (activeRegion1 === "All") {
+      titleText += "All";
+    }
     titleText += " Crops"
   } else {
     titleText +=  " " + active;
   }
-  titleText += "?";
 
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion1), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
   var legend_data = []
   var n = 0
 
-  var titleText2 = "Why Grow";
+  var titleText2 = "";
   if (activeRegion2 !== "All") {
-    titleText2 += " " + activeRegion2;
+    if (activeRegion2 === "NSJV") {
+      titleText2 += " North San Joaquin Valley";
+    }
+    else if (activeRegion2 === "SSJV") {
+      titleText2 += " South San Joaquin Valley";
+    }
+    else {
+      titleText2 += " " + activeRegion2;
+    }
   }
   if (active2 === "All") {
+    if (activeRegion2 === "All") {
+      titleText2 += "All";
+    }
     titleText2 += " Crops"
   } else {
     titleText2 +=  " " + active2;
   }
-  titleText2 += "?";
 
   var data_filtered2 = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active2), activeRegion2), "Growers")
   var data_by_reason2 = calculateAllPrimaryGrowingReasons(data_filtered2, active2)
