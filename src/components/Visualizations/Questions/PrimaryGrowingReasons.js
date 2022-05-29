@@ -138,7 +138,6 @@ function DetermineTitleText(activeCrop, activeRegion) {
   return titleText;
 }
 
-
 function GetChart(props){
     if(props.data_filtered.length === 0){
       return (
@@ -155,7 +154,6 @@ function GetChart(props){
               padding={{top: props.margin.top, bottom: props.margin.bottom, left: props.margin.left, right: props.margin.right}}
               animate={{duration: 800}}
             >
-
             <VictoryBar
               data={props.data_by_reason}
               alignment="middle"
@@ -245,7 +243,6 @@ export function PrimaryGrowingReasons(props) {
     obj.fill = colorScale[counter];
     counter--;
   }
-  var legend_data = []
 
   // const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   // // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -270,11 +267,6 @@ export function PrimaryGrowingReasons(props) {
   var fontSize = (width >= mobileWidth) ? 20: 10;
   const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
 
-  for (var i = 0; i < data_by_reason.length; i++) {
-      legend_data.push({name: data_by_reason[i].x})
-  }
-  var n = data_filtered.length;
-
 
   return (
     <>
@@ -284,9 +276,7 @@ export function PrimaryGrowingReasons(props) {
     <div className="inline-child">
       <OnlyCrops changeFunc={changeFunc} changeRegionFunc={changeRegionFunc} active={active} activeRegion={activeRegion} baseAll={filter.baseAll}/>
     </div>
-    {/* <div style={{background: "#EFEFF4FF"}}> */}
-    <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data} data_filtered={data_filtered}/>
-    {/* </div> */}
+      <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
     </>  
   );
 }
@@ -320,83 +310,37 @@ export function PrimaryGrowingReasonsCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "";
-  if (activeRegion1 !== "All") {
-    if (activeRegion1 === "NSJV") {
-      titleText += " North San Joaquin Valley";
-    }
-    else if (activeRegion1 === "SSJV") {
-      titleText += " South San Joaquin Valley";
-    }
-    else {
-      titleText += " " + activeRegion1;
-    }
-  }
-  if (active === "All") {
-    if (activeRegion1 === "All") {
-      titleText += "All";
-    }
-    titleText += " Crops"
-  } else {
-    titleText +=  " " + active;
-  }
+  var titleText = DetermineTitleText(active, activeRegion1);
 
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion1), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
-  var legend_data = []
-  var n = 0
 
-  var titleText2 = "";
-  if (activeRegion2 !== "All") {
-    if (activeRegion2 === "NSJV") {
-      titleText2 += " North San Joaquin Valley";
-    }
-    else if (activeRegion2 === "SSJV") {
-      titleText2 += " South San Joaquin Valley";
-    }
-    else {
-      titleText2 += " " + activeRegion2;
-    }
-  }
-  if (active2 === "All") {
-    if (activeRegion2 === "All") {
-      titleText2 += "All";
-    }
-    titleText2 += " Crops"
-  } else {
-    titleText2 +=  " " + active2;
-  }
+  var titleText2 = DetermineTitleText(active2, activeRegion2);
 
   var data_filtered2 = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active2), activeRegion2), "Growers")
   var data_by_reason2 = calculateAllPrimaryGrowingReasons(data_filtered2, active2)
-  var legend_data2 = []
-  var n2 = 0
 
+  // const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  // const height = vw;
+  // const width = vw;
+  // var fontSize = 15
+  // var mobileFontSize = 6
+  // const mobileWidth = 1000;
+  // const laptopWidth = 1500;
+  // if(width < laptopWidth){
+  //   fontSize = mobileFontSize*2
+  // }
+  // if(width < mobileWidth){
+  //   fontSize = mobileFontSize;
+  // }
+  // const margin = { top: 0, right: 0, bottom: 0, left: 0 };
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw;
+  const height = vw*0.5;
   const width = vw;
-  var fontSize = 15
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+  const mobileWidth=1000;
+  var fontSize = (width >= mobileWidth) ? 20: 10;
+  const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
 
-  for (var i = 0; i < data_by_reason.length; i++) {
-      legend_data.push({name: data_by_reason[i].x})
-  }
-  n = data_filtered.length;
-
-  for (i = 0; i < data_by_reason2.length; i++) {
-    legend_data2.push({name: data_by_reason2[i].x})
-  }
-  n2 = data_filtered2.length;
 
   return (
     <>
@@ -407,10 +351,10 @@ export function PrimaryGrowingReasonsCompare(props) {
       <div className='dual-display'>
           <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} changeRegion1Func={changeRegion1Func} changeRegion2Func={changeRegion2Func} active={active} active2={active2} activeRegion1={activeRegion1} activeRegion2={activeRegion2} baseAll={filter.baseAll}/>
           <div id="vis-a">
-            <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
+            <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
           </div>
           <div id="vis-b">
-            <GetChart titleText={titleText2} mobileWidth={mobileWidth} width={width} height={height} n={n2} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason2} colorScale={colorScale} legend_data={legend_data2}/>
+            <GetChart titleText={titleText2} mobileWidth={mobileWidth} width={width} height={height} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason2} data_filtered={data_filtered2}/>
           </div>
       </div>
     </>  
