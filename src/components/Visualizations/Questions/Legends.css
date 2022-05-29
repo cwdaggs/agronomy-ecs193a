@@ -18,6 +18,7 @@
   
 #legend-title {
     font-family: 'Roboto';
+    padding-top: 20px;
 }
 
 #three-color-first {
@@ -92,6 +93,10 @@
     #vis-legend {
         font-size: small;
     }
+
+    #legend-title {
+        padding-top: 12px;
+    }
 }
 
 @media (max-width: 500px) {
@@ -114,5 +119,9 @@
     
     #vis-legend {
         font-size: xx-small;
+    }
+
+    #legend-title {
+        padding-top: 8px;
     }
 }
