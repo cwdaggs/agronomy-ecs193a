@@ -1,8 +1,7 @@
 import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryZoomContainer} from 'victory';
-import {filterByCrop, filterByRegion, filterByCropOrRegion, filterByVocation, parseURLCompare} from '../UseData.js';
+import {filterByCrop, filterByRegion, filterByVocation, parseURLCompare} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
-import "typeface-abeezee";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
@@ -26,34 +25,6 @@ export function calculateInformationSources(data, sorted){
     "Water Quality Coalition",
   ];
 
-  // var colors = [
-  //   "#021837", "#031544", "#051050", "#07085B", "#150A67", "#260D71", "#3A117C", 
-  //   "#4F1586", "#65198F", "#682D99", "#6E40A2", "#7554AC", "#7E67B5", "#887BBF", 
-  //   "#958EC8", "#A3A2D2", "#B5B8DB"
-  // ];
-  // var colors = [
-  //   "#212011",
-  //   "#2C2D17",
-  //   "#35381D",
-  //   "#3D4323",
-  //   "#444F2A",
-  //   "#4A5A30",
-  //   "#4F6536",
-  //   "#53703D",
-  //   "#577B44",
-  //   "#59864A",
-  //   "#5B9151",
-  //   "#699759",
-  //   "#769C60",
-  //   "#83A268",
-  //   "#90A770",
-  //   "#9CAD78",
-  //   "#A8B280",
-  //   "#B2B888",
-  //   "#BDBD90",
-  //   "#C2BE98",
-  //   "#C7BFA0",
-  // ];
   var colors = 
   [
     "#002360",
@@ -106,7 +77,7 @@ export function calculateInformationSources(data, sorted){
 }
 
 function GetChart(props){
-  if(props.filtered_data.length == 0){
+  if(props.filtered_data.length === 0){
     return (
       <div className='dual-display-child'>
         <p>Insufficient data for this set of filters. (n=0)</p>         
@@ -175,7 +146,7 @@ function GetChart(props){
 
 function GetUnsortedChart(props){
 
-  if(props.filtered_data.length == 0){
+  if(props.filtered_data.length === 0){
     return (
       <div className='dual-display-child'>
         <p>Insufficient data for this set of filters. (n=0)</p>         
@@ -267,25 +238,12 @@ export function InfoSourcesBarChart(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-      
-    const crops = [ 
-      "Alfalfa", 
-      "Barley", 
-      "Corn", 
-      "Corn Silage", 
-      "Cotton", 
-      "Dry Beans", 
-      "Rice", 
-      "Small Grain Silage", 
-      "Sunflower", 
-      "Wheat"
-    ];
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data, true);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw*0.5;
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
@@ -312,7 +270,7 @@ export function InfoSourcesBarChart(props) {
     }
     if (activeVocation !== "All") {
       if (activeVocation === "Other") {
-        labelText += " " + "Other Vocations";
+        labelText += " Other Vocations";
       } else {
         labelText += " " + activeVocation;
       }
@@ -382,19 +340,6 @@ export function InfoSourcesBarChartCompare(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-    
-    const crops = [ 
-      "Alfalfa", 
-      "Barley", 
-      "Corn", 
-      "Corn Silage", 
-      "Cotton", 
-      "Dry Beans", 
-      "Rice", 
-      "Small Grain Silage", 
-      "Sunflower", 
-      "Wheat"
-    ];
 
     var labelText = "Information Network"
     if (activeCrop !== "All" || activeVocation !== "All") {
@@ -407,7 +352,7 @@ export function InfoSourcesBarChartCompare(props) {
     }
     if (activeVocation !== "All") {
       if (activeVocation === "Other") {
-        labelText += " " + "Other Vocations";
+        labelText += " Other Vocations";
       } else {
         labelText += " " + activeVocation;
       }
@@ -439,7 +384,7 @@ export function InfoSourcesBarChartCompare(props) {
     }
     if (activeVocation2 !== "All") {
       if (activeVocation2 === "Other") {
-        labelText2 += " " + "Other Vocations";
+        labelText2 += " Other Vocations";
       } else {
         labelText2 += " " + activeVocation2;
       }
@@ -461,7 +406,7 @@ export function InfoSourcesBarChartCompare(props) {
     var info_data2 = calculateInformationSources(filtered_data2, false);
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw*0.5;
     const width = vw;
     const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };

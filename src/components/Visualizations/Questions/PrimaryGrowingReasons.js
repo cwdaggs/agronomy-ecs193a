@@ -1,10 +1,8 @@
-import {filterByCropOrRegion, filterByVocation, parseCropURLCompare, parseURLCompare} from "../UseData.js";
+import {filterByCropOrRegion, filterByVocation, parseCropURLCompare} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {OnlyCrops, OnlyCropsCompare} from "../Menus/OnlyCrops.js"
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-
-import "typeface-abeezee";
 
 export function calculateAllPrimaryGrowingReasons(data, filter) {
     var columns = ["Alfalfa_Growing_Reasons", "Cotton_Growing_Reasons", "Rice_Growing_Reasons", "Wild_Rice_Growing_Reasons", "Wheat_Growing_Reasons", "Triticale_Growing_Reasons",	
@@ -197,10 +195,9 @@ export function PrimaryGrowingReasons(props) {
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
   var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
   var legend_data = []
-  //var n = 0
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw;
   const width = vw;
   var fontSize = 12
@@ -219,22 +216,6 @@ export function PrimaryGrowingReasons(props) {
       legend_data.push({name: data_by_reason[i].x})
   }
   var n = data_filtered.length;
-
-  // const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
-  //const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
-    // var colorScale = [
-
-    //   "#35381D",
-    //   "#444F2A",
-    //   "#4F6536",
-    //   "#577B44",
-    //   "#5B9151",
-    //   "#769C60",
-    //   "#90A770",
-    //   "#A8B280",
-    //   "#BDBD90",
-    //   "#C7BFA0",
-    // ];
 
     var colorScale = 
     [
@@ -347,7 +328,7 @@ export function PrimaryGrowingReasonsCompare(props) {
   var n2 = 0
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw;
   const width = vw;
   var fontSize = 15
@@ -367,7 +348,7 @@ export function PrimaryGrowingReasonsCompare(props) {
   }
   n = data_filtered.length;
 
-  for (var i = 0; i < data_by_reason2.length; i++) {
+  for (i = 0; i < data_by_reason2.length; i++) {
     legend_data2.push({name: data_by_reason2[i].x})
   }
   n2 = data_filtered2.length;

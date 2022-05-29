@@ -1,6 +1,5 @@
-import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {filterByCrop, filterByCropOrRegion, filterByRegion, filterByVocation, parseURLCompare, sort_by_freq} from '../UseData.js'
-import "typeface-abeezee";
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {filterByCrop, filterByRegion, filterByVocation, parseURLCompare, sort_by_freq} from '../UseData.js'
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import {useState} from 'react';
 import { parseURL } from '../UseData.js';
@@ -86,7 +85,7 @@ function calculateAverageResponses(dataset) {
 function GetChart(props){
   var fontSize=props.fontSize
 
-  if(props.data.length == 0){
+  if(props.data.length === 0){
     return (
 
       <div className='dual-display-child'>
@@ -172,12 +171,10 @@ function GetChart(props){
               }}
           />
           <VictoryAxis
-            // label="Type of Engagement"
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
                 tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
-                // axisLabel: {fontSize: 30, padding: 360}
               }}
             tickLabelComponent={       
               <VictoryLabel    
@@ -221,19 +218,6 @@ export function EngageVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
   var titleText = "UCCE Engagement Frequency";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -245,7 +229,7 @@ export function EngageVictory(props) {
   }
   if (activeVocation !== "All") {
     if (activeVocation === "Other") {
-      titleText += " " + "Other Vocations";
+      titleText += " Other Vocations";
     } else {
       titleText += " " + activeVocation;
     }
@@ -270,7 +254,7 @@ export function EngageVictory(props) {
 
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
@@ -355,19 +339,6 @@ export function EngageVictoryCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
   var titleText2 = "UCCE Engagement Frequency";
   if (activeCrop2 !== "All" || activeVocation2 !== "All") {
     titleText2 += " for";
@@ -379,7 +350,7 @@ export function EngageVictoryCompare(props) {
   }
   if (activeVocation2 !== "All") {
     if (activeVocation2 === "Other") {
-      titleText2 += " " + "Other Vocations";
+      titleText2 += " Other Vocations";
     } else {
       titleText2 += " " + activeVocation2;
     }
@@ -415,7 +386,7 @@ export function EngageVictoryCompare(props) {
   }
   if (activeVocation !== "All") {
     if (activeVocation === "Other") {
-      titleText += " " + "Other Vocations";
+      titleText += " Other Vocations";
     } else {
       titleText += " " + activeVocation;
     }
@@ -441,7 +412,7 @@ export function EngageVictoryCompare(props) {
   titleText += " (n = " + calculateAverageResponses(data_by_engage) + ")";
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };

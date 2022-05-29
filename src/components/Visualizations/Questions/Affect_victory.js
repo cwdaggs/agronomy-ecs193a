@@ -1,8 +1,7 @@
-import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryZoomContainer } from 'victory';
-import {filterByCropOrRegion, parseURLCompare, parseURL, sort_by_freq, filterByCrop, filterByRegion} from '../UseData.js'
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryZoomContainer } from 'victory';
+import {parseURLCompare, parseURL, sort_by_freq, filterByCrop, filterByRegion} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
-import "typeface-abeezee";
 import { useLocation } from 'react-router-dom';
 import "./Legends.css";
 
@@ -122,7 +121,7 @@ function calculateAverageResponses(dataset) {
 function GetChart(props){
   var fontSize = props.fontSize;
 
-  if(props.data.length == 0){
+  if(props.data.length === 0){
     return (
 
       <div className='dual-display-child'>
@@ -214,12 +213,10 @@ function GetChart(props){
               }}
           />
           <VictoryAxis
-          // label="Priority"
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
                 tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
-                // axisLabel: {fontSize: 30, padding: 410}
               }}
             tickLabelComponent={       
               <VictoryLabel    
@@ -258,19 +255,6 @@ export function AffectVictory(props) {
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
-
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
   
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
@@ -306,7 +290,7 @@ export function AffectVictory(props) {
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
@@ -392,21 +376,6 @@ export function AffectVictoryCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
-  
-
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
 
   var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
@@ -468,7 +437,7 @@ export function AffectVictoryCompare(props) {
   
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };

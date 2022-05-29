@@ -1,5 +1,4 @@
 import "survey-react/modern.min.css";
-import { useCallback } from "react";
 import { Survey, StylesManager, FunctionFactory, Model } from "survey-react";
 
 StylesManager.applyTheme("modern");

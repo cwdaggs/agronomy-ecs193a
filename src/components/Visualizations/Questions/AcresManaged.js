@@ -1,16 +1,12 @@
 import {VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCropOrRegion, filterByVocation, filterByCrop, filterByRegion} from '../UseData.js';
+import {filterByVocation, filterByCrop, filterByRegion} from '../UseData.js';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import {useState} from "react";
 import { useLocation } from 'react-router-dom';
 import { parseURL, parseURLCompare } from '../UseData.js';
 
-import "typeface-abeezee";
-import { filter } from 'd3';
-
 function calculateAcres(data){
   var names = ["< 500", "500 - 1000", "1000 - 1500", "1500 - 2000", "2000 - 2500", "2500+"]
-  // var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
   var colors = [ 
   "#003F72",
   "#006083",
@@ -80,7 +76,7 @@ function calculateSizeOfDataSet(data){
 function GetChart(props){
   
   var toolTipFontSize = 30;
-  if(props.data.length == 0){
+  if(props.data.length === 0){
     return (
 
       <>
@@ -92,7 +88,6 @@ function GetChart(props){
     <>
     <div class='visualization-window'>
           <VictoryChart height={props.height} width={props.width}
-            //domainPadding={45}
             domainPadding={{ x: props.margin.right/5.3, y: props.margin.top }}
             padding={{top: props.margin.top, bottom: props.margin.bottom, left: props.margin.left, right: props.margin.right}}
             animate={{duration: 800}}
@@ -112,7 +107,6 @@ function GetChart(props){
             axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 35}
           }}/>
           <VictoryBar
-            // barRatio={0.6}
             data={props.acre_data}
             alignment="middle"
             style={{ data:  { fill: ({datum}) => datum.fill}}}
@@ -186,7 +180,7 @@ export function AcresManagedBarChart(props) {
     }
     
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw*0.5;
     const width = vw;
     const mobileWidth=1000;
@@ -243,8 +237,6 @@ export function AcresManagedBarChartCompare(props) {
     setActiveCrop2(newValue)
   }
 
-
-  //console.log(filters)
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
@@ -301,7 +293,7 @@ export function AcresManagedBarChartCompare(props) {
   }
   
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const mobileWidth=1000;

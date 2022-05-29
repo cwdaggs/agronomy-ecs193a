@@ -6,7 +6,6 @@ import "./LoginAndOut.css";
 const clientID = '652800520818-5rp0q395un8cc2urq17bctiij15hmqn6.apps.googleusercontent.com';
 
 function Login() {
-    var name = "";
     const [isLoggedIn, setLogIn] = useState(false);
     const [profile, setProfile] = useState(null);
 

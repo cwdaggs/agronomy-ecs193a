@@ -1,8 +1,7 @@
-import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, filterByCropOrRegion, filterByVocation, parseURLCompare, filterByCrop, filterByRegion} from '../UseData.js'
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {sort_by_very, filterByVocation, parseURLCompare, filterByCrop, filterByRegion} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
-import "typeface-abeezee";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 import "./Legends.css";
@@ -29,7 +28,7 @@ export function calculateValueEach(data, filter, answer){
 function GetChart(props){
   var fontSize = props.fontSize
 
-  if(props.data.length == 0){
+  if(props.data.length === 0){
     return (
 
       <div className='dual-display-child'>
@@ -206,19 +205,6 @@ export function AmountVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
   var titleText = "Level of Value";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -247,7 +233,7 @@ export function AmountVictory(props) {
   const dataset_final = transformData(data_sorted)
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
@@ -263,15 +249,6 @@ export function AmountVictory(props) {
     fontSize = mobileFontSize;
   }
 
-  // const colorScale = ["#003f5c",
-  //   "#bc5090",
-  //   "#ffa600"];
-
-  // var colorScale = [   
-  //   "#577B44",  
-  //   "#90A770",
-  //   "#C7BFA0",
-  // ];
   var colorScale = 
   [  
     "#003F72",   
@@ -346,19 +323,6 @@ export function AmountVictoryCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
   var titleText = "Level of Value";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -418,7 +382,7 @@ export function AmountVictoryCompare(props) {
 
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };

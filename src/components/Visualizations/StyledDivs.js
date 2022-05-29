@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Visualizations } from "../Pages/Visualization";
-
 
 const StyledUl = styled.ul`
   list-style-type: none;
@@ -92,25 +90,6 @@ const SubA = styled.a`
   @media (max-width: 380px) {
     padding: 10px 10px;
   }
-`;
-
-const Tab = styled.button`
-  padding: 35px 60px;
-  cursor: pointer;
-  font-size: 25px;
-  font-family: Public Sans,sans-serif; 
-  opacity: 0.7;
-  background: white;
-  border: 0;
-  outline: 0;
-  &:hover {
-    background-color: #f1f1f1;
-  }
-  ${({active}) => 
-  active && `
-  border-bottom: 2px solid black;
-  opacity: 1;
-  `}
 `;
 
 const TabHome = styled.button`
@@ -211,33 +190,4 @@ const TabVisualizations = styled.button`
   }
 `;
 
-const Button = styled.button`
-  background-color: black;
-  color: white;
-  font-size: 20px;
-  padding: 10px 60px;
-  border-radius: 5px;
-  margin: 10px 0px;
-  cursor: pointer;
-  box-shadow: 0px 2px 2px lightgray;
-  &:disabled{
-    color: grey;
-    opacity: 0.7;
-  }
-`;
-
-const ButtonSwitch = styled(Button)`
-  opacity: 0.7;
-  ${({ active }) =>
-    active &&
-    `
-    opacity: 1;
-  `}
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-`;
-
-
-export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, Tab, Button, ButtonGroup, ButtonSwitch, TabVisualizations, TabHome};
+export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, TabVisualizations, TabHome};

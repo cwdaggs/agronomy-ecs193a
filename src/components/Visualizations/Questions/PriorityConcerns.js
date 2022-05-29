@@ -1,32 +1,8 @@
-import {filterByCropOrRegion, parseURLCompare, parseURL, filterByRegion, filterByCrop, filterByVocation} from "../UseData.js";
+import {parseURLCompare, parseURL, filterByRegion, filterByCrop, filterByVocation} from "../UseData.js";
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import { useLocation } from 'react-router-dom';
-
-var colors = [
-  "#212011",
-  "#2C2D17",
-  "#35381D",
-  "#3D4323",
-  "#444F2A",
-  "#4A5A30",
-  "#4F6536",
-  "#53703D",
-  "#577B44",
-  "#59864A",
-  "#5B9151",
-  "#699759",
-  "#769C60",
-  "#83A268",
-  "#90A770",
-  "#9CAD78",
-  "#A8B280",
-  "#B2B888",
-  "#BDBD90",
-  "#C2BE98",
-  "#C7BFA0",
-];
 
 function GetChart(props){
   return(
@@ -178,7 +154,7 @@ export function PriorityConcerns(props) {
     var n = 0
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw;
     const width = vw;
     const margin = { top: 0, right: 0, bottom: 30, left: width/10 };
@@ -285,8 +261,6 @@ export function PriorityConcernsCompare(props) {
   var legend_data = []
   var n = 0
 
-
-
   var titleText2 = "For ";
   if (activeRegion2 !== "All") {
     titleText2 += activeRegion2 + " ";
@@ -310,9 +284,8 @@ export function PriorityConcernsCompare(props) {
   var legend_data2 = []
   var n2 = 0
 
-
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw;
   const width = vw;
   const margin = { top: 0, right: 0, bottom: 30, left: width/10 };
@@ -322,7 +295,7 @@ export function PriorityConcernsCompare(props) {
       legend_data.push({name: data_by_reason[i].x})
       n += data_by_reason[i].y
   }  
-  for (var i = 0; i < data_by_reason2.length; i++) {
+  for (i = 0; i < data_by_reason2.length; i++) {
     legend_data2.push({name: data_by_reason2[i].x})
     n2 += data_by_reason2[i].y
   }  

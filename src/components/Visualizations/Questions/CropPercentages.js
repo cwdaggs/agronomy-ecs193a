@@ -1,14 +1,5 @@
 import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
 import {calculateCropPercentageAverage} from '../UseData.js';
-import "typeface-abeezee";
-import "@fontsource/metropolis";
-
-// var colors = [
-//     "#444F2A",
-//     "#577B44",
-//     "#90A770",
-//     "#C7BFA0",
-//   ];
 
 var colors = 
 [
@@ -82,7 +73,7 @@ export function CropPercentages(props) {
     var legend_data = []
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const height = vw;
     const width = vw;
     const margin = { top: 0, right: 0, bottom: 0, left: 0 };

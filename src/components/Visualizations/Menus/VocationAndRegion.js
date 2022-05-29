@@ -3,7 +3,6 @@ import {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA} from '../StyledDiv
 import { useLocation, Link } from "react-router-dom";
 import {GiWheat, GiBowlOfRice, GiGrainBundle, GiCottonFlower, GiCorn, GiSunflower, GiJellyBeans, GiVineFlower, GiBerriesBowl, GiCoolSpices} from "react-icons/gi";
 import {IoMdArrowDropdown} from "react-icons/io";
-import { active } from "d3";
 
 function DetermineCropIcon(type) {
     if (type === "Wheat") {
@@ -237,7 +236,6 @@ export function VocationAndRegion(props) {
                                     to={location + "/" + type + "/" + activeCropName + "/" + activeRegionName + "/" + activeName2 + "/" + activeCropName2 + "/" + activeRegionName2} 
                                     onClick={() => {props.vocationFunction(type); 
                                                 setActiveName(type.replace("%20", " "));
-                                                // console.log(type.replace(/([A-Z])/g, ' $1').trim());
                                             }} 
                             >
                                 <SubA 
@@ -315,7 +313,6 @@ export function VocationAndRegion(props) {
                                     to={location + "/" + activeName + "/" + activeCropName + "/" + activeRegionName + "/" + type + "/" + activeCropName2 + "/" + activeRegionName2} 
                                     onClick={() => {props.vocationFunction2(type); 
                                                 setActiveName2(type.replace("%20", " "));
-                                                // console.log(type.replace(/([A-Z])/g, ' $1').trim());
                                             }} 
                             >
                                 <SubA 

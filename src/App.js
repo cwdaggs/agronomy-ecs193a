@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import {Checkbox, Tab, Button} from './Button.js';
-import 'react-pro-sidebar/dist/css/styles.css';
+import {Tab, Button} from './Button.js';
 import {InfoSummary} from './components/Pages/InfoSummary';
-import {AboutSummary} from './components/Pages/AboutSummary';
+import {Team} from './components/Pages/Team';
 import Login from './components/Pages/Login.js';
-import {CommentBox} from './components/Pages/Comments'
+// import {CommentBox} from './components/Pages/Comments'
 import {Visualizations} from './components/Pages/Visualization';
 import {Home} from './components/Pages/Home';
 import {NavLink, Outlet,Routes, Route } from "react-router-dom";
 import {useData} from './components/Visualizations/UseData';
-import { MiniSurvey } from './components/Pages/Survey'; 
+// import { MiniSurvey } from './components/Pages/Survey'; 
 import { AcresManagedBarChart, AcresManagedBarChartCompare } from './components/Visualizations/Questions/AcresManaged';
 import { CropPercentages } from './components/Visualizations/Questions/CropPercentages';
 import { ConcernsVictory, ConcernsVictoryCompare } from './components/Visualizations/Questions/Concerns_victory';
@@ -23,10 +22,8 @@ import { AmountVictory, AmountVictoryCompare } from './components/Visualizations
 import { PrioritySatisfaction, PrioritySatisfactionCompare } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart, InternetSourcesBarChartCompare } from './components/Visualizations/Questions/InternetSources';
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
-import ReactGA from 'react-ga';
 
 export default function App() {
-  ReactGA.initialize("UA-226538502-1");
 
   function getActiveTab(isActive, pageName){
     return (isActive 
@@ -62,8 +59,8 @@ export default function App() {
         </NavLink> */}
         {/*<NavLink to ="/feedback" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
-      </NavLink>*/}
-        <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
+        </NavLink>*/}
+        <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
           <Tab>
             About UCCE
           </Tab>
@@ -172,7 +169,7 @@ export default function App() {
         </Route>
 
         <Route path="about" element={<InfoSummary dataset={dataset}/>}/>
-        <Route path="team" element={<AboutSummary/>}/>
+        <Route path="team" element={<Team/>}/>
         {/* <Route path="survey" element={<MiniSurvey/>}/> */}
         <Route path="feedback" element={<Login/>}/>
         <Route path = "*" element={<Home/>}/>

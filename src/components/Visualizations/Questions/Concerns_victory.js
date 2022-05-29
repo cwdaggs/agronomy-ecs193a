@@ -1,7 +1,5 @@
-
-import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, calculateConcernTotalsForEachElement, filterByCropOrRegion, filterByVocation, filterByRegion, filterByCrop} from '../UseData.js'
-import "typeface-abeezee";
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {sort_by_very, calculateConcernTotalsForEachElement, filterByVocation, filterByRegion, filterByCrop} from '../UseData.js'
 import React, { useState} from "react";
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import { parseURL, parseURLCompare } from '../UseData.js';
@@ -44,7 +42,7 @@ function GetChart(props){
 
   var fontSize = props.fontSize
 
-  if(props.data.length == 0){
+  if(props.data.length === 0){
     return (
 
       <div className='dual-display-child'>
@@ -122,12 +120,10 @@ function GetChart(props){
               }}
           />
           <VictoryAxis
-            // label = "Concerns"
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
                 tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
-                // axisLabel: {fontSize: 30, padding: 380}
               }}
             tickLabelComponent={       
               <VictoryLabel    
@@ -144,19 +140,6 @@ function GetChart(props){
 }
 
 export function ConcernsVictory(props) {
-
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
 
   const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   const baseURL = "/results/Production%20Concerns";
@@ -192,7 +175,7 @@ export function ConcernsVictory(props) {
   }
   if (activeVocation !== "All") {
     if (activeVocation === "Other") {
-      titleText += " " + "Other Vocations";
+      titleText += " Other Vocations";
     } else {
       titleText += " " + activeVocation;
     }
@@ -217,7 +200,7 @@ export function ConcernsVictory(props) {
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
@@ -266,19 +249,6 @@ export function ConcernsVictory(props) {
 }
 
 export function ConcernsVictoryCompare(props) {
-
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
 
   const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   const baseURL = "/results/compare/Production%20Concerns";
@@ -331,7 +301,7 @@ export function ConcernsVictoryCompare(props) {
   }
   if (activeVocation !== "All") {
     if (activeVocation === "Other") {
-      titleText += " " + "Other Vocations";
+      titleText += " Other Vocations";
     } else {
       titleText += " " + activeVocation;
     }
@@ -359,7 +329,7 @@ export function ConcernsVictoryCompare(props) {
   }
   if (activeVocation2 !== "All") {
     if (activeVocation2 === "Other") {
-      titleText2 += " " + "Other Vocations";
+      titleText2 += " Other Vocations";
     } else {
       titleText2 += " " + activeVocation2;
     }
@@ -376,8 +346,6 @@ export function ConcernsVictoryCompare(props) {
     }
   }
 
-  var data2 = props.dataset
-
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
   // var data_sorted = sort_by_very(data_by_concern);
@@ -391,7 +359,7 @@ export function ConcernsVictoryCompare(props) {
   titleText += " (n = " + calculateAverageResponses(data_by_concern) + ")";
   titleText2 += " (n = " + calculateAverageResponses(data_by_concern2) + ")";
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/20, right: width/16, bottom: height/8, left: width/6 };

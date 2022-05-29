@@ -86,13 +86,6 @@ export const Body = styled.div`
     margin-top:5%;
 `;
 
-export const Title = styled.h1`
-    margin:0;
-    padding:0;
-    font-size:60px;
-    font-weight:600;
-`;
-
 export const ProfileTitle = styled.h1`
     margin:0;
     padding:0;
@@ -149,27 +142,5 @@ export const Desc = styled.p`
     
     @media (max-width: 400px){
         font-size:10px;
-    }
-`;
-
-export const Button = styled.div`
-    button {
-        display:flex;
-        align-items:center;
-        justify-content: center;
-        background-color: #FAFAFA;
-        padding:15px;
-        font-weight:bold;
-        box-shadow: 3px 3px 15px #FFF;
-        border:0;
-        border-radius: 5px;
-        cursor:pointer;
-        outline:0;
-        
-        img {
-            margin-left:5px;
-            width:16px;
-            height:16px;
-        }
     }
 `;

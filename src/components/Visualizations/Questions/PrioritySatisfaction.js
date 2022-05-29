@@ -1,8 +1,7 @@
-import {VictoryLegend, VictoryLabel, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, filterByCropOrRegion, trendLineSatisfactions, filterByVocation, parseURLCompare, filterByRegion, filterByCrop } from '../UseData';
+import {VictoryLabel, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
+import { averageSatisfaction, trendLineSatisfactions, filterByVocation, parseURLCompare, filterByRegion, filterByCrop } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState } from "react";
-import "typeface-abeezee";
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
@@ -19,7 +18,7 @@ function BarData(dataset, topic){
 
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+// const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 const height = vw*0.5;
 const width = vw;
 const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 };
@@ -47,7 +46,7 @@ function GetChart(props, setSelection){
   var trendData = trendLineSatisfactions(props.data)
   
   
-  if(props.data_filtered.length == 0){
+  if(props.data_filtered.length === 0){
     return (
 
       <div className='dual-display-child'>
@@ -110,22 +109,6 @@ function GetChart(props, setSelection){
                 domainPadding={{ x: margin.right/10, y: margin.top/10 }}
                 padding={{ top: margin.top, bottom: margin.bottom, left: margin.left/1.5, right: margin.right }}
             >
-            {/* <VictoryLegend 
-              x={(width>=mobileWidth) ? width*.1 :0}
-              y={(width>=mobileWidth) ? height*.1 :40}
-              title="Legend"
-              centerTitle
-              orientation="vertical"
-              gutter={(width>=mobileWidth) ? 50 : 5}
-              style={{ border: { stroke: "black" }, 
-                       title: {fontSize: fontSize, fontFamily: 'Roboto' }, 
-                       labels: {fontSize: fontSize, fontFamily: 'Roboto'}}}
-              data={[
-                { name: "Topic of Interest", symbol: { fill: "tomato", stroke: "#756f6a"} },
-                { name: "Average Priority/Satisfaction overall", symbol: { fill: "red", type:"square" } },
-                
-              ]}
-            /> */}
             <VictoryScatter
                 x={(d) => d.Priority}
                 y={(d) => d.Satisfaction}
@@ -242,51 +225,6 @@ function GetChart(props, setSelection){
               x={(d) => d.x}
               y={(d) => d.y}
             />
-             {/*
-            <VictoryLine
-                
-                style={{ 
-                    data: { 
-                        stroke: "#756f6a", 
-                        strokeWidth:3, 
-                        strokeLinecap: "round" 
-                    } 
-                }}
-                events={[{
-                    target: "parent",
-                    eventHandlers: {
-                      onMouseOver: () => {
-                        return [
-                          {
-                            target: "data",
-                            eventKey: "all",
-                            mutation: ({ style }) => {
-                              return style.stroke === "red"
-                                ? null
-                                : { style: { stroke: "black", strokeWidth: 5 } };
-                            }
-                          },
-                        ];
-                      },
-                      onMouseOut: () => {
-                        return [{
-                          target: "data",
-                          eventKey: "all",
-                          mutation: ({style}) => {
-                            return style.stroke === "red"
-                            ? null
-                            : { style: { stroke: "#756f6a", strokeWidth: 3 } };;
-                          }
-                        }];
-                      }
-                    }
-                  }]
-                }
-                x={(d) => d.x}
-                y={(d) => d.y}
-                data={trendData[0]}
-            />
-              */}
           </VictoryChart>
           <div>
           <p id="vis-question-label"><br></br><br></br><br></br>Selected Topic's Average Priority/Satisfaction of Information Delivery on Topic as Surplus/Deficiency:<br></br>(Click and Drag in the Scatter Plot to Select Specific Topics)</p>
@@ -400,19 +338,6 @@ export const PrioritySatisfaction = (props) => {
 
     const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
-    const crops = [
-      "Alfalfa", 
-      "Barley", 
-      "Corn", 
-      "Corn Silage", 
-      "Cotton", 
-      "Dry Beans", 
-      "Rice", 
-      "Small Grain Silage", 
-      "Sunflower", 
-      "Wheat"
-    ];
-
     const baseURL = "/results/Priority%20Satisfaction";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -460,7 +385,7 @@ export const PrioritySatisfaction = (props) => {
 
     if(activeVocation !== "All"){
       if (activeVocation === "Other") {
-        titleText += " " + "Other Vocations";
+        titleText += " Other Vocations";
       } else {
         titleText += " " + activeVocation;
       }
@@ -488,7 +413,7 @@ export const PrioritySatisfaction = (props) => {
         </div>
         <div id='priority-satisfaction-infos-label'>
           <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
-            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
+            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
             2016</a> based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
              or above what respondents felt should be UCCE's priorities for field crop production.</p>
         </div>
@@ -504,19 +429,6 @@ export const PrioritySatisfaction = (props) => {
     export function PrioritySatisfactionCompare(props){
 
       const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-  
-      const crops = [
-        "Alfalfa", 
-        "Barley", 
-        "Corn", 
-        "Corn Silage", 
-        "Cotton", 
-        "Dry Beans", 
-        "Rice", 
-        "Small Grain Silage", 
-        "Sunflower", 
-        "Wheat"
-      ];
 
       const baseURL = "/results/compare/Priority%20Satisfaction";
       const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
@@ -593,7 +505,7 @@ export const PrioritySatisfaction = (props) => {
   
       if(activeVocation !== "All"){
         if (activeVocation === "Other") {
-          titleText += " " + "Other Vocations";
+          titleText += " Other Vocations";
         } else {
           titleText += " " + activeVocation;
         }
@@ -626,7 +538,7 @@ export const PrioritySatisfaction = (props) => {
   
       if(activeVocation2 !== "All"){
         if (activeVocation2 === "Other") {
-          titleText2 += " " + "Other Vocations";
+          titleText2 += " Other Vocations";
         } else {
           titleText2 += " " + activeVocation2;
         }
@@ -655,7 +567,7 @@ export const PrioritySatisfaction = (props) => {
 
           <div id='priority-satisfaction-infos-label'>
           <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
-            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
+            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
             2016</a> based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
              or above what respondents felt should be UCCE's priorities for field crop production.</p>
           </div>
@@ -663,7 +575,7 @@ export const PrioritySatisfaction = (props) => {
           <div className='dual-display'>
             <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
             <div id="vis-a">
-            <GetChart data={data} title={titleText} data_filtered={data_filtered} selectedNodes={selectedNodes} setSelection={setSelection}/>
+              <GetChart data={data} title={titleText} data_filtered={data_filtered} selectedNodes={selectedNodes} setSelection={setSelection}/>
             </div>
             <div id="vis-b">
               <GetChart data={data2} title={titleText2} compare={true} data_filtered={data_filtered2} selectedNodes={selectedNodes2} setSelection={setSelection2}/>
