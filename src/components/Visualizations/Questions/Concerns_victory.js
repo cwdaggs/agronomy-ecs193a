@@ -223,8 +223,8 @@ export function ConcernsVictory(props) {
     "#C3EFB8",
     "#D8F4CC"
   ]
-  var fontSize = 18
-  var mobileFontSize = 6
+  var fontSize = 22
+  var mobileFontSize = 8
   const mobileWidth = 1000;
   const laptopWidth = 1500;
   if(width < laptopWidth){
@@ -382,8 +382,8 @@ export function ConcernsVictoryCompare(props) {
     "#C3EFB8",
     "#D8F4CC"
   ]
-  var fontSize = 25
-  var mobileFontSize = 6
+  var fontSize = 22
+  var mobileFontSize = 8
   const mobileWidth = 1000;
   const laptopWidth = 1500;
   if(width < laptopWidth){
