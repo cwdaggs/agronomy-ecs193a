@@ -16,6 +16,10 @@
     padding: 10px;
 }
   
+#legend-title {
+    font-family: 'Roboto';
+}
+
 #three-color-first {
     background-color: #003F72;
 }

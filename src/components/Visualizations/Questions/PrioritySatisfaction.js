@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
+import "./Legends.css";
 
 function BarData(dataset, topic){
   var values = []
@@ -151,7 +152,8 @@ function GetChart(props, setSelection){
                     data: {
                       fill: "#000000",
                       stroke: "#756f6a",
-                      strokeWidth: 1
+                      strokeWidth: 1,
+                      fontFamily: 'Roboto'
                     },
                     axis: {stroke: "#756f6a"},
                     ticks: {stroke: "grey", size: fontSize},
