@@ -20,6 +20,13 @@ const colorScale =
   "#D8F4CC"
 ]
 
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const mobileWidth=1000;
+const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
+const fontSize = (width >= mobileWidth) ? 20: 10;
+
 export function calculateAllPrimaryGrowingReasons(data, filter) {
   var columns = ["Alfalfa_Growing_Reasons", "Cotton_Growing_Reasons", "Rice_Growing_Reasons", "Wild_Rice_Growing_Reasons", "Wheat_Growing_Reasons", "Triticale_Growing_Reasons",	
                 "Barley_Growing_Reasons",	"Oats_Growing_Reasons",	"Corn_Growing_Reasons",	"Sorghum_Growing_Reasons",	"Corn_Silage_Growing_Reasons", "Small_Grain_Silage_Growing_Reasons",
@@ -149,20 +156,20 @@ function GetChart(props){
     return(
       <>
       <div class='visualization-window'>
-            <VictoryChart horizontal={false} height={props.height} width={props.width}
-              domainPadding={{ x: props.margin.right/5.3, y: props.margin.top }}
-              padding={{top: props.margin.top, bottom: props.margin.bottom, left: props.margin.left, right: props.margin.right}}
+            <VictoryChart horizontal={false} height={height} width={width}
+              domainPadding={{ x: margin.right/5.3, y: margin.top }}
+              padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}
               animate={{duration: 800}}
             >
             <VictoryBar
               data={props.data_by_reason}
-              alignment="middle"
+              alignment="start"
               style={{ data:  { fill: ({datum}) => datum.fill, strokeWidth: 1, stroke: 'black'}}}
               labels={({ datum }) => `${datum.y + " Respondents"}`}
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize: props.fontSize,
+                    fontSize: fontSize,
                     fontFamily: 'Roboto'
                   }}
                   constrainToVisibleArea={'true'}    
@@ -170,27 +177,24 @@ function GetChart(props){
             }
             />
             <VictoryAxis dependentAxis
-            label = {String(props.titleText + " (n=" + props.n + ")")}
+            label = {String(props.titleText + " (n=" + props.data_filtered.length + ")")}
             style={{
               fontFamily: 'Roboto',
-              tickLabels: {fontSize: props.fontSize, padding: 15, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 35}
+              tickLabels: {fontSize: fontSize, padding: 15, fontFamily: 'Roboto'},
+              axisLabel: {fontSize: fontSize, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 35}
             }}
             
             />
             <VictoryAxis
-              label={props.labelText}
               style={{
-                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
-                axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 20}
+                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
                 }}
-
                 tickLabelComponent={       
                   <VictoryLabel    
                       textAnchor="start"
                       angle={25}
-                      style={{fill: "gray", fontSize: props.fontSize}}
-                      
+                      style={{fill: "black", fontSize: fontSize}}
                   />   
                 }
             />                        
@@ -200,8 +204,34 @@ function GetChart(props){
     )
 }
 
-export function PrimaryGrowingReasons(props) {
-    
+function AdjustColorAndNames(data_by_reason) {
+  var counter = colorScale.length - 1;
+  for (var obj of data_by_reason) {
+    if(obj.x === "Soil is not suitable for other crops") {
+      obj.x = "Soil unsuitable for other crops"
+    }
+    if (obj.x === "Capacity for deficit irrigation or fallowing") {
+      obj.x = "Capacity for deficit irrigation/fallowing"
+    }
+    if (obj.x === "Crop is traditionally grown on my farm") {
+      obj.x = "Traditionally grown crop on farm"
+    }
+    if (obj.x === "Suitability for saline/alkaline soils") {
+      obj.x = "Saline/alkaline soils"
+    }
+    if (obj.x === "Crop Rotation Benefits") {
+      obj.x = "Crop rotation benefits"
+    }
+    if (obj.x === "Stable Markets") {
+      obj.x = "Stable markets"
+    }
+    obj.fill = colorScale[counter];
+    counter--;
+  }
+  return data_by_reason
+}
+
+export function PrimaryGrowingReasons(props) { 
   const baseURL = "/results/Growing%20Reasons";
   const filter = parseURL(baseURL, useLocation().pathname);
 
@@ -221,52 +251,8 @@ export function PrimaryGrowingReasons(props) {
   }
 
   var titleText = DetermineTitleText(active, activeRegion);
-
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
-  var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
-  
-
-  var counter = colorScale.length - 1;
-  for (var obj of data_by_reason) {
-    if(obj.x === "Soil is not suitable for other crops") {
-      obj.x = "Soil unsuitable for other crops"
-    }
-    if (obj.x === "Capacity for deficit irrigation or fallowing") {
-      obj.x = "Capacity for deficit irrigation/fallowing"
-    }
-    if (obj.x === "Crop is traditionally grown on my farm") {
-      obj.x = "Traditionally grown crop on farm"
-    }
-    if (obj.x === "Suitability for saline/alkaline soils") {
-      obj.x = "Saline/alkaline soils"
-    }
-    obj.fill = colorScale[counter];
-    counter--;
-  }
-
-  // const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  // const height = vw;
-  // const width = vw;
-  // var fontSize = 12
-  // var mobileFontSize = 6
-  // const mobileWidth = 1000;
-  // const laptopWidth = 1500;
-  // if(width < laptopWidth){
-  //   fontSize = mobileFontSize*2
-  // }
-  // if(width < mobileWidth){
-  //   fontSize = mobileFontSize;
-  // }
-  // const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const mobileWidth=1000;
-  var fontSize = (width >= mobileWidth) ? 20: 10;
-  const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
-
+  var data_by_reason = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered, active))
 
   return (
     <>
@@ -276,13 +262,12 @@ export function PrimaryGrowingReasons(props) {
     <div className="inline-child">
       <OnlyCrops changeFunc={changeFunc} changeRegionFunc={changeRegionFunc} active={active} activeRegion={activeRegion} baseAll={filter.baseAll}/>
     </div>
-      <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
+      <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
     </>  
   );
 }
 
 export function PrimaryGrowingReasonsCompare(props) {
-    
   const baseURL = "/results/compare/Growing%20Reasons";
   const filter = parseCropURLCompare(baseURL, useLocation().pathname, ["All"]);
   const [active, setActive] = useState(filter.crop1);
@@ -311,36 +296,12 @@ export function PrimaryGrowingReasonsCompare(props) {
   }
 
   var titleText = DetermineTitleText(active, activeRegion1);
-
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion1), "Growers")
-  var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
+  var data_by_reason = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered, active))
 
   var titleText2 = DetermineTitleText(active2, activeRegion2);
-
   var data_filtered2 = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active2), activeRegion2), "Growers")
-  var data_by_reason2 = calculateAllPrimaryGrowingReasons(data_filtered2, active2)
-
-  // const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // const height = vw;
-  // const width = vw;
-  // var fontSize = 15
-  // var mobileFontSize = 6
-  // const mobileWidth = 1000;
-  // const laptopWidth = 1500;
-  // if(width < laptopWidth){
-  //   fontSize = mobileFontSize*2
-  // }
-  // if(width < mobileWidth){
-  //   fontSize = mobileFontSize;
-  // }
-  // const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const mobileWidth=1000;
-  var fontSize = (width >= mobileWidth) ? 20: 10;
-  const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
-
+  var data_by_reason2 = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered2, active2))
 
   return (
     <>
@@ -348,15 +309,15 @@ export function PrimaryGrowingReasonsCompare(props) {
       <h2>What are the primary reasons you grow the following field crops?</h2>
     </div>
     
-      <div className='dual-display'>
-          <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} changeRegion1Func={changeRegion1Func} changeRegion2Func={changeRegion2Func} active={active} active2={active2} activeRegion1={activeRegion1} activeRegion2={activeRegion2} baseAll={filter.baseAll}/>
-          <div id="vis-a">
-            <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
-          </div>
-          <div id="vis-b">
-            <GetChart titleText={titleText2} mobileWidth={mobileWidth} width={width} height={height} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason2} data_filtered={data_filtered2}/>
-          </div>
-      </div>
+    <div className='dual-display'>
+        <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} changeRegion1Func={changeRegion1Func} changeRegion2Func={changeRegion2Func} active={active} active2={active2} activeRegion1={activeRegion1} activeRegion2={activeRegion2} baseAll={filter.baseAll}/>
+        <div id="vis-a">
+          <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
+        </div>
+        <div id="vis-b">
+          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} data_filtered={data_filtered2}/>
+        </div>
+    </div>
     </>  
   );
 }
