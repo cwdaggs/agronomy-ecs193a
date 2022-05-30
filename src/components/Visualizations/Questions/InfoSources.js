@@ -6,6 +6,13 @@ import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
 const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
+const mobileFontSize = 6
+const mobileWidth = 1000;
+const laptopWidth = 1500;
 
 export function calculateInformationSources(data, sorted){
   var sources = [
@@ -88,13 +95,13 @@ function GetChart(props){
   }
   return(
         <div class='visualization-window'>
-          <VictoryChart height={props.height} width={props.width}
+          <VictoryChart height={height} width={width}
             animate={{
               duration: 500,               
             }}
-            domainPadding={{ x: props.margin.right/10, y: props.margin.top/10 }}
-            margin={{top: props.height/8, right: props.width/8, bottom: props.height/4, left: props.width/4 }}
-            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}  
+            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            margin={{top: height/8, right: width/8, bottom: height/4, left: width/4 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
             containerComponent={
               <VictoryZoomContainer
                 zoomDimension="x"
@@ -157,13 +164,13 @@ function GetUnsortedChart(props){
 
   return(
         <div class='visualization-window'>
-          <VictoryChart height={props.height} width={props.width}
+          <VictoryChart height={height} width={width}
             animate={{
               duration: 500,               
             }}
-            domainPadding={{ x: props.margin.right/10, y: props.margin.top/10 }}
-            margin={{top: props.height/8, right: props.width/8, bottom: props.height/4, left: props.width/4 }}
-            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}  
+            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            margin={{top: height/8, right: width/8, bottom: height/4, left: width/4 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
             containerComponent={
               <VictoryZoomContainer
                 zoomDimension="x"
@@ -245,6 +252,17 @@ function DetermineLabelText(activeVocation, activeCrop, activeRegion) {
     return labelText
 }
 
+function DetermineFontSize() {
+  var fontSize = 15
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+  return fontSize
+}
+
 export function InfoSourcesBarChart(props) {
     const baseURL = "/results/Information%20Network";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
@@ -272,22 +290,7 @@ export function InfoSourcesBarChart(props) {
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data, true);
     var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
-
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-
-    var fontSize = 15
-    var mobileFontSize = 6
-    const mobileWidth = 1000;
-    const laptopWidth = 1500;
-    if(width < laptopWidth){
-      fontSize = mobileFontSize*2
-    }
-    if(width < mobileWidth){
-      fontSize = mobileFontSize;
-    }
+    var fontSize = DetermineFontSize()
 
     return (
       <>
@@ -297,7 +300,7 @@ export function InfoSourcesBarChart(props) {
         <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
-        <GetChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
+        <GetChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data}/>
       </>
     );
 }
@@ -351,22 +354,7 @@ export function InfoSourcesBarChartCompare(props) {
   var info_data2 = calculateInformationSources(filtered_data2, false);
   var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
 
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-
-  var fontSize = 15
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
+  var fontSize = DetermineFontSize()
 
   return (
     <>
@@ -377,10 +365,10 @@ export function InfoSourcesBarChartCompare(props) {
       <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetUnsortedChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
+          <GetUnsortedChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data}/>
         </div>
         <div id="vis-b">
-          <GetUnsortedChart labelText={labelText2} info_data={info_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
+          <GetUnsortedChart labelText={labelText2} info_data={info_data2} fontSize={fontSize} filtered_data={filtered_data2}/>
         </div>
       </div>        
     </>
