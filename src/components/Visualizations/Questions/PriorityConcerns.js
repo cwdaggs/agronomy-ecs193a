@@ -51,16 +51,21 @@ function GetChart(props){
   )
 }
 
-function calculateAllPriorityConcerns(data, filter, job) {
+function calculateAllPriorityConcerns(data, filter, job, crop) {
     if(job === "Growers"){
         job = "_Growing_";
     } else {
         job = "_Consulting_";
     }
-    var columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
+
+    var columns = [crop.split(' ').join('_') + job + "Concerns"]
+
+    if(crop === "All"){
+      columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
                  "Barley" + job + "Concerns",	"Oats" + job + "Concerns",	"Corn" + job + "Concerns",	"Sorghum" + job + "Concerns",	"Corn_Silage" + job + "Concerns", "Small_Grain_Silage" + job + "Concerns",
                  "Small_Grain_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Pasture" + job + "Concerns",	"Sorghum_Sudangrass_Sudan" + job + "Concerns",	
                  "Mixed_Hay" + job + "Concerns", "Dry_Beans" + job + "Concerns",	"Sunflower" + job + "Concerns",	"Oilseeds" + job + "Concerns", "Sugar_Beets" + job + "Concerns", "Hemp" + job + "Concerns", "Other" + job + "Concerns"]
+    } 
  
    const myMap = new Map()
    if (filter === "All" || filter === "") {
@@ -86,12 +91,17 @@ function calculateAllPriorityConcerns(data, filter, job) {
  }
  
 function calculatePriorityConcerns(data, filter) { //labelled under concerns right before growing reasons, the q is about challenges
-   var modified_data = []
+  console.log(data, filter);
+  var modified_data = []
    const myMap = new Map()
    for (var farmer in data) {
-     const reasons = String(data[farmer][filter]).split(',')
-     for (var reason in reasons) {
-       var key = reasons[reason]
+     var reasons = String(data[farmer][filter]).split(',')
+     let reasons_no_duplicates = reasons.filter((reason, index) => {
+      return reason.indexOf(reason) !== index;
+    });
+
+     for (var reason in reasons_no_duplicates) {
+       var key = reasons_no_duplicates[reason]
        if (key !== "NA" && key !== "undefined") {
          myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
        }
@@ -141,14 +151,14 @@ export function PriorityConcerns(props) {
 
     titleText += activeVocation;
 
-    var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
+    var data_filtered = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation);
 
     var filter = activeRegion
 
     if (regionTypes.includes(activeRegion)){
       filter = "All";
     }
-    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation)
+    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation, activeCrop)
 
     var legend_data = []
     var n = 0
@@ -249,14 +259,14 @@ export function PriorityConcernsCompare(props) {
 
   titleText += activeVocation;
 
-  var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
+  var data_filtered = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation);
 
   var filter = activeRegion
 
   if (regionTypes.includes(activeRegion)){
     filter = "All";
   }
-  var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation)
+  var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation, activeCrop)
 
   var legend_data = []
   var n = 0
