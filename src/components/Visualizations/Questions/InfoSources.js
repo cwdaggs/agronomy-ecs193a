@@ -5,6 +5,8 @@ import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAn
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
+const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+
 export function calculateInformationSources(data, sorted){
   var sources = [
     "Industry",
@@ -145,7 +147,6 @@ function GetChart(props){
 }
 
 function GetUnsortedChart(props){
-
   if(props.filtered_data.length === 0){
     return (
       <div className='dual-display-child'>
@@ -213,53 +214,8 @@ function GetUnsortedChart(props){
   )
 }
 
-export function InfoSourcesBarChart(props) {
-
-    const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
-    const baseURL = "/results/Information%20Network";
-    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-    const [activeVocation, setActiveVocation] = useState(filters.vocation);
-    const [activeRegion, setActiveRegion] = useState(filters.region);
-    const [activeCrop, setActiveCrop] = useState(filters.crop);
-
-    function vocationFunction(newValue){
-      setActiveVocation(newValue);
-    }
-
-    function regionFunction(newValue) {
-      setActiveRegion(newValue);
-    }  
-
-    function cropFunction(newValue) {
-      setActiveCrop(newValue);
-    }  
-
-    if (!props.dataset) {
-        return <pre>Loading...</pre>;
-    }
-
-    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    var filtered_data = filterByVocation(data, activeVocation);
-    var info_data = calculateInformationSources(filtered_data, true);
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-
-    var fontSize = 15
-    var mobileFontSize = 6
-    const mobileWidth = 1000;
-    const laptopWidth = 1500;
-    if(width < laptopWidth){
-      fontSize = mobileFontSize*2
-    }
-    if(width < mobileWidth){
-      fontSize = mobileFontSize;
-    }
-
-    var labelText = "Information Network"
+function DetermineLabelText(activeVocation, activeCrop, activeRegion) {
+  var labelText = "Information Network"
     if (activeCrop !== "All" || activeVocation !== "All") {
       labelText += " for";
     }
@@ -286,6 +242,52 @@ export function InfoSourcesBarChart(props) {
         labelText += " in the " + activeRegion + " Region";
       }
     }
+    return labelText
+}
+
+export function InfoSourcesBarChart(props) {
+    const baseURL = "/results/Information%20Network";
+    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+    const [activeVocation, setActiveVocation] = useState(filters.vocation);
+    const [activeRegion, setActiveRegion] = useState(filters.region);
+    const [activeCrop, setActiveCrop] = useState(filters.crop);
+
+    function vocationFunction(newValue){
+      setActiveVocation(newValue);
+    }
+
+    function regionFunction(newValue) {
+      setActiveRegion(newValue);
+    }  
+
+    function cropFunction(newValue) {
+      setActiveCrop(newValue);
+    }  
+
+    if (!props.dataset) {
+        return <pre>Loading...</pre>;
+    }
+
+    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+    var filtered_data = filterByVocation(data, activeVocation);
+    var info_data = calculateInformationSources(filtered_data, true);
+    var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
+
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    const height = vw*0.5;
+    const width = vw;
+    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
+
+    var fontSize = 15
+    var mobileFontSize = 6
+    const mobileWidth = 1000;
+    const laptopWidth = 1500;
+    if(width < laptopWidth){
+      fontSize = mobileFontSize*2
+    }
+    if(width < mobileWidth){
+      fontSize = mobileFontSize;
+    }
 
     return (
       <>
@@ -301,8 +303,6 @@ export function InfoSourcesBarChart(props) {
 }
 
 export function InfoSourcesBarChartCompare(props) {
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
   const baseURL = "/results/compare/Information%20Network";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -337,106 +337,52 @@ export function InfoSourcesBarChartCompare(props) {
     setActiveCrop2(newValue);
   }  
 
-    if (!props.dataset) {
-        return <pre>Loading...</pre>;
-    }
+  if (!props.dataset) {
+      return <pre>Loading...</pre>;
+  }
 
-    var labelText = "Information Network"
-    if (activeCrop !== "All" || activeVocation !== "All") {
-      labelText += " for";
-    }
-    if (activeCrop !== "All") {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        labelText += " " + activeCrop;
-      }
-    }
-    if (activeVocation !== "All") {
-      if (activeVocation === "Other") {
-        labelText += " Other Vocations";
-      } else {
-        labelText += " " + activeVocation;
-      }
-    }
-    if (activeRegion !== "All") {
-      if (activeRegion === "NSJV") {
-        labelText += " in the North San Joaquin Valley Region";
-      }
-      else if (activeRegion === "SSJV") {
-        labelText += " in the South San Joaquin Valley Region";
-      }
-      else {
-        labelText += " in the " + activeRegion + " Region";
-      }
-    }
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+  var filtered_data = filterByVocation(data, activeVocation);
+  var info_data = calculateInformationSources(filtered_data, false);
+  var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
 
-    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    var filtered_data = filterByVocation(data, activeVocation);
-    var info_data = calculateInformationSources(filtered_data, false);
+  var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
+  var filtered_data2 = filterByVocation(data2, activeVocation2);
+  var info_data2 = calculateInformationSources(filtered_data2, false);
+  var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
 
-    var labelText2 = "Information Network"
-    if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-      labelText2 += " for";
-    }
-    if (activeCrop2 !== "All") {
-      if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-        labelText2 += " " + activeCrop2;
-      }
-    }
-    if (activeVocation2 !== "All") {
-      if (activeVocation2 === "Other") {
-        labelText2 += " Other Vocations";
-      } else {
-        labelText2 += " " + activeVocation2;
-      }
-    }
-    if (activeRegion2 !== "All") {
-      if (activeRegion2 === "NSJV") {
-        labelText2 += " in the North San Joaquin Valley Region";
-      }
-      else if (activeRegion2 === "SSJV") {
-        labelText2 += " in the South San Joaquin Valley Region";
-      }
-      else {
-        labelText2 += " in the " + activeRegion2 + " Region";
-      }
-    }
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const height = vw*0.5;
+  const width = vw;
+  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
 
-    var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
-    var filtered_data2 = filterByVocation(data2, activeVocation2);
-    var info_data2 = calculateInformationSources(filtered_data2, false);
+  var fontSize = 15
+  var mobileFontSize = 6
+  const mobileWidth = 1000;
+  const laptopWidth = 1500;
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
 
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
+  return (
+    <>
+      <div id='vis-question-label'>
+        <h2>Who do you communicate with when seeking information about field crop production?</h2>
+      </div>
 
-    var fontSize = 15
-    var mobileFontSize = 6
-    const mobileWidth = 1000;
-    const laptopWidth = 1500;
-    if(width < laptopWidth){
-      fontSize = mobileFontSize*2
-    }
-    if(width < mobileWidth){
-      fontSize = mobileFontSize;
-    }
-
-    return (
-      <>
-        <div id='vis-question-label'>
-          <h2>Who do you communicate with when seeking information about field crop production?</h2>
+      <div className='dual-display'>
+        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <div id="vis-a">
+          <GetUnsortedChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
         </div>
-
-        <div className='dual-display'>
-          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-          <div id="vis-a">
-            <GetUnsortedChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
-          </div>
-          <div id="vis-b">
-            <GetUnsortedChart labelText={labelText2} info_data={info_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
-          </div>
-        </div>        
-      </>
-    );
+        <div id="vis-b">
+          <GetUnsortedChart labelText={labelText2} info_data={info_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
+        </div>
+      </div>        
+    </>
+  );
 }
