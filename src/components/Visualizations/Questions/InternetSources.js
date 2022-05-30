@@ -75,8 +75,9 @@ function getInternetSources(data, sorted){
   sources[5] = "UCCE Magazine Articles";
   sources[6] = "Personal Contact";
   sources[7] = "In-Person Meetings";
-  sources[8] = "Books/Manuals"
-  sources[14] = "2-3 Day Destination Meetings"
+  sources[8] = "Books/Manuals";
+  sources[14] = "Destination Meetings";
+  sources[15] = "Cal Agriculture Journal";
 
 
   for(var l=0; l<totals.length; l++){
@@ -120,7 +121,7 @@ function GetChart(props){
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:props.fontSize, fontFamily: 'Roboto'
+                    fontSize:props.fontSize*1.5, fontFamily: 'Roboto'
                   }}
                   constrainToVisibleArea={'true'}    
                 />
@@ -131,7 +132,7 @@ function GetChart(props){
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*2, padding: 5, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 50, fontFamily: 'Roboto'}
               }}
             />
@@ -140,7 +141,7 @@ function GetChart(props){
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.6, padding: 1, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'}
               }}
             tickLabelComponent={       

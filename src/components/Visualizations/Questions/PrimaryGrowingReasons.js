@@ -181,21 +181,21 @@ function GetChart(props){
             label = {String(props.titleText + " (n=" + props.data_filtered.length + ")")}
             style={{
               fontFamily: 'Roboto',
-              tickLabels: {fontSize: fontSize, padding: 15, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: fontSize, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 35}
+              tickLabels: {fontSize: fontSize*1.5, padding: 15, fontFamily: 'Roboto'},
+              axisLabel: {fontSize: fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 80: 50}
             }}
             
             />
             <VictoryAxis
               style={{
-                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'},
-                axisLabel: {fontSize: fontSize, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
+                tickLabels: {fontSize: fontSize*5, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
                 }}
                 tickLabelComponent={       
                   <VictoryLabel    
                       textAnchor="start"
                       angle={25}
-                      style={{fill: "black", fontSize: fontSize}}
+                      style={{fill: "black", fontSize: (width >= mobileWidth) ? fontSize*1.25: fontSize}}
                   />   
                 }
             />                        

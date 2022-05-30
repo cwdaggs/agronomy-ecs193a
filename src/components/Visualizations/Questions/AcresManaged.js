@@ -101,15 +101,15 @@ function GetChart(props){
             label={props.labelText}
             style={{
               tickLabels: {fontSize: props.fontSize*1.25, padding: 5, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
+              axisLabel: {fontSize: props.fontSize*2, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
               }}
           />
           <VictoryAxis dependentAxis
           label = {props.lengthString}
           style={{
             fontFamily: 'Roboto',
-            tickLabels: {fontSize: props.fontSize, padding: 15, fontFamily: 'Roboto'},
-            axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 35}
+            tickLabels: {fontSize: props.fontSize*1.25, padding: 15, fontFamily: 'Roboto'},
+            axisLabel: {fontSize: props.fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 45}
           }}/>
           <VictoryBar
             data={props.acre_data}
