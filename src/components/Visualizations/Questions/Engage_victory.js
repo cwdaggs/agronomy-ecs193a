@@ -6,6 +6,20 @@ import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 import "./Legends.css";
 
+const colorScale = 
+  [
+    "#002360", 
+    "#006083",  
+    "#009B9C",
+    "#02B488",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
+const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
+
 export function calculateEngageEach(data, filter, answer){
     var total = 0
   
@@ -191,33 +205,7 @@ function GetChart(props){
   )
 }
 
-export function EngageVictory(props) {
-  
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
-  const baseURL = "/results/UCCE%20Engagement";
-  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-
-  const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegion, setActiveRegion] = useState(filters.region);
-  const [activeCrop, setActiveCrop] = useState(filters.crop);
-
-  function vocationFunction(newValue){
-    setActiveVocation(newValue);
-  }
-
-  function regionFunction(newValue) {
-    setActiveRegion(newValue);
-  }  
-
-  function cropFunction(newValue) {
-    setActiveCrop(newValue);
-  }  
-
-  if (!props.dataset) {
-      return <pre>Loading...</pre>;
-  }
-
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
   var titleText = "UCCE Engagement Frequency";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -245,6 +233,36 @@ export function EngageVictory(props) {
       titleText += " in the " + activeRegion + " Region";
     }
   }
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  return titleText
+}
+
+export function EngageVictory(props) {
+  
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+
+  const baseURL = "/results/UCCE%20Engagement";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
+
+  if (!props.dataset) {
+      return <pre>Loading...</pre>;
+  }
 
   var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var data_filtered = filterByVocation(data, activeVocation)
@@ -252,24 +270,13 @@ export function EngageVictory(props) {
   var data_sorted = sort_by_freq(data_by_engage)
   const dataset_final = transformData(data_sorted)
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted);
+  
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
-  var colorScale = 
-  [
-    "#002360", 
-    "#006083",  
-    "#009B9C",
-    "#02B488",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
+
   var fontSize = 20
   var mobileFontSize = 6
   const mobileWidth = 1000;
@@ -281,10 +288,7 @@ export function EngageVictory(props) {
     fontSize = mobileFontSize;
   }
 
-  const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
-
   return (
-
     <>
       <div id='vis-question-label'>
         <h2>How often do you engage with the UCCE in the following ways?</h2>
@@ -338,81 +342,20 @@ export function EngageVictoryCompare(props) {
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
-
-  var titleText2 = "UCCE Engagement Frequency";
-  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-    titleText2 += " for";
-  }
-  if (activeCrop2 !== "All") {
-    if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-      titleText2 += " " + activeCrop2;
-    }
-  }
-  if (activeVocation2 !== "All") {
-    if (activeVocation2 === "Other") {
-      titleText2 += " Other Vocations";
-    } else {
-      titleText2 += " " + activeVocation2;
-    }
-  }
-  if (activeRegion2 !== "All") {
-    if (activeRegion2 === "NSJV") {
-      titleText2 += " in the North San Joaquin Valley Region";
-    }
-    else if (activeRegion2 === "SSJV") {
-      titleText2 += " in the South San Joaquin Valley Region";
-    }
-    else {
-      titleText2 += " in the " + activeRegion2 + " Region";
-    }
-  }
+  // Data previously sorted after by_engage
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+  var data_filtered = filterByVocation(data, activeVocation)
+  var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
+  const dataset_final = transformData(data_by_engage)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_engage);
 
   var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
   var data_filtered2 = filterByVocation(data2, activeVocation2)
   var data_by_engage2 = calculateEngageTotalsForEachElement(data_filtered2)
-  // var data_sorted2 = sort_by_freq(data_by_engage2)
   const dataset_final2 = transformData(data_by_engage2)
-
-  titleText2 += " (n = " + calculateAverageResponses(data_by_engage2) + ")";
-
-  var titleText = "UCCE Engagement Frequency";
-  if (activeCrop !== "All" || activeVocation !== "All") {
-    titleText += " for";
-  }
-  if (activeCrop !== "All") {
-    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-      titleText += " " + activeCrop;
-    }
-  }
-  if (activeVocation !== "All") {
-    if (activeVocation === "Other") {
-      titleText += " Other Vocations";
-    } else {
-      titleText += " " + activeVocation;
-    }
-  }
-  if (activeRegion !== "All") {
-    if (activeRegion === "NSJV") {
-      titleText += " in the North San Joaquin Valley Region";
-    }
-    else if (activeRegion === "SSJV") {
-      titleText += " in the South San Joaquin Valley Region";
-    }
-    else {
-      titleText += " in the " + activeRegion + " Region";
-    }
-  }
-
-  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-  var data_filtered = filterByVocation(data, activeVocation)
-  var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
-  // var data_sorted = sort_by_freq(data_by_engage)
-  const dataset_final = transformData(data_by_engage)
-
-  titleText += " (n = " + calculateAverageResponses(data_by_engage) + ")";
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_engage2);
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
   const height = vw*0.5;
   const width = vw;
   const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };
@@ -427,23 +370,8 @@ export function EngageVictoryCompare(props) {
   if(width < mobileWidth){
     fontSize = mobileFontSize;
   }
-  var colorScale = 
-  [
-    "#002360", 
-    "#006083",  
-    "#009B9C",
-    "#02B488",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-
-  const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
-
+  
   return (
-
     <>
       <div id='vis-question-label'>
         <h2>How often do you engage with the UCCE in the following ways?</h2>
