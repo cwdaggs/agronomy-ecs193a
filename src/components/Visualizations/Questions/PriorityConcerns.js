@@ -104,7 +104,7 @@ function GetChart(props){
           }
           />
           <VictoryAxis dependentAxis
-          label = {String(props.titleText + " (n=" + props.data_filtered.length + ")")}
+          label = {String(props.titleText + " (n=" + props.n + ")")}
           style={{
             fontFamily: 'Roboto',
             tickLabels: {fontSize: fontSize, padding: 15, fontFamily: 'Roboto'},
@@ -165,7 +165,7 @@ function calculateAllPriorityConcerns(data, filter, job) {
    }
  }
  
-function calculatePriorityConcerns(data, filter) { //labelled under concerns right before growing reasons, the q is about challenges
+function calculatePriorityConcerns(data, filter) { 
    var modified_data = []
    const myMap = new Map()
    for (var farmer in data) {
@@ -198,6 +198,15 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion) {
     return titleText;
 }
 
+function AdjustColors(data_by_reason) {
+  var counter = colorScale.length - 1;
+  for (var obj of data_by_reason) {
+    obj.fill = colorScale[counter];
+    counter--;
+  }
+  return data_by_reason
+}
+
 export function PriorityConcerns(props) {
     const baseURL = "/results/Priority%20Concerns";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
@@ -222,14 +231,16 @@ export function PriorityConcerns(props) {
     }
 
     var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion);
-    var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
-    var filter = activeRegion
+    var data_filtered = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation);
+    console.log(data_filtered)
+    var filter = regionTypes.includes(activeRegion) ? "All" : activeRegion
+    // var filter = activeRegion
 
-    if (regionTypes.includes(activeRegion)){
-      filter = "All";
-    }
-    var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation)
-
+    // if (regionTypes.includes(activeRegion)){
+    //   filter = "All";
+    // }
+    var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, filter, activeVocation))
+    console.log(data_by_reason)
     var legend_data = []
     var n = 0
 
@@ -248,7 +259,7 @@ export function PriorityConcerns(props) {
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-      <div  class='visualization-window'>
+      <div>
         <GetChart titleText={titleText} data_by_reason={data_by_reason} legend_data={legend_data} n={n} data_filtered={data_filtered}/>
       </div>
       </>
@@ -295,24 +306,28 @@ export function PriorityConcernsCompare(props) {
 
   var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion);
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
-  var filter = activeRegion
+  var filter = regionTypes.includes(activeRegion) ? "All" : activeRegion
 
-  if (regionTypes.includes(activeRegion)){
-    filter = "All";
-  }
-  var data_by_reason = calculateAllPriorityConcerns(data_filtered, filter, activeVocation)
+  // var filter = activeRegion
+
+  // if (regionTypes.includes(activeRegion)){
+  //   filter = "All";
+  // }
+  var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, filter, activeVocation))
 
   var legend_data = []
   var n = 0
 
   var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2);
-  var data_filtered2 = filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2);
-  var filter2 = activeRegion2
+  var data_filtered2 = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2), activeVocation2);
+  var filter2 = regionTypes.includes(activeRegion2) ? "All" : activeRegion2
 
-  if (regionTypes.includes(activeRegion2)){
-    filter2 = "All";
-  }
-  var data_by_reason2 = calculateAllPriorityConcerns(data_filtered2, filter2, activeVocation2)
+  // var filter2 = activeRegion2
+
+  // if (regionTypes.includes(activeRegion2)){
+  //   filter2 = "All";
+  // }
+  var data_by_reason2 = AdjustColors(calculateAllPriorityConcerns(data_filtered2, filter2, activeVocation2))
 
   var legend_data2 = []
   var n2 = 0
@@ -336,15 +351,15 @@ export function PriorityConcernsCompare(props) {
       <h2>What are the highest priority management challenges/concerns?</h2>
     </div>
 
-      <div className='dual-display'>
-          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-          <div id="vis-a">
-            <GetChart titleText={titleText} data_by_reason={data_by_reason} n={n} data_filtered={data_filtered}/>
-          </div>
-          <div id="vis-b">
-            <GetChart titleText={titleText2} data_by_reason={data_by_reason2} n={n2} data_filtered={data_filtered2}/>
-          </div>
-      </div>
+    <div className='dual-display'>
+        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <div id="vis-a">
+          <GetChart titleText={titleText} data_by_reason={data_by_reason} n={n} data_filtered={data_filtered}/>
+        </div>
+        <div id="vis-b">
+          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} n={n2} data_filtered={data_filtered2}/>
+        </div>
+    </div>
     </>
   );
 }
