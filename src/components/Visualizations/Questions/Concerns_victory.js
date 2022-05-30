@@ -6,6 +6,34 @@ import { parseURL, parseURLCompare } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 import "./Legends.css";
     
+const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+const colorScale = 
+  [  
+    "#003F72",   
+    "#00728C",
+    "#00A498",
+    "#01AC90",
+    "#02B488",
+    "#15BC80",
+    "#29C37A",
+    "#3DCA77",
+    "#52D176",
+    "#66D779",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
+
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
+const mobileFontSize = 8
+const mobileWidth = 1000;
+const laptopWidth = 1500;
+
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
     const totals = dataset[0].map((data, i) => {
@@ -39,12 +67,8 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
-
-  var fontSize = props.fontSize
-
   if(props.data.length === 0){
     return (
-
       <div className='dual-display-child'>
         <div id="vis-legend">
           <div id="legend-title">
@@ -85,16 +109,16 @@ function GetChart(props){
           animate={{
               duration: 500,               
           }}
-          height={props.height} 
-          width={props.width}
-          domainPadding={{ x: props.margin.right/5, y: props.margin.top/10 }}
-          padding={{ top: (props.width>=props.mobileWidth)?props.margin.top:props.margin.top*2, bottom: props.margin.bottom, left: props.margin.left/1.5, right: (props.width>=props.mobileWidth)?props.margin.right:props.margin.right/2 }}   
+          height={height} 
+          width={width}
+          domainPadding={{ x: margin.right/5, y: margin.top/10 }}
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryStack
             style={{
                 data: { stroke: "black", strokeWidth: 1}, fontFamily: 'Roboto'
             }}
-            colorScale={props.colorScale}
+            colorScale={colorScale}
           >
             {props.dataset.map((data, i) => {
               return <VictoryBar 
@@ -104,7 +128,7 @@ function GetChart(props){
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:fontSize, fontFamily: 'Roboto'
+                        fontSize:props.fontSize, fontFamily: 'Roboto'
                       }}
                       constrainToVisibleArea={'true'}     
                     />
@@ -116,20 +140,20 @@ function GetChart(props){
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
+                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'}
               }}
           />
           <VictoryAxis
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
               }}
             tickLabelComponent={       
               <VictoryLabel    
                   textAnchor="start"
-                  style={{fill: "white", fontSize: fontSize}}
-                  dx={fontSize}
+                  style={{fill: "white", fontSize: props.fontSize}}
+                  dx={props.fontSize}
               />   
             }
           />
@@ -139,31 +163,7 @@ function GetChart(props){
   )
 }
 
-export function ConcernsVictory(props) {
-
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-  const baseURL = "/results/Production%20Concerns";
-  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-  const [activeVocation, setActiveVocation] = useState(filters.vocation);
-  const [activeRegion, setActiveRegion] = useState(filters.region);
-  const [activeCrop, setActiveCrop] = useState(filters.crop);
-
-  function vocationFunction(newValue){
-    setActiveVocation(newValue);
-  }
-
-  function regionFunction(newValue) {
-    setActiveRegion(newValue);
-  }  
-
-  function cropFunction(newValue) {
-    setActiveCrop(newValue);
-  }  
-
-  if ((!props.dataset)) {
-      return <pre>Loading...</pre>;
-  }
-
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
   var titleText = "Level of Concern";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -191,49 +191,50 @@ export function ConcernsVictory(props) {
       titleText += " in the " + activeRegion + " Region";
     }
   }
-
-  var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
-  var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
-  var data_sorted = sort_by_very(data_by_concern);
-  const dataset = transformData(data_sorted);
-
   titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  return titleText
+}
 
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-
-  var colorScale = 
-  [  
-    "#003F72",   
-    "#00728C",
-    "#00A498",
-    "#01AC90",
-    "#02B488",
-    "#15BC80",
-    "#29C37A",
-    "#3DCA77",
-    "#52D176",
-    "#66D779",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
+function DetermineFontSize() {
   var fontSize = 22
-  var mobileFontSize = 8
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
   if(width < laptopWidth){
     fontSize = mobileFontSize*2
   }
   if(width < mobileWidth){
     fontSize = mobileFontSize;
   }
-  const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]
+  return fontSize
+}
+
+export function ConcernsVictory(props) {
+  const baseURL = "/results/Production%20Concerns";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop);
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }  
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue);
+  }  
+
+  if ((!props.dataset)) {
+      return <pre>Loading...</pre>;
+  }
+
+  var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
+  var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
+  var data_sorted = sort_by_very(data_by_concern);
+  const dataset = transformData(data_sorted);
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted)
+  var fontSize = DetermineFontSize()
   
   return (
     <>
@@ -243,14 +244,12 @@ export function ConcernsVictory(props) {
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-      <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} data={data_filtered}/>
+      <GetChart titleText={titleText} dataset={dataset} fontSize={fontSize} data={data_filtered}/>
     </>
   );
 }
 
 export function ConcernsVictoryCompare(props) {
-
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
   const baseURL = "/results/compare/Production%20Concerns";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
 
@@ -290,109 +289,18 @@ export function ConcernsVictoryCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Level of Concern";
-  if (activeCrop !== "All" || activeVocation !== "All") {
-    titleText += " for";
-  }
-  if (activeCrop !== "All") {
-    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-      titleText += " " + activeCrop;
-    }
-  }
-  if (activeVocation !== "All") {
-    if (activeVocation === "Other") {
-      titleText += " Other Vocations";
-    } else {
-      titleText += " " + activeVocation;
-    }
-  }
-  if (activeRegion !== "All") {
-    if (activeRegion === "NSJV") {
-      titleText += " in the North San Joaquin Valley Region";
-    }
-    else if (activeRegion === "SSJV") {
-      titleText += " in the South San Joaquin Valley Region";
-    }
-    else {
-      titleText += " in the " + activeRegion + " Region";
-    }
-  }
-
-  var titleText2 = "Level of Concern";
-  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-    titleText2 += " for";
-  }
-  if (activeCrop2 !== "All") {
-    if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-      titleText2 += " " + activeCrop2;
-    }
-  }
-  if (activeVocation2 !== "All") {
-    if (activeVocation2 === "Other") {
-      titleText2 += " Other Vocations";
-    } else {
-      titleText2 += " " + activeVocation2;
-    }
-  }
-  if (activeRegion2 !== "All") {
-    if (activeRegion2 === "NSJV") {
-      titleText2 += " in the North San Joaquin Valley Region";
-    }
-    else if (activeRegion2 === "SSJV") {
-      titleText2 += " in the South San Joaquin Valley Region";
-    }
-    else {
-      titleText2 += " in the " + activeRegion2 + " Region";
-    }
-  }
-
+  // Data previously sorted by very after by_concern
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
-  // var data_sorted = sort_by_very(data_by_concern);
   const dataset = transformData(data_by_concern);
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_concern)
 
   var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
   var data_by_concern2 = calculateConcernTotalsForEachElement(data_filtered2);
-  // var data_sorted2 = sort_by_very(data_by_concern2);
   const dataset2 = transformData(data_by_concern2);
-
-  titleText += " (n = " + calculateAverageResponses(data_by_concern) + ")";
-  titleText2 += " (n = " + calculateAverageResponses(data_by_concern2) + ")";
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/20, right: width/16, bottom: height/8, left: width/6 };
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_concern2)
   
-  var colorScale = 
-  [  
-    "#003F72",   
-    "#00728C",
-    "#00A498",
-    "#01AC90",
-    "#02B488",
-    "#15BC80",
-    "#29C37A",
-    "#3DCA77",
-    "#52D176",
-    "#66D779",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-  var fontSize = 22
-  var mobileFontSize = 8
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-  const legend_data = [{name: "Very Concerned"}, {name: "Somewhat Concerned"}, {name: "Not Concerned"}]
+  var fontSize = DetermineFontSize()
 
   return (
     <>
@@ -403,10 +311,10 @@ export function ConcernsVictoryCompare(props) {
       <div className='dual-display'>
           <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
           <div id="vis-a">
-            <GetChart titleText={titleText} dataset={dataset} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true} data={data_filtered}/>
+            <GetChart titleText={titleText} dataset={dataset} fontSize={fontSize} compare={true} data={data_filtered}/>
           </div>
           <div id="vis-b">
-            <GetChart titleText={titleText2} dataset={dataset2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true} data={data_filtered2}/>
+            <GetChart titleText={titleText2} dataset={dataset2} fontSize={fontSize} compare={true} data={data_filtered2}/>
           </div>
       </div>
     </>
