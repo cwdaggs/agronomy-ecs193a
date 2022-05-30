@@ -25,7 +25,7 @@ const height = vw*0.5;
 const width = vw;
 const mobileWidth=1000;
 const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
-const fontSize = (width >= mobileWidth) ? 20: 10;
+const fontSize = (width >= mobileWidth) ? 18: 10;
 
 function calculateAllPrimaryGrowingReasons(data, filter) {
 
@@ -168,7 +168,7 @@ function GetChart(props){
                   <VictoryLabel    
                       textAnchor="start"
                       angle={25}
-                      style={{fill: "black", fontSize: (width >= mobileWidth) ? fontSize*1.25: fontSize}}
+                      style={{fontSize: (width >= mobileWidth) ? fontSize*1.25: fontSize}}
                   />   
                 }
             />                        
