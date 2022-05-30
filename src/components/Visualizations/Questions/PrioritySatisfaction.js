@@ -32,7 +32,6 @@ if(width < mobileWidth){
 
 
 function GetChart(props, setSelection){
-
   var toolTipFontSize = fontSize;
 
   if(props.compare){
@@ -44,7 +43,6 @@ function GetChart(props, setSelection){
   var domainPadding = 0.1
 
   var trendData = trendLineSatisfactions(props.data)
-  
   
   if(props.data_filtered.length === 0){
     return (
@@ -334,11 +332,45 @@ function GetChart(props, setSelection){
   )
 }
 
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_filtered) {
+  var titleText = "Priority Vs Satisfaction of Information Availability";
+
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
+  }
+
+  if(activeVocation !== "All"){
+    if (activeVocation === "Other") {
+      titleText += " Other Vocations";
+    } else {
+      titleText += " " + activeVocation;
+    }
+  }
+
+  if (activeRegion !== "All") {
+    if (activeRegion === "NSJV") {
+      titleText += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion === "SSJV") {
+      titleText += " in the South San Joaquin Valley Region";
+    }
+    else {
+      titleText += " in the " + activeRegion + " Region";
+    }
+  }
+
+  titleText += " (n = " + data_filtered.length + ")";
+  return titleText
+}
 
 export const PrioritySatisfaction = (props) => {
-
     const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
     const baseURL = "/results/Priority%20Satisfaction";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -371,43 +403,9 @@ export const PrioritySatisfaction = (props) => {
 
     var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
     var data = averageSatisfaction(data_filtered)
-
-    var titleText = "Priority Vs Satisfaction of Information Availability";
-
-    if (activeCrop !== "All" || activeVocation !== "All") {
-      titleText += " for";
-    }
-
-    if (activeCrop !== "All") {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        titleText += " " + activeCrop;
-      }
-    }
-
-    if(activeVocation !== "All"){
-      if (activeVocation === "Other") {
-        titleText += " Other Vocations";
-      } else {
-        titleText += " " + activeVocation;
-      }
-    }
-
-    if (activeRegion !== "All") {
-      if (activeRegion === "NSJV") {
-        titleText += " in the North San Joaquin Valley Region";
-      }
-      else if (activeRegion === "SSJV") {
-        titleText += " in the South San Joaquin Valley Region";
-      }
-      else {
-        titleText += " in the " + activeRegion + " Region";
-      }
-    }
-
-    titleText += " (n = " + data_filtered.length + ")";
+    var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_filtered)
 
     return (
-
       <>
         <div id='vis-question-label'>
           <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
@@ -421,166 +419,96 @@ export const PrioritySatisfaction = (props) => {
         <div className="inline-child">
           <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
-
         <GetChart data={data} title={titleText} data_filtered={data_filtered} selectedNodes={selectedNodes} setSelection={setSelection}/>
-
     </>
     )};
 
-    export function PrioritySatisfactionCompare(props){
+export function PrioritySatisfactionCompare(props){
+  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+  const baseURL = "/results/compare/Priority%20Satisfaction";
+  const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop)
+  const [selectedNodes, setSelectedNodes] = useState(props.dataset ? BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, filters.crop), filters.region), filters.vocation))): []);
 
-      const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+  const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
+  const [activeRegion2, setActiveRegion2] = useState(filters.region2);
+  const [activeCrop2, setActiveCrop2] = useState(filters.crop2)
+  const [selectedNodes2, setSelectedNodes2] = useState(props.dataset ? BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, filters.crop2), filters.region2), filters.vocation2))): []);
+  
 
-      const baseURL = "/results/compare/Priority%20Satisfaction";
-      const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
-      const [activeVocation, setActiveVocation] = useState(filters.vocation);
-      const [activeRegion, setActiveRegion] = useState(filters.region);
-      const [activeCrop, setActiveCrop] = useState(filters.crop)
-      const [selectedNodes, setSelectedNodes] = useState(props.dataset ? BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, filters.crop), filters.region), filters.vocation))): []);
+  if (!props.dataset) {
+    return <pre>Loading...</pre>;
+  }
 
-      const [activeVocation2, setActiveVocation2] = useState(filters.vocation2);
-      const [activeRegion2, setActiveRegion2] = useState(filters.region2);
-      const [activeCrop2, setActiveCrop2] = useState(filters.crop2)
-      const [selectedNodes2, setSelectedNodes2] = useState(props.dataset ? BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, filters.crop2), filters.region2), filters.vocation2))): []);
-      
-  
-      if (!props.dataset) {
-        return <pre>Loading...</pre>;
-      }
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+    setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), newValue))))
+  }
 
-      function vocationFunction(newValue){
-        setActiveVocation(newValue);
-        setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), newValue))))
-      }
-    
-      function regionFunction(newValue) {
-        setActiveRegion(newValue);
-        setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), newValue), activeVocation))))
-      }
-    
-      function cropFunction(newValue) {
-        setActiveCrop(newValue)
-        setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, newValue), activeRegion), activeVocation))))
-      }
-  
-      function setSelection(newValue){
-        setSelectedNodes(newValue)
-      }
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+    setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), newValue), activeVocation))))
+  }
 
-    function vocationFunction2(newValue){
-      setActiveVocation2(newValue);
-      setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), newValue))))
-    }
-  
-    function regionFunction2(newValue) {
-      setActiveRegion2(newValue);
-      setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), newValue), activeVocation2))))
-    }
-  
-    function cropFunction2(newValue) {
-      setActiveCrop2(newValue)
-      setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, newValue), activeRegion2), activeVocation2))))
-    }
+  function cropFunction(newValue) {
+    setActiveCrop(newValue)
+    setSelectedNodes(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, newValue), activeRegion), activeVocation))))
+  }
 
-    function setSelection2(newValue){
-      setSelectedNodes2(newValue)
-    }
-  
-      var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
-      var data = averageSatisfaction(data_filtered)
-  
-      var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
-      var data2 = averageSatisfaction(data_filtered2)
-      
-      var titleText = "Priority Vs Satisfaction of Information Availability";
+  function setSelection(newValue){
+    setSelectedNodes(newValue)
+  }
 
-      if (activeCrop !== "All" || activeVocation !== "All") {
-        titleText += " for";
-      }
-  
-      if (activeCrop !== "All") {
-        if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-          titleText += " " + activeCrop;
-        }
-      }
-  
-      if(activeVocation !== "All"){
-        if (activeVocation === "Other") {
-          titleText += " Other Vocations";
-        } else {
-          titleText += " " + activeVocation;
-        }
-      }
-  
-      if (activeRegion !== "All") {
-        if (activeRegion === "NSJV") {
-          titleText += " in the North San Joaquin Valley Region";
-        }
-        else if (activeRegion === "SSJV") {
-          titleText += " in the South San Joaquin Valley Region";
-        }
-        else {
-          titleText += " in the " + activeRegion + " Region";
-        }
-      }
-      titleText += " (n = " + data_filtered.length + ")";
+  function vocationFunction2(newValue){
+    setActiveVocation2(newValue);
+    setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), newValue))))
+  }
 
-      var titleText2 = "Priority Vs Satisfaction of Information Availability";
+  function regionFunction2(newValue) {
+    setActiveRegion2(newValue);
+    setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), newValue), activeVocation2))))
+  }
 
-      if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-        titleText2 += " for";
-      }
-  
-      if (activeCrop2 !== "All") {
-        if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-          titleText2 += " " + activeCrop2;
-        }
-      }
-  
-      if(activeVocation2 !== "All"){
-        if (activeVocation2 === "Other") {
-          titleText2 += " Other Vocations";
-        } else {
-          titleText2 += " " + activeVocation2;
-        }
-      }
-  
-      if (activeRegion2 !== "All") {
-        if (activeRegion2 === "NSJV") {
-          titleText2 += " in the North San Joaquin Valley Region";
-        }
-        else if (activeRegion2 === "SSJV") {
-          titleText2 += " in the South San Joaquin Valley Region";
-        }
-        else {
-          titleText2 += " in the " + activeRegion2 + " Region";
-        }
-      }
-  
-      titleText2 += " (n = " + data_filtered2.length + ")";
-  
-      return (
-  
-        <>
-          <div id='vis-question-label'>
-            <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
-          </div>
+  function cropFunction2(newValue) {
+    setActiveCrop2(newValue)
+    setSelectedNodes2(BarData(averageSatisfaction(filterByVocation(filterByRegion(filterByCrop(props.dataset, newValue), activeRegion2), activeVocation2))))
+  }
 
-          <div id='priority-satisfaction-infos-label'>
-          <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
-            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
-            2016</a> based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
-             or above what respondents felt should be UCCE's priorities for field crop production.</p>
-          </div>
+  function setSelection2(newValue){
+    setSelectedNodes2(newValue)
+  }
 
-          <div className='dual-display'>
-            <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-            <div id="vis-a">
-              <GetChart data={data} title={titleText} data_filtered={data_filtered} selectedNodes={selectedNodes} setSelection={setSelection}/>
-            </div>
-            <div id="vis-b">
-              <GetChart data={data2} title={titleText2} compare={true} data_filtered={data_filtered2} selectedNodes={selectedNodes2} setSelection={setSelection2}/>
-            </div>
-          </div>   
-      </>
-      )};
+  var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
+  var data = averageSatisfaction(data_filtered)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_filtered)
+
+  var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
+  var data2 = averageSatisfaction(data_filtered2)
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_filtered2)
+
+  return (
+    <>
+      <div id='vis-question-label'>
+        <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
+      </div>
+
+      <div id='priority-satisfaction-infos-label'>
+      <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
+        extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
+        2016</a> based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
+          or above what respondents felt should be UCCE's priorities for field crop production.</p>
+      </div>
+
+      <div className='dual-display'>
+        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <div id="vis-a">
+          <GetChart data={data} title={titleText} data_filtered={data_filtered} selectedNodes={selectedNodes} setSelection={setSelection}/>
+        </div>
+        <div id="vis-b">
+          <GetChart data={data2} title={titleText2} compare={true} data_filtered={data_filtered2} selectedNodes={selectedNodes2} setSelection={setSelection2}/>
+        </div>
+      </div>   
+    </>
+  )};
