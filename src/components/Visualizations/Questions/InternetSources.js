@@ -6,6 +6,14 @@ import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
 const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
+
+const mobileFontSize = 6
+const mobileWidth = 1000;
+const laptopWidth = 1500;
 
 function getInternetSources(data, sorted){
   var sources = [
@@ -27,29 +35,30 @@ function getInternetSources(data, sorted){
     "\"California Agriculture\" Journal"
   ];
 
-var colors = 
-["#002360",
-"#003069",
-"#003F72",
-"#004F7B",
-"#006083",
-"#00728C",
-"#008694",
-"#009B9C",
-"#00A498",
-"#01AC90",
-"#02B488",
-"#15BC80",
-"#29C37A",
-"#3DCA77",
-"#52D176",
-"#66D779",
-"#7ADE7F",
-"#8FE48F",
-"#A9E9A3",
-"#C3EFB8",
-"#D8F4CC"
-]
+  var colors = 
+  [
+    "#002360",
+    "#003069",
+    "#003F72",
+    "#004F7B",
+    "#006083",
+    "#00728C",
+    "#008694",
+    "#009B9C",
+    "#00A498",
+    "#01AC90",
+    "#02B488",
+    "#15BC80",
+    "#29C37A",
+    "#3DCA77",
+    "#52D176",
+    "#66D779",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
 
   var totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   var modified_data = [];
@@ -85,7 +94,6 @@ var colors =
 }
 
 function GetChart(props){
-
   if(props.filtered_data.length === 0){
     return (
       <div className='dual-display-child'>
@@ -95,11 +103,10 @@ function GetChart(props){
   }
 
   return(
-      <div class='visualization-window'>
-          
-          <VictoryChart height={props.height} width={props.width}
-            domainPadding={{ x: (props.width>=props.mobileWidth) ? props.margin.right/10 : 0, y:props.margin.top/10 }}
-            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}   
+      <div class='visualization-window'>          
+          <VictoryChart height={height} width={width}
+            domainPadding={{ x: (width>=mobileWidth) ? margin.right/10 : 0, y:margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}   
             animate={{duration: 800}}
             containerComponent={
               <VictoryZoomContainer
@@ -159,10 +166,9 @@ function GetUnsortedChart(props){
   }
   return(
       <div class='visualization-window'>
-          
-          <VictoryChart height={props.height} width={props.width}
-            domainPadding={{ x: (props.width>=props.mobileWidth) ? props.margin.right/10 : 0, y:props.margin.top/10 }}
-            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}   
+          <VictoryChart height={height} width={width}
+            domainPadding={{ x: (width>=mobileWidth) ? margin.right/10 : 0, y:margin.top/10 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}   
             animate={{duration: 800}}
             containerComponent={
               <VictoryZoomContainer
@@ -242,6 +248,17 @@ function DetermineLabelText(activeVocation, activeCrop, activeRegion) {
   return labelText
 }
 
+function DetermineFontSize() {
+  var fontSize = 15
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+  return fontSize
+}
+
 export function InternetSourcesBarChart(props) {
   const baseURL = "/results/Internet%20Sources";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
@@ -261,43 +278,28 @@ export function InternetSourcesBarChart(props) {
     setActiveCrop(newValue);
   }  
     
-    if (!props.dataset) {
-        return <pre>Loading...</pre>;
-    }
+  if (!props.dataset) {
+      return <pre>Loading...</pre>;
+  }
 
-    var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion);
+  var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion);
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+  var filtered_data = filterByVocation(data, activeVocation);
+  var graph_data = getInternetSources(filtered_data, true);
 
-    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    var filtered_data = filterByVocation(data, activeVocation);
-    var graph_data = getInternetSources(filtered_data, true);
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-    
-    var fontSize = 15
-    var mobileFontSize = 6
-    const mobileWidth = 1000;
-    const laptopWidth = 1500;
-    if(width < laptopWidth){
-      fontSize = mobileFontSize*2
-    }
-    if(width < mobileWidth){
-      fontSize = mobileFontSize;
-    }
+  var fontSize = DetermineFontSize()
 
-    return (
-      <>
-        <div id='vis-question-label'>
-          <h2>Where do you most often look for field crop production information on the internet?</h2>
-        </div>
-        <div className="inline-child">
-        <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-        </div>
-        <GetChart labelText={labelText} graph_data={graph_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
-      </>
-      );
+  return (
+    <>
+      <div id='vis-question-label'>
+        <h2>Where do you most often look for field crop production information on the internet?</h2>
+      </div>
+      <div className="inline-child">
+      <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+      </div>
+      <GetChart labelText={labelText} graph_data={graph_data} fontSize={fontSize} filtered_data={filtered_data}/>
+    </>
+    );
 }
 
 export function InternetSourcesBarChartCompare(props) {
@@ -334,52 +336,38 @@ export function InternetSourcesBarChartCompare(props) {
   function cropFunction2(newValue) {
     setActiveCrop2(newValue);
   }  
-    if (!props.dataset) {
-        return <pre>Loading...</pre>;
-    }
 
-    var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion);
-    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    var filtered_data = filterByVocation(data, activeVocation);
-    var graph_data = getInternetSources(filtered_data, false);
-    
-    var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
-    var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
-    var filtered_data2 = filterByVocation(data2, activeVocation2);
-    var graph_data2 = getInternetSources(filtered_data2, false);
+  if (!props.dataset) {
+      return <pre>Loading...</pre>;
+  }
 
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-    
-    var fontSize = 15
-    var mobileFontSize = 6
-    const mobileWidth = 1000;
-    const laptopWidth = 1500;
-    if(width < laptopWidth){
-      fontSize = mobileFontSize*2
-    }
-    if(width < mobileWidth){
-      fontSize = mobileFontSize;
-    }
+  var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion);
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+  var filtered_data = filterByVocation(data, activeVocation);
+  var graph_data = getInternetSources(filtered_data, false);
+  
+  var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
+  var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
+  var filtered_data2 = filterByVocation(data2, activeVocation2);
+  var graph_data2 = getInternetSources(filtered_data2, false);
+  
+  var fontSize = DetermineFontSize()
 
-    return (
-      <>
-        <div id='vis-question-label'>
-          <h2>Where do you most often look for field crop production information on the internet?</h2>
-        </div>
+  return (
+    <>
+    <div id='vis-question-label'>
+      <h2>Where do you most often look for field crop production information on the internet?</h2>
+    </div>
 
-        <div className='dual-display'>
-          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-          <div id="vis-a">
-            <GetUnsortedChart labelText={labelText} graph_data={graph_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
-          </div>
-          <div id="vis-b">
-            <GetUnsortedChart labelText={labelText2} graph_data={graph_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
-          </div>
-        </div>   
-      </>
-      );
+    <div className='dual-display'>
+      <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+      <div id="vis-a">
+        <GetUnsortedChart labelText={labelText} graph_data={graph_data} fontSize={fontSize} filtered_data={filtered_data}/>
+      </div>
+      <div id="vis-b">
+        <GetUnsortedChart labelText={labelText2} graph_data={graph_data2} fontSize={fontSize} filtered_data={filtered_data2}/>
+      </div>
+    </div>   
+  </>
+  );
 }
