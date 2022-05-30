@@ -4,7 +4,6 @@ import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import { useLocation } from 'react-router-dom';
 
-const regionTypes = ["Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
 const vocationArray = ["Growers", "Consultants"];
 const colorScale = 
 [
@@ -29,50 +28,6 @@ const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8
 const fontSize = (width >= mobileWidth) ? 20: 10;
 
 function GetChart(props){
-  // return(
-      // <div class='parent flex-parent'>
-      //     <div class='child flex-child'>
-      //       <VictoryLegend
-      //           x={150}
-      //           y={0}
-      //           colorScale={props.colorScale}
-      //           gutter={20}
-      //           style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: props.fontSize}, 
-      //                   title:  {fontFamily: 'Roboto', fontSize: props.fontSize},
-      //                   data:   {stroke: "black", strokeWidth: 1}}}
-      //           title={String(props.titleText + " (n=" + props.n + ")")}
-      //           data={props.legend_data}
-      //       />
-      //     </div>
-      //     <div class='child flex-child'>   
-      //     <VictoryPie
-      //         animate={{
-      //             duration: 500,               
-      //         }}
-      //         width={props.width}
-      //         height={props.height/2}
-      //         padding={{
-      //           left: props.margin.left,
-      //             right: props.margin.right,
-      //             bottom: props.margin.bottom,
-      //             top: props.margin.top
-      //         }}
-      //         startAngle={0}
-      //         style={{ data: { stroke: "black", strokeWidth: 1}}}
-      //         colorScale={props.colorScale}
-      //         data={props.data_by_reason}
-      //         labels={({ datum }) => `${datum.x}: ${datum.y}`}
-      //         labelComponent={<VictoryTooltip 
-      //             style={{
-      //               fontSize:45,
-      //               fontFamily: 'Roboto'
-      //             }}
-      //             constrainToVisibleArea={'true'} 
-      //         />}
-      //     />
-      //     </div>
-      // </div>    
-  // )
   if(props.data_filtered.length === 0){
     return (
       <>
@@ -104,7 +59,7 @@ function GetChart(props){
           }
           />
           <VictoryAxis dependentAxis
-          label = {String(props.titleText + " (n=" + props.n + ")")}
+          label = {String(props.titleText + " (n=" + props.data_filtered.length + ")")}
           style={{
             fontFamily: 'Roboto',
             tickLabels: {fontSize: fontSize, padding: 15, fontFamily: 'Roboto'},
@@ -132,8 +87,7 @@ function GetChart(props){
 }
 
 function calculateAllPriorityConcerns(data, job, crop)  {
-
-  if(job === "Growers"){
+  if (job === "Growers"){
     job = "_Growing_";
   } else {
       job = "_Consulting_";
@@ -188,6 +142,9 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion) {
 function AdjustColors(data_by_reason) {
   var counter = colorScale.length - 1;
   for (var obj of data_by_reason) {
+    if (obj.x === "Other:") {
+      obj.x = "Other"
+    }
     obj.fill = colorScale[counter];
     counter--;
   }
@@ -219,24 +176,7 @@ export function PriorityConcerns(props) {
 
     var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion);
     var data_filtered = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation);
-    console.log(data_filtered)
-    var filter = regionTypes.includes(activeRegion) ? "All" : activeRegion
-    // var filter = activeRegion
-
-    // if (regionTypes.includes(activeRegion)){
-    //   filter = "All";
-    // }
-    var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, filter, activeVocation))
-    console.log(data_by_reason)
-    var legend_data = []
-    var n = 0
-
-    for (var i = 0; i < data_by_reason.length; i++) {
-        legend_data.push({name: data_by_reason[i].x})
-        n += data_by_reason[i].y
-    }
-
-    n = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation).length;
+    var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, activeVocation, activeCrop))
 
     return (
       <>
@@ -247,7 +187,7 @@ export function PriorityConcerns(props) {
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <div>
-        <GetChart titleText={titleText} data_by_reason={data_by_reason} legend_data={legend_data} n={n} data_filtered={data_filtered}/>
+        <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
       </div>
       </>
     );
@@ -293,44 +233,11 @@ export function PriorityConcernsCompare(props) {
 
   var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion);
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
-  var filter = regionTypes.includes(activeRegion) ? "All" : activeRegion
-
-  // var filter = activeRegion
-
-  // if (regionTypes.includes(activeRegion)){
-  //   filter = "All";
-  // }
-  var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, filter, activeVocation))
-
-  var legend_data = []
-  var n = 0
+  var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, activeVocation, activeCrop))
 
   var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2);
   var data_filtered2 = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2), activeVocation2);
-  var filter2 = regionTypes.includes(activeRegion2) ? "All" : activeRegion2
-
-  // var filter2 = activeRegion2
-
-  // if (regionTypes.includes(activeRegion2)){
-  //   filter2 = "All";
-  // }
-  var data_by_reason2 = AdjustColors(calculateAllPriorityConcerns(data_filtered2, filter2, activeVocation2))
-
-  var legend_data2 = []
-  var n2 = 0
-
-  for (var i = 0; i < data_by_reason.length; i++) {
-      legend_data.push({name: data_by_reason[i].x})
-      n += data_by_reason[i].y
-  }  
-  for (i = 0; i < data_by_reason2.length; i++) {
-    legend_data2.push({name: data_by_reason2[i].x})
-    n2 += data_by_reason2[i].y
-  }  
-  
-
-  n = data_filtered.length;
-  n2 = data_filtered2.length;
+  var data_by_reason2 = AdjustColors(calculateAllPriorityConcerns(data_filtered2, activeVocation2, activeCrop2))
 
   return (
     <>
@@ -341,10 +248,10 @@ export function PriorityConcernsCompare(props) {
     <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetChart titleText={titleText} data_by_reason={data_by_reason} n={n} data_filtered={data_filtered}/>
+          <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
         </div>
         <div id="vis-b">
-          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} n={n2} data_filtered={data_filtered2}/>
+          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} data_filtered={data_filtered2}/>
         </div>
     </div>
     </>
