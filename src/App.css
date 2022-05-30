@@ -68,7 +68,7 @@
 }
 
 #about-visualization-window {
-  font-family: 'Metropolis';
+  font-family: 'Roboto', sans-serif;
   font-size: 24px;
   height: 100%;
   width: 100%;
@@ -144,7 +144,7 @@ a.hover-link:hover::before {
   }
 
   .visualization-window {
-    font-family: 'Metropolis';
+    font-family: 'Roboto', sans-serif;
     font-size: 24px;
     height: 60%;
     width: 70%;
