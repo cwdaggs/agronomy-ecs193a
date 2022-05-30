@@ -26,7 +26,7 @@ export const InfoSummary = (props) => {
                     Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who 
                     solve problems in agriculture, the environment, and human and community well-being. They work to foster a 
                     connection between the university and the public by delivering science-based information. In 
-                    California, <a href='https://ucanr.edu/' className="hover-link" target="_blank">UC Cooperative Extension</a>, 
+                    California, <a rel="noreferrer" href='https://ucanr.edu/' className="hover-link" target="_blank">UC Cooperative Extension</a>, 
                     which is administered by the UC Agriculture and Natural Resources Division (UC ANR), is currently undertaking 
                     an historic increase in personnel. In July of 2022, the Governor signed a budget which increased the UC ANR 
                     budget to the pre-COVID levels of FY 2019-20 in addition to a 5% increase as well as an additional ongoing 
@@ -69,7 +69,7 @@ export const InfoSummary = (props) => {
                   </C.Desc>
                   <C.Desc className='font-roboto'>
                     A peer-reviewed research paper summarizing the survey results has been published. See the 
-                    open-access <a href='https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/agj2.20897' className="hover-link" target="_blank">full 
+                    open-access <a rel="noreferrer" href='https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/agj2.20897' className="hover-link" target="_blank">full 
                     article</a> in Agronomy Journal for further details on the 
                     methodology, interpretation of results, and conclusions for California agriculture.
                   </C.Desc>

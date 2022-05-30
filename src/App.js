@@ -4,12 +4,10 @@ import {Tab, Button} from './Button.js';
 import {InfoSummary} from './components/Pages/InfoSummary';
 import {Team} from './components/Pages/Team';
 import Login from './components/Pages/Login.js';
-// import {CommentBox} from './components/Pages/Comments'
 import {Visualizations} from './components/Pages/Visualization';
 import {Home} from './components/Pages/Home';
 import {NavLink, Outlet,Routes, Route } from "react-router-dom";
-import {useData} from './components/Visualizations/UseData';
-// import { MiniSurvey } from './components/Pages/Survey'; 
+import {useData} from './components/Visualizations/UseData'; 
 import { AcresManagedBarChart, AcresManagedBarChartCompare } from './components/Visualizations/Questions/AcresManaged';
 import { CropPercentages } from './components/Visualizations/Questions/CropPercentages';
 import { ConcernsVictory, ConcernsVictoryCompare } from './components/Visualizations/Questions/Concerns_victory';
@@ -54,9 +52,6 @@ export default function App() {
         <NavLink to ="/team" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Team")}
         </NavLink>
-        {/* <NavLink to ="/survey" className={"hover-link"}>
-          {({ isActive }) => getActiveTab(isActive, "Survey")}
-        </NavLink> */}
         {/*<NavLink to ="/feedback" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
         </NavLink>*/}
@@ -170,7 +165,6 @@ export default function App() {
 
         <Route path="about" element={<InfoSummary dataset={dataset}/>}/>
         <Route path="team" element={<Team/>}/>
-        {/* <Route path="survey" element={<MiniSurvey/>}/> */}
         <Route path="feedback" element={<Login/>}/>
         <Route path = "*" element={<Home/>}/>
       </Routes>
