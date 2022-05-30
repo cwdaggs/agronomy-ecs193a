@@ -18,7 +18,16 @@ const colorScale =
     "#C3EFB8",
     "#D8F4CC"
   ]
-const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
+
+const mobileWidth = 1000;
+const laptopWidth = 1500;
+const mobileFontSize = 6;
+
+const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
 export function calculateEngageEach(data, filter, answer){
     var total = 0
@@ -97,11 +106,8 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
-  var fontSize=props.fontSize
-
   if(props.data.length === 0){
     return (
-
       <div className='dual-display-child'>
         <div id="vis-legend">
           <div id="legend-title">
@@ -150,16 +156,16 @@ function GetChart(props){
           animate={{
               duration: 1000,               
           }}
-          height={props.height} 
-          width={props.width}
-          domainPadding={{ x: props.margin.right/5, y: props.margin.top/10 }}
-          padding={{ top: (props.width>=props.mobileWidth)?props.margin.top:props.margin.top*2, bottom: props.margin.bottom, left: props.margin.left/1.5, right: (props.width>=props.mobileWidth)?props.margin.right:props.margin.right/2 }}   
+          height={height} 
+          width={width}
+          domainPadding={{ x: margin.right/5, y: margin.top/10 }}
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryStack
             style={{
                 data: { stroke: "black", strokeWidth: 0.2, fontFamily: 'Roboto'}
             }}
-            colorScale={props.colorScale}
+            colorScale={colorScale}
           >
             {props.dataset_final.map((data, i) => {
               return <VictoryBar 
@@ -193,8 +199,8 @@ function GetChart(props){
             tickLabelComponent={       
               <VictoryLabel    
                 textAnchor="start"
-                style={{fill: "white", fontSize: fontSize}}
-                dx={fontSize}
+                style={{fill: "white", fontSize: props.fontSize}}
+                dx={props.fontSize}
                 events={{onClick: (evt) => console.log(evt)}}
               />   
             }
@@ -237,10 +243,18 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorte
   return titleText
 }
 
-export function EngageVictory(props) {
-  
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+function DetermineFontSize() {
+  var fontSize = 20
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+  return fontSize
+}
 
+export function EngageVictory(props) {
   const baseURL = "/results/UCCE%20Engagement";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
 
@@ -271,22 +285,7 @@ export function EngageVictory(props) {
   const dataset_final = transformData(data_sorted)
 
   var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted);
-  
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
-
-  var fontSize = 20
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
+  var fontSize = DetermineFontSize()
 
   return (
     <>
@@ -296,15 +295,12 @@ export function EngageVictory(props) {
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-      <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText} data={data_filtered}/>
+      <GetChart dataset_final={dataset_final} fontSize={fontSize} titleText={titleText} data={data_filtered}/>
     </>
   );
 }
 
 export function EngageVictoryCompare(props) {
-  
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
   const baseURL = "/results/compare/UCCE%20Engagement";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -342,6 +338,7 @@ export function EngageVictoryCompare(props) {
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
+
   // Data previously sorted after by_engage
   var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var data_filtered = filterByVocation(data, activeVocation)
@@ -355,21 +352,7 @@ export function EngageVictoryCompare(props) {
   const dataset_final2 = transformData(data_by_engage2)
   var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_engage2);
 
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };
-
-  var fontSize = 25
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2.5
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
+  var fontSize = DetermineFontSize()
   
   return (
     <>
@@ -380,10 +363,10 @@ export function EngageVictoryCompare(props) {
       <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText} data={data_filtered}/>
+          <GetChart dataset_final={dataset_final} fontSize={fontSize} titleText={titleText} data={data_filtered}/>
         </div>
         <div id="vis-b">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2} data={data_filtered2}/>
+          <GetChart dataset_final={dataset_final2} fontSize={fontSize} titleText={titleText2} data={data_filtered2}/>
         </div>
       </div>   
     </>
