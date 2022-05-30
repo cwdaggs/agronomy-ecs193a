@@ -75,7 +75,7 @@ export default function App() {
           <div className='vis-page'>
             <div id="visTop">
             Select a topic to view responses for the respective question. Results can be sorted by vocation, regions that growers/consultants operate in, and top crops managed (in that region or others). 
-            Hovering over a data element will provide more detailed information. Be cautious interpreting results with small sample sizes (e.g. n = 10 or less)
+            Hovering over a data element will provide more detailed information. Be cautious interpreting results with small sample sizes (e.g. n = 10 or less).
             </div>
             <div id="compare-box">
               <NavLink to="/results/compare">
