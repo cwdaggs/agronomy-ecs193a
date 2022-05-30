@@ -45,7 +45,7 @@ function GetChart(props){
           >
           <VictoryBar
             data={props.data_by_reason}
-            alignment="start"
+            alignment="middle"
             style={{ data:  { fill: ({datum}) => datum.fill, strokeWidth: 1, stroke: 'black'}}}
             labels={({ datum }) => `${datum.y + " Respondents"}`}
             labelComponent={
@@ -63,7 +63,7 @@ function GetChart(props){
           style={{
             fontFamily: 'Roboto',
             tickLabels: {fontSize: fontSize*1.5, padding: 15, fontFamily: 'Roboto'},
-            axisLabel: {fontSize: fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 80: 50}
+            axisLabel: {fontSize: fontSize*1.3, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 80: 50}
           }}
           
           />
@@ -126,7 +126,7 @@ function calculateAllPriorityConcerns(data, job, crop)  {
 }
 
 function DetermineTitleText(activeVocation, activeCrop, activeRegion) {
-  var titleText = "For ";
+  var titleText = "";
     if (activeRegion !== "All") {
       titleText += activeRegion + " ";
     }

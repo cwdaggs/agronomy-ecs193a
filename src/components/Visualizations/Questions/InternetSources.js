@@ -141,7 +141,7 @@ function GetChart(props){
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize*1.6, padding: 1, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.5, padding: 1, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'}
               }}
             tickLabelComponent={       
@@ -182,7 +182,7 @@ function GetUnsortedChart(props){
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:props.fontSize, fontFamily: 'Roboto'
+                    fontSize:props.fontSize*1.5, fontFamily: 'Roboto'
                   }}
                   constrainToVisibleArea={'true'} 
                 />
@@ -193,7 +193,7 @@ function GetUnsortedChart(props){
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*2, padding: 5, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 50, fontFamily: 'Roboto'}
               }}
             />
@@ -202,7 +202,7 @@ function GetUnsortedChart(props){
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.5, padding: 1, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'}
               }}
             tickLabelComponent={       

@@ -3,7 +3,6 @@ import {VictoryTooltip, VictoryChart, VictoryAxis, VictoryBar, VictoryLabel} fro
 import {OnlyCrops, OnlyCropsCompare} from "../Menus/OnlyCrops.js"
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { map } from "d3";
 
 const colorScale = 
 [
@@ -125,15 +124,7 @@ function parseURL(baseURL, path) {
 function DetermineTitleText(activeCrop, activeRegion) {
   var titleText = "";
   if (activeRegion !== "All") {
-    if (activeRegion === "NSJV") {
-      titleText += " North San Joaquin Valley";
-    }
-    else if (activeRegion === "SSJV") {
-      titleText += " South San Joaquin Valley";
-    }
-    else {
-      titleText += " " + activeRegion;
-    }
+    titleText += " " + activeRegion;
   }
   if (activeCrop === "All") {
     if (activeRegion === "All") {
@@ -164,7 +155,7 @@ function GetChart(props){
             >
             <VictoryBar
               data={props.data_by_reason}
-              alignment="start"
+              alignment="middle"
               style={{ data:  { fill: ({datum}) => datum.fill, strokeWidth: 1, stroke: 'black'}}}
               labels={({ datum }) => `${datum.y + " Respondents"}`}
               labelComponent={
