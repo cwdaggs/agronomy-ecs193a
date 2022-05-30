@@ -43,4 +43,16 @@
     .visLandingPage {
         height: 100vh;
     }
+
+    #visLandingHeading{
+        font-size: 5vh;
+    }
+      
+    #visLandingBody{
+        font-size: 2vh;
+    }
+      
+    #visLandingBodyExtended{
+        font-size: 1.5vh;
+    }
 }
