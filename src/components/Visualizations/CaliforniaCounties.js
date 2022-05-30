@@ -38,8 +38,8 @@ export const MapChart = (props) => {
                 x={150}
                 y={0}
                 gutter={25}
-                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
-                      title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+                style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize+3}, 
+                      title:  {fontFamily: 'Roboto', fontSize: fontSize+3},
                       data:   {stroke: "black", strokeWidth: 1}}}
                 title="Responses by Vocation"
                 centerTitle
@@ -72,7 +72,7 @@ export const MapChart = (props) => {
                     <VictoryTooltip 
                     style={{
                         fontSize:10,
-                        fontFamily: 'ABeeZee'
+                        fontFamily: 'Roboto'
                     }}
                     flyoutHeight={20}
                     flyoutWidth={100}  
@@ -91,8 +91,8 @@ export const MapChart = (props) => {
             y={0}
 
             gutter={25}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+            style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize+3}, 
+                  title:  {fontFamily: 'Roboto', fontSize: fontSize+3},
                   data:   {stroke: "black", strokeWidth: 1}}}
             title="Responses by County"
             centerTitle

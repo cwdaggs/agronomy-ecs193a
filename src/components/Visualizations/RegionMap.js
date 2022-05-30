@@ -45,8 +45,8 @@ export const RegionMapChart = (props) => {
               x={150}
               y={0}
               gutter={25}
-              style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+2}, 
-                    title:  {fontFamily: 'ABeeZee', fontSize: fontSize+2},
+              style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize+2}, 
+                    title:  {fontFamily: 'Roboto', fontSize: fontSize+2},
                     data:   {stroke: "black", strokeWidth: 1}}}
               title="Responses by Region"
               centerTitle
@@ -81,7 +81,7 @@ export const RegionMapChart = (props) => {
                   <VictoryTooltip 
                   style={{
                       fontSize:10,
-                      fontFamily: 'ABeeZee'
+                      fontFamily: 'Roboto'
                   }}
                   flyoutHeight={20}
                   flyoutWidth={100}    
@@ -96,8 +96,8 @@ export const RegionMapChart = (props) => {
             colorScale={regionColorScale}
             x={150}
             gutter={25}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+            style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize+3}, 
+                  title:  {fontFamily: 'Roboto', fontSize: fontSize+3},
                   data:   {stroke: "black", strokeWidth: 1}}}
             title="Regions"
             centerTitle
