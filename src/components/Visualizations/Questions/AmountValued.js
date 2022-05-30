@@ -29,7 +29,6 @@ const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth
 const height = vw*0.5;
 const width = vw;
 const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
-const mobileFontSize = 6
 const mobileWidth = 1000;
 const laptopWidth = 1500;
 
@@ -233,6 +232,7 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorte
 
 function DetermineFontSize() {
   var fontSize = 20
+  const mobileFontSize = 6
   if(width < laptopWidth){
     fontSize = mobileFontSize*2
   }

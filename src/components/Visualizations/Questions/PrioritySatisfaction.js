@@ -19,7 +19,6 @@ function BarData(dataset, topic){
 
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-// const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 const height = vw*0.5;
 const width = vw;
 const margin = { top: height/8, right: width/8, bottom: height/6, left: width/4 };
