@@ -159,10 +159,10 @@ function GetChart(props, setSelection){
                   }}
                 size={(width>=mobileWidth) ? fontSize/2 : fontSize/5}
                 data= {[
-                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.max(domain[1], range[1]), z: "I: Concentrate Here" },
-                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.max(domain[1], range[1]), z: "II: Keep Up The Good Work" },
-                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.min(domain[0], range[0]), z: "III: Lower Priority" },
-                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.min(domain[0], range[0]), z: "IV: Possible Overkill" }
+                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.max(domain[1], range[1]), z: "I: Target motivational areas" },
+                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.max(domain[1], range[1]), z: "II: Maintain focus on these issues" },
+                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.min(domain[0], range[0]), z: "III: Low interest to target audience" },
+                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.min(domain[0], range[0]), z: "IV: Take focus off of these issues" }
                 ]}
                 labels={({datum}) => datum.z}
                 labelComponent={
