@@ -5,6 +5,8 @@ import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAn
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 
+const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+
 function getInternetSources(data, sorted){
   var sources = [
     "Internet (websites)",
@@ -209,9 +211,38 @@ function GetUnsortedChart(props){
   )
 }
 
-export function InternetSourcesBarChart(props) {
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+function DetermineLabelText(activeVocation, activeCrop, activeRegion) {
+  var labelText = "Internet Sources"
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    labelText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      labelText += " " + activeCrop;
+    }
+  }
+  if (activeVocation !== "All") {
+    if (activeVocation === "Other") {
+      labelText += " Other Vocations";
+    } else {
+      labelText += " " + activeVocation;
+    }
+  }
+  if (activeRegion !== "All") {
+    if (activeRegion === "NSJV") {
+      labelText += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion === "SSJV") {
+      labelText += " in the South San Joaquin Valley Region";
+    }
+    else {
+      labelText += " in the " + activeRegion + " Region";
+    }
+  }
+  return labelText
+}
 
+export function InternetSourcesBarChart(props) {
   const baseURL = "/results/Internet%20Sources";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -234,33 +265,7 @@ export function InternetSourcesBarChart(props) {
         return <pre>Loading...</pre>;
     }
 
-    var labelText = "Internet Sources"
-    if (activeCrop !== "All" || activeVocation !== "All") {
-      labelText += " for";
-    }
-    if (activeCrop !== "All") {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        labelText += " " + activeCrop;
-      }
-    }
-    if (activeVocation !== "All") {
-      if (activeVocation === "Other") {
-        labelText += " Other Vocations";
-      } else {
-        labelText += " " + activeVocation;
-      }
-    }
-    if (activeRegion !== "All") {
-      if (activeRegion === "NSJV") {
-        labelText += " in the North San Joaquin Valley Region";
-      }
-      else if (activeRegion === "SSJV") {
-        labelText += " in the South San Joaquin Valley Region";
-      }
-      else {
-        labelText += " in the " + activeRegion + " Region";
-      }
-    }
+    var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion);
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
     var filtered_data = filterByVocation(data, activeVocation);
@@ -296,8 +301,6 @@ export function InternetSourcesBarChart(props) {
 }
 
 export function InternetSourcesBarChartCompare(props) {
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
   const baseURL = "/results/compare/Internet%20Sources";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
 
@@ -335,66 +338,12 @@ export function InternetSourcesBarChartCompare(props) {
         return <pre>Loading...</pre>;
     }
 
-    var labelText = "Internet Sources";
-    if (activeCrop !== "All" || activeVocation !== "All") {
-      labelText += " for";
-    }
-    if (activeCrop !== "All") {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        labelText += " " + activeCrop;
-      }
-    }
-    if (activeVocation !== "All") {
-      if (activeVocation === "Other") {
-        labelText += " Other Vocations";
-      } else {
-        labelText += " " + activeVocation;
-      }
-    }
-    if (activeRegion !== "All") {
-      if (activeRegion === "NSJV") {
-        labelText += " in the North San Joaquin Valley Region";
-      }
-      else if (activeRegion === "SSJV") {
-        labelText += " in the South San Joaquin Valley Region";
-      }
-      else {
-        labelText += " in the " + activeRegion + " Region";
-      }
-    }
-
+    var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion);
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
     var filtered_data = filterByVocation(data, activeVocation);
     var graph_data = getInternetSources(filtered_data, false);
     
-    var labelText2 = "Internet Sources"
-    if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-      labelText2 += " for";
-    }
-    if (activeCrop2 !== "All") {
-      if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-        labelText2 += " " + activeCrop2;
-      }
-    }
-    if (activeVocation2 !== "All") {
-      if (activeVocation2 === "Other") {
-        labelText2 += " Other Vocations";
-      } else {
-        labelText2 += " " + activeVocation2;
-      }
-    }
-    if (activeRegion2 !== "All") {
-      if (activeRegion2 === "NSJV") {
-        labelText2 += " in the North San Joaquin Valley Region";
-      }
-      else if (activeRegion2 === "SSJV") {
-        labelText2 += " in the South San Joaquin Valley Region";
-      }
-      else {
-        labelText2 += " in the " + activeRegion2 + " Region";
-      }
-    }
-
+    var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
     var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
     var filtered_data2 = filterByVocation(data2, activeVocation2);
     var graph_data2 = getInternetSources(filtered_data2, false);
