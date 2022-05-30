@@ -3,6 +3,7 @@ import {VictoryTooltip, VictoryChart, VictoryAxis, VictoryBar, VictoryLabel} fro
 import {OnlyCrops, OnlyCropsCompare} from "../Menus/OnlyCrops.js"
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { map } from "d3";
 
 const colorScale = 
 [

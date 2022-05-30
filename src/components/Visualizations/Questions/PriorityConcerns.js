@@ -131,58 +131,45 @@ function GetChart(props){
   )
 }
 
-function calculateAllPriorityConcerns(data, filter, job) {
-    if(job === "Growers"){
-        job = "_Growing_";
-    } else {
-        job = "_Consulting_";
-    }
-    var columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
-                 "Barley" + job + "Concerns",	"Oats" + job + "Concerns",	"Corn" + job + "Concerns",	"Sorghum" + job + "Concerns",	"Corn_Silage" + job + "Concerns", "Small_Grain_Silage" + job + "Concerns",
-                 "Small_Grain_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Pasture" + job + "Concerns",	"Sorghum_Sudangrass_Sudan" + job + "Concerns",	
-                 "Mixed_Hay" + job + "Concerns", "Dry_Beans" + job + "Concerns",	"Sunflower" + job + "Concerns",	"Oilseeds" + job + "Concerns", "Sugar_Beets" + job + "Concerns", "Hemp" + job + "Concerns", "Other" + job + "Concerns"]
- 
-   const myMap = new Map()
-   if (filter === "All" || filter === "") {
-     var new_modified_data = []
-     for (var col in columns) {
-       var modified_data = calculatePriorityConcerns(data, columns[col])
-       for (var item in modified_data) {
-         let key_data = modified_data[item].x
-         let value_data = modified_data[item].y
-         if (key_data !== "NA") {
-           myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
-         }
-       }
-     }
-     for (const [key, value] of myMap) {
-       new_modified_data.push({x: key, y: value});
-     }
-     return new_modified_data
-   } else {
-     var new_filter = filter.split(' ').join('_') + job + "Concerns"
-     return calculatePriorityConcerns(data, new_filter)
-   }
- }
- 
-function calculatePriorityConcerns(data, filter) { 
-   var modified_data = []
-   const myMap = new Map()
-   for (var farmer in data) {
-     const reasons = String(data[farmer][filter]).split(',')
-     for (var reason in reasons) {
-       var key = reasons[reason]
-       if (key !== "NA" && key !== "undefined") {
-         myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
-       }
-     }
-   }
- 
-   for (const [key, value] of new Map([...myMap].sort())) {
-     key === "Other:" ? modified_data.push({x: "Other", y: value}) : modified_data.push({x: key, y: value})
-   }
-   return modified_data
- }
+function calculateAllPriorityConcerns(data, job, crop)  {
+
+  if(job === "Growers"){
+    job = "_Growing_";
+  } else {
+      job = "_Consulting_";
+  }
+
+  var columns = [crop.split(' ').join('_') + job + "Concerns"]
+
+  if(crop === "All"){
+    columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
+              "Barley" + job + "Concerns",	"Oats" + job + "Concerns",	"Corn" + job + "Concerns",	"Sorghum" + job + "Concerns",	"Corn_Silage" + job + "Concerns", "Small_Grain_Silage" + job + "Concerns",
+              "Small_Grain_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Pasture" + job + "Concerns",	"Sorghum_Sudangrass_Sudan" + job + "Concerns",	
+              "Mixed_Hay" + job + "Concerns", "Dry_Beans" + job + "Concerns",	"Sunflower" + job + "Concerns",	"Oilseeds" + job + "Concerns", "Sugar_Beets" + job + "Concerns", "Hemp" + job + "Concerns", "Other" + job + "Concerns"]
+  } 
+
+  let modified_data = [];
+  const myMap = new Map()
+
+  data.forEach(farmer => {
+    const reasons = new Set(); 
+    columns.forEach(crop =>{
+      farmer[crop].split(",").forEach(reason => {
+        if((String(reason) !== "NA") && (String(reason) !== "")){
+            reasons.has(reason) ? console.log("duplicate") : reasons.add(reason)
+        }
+      });
+      console.log(reasons)
+    });
+    reasons.forEach(reason => {
+      myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)
+    })
+  });
+  for (const [key, value] of new Map([...myMap].sort())) {
+    modified_data.push({x: key, y: value});
+  }
+  return modified_data;
+}
 
 function DetermineTitleText(activeVocation, activeCrop, activeRegion) {
   var titleText = "For ";
@@ -342,8 +329,8 @@ export function PriorityConcernsCompare(props) {
   }  
   
 
-  n = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation).length;
-  n2 = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2), activeVocation2).length;
+  n = data_filtered.length;
+  n2 = data_filtered2.length;
 
   return (
     <>
