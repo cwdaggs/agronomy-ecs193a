@@ -48,7 +48,7 @@
 }
 
 .visualization-window {
-  font-family: 'Metropolis';
+  font-family: 'Roboto', sans-serif;
   font-size: 24px;
   height: 80%;
   width: 70%;
@@ -109,7 +109,7 @@ a.hover-link:hover::before {
 
 @media screen and (max-width: 1200px) and (min-height:800px) {
   .visualization-window {
-    font-family: 'Metropolis';
+    font-family: 'Roboto', sans-serif;
     font-size: 12px;
     height: 80%;
     width: 70%;
