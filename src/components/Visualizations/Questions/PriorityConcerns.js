@@ -110,10 +110,12 @@ function calculateAllPriorityConcerns(data, job, crop)  {
     columns.forEach(crop =>{
       farmer[crop].split(",").forEach(reason => {
         if((String(reason) !== "NA") && (String(reason) !== "")){
-            reasons.has(reason) ? console.log("duplicate") : reasons.add(reason)
+            if(!reasons.has(reason)){
+              reasons.add(reason)
+            }
         }
       });
-      console.log(reasons)
+      //console.log(reasons)
     });
     reasons.forEach(reason => {
       myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)

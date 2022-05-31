@@ -46,13 +46,17 @@ function calculateAllPrimaryGrowingReasons(data, filter) {
     farmer[crop].split(",").forEach(reason => {
       if((String(reason) !== "NA") && (String(reason) !== "")){
         if(reason === "I am limited by farm resources to grow other crops (equipment" || reason ===  " water" || reason ===  " land" || reason === " capital" || reason === " know-how" || reason === " etc.)"){
-          reasons.has("Limited by farm resources") ? console.log("duplicate") : reasons.add("Limited by farm resources")
+          if(!reasons.has("Limited by farm resources")){
+            reasons.add("Limited by farm resources")
+          } 
         }else{
-          reasons.has(reason) ? console.log("duplicate") : reasons.add(reason)
+          if(!reasons.has(reason)){
+            reasons.add(reason)
+          }
         }
       }
     });
-    console.log(reasons)
+    //console.log(reasons)
   });
   reasons.forEach(reason => {
     //console.log(reasons)
