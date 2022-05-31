@@ -72,10 +72,7 @@ export function calculateInformationSources(data, sorted){
     }
   }
 
-  sources[2] = "UCCE";
   sources[9] = "County Ag Commissioner"
-  sources[11] = "Resource Conservation\nDistricts"
-  sources[12] = "State/County Farm Bureau";
 
   for(var k=0; k<totals.length; k++){
     modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
@@ -142,7 +139,7 @@ function GetChart(props){
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize*1.4, padding: 1, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.3, padding: 1, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'},
                 fontFamily: 'Roboto'
               }}
