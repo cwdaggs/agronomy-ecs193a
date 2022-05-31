@@ -51,6 +51,13 @@ const DropDownContent = styled.div`
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  @media (max-width: 1200px) {
+    min-width: 100px;
+  }
+
+  @media (max-width: 420px) {
+    min-width: 80px;
+  }
 `;
 
 const DropDownLi = styled(StyledLi)`
@@ -75,20 +82,14 @@ const SubA = styled.a`
   &:hover {
     background-color: #f1f1f1;
   }
-  @media (max-width: 950px) {
-    padding: 15px 40px;
-    font: 15px Metropolis, sans-serif;
-    font-weight: 800;
+  @media (max-width: 1200px) {
+    padding: 5px 10px;
+    font-size: 8px;
   }
 
-  @media (max-width: 675px) {
-    padding: 10px 20px;
-    font: 10px Metropolis, sans-serif;
-    font-weight: 800;
-  }
-
-  @media (max-width: 380px) {
-    padding: 10px 10px;
+  @media (max-width: 420px) {
+    padding: 5px 8px;
+    font-size: 6px;
   }
 `;
 
