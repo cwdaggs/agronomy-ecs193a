@@ -178,7 +178,7 @@ function GetUnsortedChart(props){
             <VictoryBar horizontal
               data={props.graph_data}
               style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
-              labels={({datum}) => datum.y}
+              labels={({datum}) => datum.y + " Respondents"}
               labelComponent={
                 <VictoryTooltip 
                   style={{
