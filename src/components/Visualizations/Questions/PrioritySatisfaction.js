@@ -169,7 +169,7 @@ function GetChart(props, setSelection){
                   <VictoryLabel
                     textAnchor="start"
                     style={[
-                      { fill: "black", fontSize: 20, fontFamily: "Roboto" },
+                      { fill: "black", fontSize: fontSize, fontFamily: "Roboto" },
                     ]}   
                   />            
                 }
