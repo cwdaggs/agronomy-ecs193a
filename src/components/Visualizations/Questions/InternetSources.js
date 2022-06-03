@@ -207,7 +207,7 @@ function GetUnsortedChart(props){
 }
 
 function DetermineLabelText(activeVocation, activeCrop, activeRegion) {
-  var labelText = "Internet Sources"
+  var labelText = "Information Delivery"
   if (activeCrop !== "All" || activeVocation !== "All") {
     labelText += " for";
   }
@@ -250,7 +250,7 @@ function DetermineFontSize() {
 }
 
 export function InternetSourcesBarChart(props) {
-  const baseURL = "/results/Internet%20Sources";
+  const baseURL = "/results/Information%20Delivery";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
   const [activeRegion, setActiveRegion] = useState(filters.region);
@@ -282,7 +282,7 @@ export function InternetSourcesBarChart(props) {
   return (
     <>
       <div id='vis-question-label'>
-        <h2>Where do you most often look for field crop production information on the internet?</h2>
+        <h2>How would you prefer to receive information from UC Cooperative Extension?</h2>
       </div>
       <div className="inline-child">
       <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
@@ -293,7 +293,7 @@ export function InternetSourcesBarChart(props) {
 }
 
 export function InternetSourcesBarChartCompare(props) {
-  const baseURL = "/results/compare/Internet%20Sources";
+  const baseURL = "/results/compare/Information%20Delivery";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
 
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -346,7 +346,7 @@ export function InternetSourcesBarChartCompare(props) {
   return (
     <>
     <div id='vis-question-label'>
-      <h2>Where do you most often look for field crop production information on the internet?</h2>
+      <h2>How would you prefer to receive information from UC Cooperative Extension?</h2>
     </div>
 
     <div className='dual-display'>

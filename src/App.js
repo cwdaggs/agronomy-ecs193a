@@ -110,7 +110,7 @@ export default function App() {
           <Route path="Priority%20Satisfaction" element={<PrioritySatisfaction dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<PrioritySatisfaction dataset={dataset}/>}/>
           </Route>
-          <Route path="Internet%20Sources" element={<InternetSourcesBarChart dataset={dataset}/>}>
+          <Route path="Information%20Delivery" element={<InternetSourcesBarChart dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<InternetSourcesBarChart dataset={dataset}/>}/>
           </Route>
         </Route>
@@ -160,7 +160,7 @@ export default function App() {
           <Route path="Priority%20Satisfaction" element={<PrioritySatisfactionCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<PrioritySatisfactionCompare dataset={dataset}/>}/>
           </Route>
-          <Route path="Internet%20Sources" element={<InternetSourcesBarChartCompare dataset={dataset}/>}>
+          <Route path="Information%20Delivery" element={<InternetSourcesBarChartCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<InternetSourcesBarChartCompare dataset={dataset}/>}/>
           </Route>
         </Route>
