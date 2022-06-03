@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.3563519f.css",
-    "main.js": "/static/js/main.3cd6a5fc.js",
+    "main.js": "/static/js/main.45c9cf49.js",
     "static/media/Rice.JPG": "/static/media/Rice.af10c408ccb9ede03376.JPG",
     "static/media/sky.jpg": "/static/media/sky.560e38e799908a8a535a.jpg",
     "static/media/one_wheat.jpg": "/static/media/one_wheat.7b02f3a9a1eb34517f66.jpg",
     "static/media/bg.jpeg": "/static/media/bg.3825eb8fe5c079105fbf.jpeg",
     "index.html": "/index.html",
     "main.3563519f.css.map": "/static/css/main.3563519f.css.map",
-    "main.3cd6a5fc.js.map": "/static/js/main.3cd6a5fc.js.map"
+    "main.45c9cf49.js.map": "/static/js/main.45c9cf49.js.map"
   },
   "entrypoints": [
     "static/css/main.3563519f.css",
-    "static/js/main.3cd6a5fc.js"
+    "static/js/main.45c9cf49.js"
   ]
 }
