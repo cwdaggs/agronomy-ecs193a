@@ -101,7 +101,7 @@ font-family: Public Sans, sans-serif;
 background: #A6B78C;
 text-decoration: none;
 color: white;
-font-size: 16px;
+font-size: 20px;
 position: relative;
 transition: background-color .6s ease;
 overflow: hidden;
