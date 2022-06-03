@@ -28,7 +28,7 @@ export const Visualizations = () => {
         "UCCE Engagement", //Q11
         "Value Assessment", //Q12
         "Priority Satisfaction", //Q13
-        "Internet Sources", //Q16
+        "Information Delivery", //Q16
     ]
     var test_str = "";
 
