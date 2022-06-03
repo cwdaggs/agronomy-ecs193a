@@ -69,8 +69,9 @@ export default function App() {
         <Route path="results/" element={
           <div className='vis-page'>
             <div id="visTop">
-            Select a topic to view responses for the respective question. Results can be sorted by vocation, regions that growers/consultants operate in, and top crops managed (in that region or others). 
-            Hovering over a data element will provide more detailed information. Be cautious interpreting results with small sample sizes (e.g. n = 10 or less).
+            Select a topic below to view the results. You can sort the results for each topic by vocation, regions that growers and consultants operate in, 
+            and/or the top crops managed. When you hover over the data you will see more detailed information provided. Note that sample sizes, 
+            or the number of responses, decrease as you sort results by more categories. Be cautious interpreting results with small sample sizes such as n = 10 or less.
             </div>
             <div id="compare-box">
               <NavLink to="/results/compare">
@@ -117,8 +118,9 @@ export default function App() {
         <Route path="results/compare/" element={
           <div className='vis-page'>
             <div id="visTop">
-            Select a topic to compare responses for the respective question. Results can be sorted by vocation, regions that growers/consultants operate in, and top crops managed (in that region or others). 
-            Hovering over a data element will provide more detailed information. Be cautious interpreting results with small sample sizes (e.g. n = 10 or less)
+            Select a topic below to view the results. You can sort the results for each topic by vocation, regions that growers and consultants operate in, 
+            and/or the top crops managed. When you hover over the data you will see more detailed information provided. Note that sample sizes, 
+            or the number of responses, decrease as you sort results by more categories. Be cautious interpreting results with small sample sizes such as n = 10 or less.
             </div>
             <div id="compare-box">
               <NavLink to="/results">
