@@ -1,4 +1,4 @@
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryZoomContainer} from 'victory';
+import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
 import {filterByCrop, filterByRegion, filterByVocation, parseURLCompare} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
@@ -103,11 +103,6 @@ function GetChart(props){
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
             margin={{top: height/8, right: width/8, bottom: height/4, left: width/4 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
-            containerComponent={
-              <VictoryZoomContainer
-                zoomDimension="x"
-              />
-            }
           >
 
             <VictoryBar horizontal
@@ -172,11 +167,6 @@ function GetUnsortedChart(props){
             domainPadding={{ x: margin.right/10, y: margin.top/10 }}
             margin={{top: height/8, right: width/8, bottom: height/4, left: width/4 }}
             padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
-            containerComponent={
-              <VictoryZoomContainer
-                zoomDimension="x"
-              />
-            }
           >
 
             <VictoryBar horizontal

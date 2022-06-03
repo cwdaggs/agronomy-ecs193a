@@ -1,4 +1,4 @@
-import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryZoomContainer } from 'victory';
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip} from 'victory';
 import {parseURLCompare, parseURL, sort_by_freq, filterByCrop, filterByRegion} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
@@ -193,12 +193,6 @@ function GetChart(props){
           width={width}
           domainPadding={{ x: margin.right/5, y: margin.top/10 }}
           padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
-          
-          containerComponent={
-            <VictoryZoomContainer
-              zoomDimension="x"
-            />
-          }
         >
           <VictoryStack
             style={{
