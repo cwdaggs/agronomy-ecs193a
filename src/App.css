@@ -25,6 +25,7 @@
 
 #compare-box{
   padding-bottom: 1vh;
+  padding-left: 1vw;
   opacity: 0.7;
 }
 
@@ -43,16 +44,12 @@
   flex: 1;
 }
 
-.font-metropolis{
-  font-family: 'Metropolis';
-}
-
 .font-roboto{
   font-family: 'Roboto', sans-serif;
 }
 
 .visualization-window {
-  font-family: 'Metropolis';
+  font-family: 'Roboto', sans-serif;
   font-size: 24px;
   height: 80%;
   width: 70%;
@@ -71,12 +68,21 @@
 }
 
 #about-visualization-window {
-  font-family: 'Metropolis';
+  font-family: 'Roboto', sans-serif;
   font-size: 24px;
   height: 100%;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+#priority-satisfaction-infos-label{
+  font-family: 'Roboto';
+  display:block;
+  text-align: center;
+  margin-left: 20%;
+  margin-right: 20%;
+  font-size: large;
 }
 
 a.hover-link {
@@ -104,7 +110,7 @@ a.hover-link:hover::before {
 
 @media screen and (max-width: 1200px) and (min-height:800px) {
   .visualization-window {
-    font-family: 'Metropolis';
+    font-family: 'Roboto', sans-serif;
     font-size: 12px;
     height: 80%;
     width: 70%;
@@ -117,12 +123,14 @@ a.hover-link:hover::before {
 
   #visTop {
     font-size: small;
-    font-style: italic;
   }
 
   .inline-child {
     display: inline-block;
     vertical-align: middle;
+  }
+  #priority-satisfaction-infos-label{
+    font-size: 12px;
   }
 }
 
@@ -131,8 +139,12 @@ a.hover-link:hover::before {
     font-size: 8px;
   }
 
+  #priority-satisfaction-infos-label{
+    font-size: 6px;
+  }
+
   .visualization-window {
-    font-family: 'Metropolis';
+    font-family: 'Roboto', sans-serif;
     font-size: 24px;
     height: 60%;
     width: 70%;
@@ -140,8 +152,8 @@ a.hover-link:hover::before {
   }
 
   #visTop {
-    font-size: small;
-    font-style: italic;
+    font-size: xx-small;
+    padding-top: 50px;
   }
 
   .inline-child {
@@ -155,8 +167,11 @@ a.hover-link:hover::before {
     font-size: 10px;
   }
 
+  #priority-satisfaction-infos-label{
+    font-size: 10px;
+  }
+
   #visTop {
     font-size: small;
-    font-style: italic;
   }
 }

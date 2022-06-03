@@ -1,11 +1,30 @@
-import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {filterByCrop, filterByCropOrRegion, filterByRegion, filterByVocation, parseURLCompare, sort_by_freq} from '../UseData.js'
-import "typeface-abeezee";
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {filterByCrop, filterByRegion, filterByVocation, parseURLCompare, sort_by_freq} from '../UseData.js'
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import {useState} from 'react';
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 import "./Legends.css";
+
+const colorScale = 
+  [
+    "#002360", 
+    "#006083",  
+    "#009B9C",
+    "#02B488",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
+const mobileWidth = 1000;
+const laptopWidth = 1500;
+const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
 
 export function calculateEngageEach(data, filter, answer){
     var total = 0
@@ -84,7 +103,31 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
-  var fontSize=props.fontSize
+  if(props.data.length === 0){
+    return (
+      <div className='dual-display-child'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+          <div id="legend-values">
+            <div className='legend-circle' id="five-color-first"></div>
+            <span className='legend-value'>1-3/week</span>
+            <div className='legend-circle' id="five-color-second"></div>
+            <span className='legend-value'>1-2/month</span>
+            <div className='legend-circle' id="five-color-third"></div>
+            <span className='legend-value'>3-6/year</span>
+            <div className='legend-circle' id="five-color-fourth"></div>
+            <span className='legend-value'>1-2/year</span>
+            <div className='legend-circle' id="five-color-fifth"></div>
+            <span className='legend-value'>Never</span>
+          </div>
+        </div>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -110,29 +153,28 @@ function GetChart(props){
           animate={{
               duration: 1000,               
           }}
-          height={props.height} 
-          width={props.width}
-          domainPadding={{ x: props.margin.right/5, y: props.margin.top/10 }}
-          padding={{ top: (props.width>=props.mobileWidth)?props.margin.top:props.margin.top*2, bottom: props.margin.bottom, left: props.margin.left/1.5, right: (props.width>=props.mobileWidth)?props.margin.right:props.margin.right/2 }}   
+          height={height} 
+          width={width}
+          domainPadding={{ x: margin.right/5, y: margin.top/10 }}
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryStack
             style={{
                 data: { stroke: "black", strokeWidth: 0.2, fontFamily: 'Roboto'}
             }}
-            colorScale={props.colorScale}
+            colorScale={colorScale}
           >
             {props.dataset_final.map((data, i) => {
               return <VictoryBar 
                 data={data} 
                 key={i} 
-                labels={({datum}) =>  Math.round(datum.y) + "%"}
+                labels={({datum}) => datum.concern + ": " + Math.round(datum.y) + "%"}
                 labelComponent={
                     <VictoryTooltip 
                       style={{
                         fontSize:props.fontSize, fontFamily: 'Roboto'
                       }}
-                      flyoutHeight={25}
-                      flyoutWidth={40}    
+                      constrainToVisibleArea={'true'} 
                     />
                 }/>;
             })}
@@ -146,18 +188,16 @@ function GetChart(props){
               }}
           />
           <VictoryAxis
-            // label="Type of Engagement"
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
                 tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
-                // axisLabel: {fontSize: 30, padding: 360}
               }}
             tickLabelComponent={       
               <VictoryLabel    
                 textAnchor="start"
-                style={{fill: "white", fontSize: fontSize}}
-                dx={fontSize}
+                style={{fill: "white", fontSize: props.fontSize}}
+                dx={props.fontSize}
                 events={{onClick: (evt) => console.log(evt)}}
               />   
             }
@@ -168,10 +208,51 @@ function GetChart(props){
   )
 }
 
-export function EngageVictory(props) {
-  
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
+  var titleText = "UCCE Engagement Frequency";
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+      titleText += " " + activeCrop;
+    }
+  }
+  if (activeVocation !== "All") {
+    if (activeVocation === "Other") {
+      titleText += " Other Vocations";
+    } else {
+      titleText += " " + activeVocation;
+    }
+  }
+  if (activeRegion !== "All") {
+    if (activeRegion === "NSJV") {
+      titleText += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion === "SSJV") {
+      titleText += " in the South San Joaquin Valley Region";
+    }
+    else {
+      titleText += " in the " + activeRegion + " Region";
+    }
+  }
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  return titleText
+}
 
+function DetermineFontSize() {
+  var fontSize = 20
+  const mobileFontSize = 6
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+  return fontSize
+}
+
+export function EngageVictory(props) {
   const baseURL = "/results/UCCE%20Engagement";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
 
@@ -195,78 +276,16 @@ export function EngageVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
-  var titleText = "UCCE Engagement Frequency";
-  if (activeCrop !== "All" || activeVocation !== "All") {
-    titleText += " for";
-  }
-  if (activeCrop !== "All") {
-    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-      titleText += " " + activeCrop;
-    }
-  }
-  if (activeVocation !== "All") {
-    if (activeVocation === "Other") {
-      titleText += " " + "Other Vocations";
-    } else {
-      titleText += " " + activeVocation;
-    }
-  }
-  if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
-  }
-
   var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var data_filtered = filterByVocation(data, activeVocation)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_freq(data_by_engage)
   const dataset_final = transformData(data_sorted)
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
-  var colorScale = 
-  [
-    "#002360", 
-    "#006083",  
-    "#009B9C",
-    "#02B488",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-  var fontSize = 20
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-
-  const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted);
+  var fontSize = DetermineFontSize()
 
   return (
-
     <>
       <div id='vis-question-label'>
         <h2>How often do you engage with the UCCE in the following ways?</h2>
@@ -274,15 +293,12 @@ export function EngageVictory(props) {
       <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-      <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+      <GetChart dataset_final={dataset_final} fontSize={fontSize} titleText={titleText} data={data_filtered}/>
     </>
   );
 }
 
 export function EngageVictoryCompare(props) {
-  
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
   const baseURL = "/results/compare/UCCE%20Engagement";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -321,108 +337,22 @@ export function EngageVictoryCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
-  var titleText2 = "UCCE Engagement Frequency";
-  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-    titleText2 += " for";
-  }
-  if (activeCrop2 !== "All") {
-    if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-      titleText2 += " " + activeCrop2;
-    }
-  }
-  if (activeVocation2 !== "All") {
-    if (activeVocation2 === "Other") {
-      titleText2 += " " + "Other Vocations";
-    } else {
-      titleText2 += " " + activeVocation2;
-    }
-  }
-  if (activeRegion2 !== "All") {
-    titleText2 += " in the " + activeRegion2 + " Region";
-  }
+  // Data previously sorted after by_engage
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+  var data_filtered = filterByVocation(data, activeVocation)
+  var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
+  const dataset_final = transformData(data_by_engage)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_engage);
 
   var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
   var data_filtered2 = filterByVocation(data2, activeVocation2)
   var data_by_engage2 = calculateEngageTotalsForEachElement(data_filtered2)
-  // var data_sorted2 = sort_by_freq(data_by_engage2)
   const dataset_final2 = transformData(data_by_engage2)
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_engage2);
 
-  titleText2 += " (n = " + calculateAverageResponses(data_by_engage2) + ")";
-
-  var titleText = "UCCE Engagement Frequency";
-  if (activeCrop !== "All" || activeVocation !== "All") {
-    titleText += " for";
-  }
-  if (activeCrop !== "All") {
-    if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-      titleText += " " + activeCrop;
-    }
-  }
-  if (activeVocation !== "All") {
-    if (activeVocation === "Other") {
-      titleText += " " + "Other Vocations";
-    } else {
-      titleText += " " + activeVocation;
-    }
-  }
-  if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
-  }
-
-  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-  var data_filtered = filterByVocation(data, activeVocation)
-  var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
-  // var data_sorted = sort_by_freq(data_by_engage)
-  const dataset_final = transformData(data_by_engage)
-
-  titleText += " (n = " + calculateAverageResponses(data_by_engage) + ")";
-
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };
-
-  var fontSize = 25
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2.5
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-  var colorScale = 
-  [
-    "#002360", 
-    "#006083",  
-    "#009B9C",
-    "#02B488",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-
-  const legend_data = [{name: "1-3/week"}, {name: "1-2/month"}, {name: "3-6/year"}, {name: "1-2/year"}, {name: "Never"}]
-
+  var fontSize = DetermineFontSize()
+  
   return (
-
     <>
       <div id='vis-question-label'>
         <h2>How often do you engage with the UCCE in the following ways?</h2>
@@ -431,10 +361,10 @@ export function EngageVictoryCompare(props) {
       <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+          <GetChart dataset_final={dataset_final} fontSize={fontSize} titleText={titleText} data={data_filtered}/>
         </div>
         <div id="vis-b">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
+          <GetChart dataset_final={dataset_final2} fontSize={fontSize} titleText={titleText2} data={data_filtered2}/>
         </div>
       </div>   
     </>

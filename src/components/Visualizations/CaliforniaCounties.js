@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { csv } from "d3-fetch";
+import React from "react";
 import { scaleLinear } from "d3-scale";
-import * as d3 from 'd3';
-import {filterByCropOrRegion, useData, acresByCounty, filterByVocation} from "./UseData"
+import {filterByCropOrRegion, filterByVocation} from "./UseData"
 import {VictoryLegend, VictoryPie, VictoryTooltip, VictoryBar, VictoryAxis, VictoryChart} from 'victory';
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Sphere,
-  Graticule
-} from "react-simple-maps";
 import "./CountiesRegion.css";
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 const fontSize = 16;
-
-const geoUrl =
-  "./data/california-counties.geojson";
 
 const colorScale = scaleLinear()
   .domain([0, 80])
@@ -31,7 +19,6 @@ function occupationAmount(data){
                   {x: "Consultants", y: 100 * (filterByVocation(data, "Consultant (ex. Certified Crop Advisor (CCA), Pest Control Advisor (PCA))").length  / data.length ) }, 
                   {x: "Allied Industry", y: 100 * (filterByVocation(data, "Allied Industry (e.g. Input supplier, manufacturer, processor, etc.) (please specify):").length  / data.length ) }, 
                   {x: "Other", y: 100 * (filterByVocation(data, "Other (please specify):").length / data.length )} ]
-  //console.log(occMap)
   return occMap
 }
 
@@ -40,7 +27,6 @@ export const MapChart = (props) => {
     return <pre>Loading...</pre>;
 }
   const data = filterByCropOrRegion(props.data, props.filter)
-  const countyData = acresByCounty(data)
   const occupationData = occupationAmount(data);
   return (
     <div className='info-charts'>
@@ -52,8 +38,8 @@ export const MapChart = (props) => {
                 x={150}
                 y={0}
                 gutter={25}
-                style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
-                      title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+                style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize+3}, 
+                      title:  {fontFamily: 'Roboto', fontSize: fontSize+3},
                       data:   {stroke: "black", strokeWidth: 1}}}
                 title="Responses by Vocation"
                 centerTitle
@@ -86,10 +72,9 @@ export const MapChart = (props) => {
                     <VictoryTooltip 
                     style={{
                         fontSize:10,
-                        fontFamily: 'ABeeZee'
+                        fontFamily: 'Roboto'
                     }}
-                    flyoutHeight={20}
-                    flyoutWidth={100}  
+                    constrainToVisibleArea={true} 
                     />
                 }
               />
@@ -105,8 +90,8 @@ export const MapChart = (props) => {
             y={0}
 
             gutter={25}
-            style={{labels: {fill: "black", color: "white", fontFamily: 'ABeeZee', fontSize: fontSize+3}, 
-                  title:  {fontFamily: 'ABeeZee', fontSize: fontSize+3},
+            style={{labels: {fill: "black", color: "white", fontFamily: 'Roboto', fontSize: fontSize+3}, 
+                  title:  {fontFamily: 'Roboto', fontSize: fontSize+3},
                   data:   {stroke: "black", strokeWidth: 1}}}
             title="Responses by County"
             centerTitle
@@ -123,7 +108,7 @@ export const MapChart = (props) => {
           />
         </div>
         <div className="info-map">
-          <img src='./assets/county-map-2.png' className="map-image"></img>
+          <img src='./assets/county-map.png' alt="County Map" className="map-image"></img>
         </div>
       </div>
     </div>
@@ -166,28 +151,15 @@ export const CropBar = (props) => {
         Below is a bar chart depicting the number of responses for each crop:
       </div>
       <VictoryChart height={height} width={width}
-        //domainPadding={45}
         domainPadding={{ x: margin.right/5.3 }}
         padding={{bottom: margin.bottom, left: margin.left, right: margin.right}}
         animate={{duration: 800}}
       >
-        {/* <VictoryAxis dependentAxis
-          label= {"Additionally, survey participants could list their top grown or consulted crops. \nBelow is a bar chart depicting the number of responses for each crop:"}
-          style = {{
-            tickLabels: {fontSize: 0},
-            axisLabel: {fontSize: 40, padding: -height*0.9}}}>
-          stroke: "black", strokeWidth: "1.25", fill: "white"
-        </VictoryAxis> */}
         <VictoryAxis
-          //label={"Crop"}
           style={{
             tickLabels: {fontSize: fontSize*1.25, padding: 5},
             axisLabel: {fontSize: fontSize*2, padding: 180}
             }}
-          // style={{
-          //   tickLabels: {fontSize: 30, padding: 5},
-          //   axisLabel: {fontSize: 40, padding: {top: 0}}
-          // }}
         />
         <VictoryAxis dependentAxis
         label = {"Number of Growers and Consultants"}
@@ -196,7 +168,6 @@ export const CropBar = (props) => {
           axisLabel: {fontSize: fontSize*2, padding: 60}
         }}/>
         <VictoryBar horizontal
-          // barRatio={0.6}
           sortKey= "y"
           data={cropData}
           alignment="middle"

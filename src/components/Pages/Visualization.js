@@ -24,7 +24,7 @@ export const Visualizations = () => {
         "Priority Concerns", //Q7
         "Growing Reasons", //Q8
         "Priority Effect", //Q9
-        "Information Sources", //Q10
+        "Information Network", //Q10
         "UCCE Engagement", //Q11
         "Value Assessment", //Q12
         "Priority Satisfaction", //Q13

@@ -1,5 +1,5 @@
 import "./VisualizationLandingPage.css"
-export function VisualizationLandingPage(props) {
+export function VisualizationLandingPage() {
 
   return (
     <div class="visLandingPage">

@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import {Checkbox, Tab, Button} from './Button.js';
-import 'react-pro-sidebar/dist/css/styles.css';
+import {Tab, Button} from './Button.js';
 import {InfoSummary} from './components/Pages/InfoSummary';
-import {AboutSummary} from './components/Pages/AboutSummary';
+import {Team} from './components/Pages/Team';
 import Login from './components/Pages/Login.js';
-import {CommentBox} from './components/Pages/Comments'
 import {Visualizations} from './components/Pages/Visualization';
 import {Home} from './components/Pages/Home';
 import {NavLink, Outlet,Routes, Route } from "react-router-dom";
-import {useData} from './components/Visualizations/UseData';
-import { MiniSurvey } from './components/Pages/Survey'; 
+import {useData} from './components/Visualizations/UseData'; 
 import { AcresManagedBarChart, AcresManagedBarChartCompare } from './components/Visualizations/Questions/AcresManaged';
 import { CropPercentages } from './components/Visualizations/Questions/CropPercentages';
 import { ConcernsVictory, ConcernsVictoryCompare } from './components/Visualizations/Questions/Concerns_victory';
@@ -23,10 +20,8 @@ import { AmountVictory, AmountVictoryCompare } from './components/Visualizations
 import { PrioritySatisfaction, PrioritySatisfactionCompare } from './components/Visualizations/Questions/PrioritySatisfaction';
 import { InternetSourcesBarChart, InternetSourcesBarChartCompare } from './components/Visualizations/Questions/InternetSources';
 import { VisualizationLandingPage } from './components/Visualizations/Questions/VisualizationLandingPage'
-import ReactGA from 'react-ga';
 
 export default function App() {
-  ReactGA.initialize("UA-226538502-1");
 
   function getActiveTab(isActive, pageName){
     return (isActive 
@@ -57,13 +52,10 @@ export default function App() {
         <NavLink to ="/team" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Team")}
         </NavLink>
-        {/* <NavLink to ="/survey" className={"hover-link"}>
-          {({ isActive }) => getActiveTab(isActive, "Survey")}
-        </NavLink> */}
-        <NavLink to ="/feedback" className={"hover-link"}>
+        {/*<NavLink to ="/feedback" className={"hover-link"}>
           {({ isActive }) => getActiveTab(isActive, "Feedback")}
-        </NavLink>
-        <a href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
+        </NavLink>*/}
+        <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>
           <Tab>
             About UCCE
           </Tab>
@@ -77,8 +69,9 @@ export default function App() {
         <Route path="results/" element={
           <div className='vis-page'>
             <div id="visTop">
-              Select a topic to view responses for the respective question. Responses can then be sorted by vocation, crop, and 
-              region. Hovering over a data element will provide more detailed information.
+            Select a topic below to view the results. You can sort the results for each topic by vocation, regions that growers and consultants operate in, 
+            and/or the top crops managed. When you hover over the data you will see more detailed information provided. Note that sample sizes, 
+            or the number of responses, decrease as you sort results by more categories. Be cautious interpreting results with small sample sizes such as n = 10 or less.
             </div>
             <div id="compare-box">
               <NavLink to="/results/compare">
@@ -105,7 +98,7 @@ export default function App() {
           <Route path="Priority%20Effect" element={<AffectVictory dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<AffectVictory dataset={dataset}/>}/>
           </Route>
-          <Route path="Information%20Sources" element={<InfoSourcesBarChart dataset={dataset}/>}>
+          <Route path="Information%20Network" element={<InfoSourcesBarChart dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region" element={<InfoSourcesBarChart dataset={dataset}/>}/>
           </Route>
           <Route path="UCCE%20Engagement" element={<EngageVictory dataset={dataset}/>}>
@@ -125,8 +118,9 @@ export default function App() {
         <Route path="results/compare/" element={
           <div className='vis-page'>
             <div id="visTop">
-              Select a topic to view responses for the respective question. Responses can then be sorted by vocation, crop, and 
-              region. Hovering over a data element will provide more detailed information.
+            Select a topic below to view the results. You can sort the results for each topic by vocation, regions that growers and consultants operate in, 
+            and/or the top crops managed. When you hover over the data you will see more detailed information provided. Note that sample sizes, 
+            or the number of responses, decrease as you sort results by more categories. Be cautious interpreting results with small sample sizes such as n = 10 or less.
             </div>
             <div id="compare-box">
               <NavLink to="/results">
@@ -154,7 +148,7 @@ export default function App() {
           <Route path="Priority%20Effect" element={<AffectVictoryCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<AffectVictoryCompare dataset={dataset}/>}/>
           </Route>
-          <Route path="Information%20Sources" element={<InfoSourcesBarChartCompare dataset={dataset}/>}>
+          <Route path="Information%20Network" element={<InfoSourcesBarChartCompare dataset={dataset}/>}>
             <Route path=":vocation/:crop/:region/:vocation2/:crop2/:region2" element={<InfoSourcesBarChartCompare dataset={dataset}/>}/>
           </Route>
           <Route path="UCCE%20Engagement" element={<EngageVictoryCompare dataset={dataset}/>}>
@@ -172,8 +166,7 @@ export default function App() {
         </Route>
 
         <Route path="about" element={<InfoSummary dataset={dataset}/>}/>
-        <Route path="team" element={<AboutSummary/>}/>
-        {/* <Route path="survey" element={<MiniSurvey/>}/> */}
+        <Route path="team" element={<Team/>}/>
         <Route path="feedback" element={<Login/>}/>
         <Route path = "*" element={<Home/>}/>
       </Routes>

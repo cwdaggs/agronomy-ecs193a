@@ -1,10 +1,29 @@
-import { VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryZoomContainer } from 'victory';
-import {filterByCropOrRegion, parseURLCompare, parseURL, sort_by_freq, filterByCrop, filterByRegion} from '../UseData.js'
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip} from 'victory';
+import {parseURLCompare, parseURL, sort_by_freq, filterByCrop, filterByRegion} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
-import "typeface-abeezee";
 import { useLocation } from 'react-router-dom';
 import "./Legends.css";
+
+const vocationArray = ["Growers", "Consultants"];
+const colorScale = 
+  [
+    "#002360", 
+    "#006083",  
+    "#009B9C",
+    "#02B488",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
+const mobileWidth = 1000;
+const laptopWidth = 1500;
 
 export function calculateAffectEach(data, filter, answer){
   var total = 0
@@ -120,7 +139,30 @@ function calculateAverageResponses(dataset) {
 }
 
 function GetChart(props){
-  var fontSize = props.fontSize;
+  if(props.data.length === 0){
+    return (
+      <div className='dual-display-child'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+          <div id="legend-values">
+            <div className='legend-circle' id="five-color-first"></div>
+            <span className='legend-value'>Always</span>
+            <div className='legend-circle' id="five-color-second"></div>
+            <span className='legend-value'>Often</span>
+            <div className='legend-circle' id="five-color-third"></div>
+            <span className='legend-value'>Sometimes</span>
+            <div className='legend-circle' id="five-color-fourth"></div>
+            <span className='legend-value'>Rarely</span>
+            <div className='legend-circle' id="five-color-fifth"></div>
+            <span className='legend-value'>Never</span>
+          </div>
+        </div>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
 
   return(
     <div className='dual-display-child'>
@@ -147,35 +189,28 @@ function GetChart(props){
           animate={{
               duration: 1000,               
           }}
-          height={props.height} 
-          width={props.width}
-          domainPadding={{ x: props.margin.right/5, y: props.margin.top/10 }}
-          padding={{ top: (props.width>=props.mobileWidth)?props.margin.top:props.margin.top*2, bottom: props.margin.bottom, left: props.margin.left/1.5, right: (props.width>=props.mobileWidth)?props.margin.right:props.margin.right/2 }}   
-          
-          containerComponent={
-            <VictoryZoomContainer
-              zoomDimension="x"
-            />
-          }
+          height={height} 
+          width={width}
+          domainPadding={{ x: margin.right/5, y: margin.top/10 }}
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }}   
         >
           <VictoryStack
             style={{
                 data: { stroke: "black", strokeWidth: 0.2}
             }}
-            colorScale={props.colorScale}
+            colorScale={colorScale}
           >
             {props.dataset_final.map((data, i) => {
               return <VictoryBar 
                 data={data} 
                 key={i} 
-                labels={({datum}) => Math.round(datum.y) + "%"}
+                labels={({datum}) => datum.concern + ": " +  Math.round(datum.y) + "%" }
                 labelComponent={
                     <VictoryTooltip 
                       style={{
-                        fontSize:fontSize, fontFamily: 'Roboto'
+                        fontSize:props.fontSize, fontFamily: 'Roboto'
                       }}
-                      flyoutHeight={25}
-                      flyoutWidth={40}    
+                      constrainToVisibleArea={'true'}  
                     />
                 }/>;
             })}
@@ -185,22 +220,20 @@ function GetChart(props){
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 5, fontFamily: 'Roboto'}
+                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'}
               }}
           />
           <VictoryAxis
-          // label="Priority"
             style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: fontSize, padding: 0, fontFamily: 'Roboto'},
-                // axisLabel: {fontSize: 30, padding: 410}
+                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
               }}
             tickLabelComponent={       
               <VictoryLabel    
                 textAnchor="start"
-                style={{fill: "white", fontSize: fontSize}}
-                dx={fontSize}
+                style={{fill: "white", fontSize: props.fontSize}}
+                dx={props.fontSize}
               />
             }
           />
@@ -210,8 +243,39 @@ function GetChart(props){
   )
 }
 
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
+  var titleText = activeVocation === "Consultants" ? "Frequency of Effect on Recommendations" : "Frequency of Effect on Management Decisions";
+  if (activeCrop !== "All") {
+    titleText += " for " + activeCrop;
+  }
+  if (activeRegion !== "All") {
+    if (activeRegion === "NSJV") {
+      titleText += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion === "SSJV") {
+      titleText += " in the South San Joaquin Valley Region";
+    }
+    else {
+      titleText += " in the " + activeRegion + " Region";
+    }
+  }
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  return titleText
+}
+
+function DetermineFontSize() {
+  var fontSize = 16
+  const mobileFontSize = 6
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+  return fontSize
+}
+
 export function AffectVictory(props) {
-  const vocationArray = ["Growers", "Consultants"];
   const baseURL = "/results/Priority%20Effect";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -233,93 +297,34 @@ export function AffectVictory(props) {
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
-
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
   
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
-
-  var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
-
-  var questionText = "How often do the following priorities affect your management decisions for field crop production?";
-
-  var titleText = "Frequency of Effect on Management Decisions";
-  if (activeVocation === "Consultants") {
-    data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
-    questionText = "How often do the following priorities affect your recommendations for field crop production?";
-    titleText = "Frequency of Effect on Recommendations";
-  }
-
-  if (activeCrop !== "All") {
-    titleText += " for " + activeCrop;
-  }
-  if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
-  }
-
+  var data_by_affect = activeVocation === "Consultants" ? calculateConsultantAffectTotalsForEachElement(data_filtered) : 
+                      calculateGrowerAffectTotalsForEachElement(data_filtered);
+  var questionText = activeVocation === "Consultants" ? "How often do the following priorities affect your recommendations for field crop production?" : 
+                    "How often do the following priorities affect your management decisions for field crop production?";
   var data_sorted = sort_by_freq(data_by_affect)
   const dataset_final = transformData(data_sorted)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted)
 
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
-  
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-
-  var fontSize = 16
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-
-  var colorScale = 
-  [
-    "#002360", 
-    "#006083",  
-    "#009B9C",
-    "#02B488",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-  const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
+  var fontSize = DetermineFontSize()
 
   return (
     <>
-    <div id='vis-question-label'>
-       <h2>{questionText}</h2>
-    </div>
-    <div className="inline-child">
-    <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-    </div>
-    <>
-      <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin}></GetChart>
-    </>
+      <div id='vis-question-label'>
+        <h2>{questionText}</h2>
+      </div>
+      <div className="inline-child">
+      <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+      </div>
+      <>
+        <GetChart titleText={titleText} dataset_final={dataset_final} fontSize={fontSize} data={data_filtered}></GetChart>
+      </>
     </>
   );
 }
 
 export function AffectVictoryCompare(props) {
-  const vocationArray = ["Growers", "Consultants"];
   const baseURL = "/results/compare/Priority%20Effect";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   
@@ -359,95 +364,20 @@ export function AffectVictoryCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
-  
-
+  // Data previously sorted by freq after by_affect
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
-
-  var data_by_affect = calculateGrowerAffectTotalsForEachElement(data_filtered);
-  var titleText = "Frequency of Effect on Management Decisions";
-  if (activeVocation === "Consultants") {
-    data_by_affect = calculateConsultantAffectTotalsForEachElement(data_filtered);
-    titleText = "Frequency of Effect on Recommendations";
-  }
-
-  if (activeCrop !== "All") {
-    titleText += " for " + activeCrop;
-  }
-  if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
-  }
-
-  // var data_sorted = sort_by_freq(data_by_affect)
+  var data_by_affect = activeVocation === "Consultants" ? calculateConsultantAffectTotalsForEachElement(data_filtered) : 
+                      calculateGrowerAffectTotalsForEachElement(data_filtered);
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_affect);
   const dataset_final = transformData(data_by_affect)
 
-  titleText += " (n = " + calculateAverageResponses(data_by_affect) + ")";
-  
-
   var data_filtered2 = filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2);
-
-  var data_by_affect2 = calculateGrowerAffectTotalsForEachElement(data_filtered2);
-  var titleText2 = "Frequency of Effect on Management Decisions";
-  if (activeVocation2 === "Consultants") {
-    data_by_affect2 = calculateConsultantAffectTotalsForEachElement(data_filtered2);
-    titleText2 = "Frequency of Effect on Recommendations";
-  }
-
-  if (activeCrop2 !== "All") {
-    titleText2 += " for " + activeCrop2;
-  }
-  if (activeRegion2 !== "All") {
-    titleText2 += " in the " + activeRegion2 + " Region";
-  }
-
-  // var data_sorted2 = sort_by_freq(data_by_affect2)
+  var data_by_affect2 = activeVocation2 === "Consultants" ? calculateConsultantAffectTotalsForEachElement(data_filtered2) : 
+                      calculateGrowerAffectTotalsForEachElement(data_filtered2);
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_affect2);
   const dataset_final2 = transformData(data_by_affect2)
 
-  titleText2 += " (n = " + calculateAverageResponses(data_by_affect2) + ")";
-  
-  
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };
-
-  var fontSize = 25
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2.5
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-
-  var colorScale = 
-  [
-    "#002360", 
-    "#006083",  
-    "#009B9C",
-    "#02B488",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-  const legend_data = [{name: "Always"}, {name: "Often"}, {name: "Sometimes"}, {name: "Rarely"}, {name: "Never"}]
+  var fontSize = DetermineFontSize()
 
   return (
     <>
@@ -458,10 +388,10 @@ export function AffectVictoryCompare(props) {
     <div className='dual-display'>
       <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       <div id="vis-a">
-        <GetChart titleText={titleText} dataset_final={dataset_final} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+        <GetChart titleText={titleText} dataset_final={dataset_final} fontSize={fontSize} compare={true} data={data_filtered}/>
       </div>
       <div id="vis-b">
-        <GetChart titleText={titleText2} dataset_final={dataset_final2} width={width} height={height} fontSize={fontSize} mobileWidth={mobileWidth} colorScale={colorScale} legend_data={legend_data} margin={margin} compare={true}/>
+        <GetChart titleText={titleText2} dataset_final={dataset_final2} fontSize={fontSize} compare={true} data={data_filtered2}/>
       </div>
     </div>
     </>

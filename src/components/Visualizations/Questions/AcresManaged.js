@@ -1,16 +1,19 @@
 import {VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
-import {filterByCropOrRegion, filterByVocation, filterByCrop, filterByRegion} from '../UseData.js';
+import {filterByVocation, filterByCrop, filterByRegion} from '../UseData.js';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import {useState} from "react";
 import { useLocation } from 'react-router-dom';
 import { parseURL, parseURLCompare } from '../UseData.js';
 
-import "typeface-abeezee";
-import { filter } from 'd3';
+const vocationArray = ["All", "Growers", "Consultants"];
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const mobileWidth = 1000;
+const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
 
 function calculateAcres(data){
-  var names = ["< 500", "< 1000", "< 1500", "< 2000", "< 2500", "2500+"]
-  // var colors = ["#c9d2b7", "#b1b8a2", "#79917c", "#647766", "#343f36", "#212121"]
+  var names = ["< 500", "500 - 1000", "1000 - 1500", "1500 - 2000", "2000 - 2500", "2500+"]
   var colors = [ 
   "#003F72",
   "#006083",
@@ -78,38 +81,41 @@ function calculateSizeOfDataSet(data){
 }
 
 function GetChart(props){
-  
   var toolTipFontSize = 30;
-
+  if(props.data.length === 0){
+    return (
+      <>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </>
+      )
+  }
   return(
     <>
     <div class='visualization-window'>
-          <VictoryChart height={props.height} width={props.width}
-            //domainPadding={45}
-            domainPadding={{ x: props.margin.right/5.3, y: props.margin.top }}
-            padding={{top: props.margin.top, bottom: props.margin.bottom, left: props.margin.left, right: props.margin.right}}
+          <VictoryChart height={height} width={width}
+            domainPadding={{ x: margin.right/5.3, y: margin.top }}
+            padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}
             animate={{duration: 800}}
           >
           <VictoryAxis
             label={props.labelText}
             style={{
               tickLabels: {fontSize: props.fontSize*1.25, padding: 5, fontFamily: 'Roboto'},
-              axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 20}
+              axisLabel: {fontSize: props.fontSize*2, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
               }}
           />
           <VictoryAxis dependentAxis
           label = {props.lengthString}
           style={{
             fontFamily: 'Roboto',
-            tickLabels: {fontSize: props.fontSize, padding: 15, fontFamily: 'Roboto'},
-            axisLabel: {fontSize: props.fontSize, fontFamily: 'Roboto', padding: (props.width >= props.mobileWidth) ? 60: 35}
+            tickLabels: {fontSize: props.fontSize*1.25, padding: 15, fontFamily: 'Roboto'},
+            axisLabel: {fontSize: props.fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 45}
           }}/>
           <VictoryBar
-            // barRatio={0.6}
             data={props.acre_data}
             alignment="middle"
             style={{ data:  { fill: ({datum}) => datum.fill}}}
-            labels={({datum}) => datum.y}
+            labels={({ datum }) => `${datum.y + " Respondents"}`}
             labelComponent={
               <VictoryTooltip 
                 style={{
@@ -126,74 +132,74 @@ function GetChart(props){
   )
 }
 
-export function AcresManagedBarChart(props) {
-    const vocationArray = ["All", "Growers", "Consultants"];
-    const baseURL = "/results/Acres%20Managed";
-    const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
-
-    const [activeVocation, setActiveVocation] = useState(filters.vocation);
-    const [activeRegion, setActiveRegion] = useState(filters.region);
-    const [activeCrop, setActiveCrop] = useState(filters.crop)
-  
-
-    function vocationFunction(newValue){
-      setActiveVocation(newValue);
+function DetermineLabelText(activeVocation, activeCrop, activeRegion) {
+  var labelText = "Acres";
+  if (activeVocation === "Growers") {
+    labelText = "Acres Managed";
+  } else if (activeVocation === "Consultants") {
+    labelText = "Acres Consulted";
+  }
+  if(activeRegion !== "All"){
+    if (activeRegion === "NSJV") {
+      labelText = "North San Joaquin Valley " + labelText;
     }
-  
-    function regionFunction(newValue) {
-      setActiveRegion(newValue);
+    else if (activeRegion === "SSJV") {
+      labelText = "South San Joaquin Valley " + labelText;
     }
-  
-    function cropFunction(newValue) {
-      setActiveCrop(newValue)
-    }
-
-
-    if (!props.dataset) {
-      return <pre>Loading...</pre>;
-    }
-    var data = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
-    var acre_data = calculateAcres(data);
-    var dataLength = calculateSizeOfDataSet(acre_data)
-    var lengthString = String("Number of Farms (n = " + dataLength + ")");
-    
-    var labelText = "Acres";
-    if (activeVocation === "Growers") {
-      labelText = "Acres Managed";
-    } else if (activeVocation === "Consultants") {
-      labelText = "Acres Consulted";
-    }
-    if(activeRegion !== "All"){
+    else {
       labelText = activeRegion + " " + labelText;
     }
-    if(activeCrop !== "All"){
-      labelText += " for " + activeCrop;
-    }
-    
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const mobileWidth=1000;
-    var fontSize = (width >= mobileWidth) ? 20: 10;
-    const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
+  }
+  if(activeCrop !== "All"){
+    labelText += " for " + activeCrop;
+  }
+  return labelText
+}
 
-    return (
-      <>
-        <div id='vis-question-label'>
-            <h2>How many acres do you manage/consult annually?</h2>
-        </div>
-        <div className="inline-child">
-          <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-        </div>
-        <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} vocationArray={vocationArray} filters={filters} visIndex={1}/>
-          
-      </>
-      );
+export function AcresManagedBarChart(props) {
+  const baseURL = "/results/Acres%20Managed";
+  const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
+  const [activeVocation, setActiveVocation] = useState(filters.vocation);
+  const [activeRegion, setActiveRegion] = useState(filters.region);
+  const [activeCrop, setActiveCrop] = useState(filters.crop)
+
+  function vocationFunction(newValue){
+    setActiveVocation(newValue);
+  }
+
+  function regionFunction(newValue) {
+    setActiveRegion(newValue);
+  }
+
+  function cropFunction(newValue) {
+    setActiveCrop(newValue)
+  }
+
+  if (!props.dataset) {
+    return <pre>Loading...</pre>;
+  }
+
+  var data = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
+  var acre_data = calculateAcres(data);
+  var dataLength = calculateSizeOfDataSet(acre_data)
+  var lengthString = String("Number of Farms (n = " + dataLength + ")");
+  var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
+  var fontSize = (width >= mobileWidth) ? 20: 10;
+  
+  return (
+    <>
+      <div id='vis-question-label'>
+          <h2>How many acres do you manage/consult annually?</h2>
+      </div>
+      <div className="inline-child">
+        <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+      </div>
+      <GetChart fontSize={fontSize} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1} data={data}/>   
+    </>
+  );
 }
 
 export function AcresManagedBarChartCompare(props) {
-  const vocationArray = ["All", "Growers", "Consultants"];
   const baseURL = "/results/compare/Acres%20Managed";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -228,8 +234,6 @@ export function AcresManagedBarChartCompare(props) {
     setActiveCrop2(newValue)
   }
 
-
-  //console.log(filters)
   if (!props.dataset) {
       return <pre>Loading...</pre>;
   }
@@ -237,45 +241,15 @@ export function AcresManagedBarChartCompare(props) {
   var acre_data = calculateAcres(data);
   var dataLength = calculateSizeOfDataSet(acre_data)
   var lengthString = String("Number of Farms (n = " + dataLength + ")");
+  var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
 
   var data2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
   var acre_data2 = calculateAcres(data2);
   var dataLength2 = calculateSizeOfDataSet(acre_data2)
   var lengthString2 = String("Number of Farms (n = " + dataLength2 + ")");
+  var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
   
-  var labelText = "Acres";
-  if (activeVocation === "Growers") {
-    labelText = "Acres Managed";
-  } else if (activeVocation === "Consultants") {
-    labelText = "Acres Consulted";
-  }
-  if(activeRegion !== "All"){
-    labelText = activeRegion + " " + labelText;
-  }
-  if(activeCrop !== "All"){
-    labelText += " for " + activeCrop;
-  }
-
-  var labelText2 = "Acres";
-  if (activeVocation2 === "Growers") {
-    labelText2 = "Acres Managed";
-  } else if (activeVocation2 === "Consultants") {
-    labelText2 = "Acres Consulted";
-  }
-  if(activeRegion2 !== "All"){
-    labelText2 = activeRegion2 + " " + labelText2;
-  }
-  if(activeCrop2 !== "All"){
-    labelText2 += " for " + activeCrop2;
-  }
-  
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const mobileWidth=1000;
   var fontSize = (width >= mobileWidth) ? 20: 10;
-  const margin = { top: height/20, right: width/8, bottom: height/8, left: width/8 };
 
   return (
     <>
@@ -285,10 +259,10 @@ export function AcresManagedBarChartCompare(props) {
       <div className='dual-display'>
           <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
           <div id="vis-a">
-            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1} compare={true}/>
+            <GetChart fontSize={fontSize} acre_data={acre_data} labelText={labelText} lengthString={lengthString} filters={filters} visIndex={1} compare={true} data={data}/>
           </div>
           <div id="vis-b">
-            <GetChart height={height} width={width} margin={margin} fontSize={fontSize} mobileWidth={mobileWidth} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2} compare={true}/>
+            <GetChart fontSize={fontSize} acre_data={acre_data2} labelText={labelText2} lengthString={lengthString2} filters={filters} visIndex={2} compare={true} data={data2}/>
           </div>
       </div>
     </>

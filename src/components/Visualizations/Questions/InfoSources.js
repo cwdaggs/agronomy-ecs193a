@@ -1,10 +1,17 @@
-import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryZoomContainer} from 'victory';
-import {filterByCrop, filterByRegion, filterByCropOrRegion, filterByVocation, parseURLCompare} from '../UseData.js';
+import {VictoryLabel, VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+import {filterByCrop, filterByRegion, filterByVocation, parseURLCompare} from '../UseData.js';
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
-import "typeface-abeezee";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
+
+const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
+const mobileWidth = 1000;
+const laptopWidth = 1500;
 
 export function calculateInformationSources(data, sorted){
   var sources = [
@@ -26,34 +33,6 @@ export function calculateInformationSources(data, sorted){
     "Water Quality Coalition",
   ];
 
-  // var colors = [
-  //   "#021837", "#031544", "#051050", "#07085B", "#150A67", "#260D71", "#3A117C", 
-  //   "#4F1586", "#65198F", "#682D99", "#6E40A2", "#7554AC", "#7E67B5", "#887BBF", 
-  //   "#958EC8", "#A3A2D2", "#B5B8DB"
-  // ];
-  // var colors = [
-  //   "#212011",
-  //   "#2C2D17",
-  //   "#35381D",
-  //   "#3D4323",
-  //   "#444F2A",
-  //   "#4A5A30",
-  //   "#4F6536",
-  //   "#53703D",
-  //   "#577B44",
-  //   "#59864A",
-  //   "#5B9151",
-  //   "#699759",
-  //   "#769C60",
-  //   "#83A268",
-  //   "#90A770",
-  //   "#9CAD78",
-  //   "#A8B280",
-  //   "#B2B888",
-  //   "#BDBD90",
-  //   "#C2BE98",
-  //   "#C7BFA0",
-  // ];
   var colors = 
   [
     "#002360",
@@ -93,6 +72,8 @@ export function calculateInformationSources(data, sorted){
     }
   }
 
+  sources[9] = "County Ag Commissioner"
+
   for(var k=0; k<totals.length; k++){
     modified_data.push({x: sources[k], y: totals[k], fill: colors[k]});
   }
@@ -106,34 +87,35 @@ export function calculateInformationSources(data, sorted){
 }
 
 function GetChart(props){
+  if(props.filtered_data.length === 0){
+    return (
+      <div className='dual-display-child'>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
   return(
         <div class='visualization-window'>
-          <VictoryChart height={props.height} width={props.width}
+          <VictoryChart height={height} width={width}
             animate={{
               duration: 500,               
             }}
-            domainPadding={{ x: props.margin.right/10, y: props.margin.top/10 }}
-            margin={{top: props.height/8, right: props.width/8, bottom: props.height/4, left: props.width/4 }}
-            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}  
-            containerComponent={
-              <VictoryZoomContainer
-                zoomDimension="x"
-              />
-            }
+            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            margin={{top: height/8, right: width/8, bottom: height/4, left: width/4 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
           >
 
             <VictoryBar horizontal
               data={props.info_data}
               sortKey = "y"
               style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
-              labels={({datum}) => datum.y}
+              labels={({datum}) => datum.y + " Respondents"}
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:props.fontSize, fontFamily: 'Roboto'
+                    fontSize:props.fontSize*1.5, fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={25}
-                  flyoutWidth={40}    
+                  constrainToVisibleArea={'true'}  
                 />
             }
             />
@@ -142,17 +124,17 @@ function GetChart(props){
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.5, padding: 5, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 50, fontFamily: 'Roboto'},
                 fontFamily: 'Roboto'
               }}
             />
             <VictoryAxis
-              label = {"Information Sources"}
+              label = {"Information Network Sources"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.2, padding: 1, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'},
                 fontFamily: 'Roboto'
               }}
@@ -168,33 +150,35 @@ function GetChart(props){
 }
 
 function GetUnsortedChart(props){
+  if(props.filtered_data.length === 0){
+    return (
+      <div className='dual-display-child'>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
         <div class='visualization-window'>
-          <VictoryChart height={props.height} width={props.width}
+          <VictoryChart height={height} width={width}
             animate={{
               duration: 500,               
             }}
-            domainPadding={{ x: props.margin.right/10, y: props.margin.top/10 }}
-            margin={{top: props.height/8, right: props.width/8, bottom: props.height/4, left: props.width/4 }}
-            padding={{ top: props.margin.top, bottom: props.margin.bottom, left: (props.width>=props.mobileWidth)?props.margin.left/1.5:props.margin.left*1.25, right: props.margin.right }}  
-            containerComponent={
-              <VictoryZoomContainer
-                zoomDimension="x"
-              />
-            }
+            domainPadding={{ x: margin.right/10, y: margin.top/10 }}
+            margin={{top: height/8, right: width/8, bottom: height/4, left: width/4 }}
+            padding={{ top: margin.top, bottom: margin.bottom, left: (width>=mobileWidth)?margin.left/1.5:margin.left*1.25, right: margin.right }}  
           >
 
             <VictoryBar horizontal
               data={props.info_data}
               style={{ data:  { fill: ({datum}) => datum.fill}, fontFamily: 'Roboto'}}
-              labels={({datum}) => datum.y}
+              labels={({datum}) => datum.y + " Respondents"}
               labelComponent={
                 <VictoryTooltip 
                   style={{
-                    fontSize:props.fontSize, fontFamily: 'Roboto'
+                    fontSize:props.fontSize*1.5, fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={25}
-                  flyoutWidth={40}    
+                  constrainToVisibleArea={'true'}  
                 />
             }
             />
@@ -203,17 +187,17 @@ function GetUnsortedChart(props){
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 5, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.5, padding: 5, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 50, fontFamily: 'Roboto'},
                 fontFamily: 'Roboto'
               }}
             />
             <VictoryAxis
-              label = {"Information Sources"}
+              label = {"Information Network Sources"}
               style={{
                 axis: {stroke: "#756f6a"},
                 ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: props.fontSize, padding: 0, fontFamily: 'Roboto'},
+                tickLabels: {fontSize: props.fontSize*1.2, padding: 1, fontFamily: 'Roboto'},
                 axisLabel: {fontSize: props.fontSize*2, padding: 350, fontFamily: 'Roboto'},
                 fontFamily: 'Roboto'
               }}
@@ -228,11 +212,51 @@ function GetUnsortedChart(props){
   )
 }
 
+function DetermineLabelText(activeVocation, activeCrop, activeRegion) {
+  var labelText = "Information Network"
+    if (activeCrop !== "All" || activeVocation !== "All") {
+      labelText += " for";
+    }
+    if (activeCrop !== "All") {
+      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
+        labelText += " " + activeCrop;
+      }
+    }
+    if (activeVocation !== "All") {
+      if (activeVocation === "Other") {
+        labelText += " Other Vocations";
+      } else {
+        labelText += " " + activeVocation;
+      }
+    }
+    if (activeRegion !== "All") {
+      if (activeRegion === "NSJV") {
+        labelText += " in the North San Joaquin Valley Region";
+      }
+      else if (activeRegion === "SSJV") {
+        labelText += " in the South San Joaquin Valley Region";
+      }
+      else {
+        labelText += " in the " + activeRegion + " Region";
+      }
+    }
+    return labelText
+}
+
+function DetermineFontSize() {
+  var fontSize = 15
+  const mobileFontSize = 6
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+  return fontSize
+}
+
 export function InfoSourcesBarChart(props) {
-
-    const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
-    const baseURL = "/results/Information%20Sources";
+    const baseURL = "/results/Information%20Network";
     const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
     const [activeVocation, setActiveVocation] = useState(filters.vocation);
     const [activeRegion, setActiveRegion] = useState(filters.region);
@@ -253,59 +277,12 @@ export function InfoSourcesBarChart(props) {
     if (!props.dataset) {
         return <pre>Loading...</pre>;
     }
-      
-    const crops = [ 
-      "Alfalfa", 
-      "Barley", 
-      "Corn", 
-      "Corn Silage", 
-      "Cotton", 
-      "Dry Beans", 
-      "Rice", 
-      "Small Grain Silage", 
-      "Sunflower", 
-      "Wheat"
-    ];
 
     var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data, true);
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-
-    var fontSize = 15
-    var mobileFontSize = 6
-    const mobileWidth = 1000;
-    const laptopWidth = 1500;
-    if(width < laptopWidth){
-      fontSize = mobileFontSize*2
-    }
-    if(width < mobileWidth){
-      fontSize = mobileFontSize;
-    }
-
-    var labelText = "Information Sources"
-    if (activeCrop !== "All" || activeVocation !== "All") {
-      labelText += " for";
-    }
-    if (activeCrop !== "All") {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        labelText += " " + activeCrop;
-      }
-    }
-    if (activeVocation !== "All") {
-      if (activeVocation === "Other") {
-        labelText += " " + "Other Vocations";
-      } else {
-        labelText += " " + activeVocation;
-      }
-    }
-    if (activeRegion !== "All") {
-      labelText += " in the " + activeRegion + " Region";
-    }
+    var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
+    var fontSize = DetermineFontSize()
 
     return (
       <>
@@ -315,15 +292,13 @@ export function InfoSourcesBarChart(props) {
         <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
-        <GetChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
+        <GetChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data}/>
       </>
     );
 }
 
 export function InfoSourcesBarChartCompare(props) {
-  const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
-
-  const baseURL = "/results/compare/Information%20Sources";
+  const baseURL = "/results/compare/Information%20Network";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
   const [activeRegion, setActiveRegion] = useState(filters.region);
@@ -357,103 +332,37 @@ export function InfoSourcesBarChartCompare(props) {
     setActiveCrop2(newValue);
   }  
 
-    if (!props.dataset) {
-        return <pre>Loading...</pre>;
-    }
-    
-    const crops = [ 
-      "Alfalfa", 
-      "Barley", 
-      "Corn", 
-      "Corn Silage", 
-      "Cotton", 
-      "Dry Beans", 
-      "Rice", 
-      "Small Grain Silage", 
-      "Sunflower", 
-      "Wheat"
-    ];
+  if (!props.dataset) {
+      return <pre>Loading...</pre>;
+  }
 
-    var labelText = "Information Sources"
-    if (activeCrop !== "All" || activeVocation !== "All") {
-      labelText += " for";
-    }
-    if (activeCrop !== "All") {
-      if (activeVocation !== "Allied Industry" && activeVocation !== "Other") {
-        labelText += " " + activeCrop;
-      }
-    }
-    if (activeVocation !== "All") {
-      if (activeVocation === "Other") {
-        labelText += " " + "Other Vocations";
-      } else {
-        labelText += " " + activeVocation;
-      }
-    }
-    if (activeRegion !== "All") {
-      labelText += " in the " + activeRegion + " Region";
-    }
+  var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
+  var filtered_data = filterByVocation(data, activeVocation);
+  var info_data = calculateInformationSources(filtered_data, false);
+  var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
 
-    var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
-    var filtered_data = filterByVocation(data, activeVocation);
-    var info_data = calculateInformationSources(filtered_data, false);
+  var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
+  var filtered_data2 = filterByVocation(data2, activeVocation2);
+  var info_data2 = calculateInformationSources(filtered_data2, false);
+  var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
 
-    var labelText2 = "Information Sources"
-    if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-      labelText2 += " for";
-    }
-    if (activeCrop2 !== "All") {
-      if (activeVocation2 !== "Allied Industry" && activeVocation2 !== "Other") {
-        labelText2 += " " + activeCrop2;
-      }
-    }
-    if (activeVocation2 !== "All") {
-      if (activeVocation2 === "Other") {
-        labelText2 += " " + "Other Vocations";
-      } else {
-        labelText2 += " " + activeVocation2;
-      }
-    }
-    if (activeRegion2 !== "All") {
-      labelText2 += " in the " + activeRegion2 + " Region";
-    }
+  var fontSize = DetermineFontSize()
 
-    var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
-    var filtered_data2 = filterByVocation(data2, activeVocation2);
-    var info_data2 = calculateInformationSources(filtered_data2, false);
+  return (
+    <>
+      <div id='vis-question-label'>
+        <h2>Who do you communicate with when seeking information about field crop production?</h2>
+      </div>
 
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-    const height = vw*0.5;
-    const width = vw;
-    const margin = { top: height/8, right: width/8, bottom: height/4, left: width/4 };
-
-    var fontSize = 15
-    var mobileFontSize = 6
-    const mobileWidth = 1000;
-    const laptopWidth = 1500;
-    if(width < laptopWidth){
-      fontSize = mobileFontSize*2
-    }
-    if(width < mobileWidth){
-      fontSize = mobileFontSize;
-    }
-
-    return (
-      <>
-        <div id='vis-question-label'>
-          <h2>Who do you communicate with when seeking information about field crop production?</h2>
+      <div className='dual-display'>
+        <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
+        <div id="vis-a">
+          <GetUnsortedChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data}/>
         </div>
-
-        <div className='dual-display'>
-          <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
-          <div id="vis-a">
-            <GetUnsortedChart labelText={labelText} info_data={info_data} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data}/>
-          </div>
-          <div id="vis-b">
-            <GetUnsortedChart labelText={labelText2} info_data={info_data2} width={width} height={height} fontSize={fontSize} margin={margin} mobileWidth={mobileWidth} filtered_data={filtered_data2}/>
-          </div>
-        </div>        
-      </>
-    );
+        <div id="vis-b">
+          <GetUnsortedChart labelText={labelText2} info_data={info_data2} fontSize={fontSize} filtered_data={filtered_data2}/>
+        </div>
+      </div>        
+    </>
+  );
 }

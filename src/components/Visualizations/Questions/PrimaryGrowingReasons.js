@@ -1,67 +1,73 @@
-import {filterByCropOrRegion, filterByVocation, parseCropURLCompare, parseURLCompare} from "../UseData.js";
-import {VictoryPie, VictoryLegend, VictoryTooltip} from 'victory';
+import {filterByCropOrRegion, filterByVocation, parseCropURLCompare} from "../UseData.js";
+import {VictoryTooltip, VictoryChart, VictoryAxis, VictoryBar, VictoryLabel} from 'victory';
 import {OnlyCrops, OnlyCropsCompare} from "../Menus/OnlyCrops.js"
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import "typeface-abeezee";
+const colorScale = 
+[
+  "#002360", 
+  "#003F72",
+  "#006083",
+  "#008694",
+  "#00A498", 
+  "#02B488",
+  "#29C37A",
+  "#52D176", 
+  "#7ADE7F",
+  "#A9E9A3",
+  "#C3EFB8",
+  "#D8F4CC"
+]
 
-export function calculateAllPrimaryGrowingReasons(data, filter) {
-    var columns = ["Alfalfa_Growing_Reasons", "Cotton_Growing_Reasons", "Rice_Growing_Reasons", "Wild_Rice_Growing_Reasons", "Wheat_Growing_Reasons", "Triticale_Growing_Reasons",	
-                  "Barley_Growing_Reasons",	"Oats_Growing_Reasons",	"Corn_Growing_Reasons",	"Sorghum_Growing_Reasons",	"Corn_Silage_Growing_Reasons", "Small_Grain_Silage_Growing_Reasons",
-                  "Small_Grain_Hay_Growing_Reasons", "Grass_and_Grass_Mixtures_Hay_Growing_Reasons",	"Grass_and_Grass_Mixtures_Pasture_Growing_Reasons",	"Sorghum_Sudangrass_Sudan_Growing_Reasons",	
-                  "Mixed_Hay_Growing_Reasons", "Dry_Beans_Growing_Reasons",	"Sunflower_Growing_Reasons", "Oilseeds_Growing_Reasons", "Sugar_Beets_Growing_Reasons", "Hemp_Growing_Reasons", "Other_Growing_Reasons"]
-  
-    const myMap = new Map()
-    if (filter === "All" || filter === "") {
-      var new_modified_data = []
-      for (var col in columns) {
-        var modified_data = calculatePrimaryGrowingReasons(data, columns[col])
-        for (var item in modified_data) {
-          let key_data = modified_data[item].x
-          let value_data = modified_data[item].y
-          if (key_data !== "NA") {
-            myMap.has(key_data) ? myMap.set(key_data, myMap.get(key_data) + value_data) : myMap.set(key_data, value_data)
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const mobileWidth=1000;
+const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
+const fontSize = (width >= mobileWidth) ? 18: 10;
+
+function calculateAllPrimaryGrowingReasons(data, filter) {
+
+  var columns = [filter.split(' ').join('_') + "_Growing_Reasons"]
+  let modified_data = [];
+  if(filter === "All"){
+    columns = ["Alfalfa_Growing_Reasons", "Cotton_Growing_Reasons", "Rice_Growing_Reasons", "Wild_Rice_Growing_Reasons", "Wheat_Growing_Reasons", "Triticale_Growing_Reasons",    
+                "Barley_Growing_Reasons",    "Oats_Growing_Reasons",    "Corn_Growing_Reasons",    "Sorghum_Growing_Reasons",    "Corn_Silage_Growing_Reasons", "Small_Grain_Silage_Growing_Reasons",
+                "Small_Grain_Hay_Growing_Reasons", "Grass_and_Grass_Mixtures_Hay_Growing_Reasons",    "Grass_and_Grass_Mixtures_Pasture_Growing_Reasons",    "Sorghum_Sudangrass_Sudan_Growing_Reasons",    
+                "Mixed_Hay_Growing_Reasons", "Dry_Beans_Growing_Reasons",    "Sunflower_Growing_Reasons", "Oilseeds_Growing_Reasons", "Sugar_Beets_Growing_Reasons", "Hemp_Growing_Reasons", "Other_Growing_Reasons"]
+  } 
+
+ const myMap = new Map()
+
+ data.forEach(farmer => {
+  const reasons = new Set(); 
+  columns.forEach(crop =>{
+    farmer[crop].split(",").forEach(reason => {
+      if((String(reason) !== "NA") && (String(reason) !== "")){
+        if(reason === "I am limited by farm resources to grow other crops (equipment" || reason ===  " water" || reason ===  " land" || reason === " capital" || reason === " know-how" || reason === " etc.)"){
+          if(!reasons.has("Limited by farm resources")){
+            reasons.add("Limited by farm resources")
+          } 
+        }else{
+          if(!reasons.has(reason)){
+            reasons.add(reason)
           }
         }
       }
-      
-      for (const [key, value] of myMap) {
-        new_modified_data.push({x: key, y: value});
-      }
-      return new_modified_data
-    } else {
-      var new_filter = filter.split(' ').join('_') + "_Growing_Reasons"
-      return calculatePrimaryGrowingReasons(data, new_filter)
-    }
+    });
+    //console.log(reasons)
+  });
+  reasons.forEach(reason => {
+    //console.log(reasons)
+    myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)
+  })
+ });
+ for (const [key, value] of new Map([...myMap].sort())) {
+    modified_data.push({x: key, y: value});
   }
-  
-  export function calculatePrimaryGrowingReasons(data, filter) {
-    var modified_data = []
-    const myMap = new Map()
-    for (var farmer in data) {
-      const reasons = String(data[farmer][filter]).split(',')
-      for (var reason in reasons) {
-        var key = reasons[reason]
-        if (key === " water" || key === " land" || key === " capital" || key === " know-how" || key === " etc.)" || key === "I am limited by farm resources to grow other crops (equipment") {
-          key = "Limited by farm resources"
-        }
-        if (key !== "NA") {
-          myMap.has(key) ? myMap.set(key, myMap.get(key) + 1) : myMap.set(key, 1)
-        }
-      }
-    }
-  
-    for (const [key, value] of new Map([...myMap].sort())) {
-      if (key === "Limited by farm resources") {
-        modified_data.push({x: key, y: value/6});
-      } else {
-        modified_data.push({x: key, y: value});
-      }
-    }
-  
-    return modified_data
-  }
+ return modified_data;
+}
 
 function parseURL(baseURL, path) {
   var pathname = path;
@@ -101,60 +107,109 @@ function parseURL(baseURL, path) {
   return {crop: crop, region: region, baseAll: baseAll};
 }
   
+function DetermineTitleText(activeCrop, activeRegion) {
+  var titleText = "";
+  if (activeRegion !== "All") {
+    titleText += " " + activeRegion;
+  }
+  if (activeCrop === "All") {
+    if (activeRegion === "All") {
+      titleText += "All";
+    }
+    titleText += " Crops"
+  } else {
+    titleText +=  " " + activeCrop;
+  }
+  return titleText;
+}
 
 function GetChart(props){
-  var toolTipFontSize = props.fontSize * 4
-  return(
-    <div class='visualization-window'>
-          <div class='flex-parent'>
-            <div class='flex-child'>
-                <VictoryLegend      
-                  x={150}
-                  y={0}     
-                    colorScale={props.colorScale}
-                    gutter={20}
-                    style={{labels: {fill: "black", fontFamily: 'Roboto', fontSize: 12}, 
-                            title:  {fontFamily: 'Roboto', fontSize: 12},
-                            data:   {stroke: "black", strokeWidth: 1}}}
-                    title={String(props.titleText + " (n=" + props.n + ")")}
-                    centerTitle
-                    data={props.legend_data}
+    if(props.data_filtered.length === 0){
+      return (
+        <>
+          <p>Insufficient data for this set of filters. (n=0)</p>         
+        </>
+        )
+    }
+    return(
+      <>
+      <div class='visualization-window'>
+            <VictoryChart horizontal={false} height={height} width={width}
+              domainPadding={{ x: margin.right/5.3, y: margin.top }}
+              padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}
+              animate={{duration: 800}}
+            >
+            <VictoryBar
+              data={props.data_by_reason}
+              alignment="middle"
+              style={{ data:  { fill: ({datum}) => datum.fill, strokeWidth: 1, stroke: 'black'}}}
+              labels={({ datum }) => `${datum.y + " Respondents"}`}
+              labelComponent={
+                <VictoryTooltip 
+                  style={{
+                    fontSize: fontSize,
+                    fontFamily: 'Roboto'
+                  }}
+                  constrainToVisibleArea={'true'}    
                 />
-                </div>
-                <div class='flex-child'>
-                <VictoryPie
-                    animate={{
-                      duration: 500,               
-                    }}
-                    width={props.width}
-                    height={props.height/2}
-                    padding={{
-                      left: props.margin.left,
-                        right: props.margin.right,
-                        bottom: props.margin.bottom,
-                        top: props.margin.top
-                    }}
-                    style={{ data: { stroke: "black", strokeWidth: 1}}}
-                    colorScale={props.colorScale}
-                    data={props.data_by_reason}
-                    labels={({ datum }) => `${datum.x}: ${datum.y}`}
-                    labelComponent={<VictoryTooltip 
-                        style={{
-                          fontSize: toolTipFontSize,
-                          fontFamily: 'Roboto'
-                        }}
-                        constrainToVisibleArea={'true'}    
-                    />}
-                />
-            </div>
-        </div>
+            }
+            />
+            <VictoryAxis dependentAxis
+            label = {String(props.titleText + " (n=" + props.data_filtered.length + ")")}
+            style={{
+              fontFamily: 'Roboto',
+              tickLabels: {fontSize: fontSize*1.5, padding: 15, fontFamily: 'Roboto'},
+              axisLabel: {fontSize: fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 80: 50}
+            }}
+            
+            />
+            <VictoryAxis
+              style={{
+                tickLabels: {fontSize: fontSize*5, padding: 5, fontFamily: 'Roboto'},
+                axisLabel: {fontSize: fontSize*5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
+                }}
+                tickLabelComponent={       
+                  <VictoryLabel    
+                      textAnchor="start"
+                      angle={25}
+                      style={{fontSize: (width >= mobileWidth) ? fontSize*1.25: fontSize}}
+                  />   
+                }
+            />                        
+          </VictoryChart>
       </div>
+    </>
     )
 }
 
+function AdjustColorAndNames(data_by_reason) {
+  var counter = colorScale.length - 1;
+  for (var obj of data_by_reason) {
+    if(obj.x === "Soil is not suitable for other crops") {
+      obj.x = "Soil unsuitable for other crops"
+    }
+    if (obj.x === "Capacity for deficit irrigation or fallowing") {
+      obj.x = "Capacity for deficit irrigation/fallowing"
+    }
+    if (obj.x === "Crop is traditionally grown on my farm") {
+      obj.x = "Traditionally grown crop on farm"
+    }
+    if (obj.x === "Suitability for saline/alkaline soils") {
+      obj.x = "Saline/alkaline soils"
+    }
+    if (obj.x === "Crop Rotation Benefits") {
+      obj.x = "Crop rotation benefits"
+    }
+    if (obj.x === "Stable Markets") {
+      obj.x = "Stable markets"
+    }
+    obj.fill = colorScale[counter];
+    counter--;
+  }
+  return data_by_reason
+}
 
-export function PrimaryGrowingReasons(props) {
-    
+export function PrimaryGrowingReasons(props) { 
   const baseURL = "/results/Growing%20Reasons";
   const filter = parseURL(baseURL, useLocation().pathname);
 
@@ -173,74 +228,10 @@ export function PrimaryGrowingReasons(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Why Grow";
-  if (activeRegion !== "All") {
-    titleText += " " + activeRegion;
-  }
-  if (active === "All") {
-    titleText += " Crops"
-  } else {
-    titleText +=  " " + active;
-  }
-  titleText += "?";
-
+  var titleText = DetermineTitleText(active, activeRegion);
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
-  var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
-  var legend_data = []
-  //var n = 0
+  var data_by_reason = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered, active))
 
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw;
-  const width = vw;
-  var fontSize = 12
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-
-  for (var i = 0; i < data_by_reason.length; i++) {
-      legend_data.push({name: data_by_reason[i].x})
-  }
-  var n = data_filtered.length;
-
-  // const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
-  //const colorScale = ["#00876c", "#4d9a70", "#7aac77", "#a2bd83", "#c9ce93", "#eee0a9", "#eac487", "#e7a66c", "#e38759", "#dd6551", "#d43d51"]
-    // var colorScale = [
-
-    //   "#35381D",
-    //   "#444F2A",
-    //   "#4F6536",
-    //   "#577B44",
-    //   "#5B9151",
-    //   "#769C60",
-    //   "#90A770",
-    //   "#A8B280",
-    //   "#BDBD90",
-    //   "#C7BFA0",
-    // ];
-
-    var colorScale = 
-    [
-      "#002360", 
-      "#003F72",
-      "#006083",
-      "#008694",
-      "#00A498", 
-      "#02B488",
-      "#29C37A",
-      "#52D176", 
-      "#7ADE7F",
-      "#A9E9A3",
-      "#C3EFB8",
-      "#D8F4CC"
-    ]
   return (
     <>
     <div id='vis-question-label'>
@@ -249,14 +240,12 @@ export function PrimaryGrowingReasons(props) {
     <div className="inline-child">
       <OnlyCrops changeFunc={changeFunc} changeRegionFunc={changeRegionFunc} active={active} activeRegion={activeRegion} baseAll={filter.baseAll}/>
     </div>
-
-    <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
+      <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
     </>  
   );
 }
 
 export function PrimaryGrowingReasonsCompare(props) {
-    
   const baseURL = "/results/compare/Growing%20Reasons";
   const filter = parseCropURLCompare(baseURL, useLocation().pathname, ["All"]);
   const [active, setActive] = useState(filter.crop1);
@@ -284,94 +273,29 @@ export function PrimaryGrowingReasonsCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  var titleText = "Why Grow";
-  if (activeRegion1 !== "All") {
-    titleText += " " + activeRegion1;
-  }
-  if (active === "All") {
-    titleText += " Crops"
-  } else {
-    titleText +=  " " + active;
-  }
-  titleText += "?";
-
+  var titleText = DetermineTitleText(active, activeRegion1);
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion1), "Growers")
-  var data_by_reason = calculateAllPrimaryGrowingReasons(data_filtered, active)
-  var legend_data = []
-  var n = 0
+  var data_by_reason = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered, active))
 
-  var titleText2 = "Why Grow";
-  if (activeRegion2 !== "All") {
-    titleText2 += " " + activeRegion2;
-  }
-  if (active2 === "All") {
-    titleText2 += " Crops"
-  } else {
-    titleText2 +=  " " + active2;
-  }
-  titleText2 += "?";
-
+  var titleText2 = DetermineTitleText(active2, activeRegion2);
   var data_filtered2 = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active2), activeRegion2), "Growers")
-  var data_by_reason2 = calculateAllPrimaryGrowingReasons(data_filtered2, active2)
-  var legend_data2 = []
-  var n2 = 0
+  var data_by_reason2 = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered2, active2))
 
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw;
-  const width = vw;
-  var fontSize = 15
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-
-  for (var i = 0; i < data_by_reason.length; i++) {
-      legend_data.push({name: data_by_reason[i].x})
-  }
-  n = data_filtered.length;
-
-  for (var i = 0; i < data_by_reason2.length; i++) {
-    legend_data2.push({name: data_by_reason2[i].x})
-  }
-  n2 = data_filtered2.length;
-
-    var colorScale = 
-    [
-      "#002360", 
-      "#003F72",
-      "#006083",
-      "#008694",
-      "#00A498", 
-      "#02B488",
-      "#29C37A",
-      "#52D176", 
-      "#7ADE7F",
-      "#A9E9A3",
-      "#C3EFB8",
-      "#D8F4CC"
-    ]
   return (
     <>
     <div id='vis-question-label'>
       <h2>What are the primary reasons you grow the following field crops?</h2>
     </div>
     
-      <div className='dual-display'>
-          <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} changeRegion1Func={changeRegion1Func} changeRegion2Func={changeRegion2Func} active={active} active2={active2} activeRegion1={activeRegion1} activeRegion2={activeRegion2} baseAll={filter.baseAll}/>
-          <div id="vis-a">
-            <GetChart titleText={titleText} mobileWidth={mobileWidth} width={width} height={height} n={n} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason} colorScale={colorScale} legend_data={legend_data}/>
-          </div>
-          <div id="vis-b">
-            <GetChart titleText={titleText2} mobileWidth={mobileWidth} width={width} height={height} n={n2} fontSize={fontSize} margin={margin} data_by_reason={data_by_reason2} colorScale={colorScale} legend_data={legend_data2}/>
-          </div>
-      </div>
+    <div className='dual-display'>
+        <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} changeRegion1Func={changeRegion1Func} changeRegion2Func={changeRegion2Func} active={active} active2={active2} activeRegion1={activeRegion1} activeRegion2={activeRegion2} baseAll={filter.baseAll}/>
+        <div id="vis-a">
+          <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
+        </div>
+        <div id="vis-b">
+          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} data_filtered={data_filtered2}/>
+        </div>
+    </div>
     </>  
   );
 }

@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Visualizations } from "../Pages/Visualization";
-
 
 const StyledUl = styled.ul`
   list-style-type: none;
@@ -53,6 +51,13 @@ const DropDownContent = styled.div`
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  @media (max-width: 1200px) {
+    min-width: 100px;
+  }
+
+  @media (max-width: 420px) {
+    min-width: 80px;
+  }
 `;
 
 const DropDownLi = styled(StyledLi)`
@@ -77,40 +82,15 @@ const SubA = styled.a`
   &:hover {
     background-color: #f1f1f1;
   }
-  @media (max-width: 950px) {
-    padding: 15px 40px;
-    font: 15px Metropolis, sans-serif;
-    font-weight: 800;
+  @media (max-width: 1200px) {
+    padding: 5px 10px;
+    font-size: 8px;
   }
 
-  @media (max-width: 675px) {
-    padding: 10px 20px;
-    font: 10px Metropolis, sans-serif;
-    font-weight: 800;
+  @media (max-width: 420px) {
+    padding: 5px 8px;
+    font-size: 6px;
   }
-
-  @media (max-width: 380px) {
-    padding: 10px 10px;
-  }
-`;
-
-const Tab = styled.button`
-  padding: 35px 60px;
-  cursor: pointer;
-  font-size: 25px;
-  font-family: Public Sans,sans-serif; 
-  opacity: 0.7;
-  background: white;
-  border: 0;
-  outline: 0;
-  &:hover {
-    background-color: #f1f1f1;
-  }
-  ${({active}) => 
-  active && `
-  border-bottom: 2px solid black;
-  opacity: 1;
-  `}
 `;
 
 const TabHome = styled.button`
@@ -122,7 +102,7 @@ font-family: Public Sans, sans-serif;
 background: #A6B78C;
 text-decoration: none;
 color: white;
-font-size: 16px;
+font-size: 20px;
 position: relative;
 transition: background-color .6s ease;
 overflow: hidden;
@@ -211,33 +191,4 @@ const TabVisualizations = styled.button`
   }
 `;
 
-const Button = styled.button`
-  background-color: black;
-  color: white;
-  font-size: 20px;
-  padding: 10px 60px;
-  border-radius: 5px;
-  margin: 10px 0px;
-  cursor: pointer;
-  box-shadow: 0px 2px 2px lightgray;
-  &:disabled{
-    color: grey;
-    opacity: 0.7;
-  }
-`;
-
-const ButtonSwitch = styled(Button)`
-  opacity: 0.7;
-  ${({ active }) =>
-    active &&
-    `
-    opacity: 1;
-  `}
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-`;
-
-
-export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, Tab, Button, ButtonGroup, ButtonSwitch, TabVisualizations, TabHome};
+export {StyledUl, DropDownLi, Dropbtn, DropDownContent, SubA, TabVisualizations, TabHome};

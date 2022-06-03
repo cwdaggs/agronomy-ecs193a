@@ -1,17 +1,10 @@
 npm install react-scripts --save
-npm install react-pro-sidebar
 npm install react-icons --save
 npm install d3 --save
 npm install victory
-npm install react-button --save
-npm install react-bootstrap-validation --save
-npm install --save react-simple-maps
-npm install @fontsource/metropolis
-npm install @fontsource/newsreader
 npm install survey-react --save
 npm install react-router-dom@6
 npm install @react-spring/parallax
 npm i react-google-login
 npm install @emailjs/browser --save
-npm i -s react-ga
 npm install bad-words --save

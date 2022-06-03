@@ -1,11 +1,36 @@
-import {VictoryLegend, VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
-import {sort_by_very, filterByCropOrRegion, filterByVocation, parseURLCompare, filterByCrop, filterByRegion} from '../UseData.js'
+import {VictoryBar, VictoryChart, VictoryStack, VictoryAxis, VictoryLabel, VictoryTooltip } from 'victory';
+import {sort_by_very, filterByVocation, parseURLCompare, filterByCrop, filterByRegion} from '../UseData.js'
 import {useState} from 'react';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
-import "typeface-abeezee";
 import { parseURL } from '../UseData.js';
 import { useLocation } from 'react-router-dom';
 import "./Legends.css";
+
+const vocationArray = ["All", "Growers", "Consultants"];
+const colorScale = 
+  [  
+    "#003F72",   
+    "#00728C",
+    "#00A498",
+    "#01AC90",
+    "#02B488",
+    "#15BC80",
+    "#29C37A",
+    "#3DCA77",
+    "#52D176",
+    "#66D779",
+    "#7ADE7F",
+    "#8FE48F",
+    "#A9E9A3",
+    "#C3EFB8",
+    "#D8F4CC"
+  ]
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const height = vw*0.5;
+const width = vw;
+const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
+const mobileWidth = 1000;
+const laptopWidth = 1500;
 
 export function calculateValueEach(data, filter, answer){
   var total = 0
@@ -27,7 +52,28 @@ export function calculateValueEach(data, filter, answer){
 }
 
 function GetChart(props){
-  var fontSize = props.fontSize
+  if(props.data.length === 0){
+    return (
+
+      <div className='dual-display-child'>
+        <div id="vis-legend">
+          <div id="legend-title">
+            {props.titleText}
+          </div>
+            <div id="legend-values">
+            <div className='legend-circle' id="three-color-first"></div>
+            <span className='legend-value'>Very Valuable</span>
+            <div className='legend-circle' id="three-color-second"></div>
+            <span className='legend-value'>Somewhat Valuable</span>
+            <div className='legend-circle' id="three-color-third"></div>
+            <span className='legend-value'>Not Valuable</span>
+            </div>
+        </div>
+        <p>Insufficient data for this set of filters. (n=0)</p>         
+      </div>
+      )
+  }
+
   return(
     <div className='dual-display-child'>
       <div id="vis-legend">
@@ -49,29 +95,28 @@ function GetChart(props){
           animate={{
               duration: 500,               
           }}
-          height={props.height} 
-          width={props.width}
-          domainPadding={{ x: props.margin.right/4, y: props.margin.top/10 }}
-          padding={{ top: (props.width>=props.mobileWidth)?props.margin.top:props.margin.top*2, bottom: props.margin.bottom, left: props.margin.left/1.5, right: (props.width>=props.mobileWidth)?props.margin.right:props.margin.right/2 }} 
+          height={height} 
+          width={width}
+          domainPadding={{ x: margin.right/4, y: margin.top/10 }}
+          padding={{ top: (width>=mobileWidth)?margin.top:margin.top*2, bottom: margin.bottom, left: margin.left/1.5, right: (width>=mobileWidth)?margin.right:margin.right/2 }} 
         >
           <VictoryStack
             style={{
                 data: { stroke: "black", strokeWidth: 0.2, fontFamily: 'Roboto'}
             }}
-            colorScale={props.colorScale}
+            colorScale={colorScale}
           >
             {props.dataset_final.map((data, i) => {
               return <VictoryBar 
                 data={data} 
                 key={i} 
-                labels={({datum}) => Math.round(datum.y) + "%"}
+                labels={({datum}) => datum.concern + ": " + Math.round(datum.y) + "%"}
                 labelComponent={
                     <VictoryTooltip 
                       style={{
                         fontSize:props.fontSize, fontFamily: 'Roboto'
                       }}
-                      flyoutHeight={25}
-                      flyoutWidth={40}    
+                      constrainToVisibleArea={'true'}    
                     />
                 }/>;
             })}
@@ -95,8 +140,8 @@ function GetChart(props){
             tickLabelComponent={       
               <VictoryLabel    
                 textAnchor="start"
-                style={{fill: "white", fontSize: fontSize}}
-                dx={fontSize}
+                style={{fill: "white", fontSize: props.fontSize}}
+                dx={props.fontSize}
                 events={{onClick: (evt) => console.log(evt)}}
               />   
             }
@@ -159,9 +204,45 @@ function calculateAverageResponses(dataset) {
   return Math.round(sum / totals.length);
 }
 
-export function AmountVictory(props) {
-  const vocationArray = ["All", "Growers", "Consultants"];
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
+  var titleText = "Level of Value";
+  if (activeCrop !== "All" || activeVocation !== "All") {
+    titleText += " for";
+  }
+  if (activeCrop !== "All") {
+    titleText += " " + activeCrop;
+  }
+  if (activeVocation !== "All") {
+    titleText += " " + activeVocation;
+  }
+  if (activeRegion !== "All") {
+    if (activeRegion === "NSJV") {
+      titleText += " in the North San Joaquin Valley Region";
+    }
+    else if (activeRegion === "SSJV") {
+      titleText += " in the South San Joaquin Valley Region";
+    }
+    else {
+      titleText += " in the " + activeRegion + " Region";
+    }
+  }
+  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  return titleText
+}
 
+function DetermineFontSize() {
+  var fontSize = 20
+  const mobileFontSize = 6
+  if(width < laptopWidth){
+    fontSize = mobileFontSize*2
+  }
+  if(width < mobileWidth){
+    fontSize = mobileFontSize;
+  }
+  return fontSize
+}
+
+export function AmountVictory(props) {
   const baseURL = "/results/Value%20Assessment";
   const filters = parseURL(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -184,83 +265,12 @@ export function AmountVictory(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
-  var titleText = "Level of Value";
-  if (activeCrop !== "All" || activeVocation !== "All") {
-    titleText += " for";
-  }
-  if (activeCrop !== "All") {
-    titleText += " " + activeCrop;
-  }
-  if (activeVocation !== "All") {
-    titleText += " " + activeVocation;
-  }
-  if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
-  }
-
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/16, right: width/8, bottom: height/4, left: width/4 };
-
-  var fontSize = 18
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-
-  // const colorScale = ["#003f5c",
-  //   "#bc5090",
-  //   "#ffa600"];
-
-  // var colorScale = [   
-  //   "#577B44",  
-  //   "#90A770",
-  //   "#C7BFA0",
-  // ];
-  var colorScale = 
-  [  
-    "#003F72",   
-    "#00728C",
-    "#00A498",
-    "#01AC90",
-    "#02B488",
-    "#15BC80",
-    "#29C37A",
-    "#3DCA77",
-    "#52D176",
-    "#66D779",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-  const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted)
+  var fontSize = DetermineFontSize()
 
   return (
     <>
@@ -270,14 +280,12 @@ export function AmountVictory(props) {
     <div className="inline-child">
     <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
     </div>
-    <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+    <GetChart dataset_final={dataset_final} fontSize={fontSize} titleText={titleText} data={data_filtered}/>
     </>
   );
 }
 
 export function AmountVictoryCompare(props) {
-  const vocationArray = ["All", "Growers", "Consultants"];
-
   const baseURL = "/results/compare/Value%20Assessment";
   const filters = parseURLCompare(baseURL, useLocation().pathname, vocationArray);
   const [activeVocation, setActiveVocation] = useState(filters.vocation);
@@ -316,97 +324,19 @@ export function AmountVictoryCompare(props) {
       return <pre>Loading...</pre>;
   }
 
-  const crops = [
-    "Alfalfa", 
-    "Barley", 
-    "Corn", 
-    "Corn Silage", 
-    "Cotton", 
-    "Dry Beans", 
-    "Rice", 
-    "Small Grain Silage", 
-    "Sunflower", 
-    "Wheat"
-  ];
-
-  var titleText = "Level of Value";
-  if (activeCrop !== "All" || activeVocation !== "All") {
-    titleText += " for";
-  }
-  if (activeCrop !== "All") {
-    titleText += " " + activeCrop;
-  }
-  if (activeVocation !== "All") {
-    titleText += " " + activeVocation;
-  }
-  if (activeRegion !== "All") {
-    titleText += " in the " + activeRegion + " Region";
-  }
-
+  // Data previously sorted by very after by_value
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
-  // var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_by_value)
-  titleText += " (n = " + calculateAverageResponses(data_by_value) + ")";
-
-
-  var titleText2 = "Level of Value";
-  if (activeCrop2 !== "All" || activeVocation2 !== "All") {
-    titleText2 += " for";
-  }
-  if (activeCrop2 !== "All") {
-    titleText2 += " " + activeCrop2;
-  }
-  if (activeVocation2 !== "All") {
-    titleText2 += " " + activeVocation2;
-  }
-  if (activeRegion2 !== "All") {
-    titleText2 += " in the " + activeRegion2 + " Region";
-  }
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_value)
 
   var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2)
   var data_by_value2 = calculateValueTotalsForEachElement(data_filtered2)
-  // var data_sorted2 = sort_by_very(data_by_value2)
   const dataset_final2 = transformData(data_by_value2)
-  titleText2 += " (n = " + calculateAverageResponses(data_by_value2) + ")";
-
-
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const height = vw*0.5;
-  const width = vw;
-  const margin = { top: height/20, right: width/16, bottom: height/8, left: width/5 };
-
-  var fontSize = 25
-  var mobileFontSize = 6
-  const mobileWidth = 1000;
-  const laptopWidth = 1500;
-  if(width < laptopWidth){
-    fontSize = mobileFontSize*2.5
-  }
-  if(width < mobileWidth){
-    fontSize = mobileFontSize;
-  }
-  var colorScale = 
-  [  
-    "#003F72",   
-    "#00728C",
-    "#00A498",
-    "#01AC90",
-    "#02B488",
-    "#15BC80",
-    "#29C37A",
-    "#3DCA77",
-    "#52D176",
-    "#66D779",
-    "#7ADE7F",
-    "#8FE48F",
-    "#A9E9A3",
-    "#C3EFB8",
-    "#D8F4CC"
-  ]
-  const legend_data = [{name: "Very Valuable"}, {name: "Somewhat Valuable"}, {name: "Not Valuable"}]
-
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_value2)
+  
+  var fontSize = DetermineFontSize()
+  
   return (
     <>
       <div id='vis-question-label'>
@@ -416,10 +346,10 @@ export function AmountVictoryCompare(props) {
       <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText}/>
+          <GetChart dataset_final={dataset_final} fontSize={fontSize} titleText={titleText} data={data_filtered}/>
         </div>
         <div id="vis-b">
-          <GetChart legend_data={legend_data} dataset_final={dataset_final2} fontSize={fontSize} margin={margin} width={width} height={height} colorScale={colorScale} titleText={titleText2}/>
+          <GetChart dataset_final={dataset_final2} fontSize={fontSize} titleText={titleText2} data={data_filtered2}/>
         </div>
       </div>   
     </>

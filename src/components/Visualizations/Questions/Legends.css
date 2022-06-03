@@ -7,7 +7,7 @@
     width: 15px;
     height: 15px;
     border-radius: 15px;
-    margin-top: 8px;
+    margin-top: 10px;
     border: 1px solid #000000;
 }
   
@@ -16,6 +16,11 @@
     padding: 10px;
 }
   
+#legend-title {
+    font-family: 'Roboto';
+    padding-top: 20px;
+}
+
 #three-color-first {
     background-color: #003F72;
 }
@@ -51,7 +56,7 @@
 .legend-square {
     width: 15px;
     height: 15px;
-    margin-top: 8px;
+    margin-top: 10px;
     border: 1px solid #000000;
 }
 
@@ -76,17 +81,21 @@
         width: 10px;
         height: 10px;
         border-radius: 10px;
-        margin-top: 9px;
+        margin-top: 12px;
     }
       
     .legend-square {
         width: 10px;
         height: 10px;
-        margin-top: 9px;
+        margin-top: 12px;
     }
 
     #vis-legend {
         font-size: small;
+    }
+
+    #legend-title {
+        padding-top: 12px;
     }
 }
 
@@ -95,13 +104,13 @@
         width: 8px;
         height: 8px;
         border-radius: 8px;
-        margin-top: 3px;
+        margin-top: 5px;
     }
 
     .legend-square {
         width: 8px;
         height: 8px;
-        margin-top: 3px;
+        margin-top: 5px;
     }
 
     .legend-value {
@@ -110,5 +119,9 @@
     
     #vis-legend {
         font-size: xx-small;
+    }
+
+    #legend-title {
+        padding-top: 8px;
     }
 }

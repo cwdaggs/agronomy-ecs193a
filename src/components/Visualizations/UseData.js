@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
 // This is a utils file for data oriented functionality
@@ -269,7 +269,6 @@ export function calculateConcernTotalsForEachElement(data){
   var very = []
   var somewhat = []
   var notVery = []
-  // console.log("Original data: " , data)
 
   for(var i in questions){
       very.push(calculateConcernEach(data, questions[i], "Very concerned"))
@@ -277,13 +276,11 @@ export function calculateConcernTotalsForEachElement(data){
       notVery.push(calculateConcernEach(data, questions[i], "Not  concerned"))
 
   }
-  // console.log("New data: ", [very, somewhat, notVery])
 
   return [very, somewhat, notVery]
 }
 
 export function calculateCropPercentageAverage(data) {
-  //var columns = ["Percentage_Field_Crops", "Percentage_Vegetable_Crops", "Percentage_Tree_and_Vine_Crops", "Percentage_Other"]
   var columns = ["Percentage_of_Acres_Field_Crops", "Percentage_of_Acres_Vegetable_Crops", "Percentage_of_Acres_Tree_and_Vine_Crops", "Percentage_of_Acres_Other"]
   var modified_data=[]
 
@@ -358,7 +355,6 @@ export function averageSatisfaction(data){
     }
     answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot, x:topics[i], y:(pTot/pAmount)})
   }
-  //console.log(answers)
   return answers
 } 
 
@@ -403,7 +399,6 @@ export function trendLineSatisfactions(data){
 }
 
 export function acresByCounty(data){
-  //const counties = getFarmersCounties(data)
   var county_acres =  { }
   for(var i in data){
     var current_counties = String(data[i]["County"]).split(",")
@@ -415,54 +410,8 @@ export function acresByCounty(data){
       }
     }
   }
-  //console.log(county_acres)
   return county_acres
 }
-
-// export function parseURL(baseURL, path, vocationArray) {
-//   var pathname = path;
-//   var vocation = vocationArray[0];
-//   var cropOrRegion = "All";
-//   var baseAll = true;
-//   const cropChoices = [
-//     "All", 
-//     "Alfalfa", 
-//     "Barley", 
-//     "Corn", 
-//     "Corn Silage", 
-//     "Cotton", 
-//     "Dry Beans", 
-//     "Rice", 
-//     "Small Grain Silage", 
-//     "Sunflower", 
-//     "Wheat"
-//   ];
-
-//   const regionChoices = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
-
-//   if (baseURL !== pathname) {
-//     pathname = pathname.replace(baseURL, "");
-//     const filters = pathname.split("/");
-//     filters.shift();
-//     // console.log(filters);
-//     if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
-//       vocation = filters[0];
-//       baseAll = false;
-//     }
-    
-//     if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
-//       cropOrRegion = "All";
-//     } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
-//       cropOrRegion = filters[2].replaceAll("%20", " ");
-//       baseAll = false;
-//     } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
-//       cropOrRegion = filters[1].replaceAll("%20", " ");
-//       baseAll = false;
-//     }
-//   } 
-//   // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
-//   return {vocation: vocation, cropOrRegion: cropOrRegion, baseAll: baseAll};
-// }
 
 export function parseURL(baseURL, path, vocationArray) {
   var pathname = path;
@@ -496,22 +445,28 @@ export function parseURL(baseURL, path, vocationArray) {
       baseAll = false;
     }
     
-    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+    if (filters[1] === "Select%20Crop") {
       crop = "All";
-      region = "All"
-    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
-      region = filters[2].replaceAll("%20", " ");
-      baseAll = false;
-    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
-    } else{
-      region = filters[2].replaceAll("%20", " ");
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
+    }else{
+      if (cropChoices.includes(filters[1])){
+        crop = filters[1].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        crop = "All";
+      }
+    }
+
+    if (filters[2] === "Select%20Region") {
+      region = "All";
+    }else{
+      if (regionChoices.includes(filters[2])){
+        region = filters[2].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        region = "All";
+      }
     }
   } 
-  // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
   return {vocation: vocation, crop: crop, region: region, baseAll: baseAll};
 }
 
@@ -568,69 +523,6 @@ export function parseCropURLCompare(baseURL, path){
   return {crop1:crop1, crop2:crop2, region1:region1, region2:region2, baseAll: baseAll};
 }
 
-// export function parseURLCompare(baseURL, path, vocationArray) {
-//   var pathname = path;
-//   var vocation = vocationArray[0];
-//   var cropOrRegion = "All";
-//   var vocation2 = vocationArray[0];
-//   var cropOrRegion2 = "All";
-//   var baseAll = true;
-
-//   const cropChoices = [
-//     "All", 
-//     "Alfalfa", 
-//     "Barley", 
-//     "Corn", 
-//     "Corn Silage", 
-//     "Cotton", 
-//     "Dry Beans", 
-//     "Rice", 
-//     "Small Grain Silage", 
-//     "Sunflower", 
-//     "Wheat"
-//   ];
-
-//   const regionChoices = ["All", "Intermountain", "Sac Valley", "NSJV", "SSJV", "Desert", "Coastal", "Sierra Nevada"];
-
-//   if (baseURL !== pathname) {
-//     pathname = pathname.replace(baseURL, "");
-//     const filters = pathname.split("/");
-//     filters.shift();
-//     // console.log(filters);
-//     if (filters[0] !== "Select%20Vocation" && vocationArray.includes(filters[0])) {
-//       vocation = filters[0];
-//       baseAll = false;
-//     }
-    
-//     if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
-//       cropOrRegion = "All";
-//     } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
-//       cropOrRegion = filters[2].replaceAll("%20", " ");
-//       baseAll = false;
-//     } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
-//       cropOrRegion = filters[1].replaceAll("%20", " ");
-//       baseAll = false;
-//     }
-
-//     if (filters[3] !== "Compare%20Vocation" && vocationArray.includes(filters[3])) {
-//       vocation2 = filters[3];
-//       baseAll = false;
-//     }
-    
-//     if (filters[4] === "Compare%20Crop" && filters[5] === "Compare%20Region") {
-//       cropOrRegion2 = "All";
-//     } else if (filters[4] === "Compare%20Crop"  && vocationArray.includes(filters[5])){
-//       cropOrRegion2 = filters[5].replaceAll("%20", " ");
-//       baseAll = false;
-//     } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[4])){
-//       cropOrRegion2 = filters[4].replaceAll("%20", " ");
-//       baseAll = false;
-//     }
-//   } 
-//   // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
-//   return {vocation: vocation, cropOrRegion: cropOrRegion, vocation2:vocation2, cropOrRegion2:cropOrRegion2, baseAll: baseAll};
-// }
-
 export function parseURLCompare(baseURL, path, vocationArray) {
   var pathname = path;
   var vocation = vocationArray[0];
@@ -666,43 +558,60 @@ export function parseURLCompare(baseURL, path, vocationArray) {
       vocation = filters[0];
       baseAll = false;
     }
-    
-    if (filters[1] === "Select%20Crop" && filters[2] === "Select%20Region") {
+
+    if (filters[1] === "Select%20Crop") {
       crop = "All";
-      region = "All"
-    } else if (filters[1] === "Select%20Crop" && regionChoices.includes(filters[2])){
-      region = filters[2].replaceAll("%20", " ");
-      baseAll = false;
-    } else if (filters[2] === "Select%20Region" && cropChoices.includes(filters[1])){
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
-    } else{
-      region = filters[2].replaceAll("%20", " ");
-      crop = filters[1].replaceAll("%20", " ");
-      baseAll = false;
+    }else{
+      if (cropChoices.includes(filters[1])){
+        crop = filters[1].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        crop = "All";
+      }
     }
+
+    if (filters[2] === "Select%20Region") {
+      region = "All";
+    }else{
+      if (regionChoices.includes(filters[2])){
+        region = filters[2].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        region = "All";
+      }
+    }
+
 
     if (filters[3] !== "Compare Vocation" && vocationArray.includes(filters[3])) {
       vocation2 = filters[3];
       baseAll = false;
+    }else{
+      vocation2 = vocationArray[0];
     }
-    
-    if (filters[4] === "Compare%20Crop" && filters[5] === "Compare%20Region") {
+
+
+    if (filters[4] === "Select%20Crop") {
       crop2 = "All";
-      region2 = "All"
-    } else if (filters[4] === "Compare%20Crop" && regionChoices.includes(filters[5])){
-      region2 = filters[5].replaceAll("%20", " ");
-      baseAll = false;
-    } else if (filters[5] === "Compare%20Region" && cropChoices.includes(filters[4])){
-      crop2 = filters[4].replaceAll("%20", " ");
-      baseAll = false;
-    } else{
-      region2 = filters[5].replaceAll("%20", " ");
-      crop2 = filters[4].replaceAll("%20", " ");
-      baseAll = false;
+    }else{
+      if (cropChoices.includes(filters[4])){
+        crop2 = filters[4].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        crop2 = "All";
+      }
+    }
+
+    if (filters[5] === "Select%20Region") {
+      region2 = "All";
+    }else{
+      if (regionChoices.includes(filters[5])){
+        region2 = filters[5].replaceAll("%20", " ");
+        baseAll = false;
+      }else{
+        region2 = "All";
+      }
     }
   } 
-  // console.log("vocation: " + vocation + ", croporreg: " + cropOrRegion);
   return {vocation: vocation, crop: crop, region: region, vocation2:vocation2, crop2:crop2, region2:region2, baseAll: baseAll};
 }
 
