@@ -159,10 +159,10 @@ function GetChart(props, setSelection){
                   }}
                 size={(width>=mobileWidth) ? fontSize/2 : fontSize/5}
                 data= {[
-                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.max(domain[1], range[1]), z: "I: Target motivational areas" },
+                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.max(domain[1], range[1]), z: "I: Improve information delivery" },
                   { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.max(domain[1], range[1]), z: "II: Maintain focus on these issues" },
                   { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.min(domain[0], range[0]), z: "III: Low interest to target audience" },
-                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.min(domain[0], range[0]), z: "IV: Take focus off of these issues" }
+                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.min(domain[0], range[0]), z: "IV: Reconsider information\n delivery efforts,\n re-assess priority later" }
                 ]}
                 labels={({datum}) => datum.z}
                 labelComponent={
@@ -408,7 +408,7 @@ export const PrioritySatisfaction = (props) => {
     return (
       <>
         <div id='vis-question-label'>
-          <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
+          <h2>Rate what you believe should be UCCE's priorities for field crop production, and your current level of satisfaction with UCCE's delivery of information on these topics (1 being low priority/satisfaction and 3 being high priority/satisfaction)</h2>
         </div>
         <div id='priority-satisfaction-infos-label'>
           <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
@@ -491,7 +491,7 @@ export function PrioritySatisfactionCompare(props){
   return (
     <>
       <div id='vis-question-label'>
-        <h2>Rate what you believe should be the UCCE's priorities for field crop production (1-3), and rate your satisfaction with the UCCE's delivery of information on these topics (1-3).</h2>
+        <h2>Rate what you believe should be UCCE's priorities for field crop production, and your current level of satisfaction with UCCE's delivery of information on these topics (1 being low priority/satisfaction and 3 being high priority/satisfaction)</h2>
       </div>
 
       <div id='priority-satisfaction-infos-label'>
