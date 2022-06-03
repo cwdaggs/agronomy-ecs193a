@@ -52,9 +52,9 @@ export const RegionMapChart = (props) => {
               centerTitle
               data={[
                 { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: fontSize}},
-                { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
-                { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
-                { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
+                { name: "Sacramento Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
+                { name: "North San Joaquin Valley", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
+                { name: "South San Joaquin Valley", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
                 { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: fontSize}},
                 { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: fontSize}},
                 { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: fontSize}}
@@ -83,8 +83,7 @@ export const RegionMapChart = (props) => {
                       fontSize:10,
                       fontFamily: 'Roboto'
                   }}
-                  flyoutHeight={20}
-                  flyoutWidth={100}    
+                  constrainToVisibleArea={true}    
                   />
               }
             />
@@ -103,9 +102,9 @@ export const RegionMapChart = (props) => {
             centerTitle
             data={[
               { name: "Intermountain", symbol: { fill: getRegionColor("Intermountain") }, labels:{fontSize: fontSize}},
-              { name: "Sac Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
-              { name: "NSJV", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
-              { name: "SSJV", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
+              { name: "Sacramento Valley", symbol: { fill: getRegionColor("Sac_Valley") }, labels:{fontSize: fontSize}},
+              { name: "North San Joaquin Valley", symbol: { fill: getRegionColor("NSJV") }, labels:{fontSize: fontSize}},
+              { name: "South San Joaquin Valley", symbol: { fill: getRegionColor("SSJV") }, labels:{fontSize: fontSize}},
               { name: "Desert", symbol: { fill: getRegionColor("Desert") }, labels:{fontSize: fontSize}},
               { name: "Coastal", symbol: { fill: getRegionColor("Coastal") }, labels:{fontSize: fontSize}},
               { name: "Sierra Nevada", symbol: { fill: getRegionColor("Sierra_Nevada") }, labels:{fontSize: fontSize}}
@@ -179,9 +178,8 @@ export const CropBar = (props) => {
             <VictoryTooltip 
               style={{
                 fontSize:30
-              }}
-              flyoutHeight={45}
-              flyoutWidth={60}    
+              }}  
+              constrainToVisibleArea={true}  
             />
         }
         />

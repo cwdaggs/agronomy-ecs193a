@@ -74,8 +74,7 @@ export const MapChart = (props) => {
                         fontSize:10,
                         fontFamily: 'Roboto'
                     }}
-                    flyoutHeight={20}
-                    flyoutWidth={100}  
+                    constrainToVisibleArea={true} 
                     />
                 }
               />
