@@ -25,7 +25,7 @@ const height = vw*0.5;
 const width = vw;
 const mobileWidth=1000;
 const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
-const fontSize = (width >= mobileWidth) ? 20: 10;
+const fontSize = (width >= mobileWidth) ? 16: 10;
 
 function GetChart(props){
   if(props.data_filtered.length === 0){
@@ -45,7 +45,7 @@ function GetChart(props){
           >
           <VictoryBar
             data={props.data_by_reason}
-            alignment="start"
+            alignment="middle"
             style={{ data:  { fill: ({datum}) => datum.fill, strokeWidth: 1, stroke: 'black'}}}
             labels={({ datum }) => `${datum.y + " Respondents"}`}
             labelComponent={
@@ -63,7 +63,7 @@ function GetChart(props){
           style={{
             fontFamily: 'Roboto',
             tickLabels: {fontSize: fontSize*1.5, padding: 15, fontFamily: 'Roboto'},
-            axisLabel: {fontSize: fontSize*1.5, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 80: 50}
+            axisLabel: {fontSize: fontSize*1.3, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 80: 50}
           }}
           
           />
@@ -76,7 +76,7 @@ function GetChart(props){
                 <VictoryLabel    
                     textAnchor="start"
                     angle={25}
-                    style={{fill: "black", fontSize: (width >= mobileWidth) ? fontSize*1.6: fontSize*1.3}}
+                    style={{fontSize: (width >= mobileWidth) ? fontSize*1.6: fontSize*1.3}}
                 />   
               }
           />                        
@@ -110,10 +110,12 @@ function calculateAllPriorityConcerns(data, job, crop)  {
     columns.forEach(crop =>{
       farmer[crop].split(",").forEach(reason => {
         if((String(reason) !== "NA") && (String(reason) !== "")){
-            reasons.has(reason) ? console.log("duplicate") : reasons.add(reason)
+            if(!reasons.has(reason)){
+              reasons.add(reason)
+            }
         }
       });
-      console.log(reasons)
+      //console.log(reasons)
     });
     reasons.forEach(reason => {
       myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)
@@ -126,7 +128,7 @@ function calculateAllPriorityConcerns(data, job, crop)  {
 }
 
 function DetermineTitleText(activeVocation, activeCrop, activeRegion) {
-  var titleText = "For ";
+  var titleText = "";
     if (activeRegion !== "All") {
       titleText += activeRegion + " ";
     }

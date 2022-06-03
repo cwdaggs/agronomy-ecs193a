@@ -159,17 +159,17 @@ function GetChart(props, setSelection){
                   }}
                 size={(width>=mobileWidth) ? fontSize/2 : fontSize/5}
                 data= {[
-                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.max(domain[1], range[1]), z: "I: Concentrate Here" },
-                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.max(domain[1], range[1]), z: "II: Keep Up The Good Work" },
-                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.min(domain[0], range[0]), z: "III: Lower Priority" },
-                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.min(domain[0], range[0]), z: "IV: Possible Overkill" }
+                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.max(domain[1], range[1]), z: "I: Target motivational areas" },
+                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.max(domain[1], range[1]), z: "II: Maintain focus on these issues" },
+                  { x: Math.min(domain[0], range[0]) - domainPadding, y: Math.min(domain[0], range[0]), z: "III: Low interest to target audience" },
+                  { x: Math.max(domain[1], range[1]) - domainPadding, y: Math.min(domain[0], range[0]), z: "IV: Take focus off of these issues" }
                 ]}
                 labels={({datum}) => datum.z}
                 labelComponent={
                   <VictoryLabel
                     textAnchor="start"
                     style={[
-                      { fill: "black", fontSize: 20, fontFamily: "Roboto" },
+                      { fill: "black", fontSize: fontSize, fontFamily: "Roboto" },
                     ]}   
                   />            
                 }
@@ -412,7 +412,7 @@ export const PrioritySatisfaction = (props) => {
         </div>
         <div id='priority-satisfaction-infos-label'>
           <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
-            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
+            extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://tigerprints.clemson.edu/joe/vol54/iss6/21/" target="_blank" className={"hover-link"}>Warner et al.
             2016</a> based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
              or above what respondents felt should be UCCE's priorities for field crop production.</p>
         </div>
@@ -496,7 +496,7 @@ export function PrioritySatisfactionCompare(props){
 
       <div id='priority-satisfaction-infos-label'>
       <p>To help identify needs and prioritize program activities that should receive more time and resources, we compared how respondents ranked the importance of different topics for UCCE 
-        extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://ucanr.edu/" target="_blank" className={"hover-link"}>Warner et al.
+        extension with their level of satisfaction regarding delivery of information on these topics. Topics are placed into four different quadrants following the methodology in <a rel="noreferrer" href="https://tigerprints.clemson.edu/joe/vol54/iss6/21/" target="_blank" className={"hover-link"}>Warner et al.
         2016</a> based on the combination of priority (high vs. low) and satisfaction (high vs. low). Drag over multiple topics to visualize whether satisfaction with information delivery was below
           or above what respondents felt should be UCCE's priorities for field crop production.</p>
       </div>
