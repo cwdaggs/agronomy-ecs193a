@@ -24,8 +24,8 @@ const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth
 const height = vw*0.5;
 const width = vw;
 const mobileWidth=1000;
-const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
-const fontSize = (width >= mobileWidth) ? 18: 10;
+const margin = { top: height/20, right: width/6, bottom: height/3.5, left: width/6 };
+const fontSize = (width >= mobileWidth) ? 18: 6;
 
 function calculateAllPrimaryGrowingReasons(data, filter) {
 

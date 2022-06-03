@@ -10,7 +10,7 @@ const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth
 const height = vw*0.5;
 const width = vw;
 const mobileWidth = 1000;
-const margin = { top: height/20, right: width/8, bottom: height/4, left: width/8 };
+const margin = { top: height/20, right: width/6, bottom: height/4, left: width/6 };
 
 function calculateAcres(data){
   var names = ["< 500", "500 - 1000", "1000 - 1500", "1500 - 2000", "2000 - 2500", "2500+"]
@@ -184,7 +184,7 @@ export function AcresManagedBarChart(props) {
   var dataLength = calculateSizeOfDataSet(acre_data)
   var lengthString = String("Number of Farms (n = " + dataLength + ")");
   var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
-  var fontSize = (width >= mobileWidth) ? 20: 10;
+  var fontSize = (width >= mobileWidth) ? 18: 7;
   
   return (
     <>
@@ -249,7 +249,7 @@ export function AcresManagedBarChartCompare(props) {
   var lengthString2 = String("Number of Farms (n = " + dataLength2 + ")");
   var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
   
-  var fontSize = (width >= mobileWidth) ? 20: 10;
+  var fontSize = (width >= mobileWidth) ? 18: 6;
 
   return (
     <>
