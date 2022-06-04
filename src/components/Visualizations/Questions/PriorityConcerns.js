@@ -115,7 +115,6 @@ function calculateAllPriorityConcerns(data, job, crop)  {
             }
         }
       });
-      //console.log(reasons)
     });
     reasons.forEach(reason => {
       myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)
@@ -234,7 +233,7 @@ export function PriorityConcernsCompare(props) {
   }
 
   var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion);
-  var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
+  var data_filtered = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation);
   var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, activeVocation, activeCrop))
 
   var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2);
