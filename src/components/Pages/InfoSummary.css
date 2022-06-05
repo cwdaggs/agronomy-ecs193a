@@ -1,27 +1,3 @@
-#infoSection1{
-    height: 100vh;
-    position: fixed;
-    top: 75%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-  
-#infoSection2{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    vertical-align: middle;
-}
-  
-#infoSection3{
-    height: 100vh;
-    width: 80vw;
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#info-vis-title {
-    text-align: center;
+.about-page {
+    background-color: #EFEFF4FF;
 }

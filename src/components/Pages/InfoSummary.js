@@ -1,26 +1,16 @@
 import * as C from './App.styles';
 import {MapChart, CropBar} from '../Visualizations/CaliforniaCounties'
 import {RegionMapChart} from '../Visualizations/RegionMap'
-import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import singleWheat from '../../images/one_wheat.jpg'
-import sky from '../../images/sky.jpg'
 import './InfoSummary.css';
 
 export const InfoSummary = (props) => {
 
   return (
-    <div>
-      <Parallax pages={4}>
+    <div className='about-page'>
         <C.Container>
           <C.Area>          
             <C.Body>
-              <ParallaxLayer factor={2} style={{
-                backgroundImage: `url(${sky})`,
-                backgroundSize: 'cover'
-              }}>
-              </ParallaxLayer>
-              <ParallaxLayer speed = {0.8}> 
-                <div id = "infoSection1">
+                <div>
                   <C.SubTitle>Survey Objectives</C.SubTitle>
                   <C.Desc className='font-roboto'>
                     Cooperative Extension (CE) is a nationwide network of land-grant university researchers and educators who 
@@ -74,13 +64,6 @@ export const InfoSummary = (props) => {
                     methodology, interpretation of results, and conclusions for California agriculture.
                   </C.Desc>
                 </div>
-              </ParallaxLayer>
-              <ParallaxLayer factor={2} offset={2} style={{
-                backgroundImage: `url(${singleWheat})`,
-                backgroundSize: 'cover'
-              }}> 
-              </ParallaxLayer>
-              <ParallaxLayer offset={2} speed = {0.8}> 
                 <div id = "infoSection2">
                   <div id="info-vis-title">
                     <C.SubTitle>Responses by Vocation, County, Region, and Crop</C.SubTitle>
@@ -90,17 +73,13 @@ export const InfoSummary = (props) => {
                   </div>
                     <MapChart data={props.dataset} filter={"All"}/>
                     <RegionMapChart data={props.dataset} filter={"All"}/>
-                </div>
-              </ParallaxLayer>
-              <ParallaxLayer offset={3} speed = {0.8}>  
-                <div id = "infoSection3">
+                </div> 
+                <div>
                   <CropBar data={props.dataset}/>
                 </div>
-              </ParallaxLayer>
             </C.Body>
           </C.Area>
         </C.Container>
-      </Parallax>
     </div>
   );
 }
