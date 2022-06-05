@@ -1,4 +1,4 @@
-import {VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip} from 'victory';
+import {VictoryAxis, VictoryChart, VictoryBar, VictoryTooltip, VictoryLabel} from 'victory';
 import {filterByVocation, filterByCrop, filterByRegion} from '../UseData.js';
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
 import {useState} from "react";
@@ -81,7 +81,6 @@ function calculateSizeOfDataSet(data){
 }
 
 function GetChart(props){
-  var toolTipFontSize = 30;
   if(props.data.length === 0){
     return (
       <>
@@ -103,6 +102,13 @@ function GetChart(props){
               tickLabels: {fontSize: props.fontSize*1.25, padding: 5, fontFamily: 'Roboto'},
               axisLabel: {fontSize: props.fontSize*2, fontFamily: 'Roboto', padding: (width >= mobileWidth) ? 60: 20}
               }}
+              tickLabelComponent={       
+                <VictoryLabel    
+                    textAnchor="start"
+                    angle={25}
+                    style={{fontSize: props.fontSize}}
+                />   
+              }
           />
           <VictoryAxis dependentAxis
           label = {props.lengthString}
@@ -119,7 +125,7 @@ function GetChart(props){
             labelComponent={
               <VictoryTooltip 
                 style={{
-                  fontSize: toolTipFontSize,
+                  fontSize: props.fontSize,
                   fontFamily: 'Roboto'
                 }}
                 constrainToVisibleArea={'true'}    

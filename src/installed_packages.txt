@@ -4,7 +4,6 @@ npm install d3 --save
 npm install victory
 npm install survey-react --save
 npm install react-router-dom@6
-npm install @react-spring/parallax
 npm i react-google-login
 npm install @emailjs/browser --save
 npm install bad-words --save

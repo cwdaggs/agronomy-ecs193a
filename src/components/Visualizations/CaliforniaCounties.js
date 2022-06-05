@@ -6,7 +6,9 @@ import "./CountiesRegion.css";
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+const mobileWidth=1000;
 const fontSize = 16;
+const toolTipFontSize = (vw >= mobileWidth)? 10: 5;
 
 const colorScale = scaleLinear()
   .domain([0, 80])
@@ -71,7 +73,7 @@ export const MapChart = (props) => {
                 labelComponent={
                     <VictoryTooltip 
                     style={{
-                        fontSize:10,
+                        fontSize:toolTipFontSize,
                         fontFamily: 'Roboto'
                     }}
                     constrainToVisibleArea={true} 

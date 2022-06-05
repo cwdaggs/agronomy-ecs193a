@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width:100vw;
     padding-bottom: 10%;
 }
   
@@ -13,6 +12,9 @@
   
 .info-map {
     width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
   
 .info-pie {
@@ -26,26 +28,28 @@
 #cropBarTitle{
     font-family: 'Roboto', sans-serif;
     font-size: 22px;
+    padding-bottom: 5vh;
 }
 
 @media (max-width: 1350px) {
     #cropBarTitle {
         font-size: 18px;
-        margin-bottom: -10vh;
     }
 }
 
 @media (max-width: 1000px) {
     #cropBarTitle {
         font-size: 14px;
-        margin-bottom: -20vh;
+    }
+
+    .map-image {
+        height: 75%;
     }
 }
 
 @media (max-width: 730px) {
     #cropBarTitle {
         font-size: 12px;
-        margin-bottom: -20vh;
     }
 }
 
@@ -55,8 +59,6 @@
     }
 
     .map-image {
-        margin-top: 30%;
-        margin-left: 20%;
         height: 60%;
     }
 }
@@ -64,20 +66,15 @@
 @media (max-width: 400px){
     #cropBarTitle {
         font-size: 10px;
-        margin-bottom: -30vh;
     }
 
     .map-image {
-        margin-top: 50%;
-        margin-left: 20%;
         height: 50%;
     }
 }
 
 @media (max-width: 300px) {
     .map-image {
-        margin-top: 80%;
-        margin-left: 20%;
         height: 40%;
     }
 }
