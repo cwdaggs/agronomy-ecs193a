@@ -81,7 +81,6 @@ function calculateSizeOfDataSet(data){
 }
 
 function GetChart(props){
-  var toolTipFontSize = 30;
   if(props.data.length === 0){
     return (
       <>
@@ -126,7 +125,7 @@ function GetChart(props){
             labelComponent={
               <VictoryTooltip 
                 style={{
-                  fontSize: toolTipFontSize,
+                  fontSize: props.fontSize,
                   fontFamily: 'Roboto'
                 }}
                 constrainToVisibleArea={'true'}    

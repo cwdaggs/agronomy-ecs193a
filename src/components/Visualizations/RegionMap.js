@@ -1,11 +1,13 @@
 import React from "react";
 import {filterByCropOrRegion} from "./UseData"
-import {VictoryLegend, VictoryPie, VictoryTooltip, VictoryBar, VictoryAxis, VictoryChart} from 'victory';
+import {VictoryLegend, VictoryPie, VictoryTooltip} from 'victory';
 import "./CountiesRegion.css";
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+const mobileWidth=1000;
 const fontSize = 16;
+const toolTipFontSize = (vw >= mobileWidth)? 10: 5;
 
 const regionColorScale =  ["#0E4D64", "#137177","#188977", "#39A96B", "#74C67A", "#9EAD8F", "#6F9160"]
 
@@ -80,7 +82,7 @@ export const RegionMapChart = (props) => {
               labelComponent={
                   <VictoryTooltip 
                   style={{
-                      fontSize:10,
+                      fontSize:toolTipFontSize,
                       fontFamily: 'Roboto'
                   }}
                   constrainToVisibleArea={true}    
@@ -118,73 +120,3 @@ export const RegionMapChart = (props) => {
     </div>
   );
 };
-
-
-function cropAmount(data){
-  var occMap = [  {x: "Rice", y: filterByCropOrRegion(data, "Rice").length}, 
-                  {x: "Alfalfa", y: filterByCropOrRegion(data, "Alfalfa").length}, 
-                  {x: "Wheat", y: filterByCropOrRegion(data, "Wheat").length},
-                  {x: "Corn", y: filterByCropOrRegion(data, "Corn").length},
-                  {x: "Corn Silage", y: filterByCropOrRegion(data, "Corn Silage").length},
-                  {x: "Dry Beans", y: filterByCropOrRegion(data, "Dry Beans").length},
-                  {x: "Cotton", y: filterByCropOrRegion(data, "Cotton").length},
-                  {x: "Sunflower", y: filterByCropOrRegion(data, "Sunflower").length},
-                  {x: "Barley", y: filterByCropOrRegion(data, "Barley").length},
-                  {x: "Small Grain Silage", y: filterByCropOrRegion(data, "Small Grain Silage").length} ]
-  return occMap
-}
-
-
-export const CropBar = (props) => {
-  if (!props.data){
-    return <pre>Loading...</pre>;
-  }
-  const cropData = cropAmount(props.data);
-
-  const fontSize = 20
-
-  const margin = { top: vh/12, right: vw/8, bottom: vh/4, left: vw/6 };
-
-  return (
-    <div id='about-visualization-window'>
-      <VictoryChart height={vh} width={vw}
-        domainPadding={{ x: margin.right/5.3, y: margin.top }}
-        padding={{top: margin.top, bottom: margin.bottom, left: margin.left, right: margin.right}}
-        animate={{duration: 800}}
-      >
-        <VictoryAxis
-          style={{
-            tickLabels: {fontSize: fontSize*1.25, padding: 5},
-            axisLabel: {fontSize: fontSize*2, padding: vw/10}
-            }}
-        />
-        <VictoryAxis dependentAxis
-        label = {"Number of Growers and Consultants"}
-        style={{
-          tickLabels: {fontSize: 20, padding: 15},
-          axisLabel: {fontSize: fontSize*2, padding: 60}
-        }}/>
-        <VictoryLegend 
-                title="Additionally, survey participants could list their top grown or consulted crops. Below is a bar chart depicting the number of
-                responses for each crop:"
-              />
-        <VictoryBar horizontal
-          sortKey= "y"
-          data={cropData}
-          alignment="middle"
-          style={{ data:  { fill: () => "#282c5c"}}}
-          labels={({datum}) => datum.y}
-          labelComponent={
-            <VictoryTooltip 
-              style={{
-                fontSize:30
-              }}  
-              constrainToVisibleArea={true}  
-            />
-        }
-        />
-      </VictoryChart>
-      
-    </div>
-  );
-}
