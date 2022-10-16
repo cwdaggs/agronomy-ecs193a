@@ -39,7 +39,7 @@ export const Visualizations = () => {
     var preLocation = useLocation().pathname.split("/")
     var location ="";
     if (path !== "/results") {
-      if(preLocation[2] != "compare"){
+      if(preLocation[2] !== "compare"){
         location = preLocation[2].replace("%20", " ");
       }else{
         if(path !== "/results/compare"){

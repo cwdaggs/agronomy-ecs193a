@@ -56,10 +56,8 @@ function calculateAllPrimaryGrowingReasons(data, filter) {
         }
       }
     });
-    //console.log(reasons)
   });
   reasons.forEach(reason => {
-    //console.log(reasons)
     myMap.has(reason) ? myMap.set(reason, myMap.get(reason) + 1) : myMap.set(reason, 1)
   })
  });
