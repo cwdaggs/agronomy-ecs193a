@@ -1,5 +1,5 @@
 import {VictoryLabel, VictoryBar, VictorySelectionContainer, VictoryAxis, VictoryTooltip, VictoryLine, VictoryChart, VictoryScatter, VictoryTheme} from 'victory';
-import { averageSatisfaction, trendLineSatisfactions, filterByVocation, parseURLCompare, filterByRegion, filterByCrop } from '../UseData';
+import { averageSatisfaction, trendLineSatisfactions, filterByVocation, parseURLCompare, filterByRegion, filterByCrop, averageSatisfactionAnalysis } from '../UseData';
 import * as d3 from 'd3'
 import React, { useState } from "react";
 import { VocationAndRegion, VocationAndRegionCompare } from "../Menus/VocationAndRegion.js";
@@ -365,10 +365,35 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_filte
     }
   }
 
-  titleText += " (n = " + data_filtered.length + ")";
+  titleText += " (n = " + GetResponses(data_filtered) + ")";
   return titleText
 }
 
+function GetResponses(data){
+  var topics = ["Compost_Management", "Cover_Crops", "Crop_Establishment", 
+                "Disease_Control", "Emerging_Crops", "Greenhouse_Gas_Emissions_Reduction", 
+                "Harvest_and_Postharvest", "Insect_Pest_Control", "Irrigation_Management",
+                "Manure_Management", "Niche_Marketing_Field_Crops", "Nutrient_Management",
+                "Organic_Production", "Salinity_Management",
+                "Soil_Health_Management", "Testing_New_Products", "Variety_Testing",
+                "Water_Conservation_and_Storage", "Weed_Control"]
+  console.log(data);
+  var amount = 0
+  for (var j in data){
+
+    if(data[j][String("Satisfaction_" + topics[0])] === "NA" && data[j][String("Priority_" + topics[0])] === "NA"){
+      for (var i in topics){
+        if(data[j][String("Satisfaction_" + topics[i])] !== "NA" || data[j][String("Priority_" + topics[i])] !== "NA"){
+          amount += 1;
+          break;
+        }
+      }
+    }else{
+      amount += 1;
+    }    
+  }
+  return amount;
+}
 export const PrioritySatisfaction = (props) => {
     const vocationArray = ["All", "Allied Industry", "Consultants", "Growers", "Other"];
     const baseURL = "/results/Priority%20Satisfaction";
@@ -403,6 +428,11 @@ export const PrioritySatisfaction = (props) => {
 
     var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
     var data = averageSatisfaction(data_filtered)
+
+    var debugdata = averageSatisfactionAnalysis(data_filtered)
+
+    console.log(debugdata);
+    
     var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_filtered)
 
     return (

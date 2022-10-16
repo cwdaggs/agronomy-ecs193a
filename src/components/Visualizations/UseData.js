@@ -151,7 +151,11 @@ export function filterByCrop(data, filter){
     if(filter === "All"){
       return data
     }else{
-      return data.filter(function(d){return String(d.Crops).includes(filter)});
+
+      if(filter === "Rice"){
+        return data.filter(function(d){return (String(d.Crops).includes(filter) && !String(d.Crops).includes("Wild Rice"))});
+      }
+      return data.filter(function(d){return (String(d.Crops).includes(filter))});
     }
 }
 
@@ -231,10 +235,12 @@ export function calculateConcernTotals(data, filter){
 // Tallies each type of answer for the given question (Concerns)
 export function calculateConcernEach(data, filter, answer){
   var total = 0
-
+  var nulls = 0
   for(var farmer in data){
       if(data[farmer][filter] === answer){
-          total ++
+        total++;
+      }else if(data[farmer][filter] === "NA"){
+        nulls++;
       }
   }
 
@@ -245,7 +251,7 @@ export function calculateConcernEach(data, filter, answer){
     temp += name[i] + " ";
   }
   temp += name[name.length - 1]
-  return {Concern: temp, Total: total, Level_Of_Concern: answer}
+  return {Concern: temp, Total: total, Level_Of_Concern: answer, Nulls: nulls}
 }  
 
 // Iterates through list of questions regarding farmer concerns, and sums up each answer
@@ -353,7 +359,97 @@ export function averageSatisfaction(data){
     if(sAmount === 0){
       sAmount = 1
     }
-    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sTot, Priority_votes: pTot, x:topics[i], y:(pTot/pAmount)})
+    answers.push({Topic: topics[i], Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), Satisfaction_votes: sAmount, Priority_votes: pAmount, x:topics[i], y:(pTot/pAmount)})
+  }
+  return answers
+} 
+
+export function averageSatisfactionAnalysis(data){
+  var topics = ["Compost_Management", "Cover_Crops", "Crop_Establishment", 
+                "Disease_Control", "Emerging_Crops", "Greenhouse_Gas_Emissions_Reduction", 
+                "Harvest_and_Postharvest", "Insect_Pest_Control", "Irrigation_Management",
+                "Manure_Management", "Niche_Marketing_Field_Crops", "Nutrient_Management",
+                "Organic_Production", "Salinity_Management",
+                "Soil_Health_Management", "Testing_New_Products", "Variety_Testing",
+                "Water_Conservation_and_Storage", "Weed_Control"]
+
+  var answers = []
+
+  for (var i in topics){
+    var pAmount = 0
+    var sAmount = 0
+    var pTot = 0
+    var sTot = 0
+
+    var hSatisfaction = 0;
+    var mSatisfaction = 0;
+    var lSatisfaction = 0;
+
+    var hPriority = 0;
+    var mPriority = 0;
+    var lPriority = 0;
+
+    var nSatisfaction = 0;
+    var nPriority = 0;
+
+    for (var j in data){
+      var satisfaction = data[j][String("Satisfaction_" + topics[i])]
+      var priority = data[j][String("Priority_" + topics[i])]
+
+      if (priority === "High Priority"){
+        pTot += 3
+        pAmount += 1
+        hPriority += 1
+      }else if (priority === "Medium Priority"){
+        pTot += 2
+        pAmount += 1
+        mPriority += 1
+      }else if (priority === "Low Priority"){
+        pTot += 1
+        pAmount += 1
+        lPriority += 1
+      }else if(priority === "No Opinion"){
+        nPriority += 1;
+      }
+
+      if (satisfaction === "High Satisfaction"){
+        sTot += 3
+        sAmount += 1
+        hSatisfaction += 1
+      }else if (satisfaction === "Medium Satisfaction"){
+        sTot += 2
+        sAmount += 1
+        mSatisfaction += 1
+      }else if (satisfaction === "Low Satisfaction"){
+        sTot += 1
+        sAmount += 1
+        lSatisfaction += 1
+      }else if(satisfaction === "No Opinion"){
+        nSatisfaction += 1;
+      }
+    }
+    if(pAmount === 0){
+      pAmount = 1
+    }
+
+    if(sAmount === 0){
+      sAmount = 1
+    }
+    var sCount = (hSatisfaction+mSatisfaction+lSatisfaction+nSatisfaction);
+    var pCount = (hPriority+mPriority+lPriority+nPriority);
+    answers.push({Topic: topics[i], 
+      Priority: (pTot/pAmount), Satisfaction: (sTot/sAmount), 
+      Priority2: (pTot/pCount), Satisfaction2: (sTot/sCount), 
+      Satisfaction_votes: sAmount, Priority_votes: pAmount, 
+      SatisfactionCount: sCount,
+      PriorityCount: pCount, 
+      HighSat: hSatisfaction, MedSat: mSatisfaction, LowSat: lSatisfaction, 
+      HighSatPercent: hSatisfaction/sAmount, MedSatPercent: mSatisfaction/sAmount, LowSatPercent: lSatisfaction/sAmount,
+      HighSatPercent2: hSatisfaction/sCount, MedSatPercent2: mSatisfaction/sCount, LowSatPercent2: lSatisfaction/sCount, 
+      HighPri: hPriority, MedPri: mPriority, LowPri: lPriority, 
+      HighPriPercent: hPriority/pAmount, MedPriPercent: mPriority/pAmount, LowPriPercent: lPriority/pAmount,
+      HighPriPercent2: hPriority/pCount, MedPriPercent2: mPriority/pCount, LowPriPercent2: lPriority/pCount, 
+      x:topics[i], y:(pTot/pAmount)})
   }
   return answers
 } 

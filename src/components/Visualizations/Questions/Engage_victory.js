@@ -89,17 +89,45 @@ function transformData(dataset) {
   });
 }
 
-function calculateAverageResponses(dataset) {
-  const totals = dataset[0].map((data, i) => {
-    return dataset.reduce((memo, curr) => {
-      return memo + curr[i].Total;
-    }, 0);
-  });
-  var sum = 0;
-  for (var i = 0; i < totals.length; i++) {
-    sum += totals[i];
+// function calculateAverageResponses(dataset) {
+//   const totals = dataset[0].map((data, i) => {
+//     return dataset.reduce((memo, curr) => {
+//       return memo + curr[i].Total;
+//     }, 0);
+//   });
+//   var sum = 0;
+//   for (var i = 0; i < totals.length; i++) {
+//     sum += totals[i];
+//   }
+//   return Math.round(sum / totals.length);
+// }
+
+function GetResponses(data){
+  var topics = [
+    "UCCE_Engagement_Attend_Field_Day",
+    "UCCE_Engagement_Read_Blog",
+    "UCCE_Engagement_Call_Advisor",
+    "UCCE_Engagement_Read_Newsletter",
+    "UCCE_Engagement_Interact_with_Social_Media"
+  ]
+
+  //console.log(data);
+  var amount = 0
+  for (var j in data){
+
+    if(data[j][String(topics[0])] === "NA"){
+      for (var i in topics){
+        if(data[j][String(topics[i])] !== "NA"){
+          amount += 1;
+          break;
+        }
+      }
+    }else{
+      amount += 1;
+    }    
   }
-  return Math.round(sum / totals.length);
+  //console.log(amount)
+  return amount;
 }
 
 function GetChart(props){
@@ -208,7 +236,7 @@ function GetChart(props){
   )
 }
 
-function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, responses) {
   var titleText = "UCCE Engagement Frequency";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -236,7 +264,7 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorte
       titleText += " in the " + activeRegion + " Region";
     }
   }
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText += " (n = " + responses + ")";
   return titleText
 }
 
@@ -282,7 +310,9 @@ export function EngageVictory(props) {
   var data_sorted = sort_by_freq(data_by_engage)
   const dataset_final = transformData(data_sorted)
 
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted);
+  var responses = GetResponses(data_filtered)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses);
+
   var fontSize = DetermineFontSize()
 
   return (
@@ -342,13 +372,15 @@ export function EngageVictoryCompare(props) {
   var data_filtered = filterByVocation(data, activeVocation)
   var data_by_engage = calculateEngageTotalsForEachElement(data_filtered)
   const dataset_final = transformData(data_by_engage)
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_engage);
+    var responses = GetResponses(data_filtered)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses);
 
   var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
   var data_filtered2 = filterByVocation(data2, activeVocation2)
   var data_by_engage2 = calculateEngageTotalsForEachElement(data_filtered2)
   const dataset_final2 = transformData(data_by_engage2)
-  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_engage2);
+  var responses2 = GetResponses(data_filtered2)
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, responses2);
 
   var fontSize = DetermineFontSize()
   

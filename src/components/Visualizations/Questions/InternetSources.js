@@ -92,8 +92,22 @@ function getInternetSources(data, sorted){
   return modified_data;
 }
 
+function GetResponses(data){
+
+  //console.log(data);
+  var amount = 0
+  for (var j in data){
+
+    if(data[j][String("Internet_Information_Sources")] !== "NA"){
+      amount += 1;
+    }    
+  }
+  //console.log(amount)
+  return amount;
+}
+
 function GetChart(props){
-  if(props.filtered_data.length === 0){
+  if(props.filtered_data.length === 0 || props.responses === 0){
     return (
       <div className='dual-display-child'>
         <p>Insufficient data for this set of filters. (n=0)</p>         
@@ -123,7 +137,7 @@ function GetChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.responses + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -151,7 +165,7 @@ function GetChart(props){
 }
 
 function GetUnsortedChart(props){
-  if(props.filtered_data.length === 0){
+  if(props.filtered_data.length === 0 || props.responses === 0){
     return (
       <div className='dual-display-child'>
         <p>Insufficient data for this set of filters. (n=0)</p>         
@@ -179,7 +193,7 @@ function GetUnsortedChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.responses + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -276,7 +290,7 @@ export function InternetSourcesBarChart(props) {
   var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var filtered_data = filterByVocation(data, activeVocation);
   var graph_data = getInternetSources(filtered_data, true);
-
+  var responses = GetResponses(filtered_data)
   var fontSize = DetermineFontSize()
 
   return (
@@ -287,7 +301,7 @@ export function InternetSourcesBarChart(props) {
       <div className="inline-child">
       <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
-      <GetChart labelText={labelText} graph_data={graph_data} fontSize={fontSize} filtered_data={filtered_data}/>
+      <GetChart labelText={labelText} graph_data={graph_data} fontSize={fontSize} filtered_data={filtered_data} responses={responses}/>
     </>
     );
 }
@@ -335,11 +349,15 @@ export function InternetSourcesBarChartCompare(props) {
   var data = filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion);
   var filtered_data = filterByVocation(data, activeVocation);
   var graph_data = getInternetSources(filtered_data, false);
+
+  var responses = GetResponses(filtered_data)
   
   var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
   var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
   var filtered_data2 = filterByVocation(data2, activeVocation2);
   var graph_data2 = getInternetSources(filtered_data2, false);
+
+  var responses2 = GetResponses(filtered_data2)
   
   var fontSize = DetermineFontSize()
 
@@ -352,10 +370,10 @@ export function InternetSourcesBarChartCompare(props) {
     <div className='dual-display'>
       <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       <div id="vis-a">
-        <GetUnsortedChart labelText={labelText} graph_data={graph_data} fontSize={fontSize} filtered_data={filtered_data}/>
+        <GetUnsortedChart labelText={labelText} graph_data={graph_data} fontSize={fontSize} filtered_data={filtered_data} responses={responses}/>
       </div>
       <div id="vis-b">
-        <GetUnsortedChart labelText={labelText2} graph_data={graph_data2} fontSize={fontSize} filtered_data={filtered_data2}/>
+        <GetUnsortedChart labelText={labelText2} graph_data={graph_data2} fontSize={fontSize} filtered_data={filtered_data2} responses={responses2}/>
       </div>
     </div>   
   </>

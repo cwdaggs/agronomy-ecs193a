@@ -69,6 +69,36 @@ function calculateAllPrimaryGrowingReasons(data, filter) {
  return modified_data;
 }
 
+function GetResponses(data, filter){
+  var columns = [filter.split(' ').join('_') + "_Growing_Reasons"]
+
+  if(filter === "All"){
+    columns = ["Alfalfa_Growing_Reasons", "Cotton_Growing_Reasons", "Rice_Growing_Reasons", "Wild_Rice_Growing_Reasons", "Wheat_Growing_Reasons", "Triticale_Growing_Reasons",    
+                "Barley_Growing_Reasons",    "Oats_Growing_Reasons",    "Corn_Growing_Reasons",    "Sorghum_Growing_Reasons",    "Corn_Silage_Growing_Reasons", "Small_Grain_Silage_Growing_Reasons",
+                "Small_Grain_Hay_Growing_Reasons", "Grass_and_Grass_Mixtures_Hay_Growing_Reasons",    "Grass_and_Grass_Mixtures_Pasture_Growing_Reasons",    "Sorghum_Sudangrass_Sudan_Growing_Reasons",    
+                "Mixed_Hay_Growing_Reasons", "Dry_Beans_Growing_Reasons",    "Sunflower_Growing_Reasons", "Oilseeds_Growing_Reasons", "Sugar_Beets_Growing_Reasons", "Hemp_Growing_Reasons", "Other_Growing_Reasons"]
+  } 
+  console.log(data);
+  var amount = 0
+
+  for (var j in data){
+    if(data[j][String(columns[0])] === "NA"){
+      for (var i in columns){
+        if(data[j][String(columns[i])] !== "NA"){
+          amount += 1;
+          break;
+        }
+      }
+    }else{
+      amount += 1;
+    }    
+  }
+
+  console.log(amount)
+  return amount;
+}
+
+
 function parseURL(baseURL, path) {
   var pathname = path;
   var crop = "All";
@@ -124,7 +154,7 @@ function DetermineTitleText(activeCrop, activeRegion) {
 }
 
 function GetChart(props){
-    if(props.data_filtered.length === 0){
+    if(props.responses === 0){
       return (
         <>
           <p>Insufficient data for this set of filters. (n=0)</p>         
@@ -155,7 +185,7 @@ function GetChart(props){
             }
             />
             <VictoryAxis dependentAxis
-            label = {String(props.titleText + " (n=" + props.data_filtered.length + ")")}
+            label = {String(props.titleText + " (n=" + props.responses + ")")}
             style={{
               fontFamily: 'Roboto',
               tickLabels: {fontSize: fontSize*1.5, padding: 15, fontFamily: 'Roboto'},
@@ -232,6 +262,9 @@ export function PrimaryGrowingReasons(props) {
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion), "Growers")
   var data_by_reason = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered, active))
 
+  var responses = GetResponses(data_filtered, active)
+  console.log(responses)
+
   return (
     <>
     <div id='vis-question-label'>
@@ -240,7 +273,7 @@ export function PrimaryGrowingReasons(props) {
     <div className="inline-child">
       <OnlyCrops changeFunc={changeFunc} changeRegionFunc={changeRegionFunc} active={active} activeRegion={activeRegion} baseAll={filter.baseAll}/>
     </div>
-      <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
+      <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered} responses={responses}/>
     </>  
   );
 }
@@ -276,10 +309,12 @@ export function PrimaryGrowingReasonsCompare(props) {
   var titleText = DetermineTitleText(active, activeRegion1);
   var data_filtered = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active), activeRegion1), "Growers")
   var data_by_reason = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered, active))
+  var responses = GetResponses(data_filtered, active)
 
   var titleText2 = DetermineTitleText(active2, activeRegion2);
   var data_filtered2 = filterByVocation(filterByCropOrRegion(filterByCropOrRegion(props.dataset, active2), activeRegion2), "Growers")
   var data_by_reason2 = AdjustColorAndNames(calculateAllPrimaryGrowingReasons(data_filtered2, active2))
+  var responses2 = GetResponses(data_filtered2, active2)
 
   return (
     <>
@@ -290,10 +325,10 @@ export function PrimaryGrowingReasonsCompare(props) {
     <div className='dual-display'>
         <OnlyCropsCompare changeFunc={changeFunc} changeFunc2={changeFunc2} changeRegion1Func={changeRegion1Func} changeRegion2Func={changeRegion2Func} active={active} active2={active2} activeRegion1={activeRegion1} activeRegion2={activeRegion2} baseAll={filter.baseAll}/>
         <div id="vis-a">
-          <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
+          <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered} responses={responses}/>
         </div>
         <div id="vis-b">
-          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} data_filtered={data_filtered2}/>
+          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} data_filtered={data_filtered2} responses={responses2}/>
         </div>
     </div>
     </>  

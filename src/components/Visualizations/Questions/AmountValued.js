@@ -191,20 +191,47 @@ function transformData(dataset) {
   });
 }
 
-function calculateAverageResponses(dataset) {
-  const totals = dataset[0].map((data, i) => {
-    return dataset.reduce((memo, curr) => {
-      return memo + curr[i].Total;
-    }, 0);
-  });
-  var sum = 0;
-  for (var i = 0; i < totals.length; i++) {
-    sum += totals[i];
+// function calculateAverageResponses(dataset) {
+//   const totals = dataset[0].map((data, i) => {
+//     return dataset.reduce((memo, curr) => {
+//       return memo + curr[i].Total;
+//     }, 0);
+//   });
+//   var sum = 0;
+//   for (var i = 0; i < totals.length; i++) {
+//     sum += totals[i];
+//   }
+//   return Math.round(sum / totals.length);
+// }
+
+function GetResponses(data){
+  var topics = [
+    "Amount_Valued_Continuing_Education_Credits",
+    "Amount_Valued_On_Farm_Consultations",
+    "Amount_Valued_Crop_Injury_Diagnosis",
+    "Amount_Valued_On_Farm_Trials"
+  ]
+
+  //console.log(data);
+  var amount = 0
+  for (var j in data){
+
+    if(data[j][String(topics[0])] === "NA"){
+      for (var i in topics){
+        if(data[j][String(topics[i])] !== "NA"){
+          amount += 1;
+          break;
+        }
+      }
+    }else{
+      amount += 1;
+    }    
   }
-  return Math.round(sum / totals.length);
+  //console.log(amount)
+  return amount;
 }
 
-function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, responses) {
   var titleText = "Level of Value";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -226,7 +253,7 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorte
       titleText += " in the " + activeRegion + " Region";
     }
   }
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText += " (n = " + responses + ")";
   return titleText
 }
 
@@ -269,7 +296,8 @@ export function AmountVictory(props) {
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   var data_sorted = sort_by_very(data_by_value)
   const dataset_final = transformData(data_sorted)
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted)
+  var responses = GetResponses(data_filtered)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses)
   var fontSize = DetermineFontSize()
 
   return (
@@ -328,12 +356,14 @@ export function AmountVictoryCompare(props) {
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation)
   var data_by_value = calculateValueTotalsForEachElement(data_filtered)
   const dataset_final = transformData(data_by_value)
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_value)
+  var responses = GetResponses(data_filtered)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses)
 
   var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2)
   var data_by_value2 = calculateValueTotalsForEachElement(data_filtered2)
   const dataset_final2 = transformData(data_by_value2)
-  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_value2)
+  var responses2 = GetResponses(data_filtered2)
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, responses2)
   
   var fontSize = DetermineFontSize()
   

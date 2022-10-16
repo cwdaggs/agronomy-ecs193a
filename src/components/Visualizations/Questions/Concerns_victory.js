@@ -52,17 +52,41 @@ function transformData(dataset) {
   });
 }
 
-function calculateAverageResponses(dataset) {
-  const totals = dataset[0].map((data, i) => {
-    return dataset.reduce((memo, curr) => {
-      return memo + curr[i].Total;
-    }, 0);
-  });
-  var sum = 0;
-  for (var i = 0; i < totals.length; i++) {
-    sum += totals[i];
+// function calculateAverageResponses(dataset) {
+//   const totals = dataset[0].map((data, i) => {
+//     return dataset.reduce((memo, curr) => {
+//       return memo + curr[i].Total;
+//     }, 0);
+//   });
+//   var sum = 0;
+//   for (var i = 0; i < totals.length; i++) {
+//     sum += totals[i];
+//   }
+//   return Math.round(sum / totals.length);
+// }
+
+function GetResponses(data){
+  var topics = ["Concern_Air_Quality","Concern_Changing_Weather_and_Climate","Concern_Chemical_Regulations",
+  "Concern_Commodity_Price_of_Crops", "Concern_Consumer_Demand", "Concern_Input_Costs", "Concern_Labor_Quality_and_Availability",
+  "Concern_Labor_Regulations", "Concern_Land_Tenure", "Concern_Market_Access"]
+
+  //console.log(data);
+  var amount = 0
+  for (var j in data){
+
+    if(data[j][String(topics[0])] === "NA"){
+      for (var i in topics){
+        if(data[j][String(topics[i])] !== "NA"){
+          amount += 1;
+          break;
+        }
+      }
+    }else{
+      amount += 1;
+    }    
   }
-  return Math.round(sum / totals.length);
+  //console.log(amount)
+  return amount;
 }
 
 function GetChart(props){
@@ -162,7 +186,7 @@ function GetChart(props){
   )
 }
 
-function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, responses) {
   var titleText = "Level of Concern";
   if (activeCrop !== "All" || activeVocation !== "All") {
     titleText += " for";
@@ -190,7 +214,7 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorte
       titleText += " in the " + activeRegion + " Region";
     }
   }
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText += " (n = " + responses + ")";
   return titleText
 }
 
@@ -233,9 +257,15 @@ export function ConcernsVictory(props) {
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
   var data_sorted = sort_by_very(data_by_concern);
   const dataset = transformData(data_sorted);
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted)
+  var responses = GetResponses(data_filtered)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses)
   var fontSize = DetermineFontSize()
-  
+  //console.log(data_filtered)
+  //console.log(data_by_concern)
+
+
+  //console.log(responses)
+
   return (
     <>
       <div id='vis-question-label'>
@@ -293,12 +323,14 @@ export function ConcernsVictoryCompare(props) {
   var data_filtered = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop), activeRegion), activeVocation);
   var data_by_concern = calculateConcernTotalsForEachElement(data_filtered);
   const dataset = transformData(data_by_concern);
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_concern)
+  var responses = GetResponses(data_filtered)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses)
 
   var data_filtered2 = filterByVocation(filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2), activeVocation2);
   var data_by_concern2 = calculateConcernTotalsForEachElement(data_filtered2);
   const dataset2 = transformData(data_by_concern2);
-  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_concern2)
+  var responses2 = GetResponses(data_filtered2)
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, responses2)
   
   var fontSize = DetermineFontSize()
 

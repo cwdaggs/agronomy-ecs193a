@@ -106,6 +106,47 @@ export function calculateGrowerAffectTotalsForEachElement(data){
   return [always, often, sometimes, rarely, never]
 }
 
+function GetResponses(data, active_vocation){
+
+  var vocation_verb = "Management"
+
+  if(active_vocation === "Consultants"){
+    vocation_verb = "Recommendation"
+  }
+
+  var topics = ["Affected_Crop_Production_" + vocation_verb + "_Profitability", 
+  "Affected_Crop_Production_" + vocation_verb + "_Crop_Yield",
+  "Affected_Crop_Production_" + vocation_verb + "_Crop_Quality", 
+  "Affected_Crop_Production_" + vocation_verb + "_Input_Costs", 
+  "Affected_Crop_Production_" + vocation_verb + "_Soil_Fertility", 
+  "Affected_Crop_Production_" + vocation_verb + "_Land_Stewardship", 
+  "Affected_Crop_Production_" + vocation_verb + "_Natural_Resource_Conservation", 
+  "Affected_Crop_Production_" + vocation_verb + "_Meeting_Government_Regulations", 
+  "Affected_Crop_Production_" + vocation_verb + "_Labor_Required", 
+  "Affected_Crop_Production_" + vocation_verb + "_Ease_of_Implementation", 
+  "Affected_Crop_Production_" + vocation_verb + "_Certainty_in_Management_Practice", 
+  "Affected_Crop_Production_" + vocation_verb + "_Availability_of_Outreach_Information", 
+  "Affected_Crop_Production_" + vocation_verb + "_Water_Availability"]
+
+  //console.log(data);
+  var amount = 0
+  for (var j in data){
+
+    if(data[j][String(topics[0])] === "NA"){
+      for (var i in topics){
+        if(data[j][String(topics[i])] !== "NA"){
+          amount += 1;
+          break;
+        }
+      }
+    }else{
+      amount += 1;
+    }    
+  }
+  //console.log(amount)
+  return amount;
+}
+
 // This is an example of a function you might use to transform your data to make 100% data
 function transformData(dataset) {
     const totals = dataset[0].map((data, i) => {
@@ -125,18 +166,18 @@ function transformData(dataset) {
   });
 }
 
-function calculateAverageResponses(dataset) {
-  const totals = dataset[0].map((data, i) => {
-    return dataset.reduce((memo, curr) => {
-      return memo + curr[i].Total;
-    }, 0);
-  });
-  var sum = 0;
-  for (var i = 0; i < totals.length; i++) {
-    sum += totals[i];
-  }
-  return Math.round(sum / totals.length);
-}
+// function calculateAverageResponses(dataset) {
+//   const totals = dataset[0].map((data, i) => {
+//     return dataset.reduce((memo, curr) => {
+//       return memo + curr[i].Total;
+//     }, 0);
+//   });
+//   var sum = 0;
+//   for (var i = 0; i < totals.length; i++) {
+//     sum += totals[i];
+//   }
+//   return Math.round(sum / totals.length);
+// }
 
 function GetChart(props){
   if(props.data.length === 0){
@@ -243,7 +284,7 @@ function GetChart(props){
   )
 }
 
-function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted) {
+function DetermineTitleText(activeVocation, activeCrop, activeRegion, responses) {
   var titleText = activeVocation === "Consultants" ? "Frequency of Effect on Recommendations" : "Frequency of Effect on Management Decisions";
   if (activeCrop !== "All") {
     titleText += " for " + activeCrop;
@@ -259,7 +300,7 @@ function DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorte
       titleText += " in the " + activeRegion + " Region";
     }
   }
-  titleText += " (n = " + calculateAverageResponses(data_sorted) + ")";
+  titleText += " (n = " + responses + ")";
   return titleText
 }
 
@@ -305,8 +346,8 @@ export function AffectVictory(props) {
                     "How often do the following priorities affect your management decisions for field crop production?";
   var data_sorted = sort_by_freq(data_by_affect)
   const dataset_final = transformData(data_sorted)
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_sorted)
-
+  var responses = GetResponses(data_filtered, activeVocation)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses)
   var fontSize = DetermineFontSize()
 
   return (
@@ -368,13 +409,16 @@ export function AffectVictoryCompare(props) {
   var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
   var data_by_affect = activeVocation === "Consultants" ? calculateConsultantAffectTotalsForEachElement(data_filtered) : 
                       calculateGrowerAffectTotalsForEachElement(data_filtered);
-  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, data_by_affect);
+
+  var responses = GetResponses(data_filtered, activeVocation)
+  var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion, responses)
   const dataset_final = transformData(data_by_affect)
 
   var data_filtered2 = filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2);
   var data_by_affect2 = activeVocation2 === "Consultants" ? calculateConsultantAffectTotalsForEachElement(data_filtered2) : 
                       calculateGrowerAffectTotalsForEachElement(data_filtered2);
-  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, data_by_affect2);
+  var responses2 = GetResponses(data_filtered2, activeVocation2)
+  var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2, responses2)
   const dataset_final2 = transformData(data_by_affect2)
 
   var fontSize = DetermineFontSize()

@@ -28,7 +28,7 @@ const margin = { top: height/20, right: width/6, bottom: height/3.5, left: width
 const fontSize = (width >= mobileWidth) ? 16: 6;
 
 function GetChart(props){
-  if(props.data_filtered.length === 0){
+  if(props.data_filtered.length === 0 || props.responses === 0){
     return (
       <>
         <p>Insufficient data for this set of filters. (n=0)</p>         
@@ -59,7 +59,7 @@ function GetChart(props){
           }
           />
           <VictoryAxis dependentAxis
-          label = {String(props.titleText + " (n=" + props.data_filtered.length + ")")}
+          label = {String(props.titleText + " (n=" + props.responses + ")")}
           style={{
             fontFamily: 'Roboto',
             tickLabels: {fontSize: fontSize*1.5, padding: 15, fontFamily: 'Roboto'},
@@ -124,7 +124,43 @@ function calculateAllPriorityConcerns(data, job, crop)  {
   for (const [key, value] of new Map([...myMap].sort())) {
     modified_data.push({x: key, y: value});
   }
+  console.log(modified_data)
   return modified_data;
+}
+
+function GetResponses(data, job, crop){
+  if (job === "Growers"){
+    job = "_Growing_";
+  } else {
+      job = "_Consulting_";
+  }
+
+  var columns = [crop.split(' ').join('_') + job + "Concerns"]
+
+  if(crop === "All"){
+    columns = ["Alfalfa" + job + "Concerns",	"Cotton" + job + "Concerns",	"Rice" + job + "Concerns",	"Wild_Rice" + job + "Concerns",	"Wheat" + job + "Concerns",	"Triticale" + job + "Concerns",	
+              "Barley" + job + "Concerns",	"Oats" + job + "Concerns",	"Corn" + job + "Concerns",	"Sorghum" + job + "Concerns",	"Corn_Silage" + job + "Concerns", "Small_Grain_Silage" + job + "Concerns",
+              "Small_Grain_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Hay" + job + "Concerns",	"Grass_and_Grass_Mixtures_Pasture" + job + "Concerns",	"Sorghum_Sudangrass_Sudan" + job + "Concerns",	
+              "Mixed_Hay" + job + "Concerns", "Dry_Beans" + job + "Concerns",	"Sunflower" + job + "Concerns",	"Oilseeds" + job + "Concerns", "Sugar_Beets" + job + "Concerns", "Hemp" + job + "Concerns", "Other" + job + "Concerns"]
+  } 
+  console.log(data);
+  var amount = 0
+
+  for (var j in data){
+    if(data[j][String(columns[0])] === "NA"){
+      for (var i in columns){
+        if(data[j][String(columns[i])] !== "NA"){
+          amount += 1;
+          break;
+        }
+      }
+    }else{
+      amount += 1;
+    }    
+  }
+
+  console.log(amount)
+  return amount;
 }
 
 function DetermineTitleText(activeVocation, activeCrop, activeRegion) {
@@ -179,7 +215,9 @@ export function PriorityConcerns(props) {
     var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion);
     var data_filtered = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation);
     var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, activeVocation, activeCrop))
-
+    var responses = GetResponses(data_filtered, activeVocation, activeCrop)
+    //console.log(responses)
+    //console.log(data_by_reason)
     return (
       <>
       <div id='vis-question-label'>
@@ -189,7 +227,7 @@ export function PriorityConcerns(props) {
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
       </div>
       <div>
-        <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
+        <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered} responses={responses}/>
       </div>
       </>
     );
@@ -233,14 +271,18 @@ export function PriorityConcernsCompare(props) {
       return <pre>Loading...</pre>;
   }
 
+
   var titleText = DetermineTitleText(activeVocation, activeCrop, activeRegion);
-  var data_filtered = filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop);
+  var data_filtered = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion), activeCrop), activeVocation);
   var data_by_reason = AdjustColors(calculateAllPriorityConcerns(data_filtered, activeVocation, activeCrop))
+
 
   var titleText2 = DetermineTitleText(activeVocation2, activeCrop2, activeRegion2);
   var data_filtered2 = filterByVocation(filterByCrop(filterByRegion(props.dataset, activeRegion2), activeCrop2), activeVocation2);
   var data_by_reason2 = AdjustColors(calculateAllPriorityConcerns(data_filtered2, activeVocation2, activeCrop2))
 
+  var responses = GetResponses(data_filtered, activeVocation, activeCrop)
+  var responses2 = GetResponses(data_filtered2, activeVocation2, activeCrop2)
   return (
     <>
     <div id='vis-question-label'>
@@ -250,10 +292,10 @@ export function PriorityConcernsCompare(props) {
     <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered}/>
+          <GetChart titleText={titleText} data_by_reason={data_by_reason} data_filtered={data_filtered} responses={responses}/>
         </div>
         <div id="vis-b">
-          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} data_filtered={data_filtered2}/>
+          <GetChart titleText={titleText2} data_by_reason={data_by_reason2} data_filtered={data_filtered2} responses={responses2}/>
         </div>
     </div>
     </>

@@ -120,7 +120,7 @@ function GetChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.responses + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -147,6 +147,20 @@ function GetChart(props){
           </VictoryChart>
         </div>  
   )
+}
+
+function GetResponses(data){
+
+  //console.log(data);
+  var amount = 0
+  for (var j in data){
+
+    if(data[j][String("Information_Sources")] !== "NA"){
+      amount += 1;
+    }    
+  }
+  //console.log(amount)
+  return amount;
 }
 
 function GetUnsortedChart(props){
@@ -183,7 +197,7 @@ function GetUnsortedChart(props){
             }
             />
             <VictoryAxis dependentAxis
-              label = {props.labelText + " (n = " + props.filtered_data.length + ")"}
+              label = {props.labelText + " (n = " + props.responses + ")"}
               style={{
                 axis: {stroke: "#756f6a", fontFamily: 'Roboto'},
                 ticks: {stroke: "grey", size: 5},
@@ -282,6 +296,9 @@ export function InfoSourcesBarChart(props) {
     var filtered_data = filterByVocation(data, activeVocation);
     var info_data = calculateInformationSources(filtered_data, true);
     var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
+    var responses = GetResponses(filtered_data)
+    // console.log(filtered_data)
+    // console.log(responses)
     var fontSize = DetermineFontSize()
 
     return (
@@ -292,7 +309,7 @@ export function InfoSourcesBarChart(props) {
         <div className="inline-child">
         <VocationAndRegion vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         </div>
-        <GetChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data}/>
+        <GetChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data} responses={responses}/>
       </>
     );
 }
@@ -340,12 +357,13 @@ export function InfoSourcesBarChartCompare(props) {
   var filtered_data = filterByVocation(data, activeVocation);
   var info_data = calculateInformationSources(filtered_data, false);
   var labelText = DetermineLabelText(activeVocation, activeCrop, activeRegion)
+  var responses = GetResponses(filtered_data)
 
   var data2 = filterByRegion(filterByCrop(props.dataset, activeCrop2), activeRegion2);
   var filtered_data2 = filterByVocation(data2, activeVocation2);
   var info_data2 = calculateInformationSources(filtered_data2, false);
   var labelText2 = DetermineLabelText(activeVocation2, activeCrop2, activeRegion2)
-
+  var responses2 = GetResponses(filtered_data2)
   var fontSize = DetermineFontSize()
 
   return (
@@ -357,10 +375,10 @@ export function InfoSourcesBarChartCompare(props) {
       <div className='dual-display'>
         <VocationAndRegionCompare vocationFunction={vocationFunction} regionFunction={regionFunction} cropFunction={cropFunction} activeVocation={activeVocation} activeRegion={activeRegion} activeCrop={activeCrop} vocationFunction2={vocationFunction2} regionFunction2={regionFunction2} cropFunction2={cropFunction2} activeVocation2={activeVocation2} activeCrop2={activeCrop2} activeRegion2={activeRegion2} vocationArray={vocationArray} baseAll={filters.baseAll}/>
         <div id="vis-a">
-          <GetUnsortedChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data}/>
+          <GetUnsortedChart labelText={labelText} info_data={info_data} fontSize={fontSize} filtered_data={filtered_data} responses={responses}/>
         </div>
         <div id="vis-b">
-          <GetUnsortedChart labelText={labelText2} info_data={info_data2} fontSize={fontSize} filtered_data={filtered_data2}/>
+          <GetUnsortedChart labelText={labelText2} info_data={info_data2} fontSize={fontSize} filtered_data={filtered_data2} responses={responses2}/>
         </div>
       </div>        
     </>
